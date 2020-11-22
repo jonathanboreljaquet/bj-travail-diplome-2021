@@ -4,40 +4,117 @@
 
 ### Objectif du projet
 
-L'application mobile permettra de faciliter les différentes tâches d'organisation, de prise en charge et de relation d'un client et d'un éducateur canin. L'éducateur canin aura la possibilité de se connecter à l'application afin de pouvoir gérer/visualiser/éditer les différentes informations des ses clients. Il pourra consulter son planning de rendez-vous afin de pouvoir trouver une date adéquate pour un cours avec un ou plusieurs clients. L'éducateur canin aura la possibilité de faire signer numériquement les différents contrats lors d'un rendez-vous et d'y stocker avec d'autre documents dans un dossier partagé que le client aura accès depuis son compte, si celui-ci n'en a pas, l'éducateur canin pourra lui en créer un directement depuis l'application. Pour finir, l'éducateur canin pourra scanner la puce canine RFID grâce à un appareil externe communiquant en Bluetooth les données de celle-ci. Le client quant-à lui, aura le pouvoir de se connecter à l'application afin d'accéder à ses informations personnelles, ses contrats signé/documents et ses rendez-vous planifiés avec un éducateur canin.
+L'application mobile permettra de faciliter les différentes tâches d'organisation, de prise en charge et de relation d'un client et d'un éducateur canin. L'éducateur canin aura la possibilité de se connecter à l'application afin de pouvoir gérer/visualiser/éditer les différentes informations des ses clients. Il pourra consulter son planning de rendez-vous afin de pouvoir trouver une date adéquate pour un rendez-vous avec un client. L'éducateur canin aura la possibilité de faire signer numériquement les différents contrats lors d'un rendez-vous et d'y stocker avec d'autre documents dans un dossier partagé que le client aura accès depuis son compte. Il aura la possibilité de pouvoir scanner la puce sous-cutanée canine grâce à un appareil externe communiquant en Bluetooth les données de celle-ci. Le client quant-à lui, aura le pouvoir de se connecter à l'application afin d'accéder à ses informations personnelles, ses contrats signé/documents et ses rendez-vous planifiés avec un éducateur canin.
 
 ### Description détaillée
 
 L'application mobile permet à un éducateur canin ou à un client de se connecter à l'application pour avoir accès à différentes fonctionnalités.
-L'éducateur canin a accès à un calendrier avec tout ces rendez-vous planifié et à une liste contenant tous ses actuels clients ainsi que leurs différentes informations, telle que :
+L'éducateur canin a accès à un calendrier avec tout ces rendez-vous planifié et à une liste contenant tous ses actuels clients ou il peut, si il le souhaite, faire une recherche spécifique par nom ou par scan de puce sous-cutanée canine afin de visualiser leurs différentes informations, telle que :
 
 * Les informations personnelles du client
   * Nom
   * Prénom
-  * Mail
-  * ect..
+  * Téléphone
+  * Adresse mail
+  * Adresse du domicile
 * Les informations personnelles du chien
+  * Date de naissance
+  * Race
+  * Sexe
   * Nom
-  * Age
-  * ect..
-* Les documents partagés entre le client et l'éducateur
+  * Photo
+  * Numéro de puce sous-cutanée
+* Les documents partagés entre le client et l'éducateur canin
   * Conditions d'inscription signé
   * Fiches récapitulatif du cours
-  * ect..
+  * Autres
 
-Les clients eux, ont accès individuellement aux même fonctionnalité.
+L'éducateur canin peut procéder à une création préliminaire d'une fiche client, le client concerné sera avertit par mail qu'une fiche à été créé avec ces informations, il devra alors validé son compte pour pouvoir y accéder. Lors du premier rendez-vous, l'éducateur canin pourra compléter la fiche client avec les données qui nécessite une rencontre physique.
 
-Lors d'un rendez-vous physique entre l'éducateur canin et le client, l'éducateur à la possibilité de créer, si cela n'est pas le cas, un compte utilisateur pour le client afin de pouvoir y rentrer différentes informations comme la planification des futurs rendez-vous et l'accès aux document partagé. Si le client veut avoir accès à ses informations, il va devoir se créer un compte depuis le mail qu'il à reçu lorsque l'éducateur à validé ses informations.
+L'éducateur canin peut à tout moment lors d'un rendez-vous, accéder à la fiche du client afin de pouvoir y rentrer différentes informations :
+
+- Note du cours sous format texte
+- Note du cours sous format graphique
+- Note récapitulatif du cours
+- Documents à partager
+
+Si le rendez-vous entre l'éducateur canine et le client est le premier, alors l'éducateur doit faire signer depuis l'application, les conditions d'inscription au client.
+
+Le client quant-à lui, peut se connecter à l'application après s'être inscrit pour accéder à ses informations personnelles ainsi que ces documents.
+
+### Liste des fonctionnalités
+
+#### Fonctionnalités de l'éducateur canin
+
+- Connexion à l'application
+- Accès au calendrier de ces rendez-vous
+- Affichage de tout les clients avec photo du chien et nom de son maitre
+- Recherche spécifique d'un client par nom ou depuis un scan de puce sous-cutanée canine
+- Accès aux informations personnelles d'un client depuis la recherche spécifique ou du calendrier de rendez-vous
+- Création préliminaire d'une fiche client
+- Accès et création de contenue séance d'un client depuis la recherche spécifique ou le calendrier de rendez-vous
+
+#### Fonctionnalités du client
+
+- Inscription à l'application
+- Connexion à l'application
+- Accès au calendrier de ces rendez-vous
+- Accès à ces informations personnelles
+- Accès à ses documents personnelles
+- Accès à ces différents contenues séances 
+
+### Scénario d'utilisation
+
+#### Prise en charge d'un nouveau client
+
+##### Étape 1 : Création de fiche cliente préliminaire par téléphone
+
+1. Le client appel l'éducateur canin avec son téléphone car il a besoin de ces services.
+2. L'éducateur canin va se rendre sur l'application mobile et se connecter avec ses identifiants.
+3. Il va se rendre sur l'interface de création d'une nouvelle fiche client.
+4. Il va y renter les informations personnelles du client communiqué par téléphone :
+   - Nom du client
+   - Prénom du client
+   - Téléphone du client
+   - Adresse mail du client
+   - Adresse du domicile du client
+   - Date de naissance du chien
+   - Race du chien
+   - Sexe du chien
+   - Nom du chien
+5. Il aura accès à son calendrier personnel afin de visualiser à quelle date il peut se rendre au domicile du client.
+6. Le client ainsi que l'éducateur se mettront d'accord sur la date du rendez-vous.
+7. L'éducateur canin sélectionnera cette date dans le calendrier.
+8. Une fois la fiche client préliminaire avec la date du premier rendez-vous remplis, un mail sera envoyé au client afin qu'il puisse créer son compte dans l'application afin d'avoir accès à différentes fonctionnalités.
+
+##### Étape 2 : Rencontre physique avec le client 
+
+1. L'éducateur canin se rend au domicile du client à la date spécifié lors de l'appel téléphonique. 
+2. Il va se rendre sur l'application mobile et se connecter avec ses identifiants.
+3. Il va rechercher le client grâce à son nom et accéder à sa fiche client précédemment créée lors de l'appel téléphonique.
+4. Il va montrer les données personnelles du client et lui demander une vérification de celle-ci.
+5. Si elles sont fausses, modification de celle-ci.
+6. Si elles sont correctes, l'éducateur canin devra prendre une photo du chien ainsi que de rentrer manuellement ou avec un lecteur RFID communiquant en Bluetooth avec l'application, les 15 chiffres du code de la puce sous-cutanée du chien.
+7. Il pourra ensuite sauvegarder cette version final de la fiche client.
+
+#### Rendez-vous avec un client
+
+1. L'éducateur canin peut à tout moment lors d'un rendez-vous, accéder à la fiche du client afin de pouvoir y rentrer différentes données :
+   - Note du cours sous format texte (accessible uniquement par l'éducateur)
+   - Note du cours sous format graphique (accessible uniquement par l'éducateur)
+   - Note récapitulatif du cours (accessible par l'éducateur ainsi que le client)
+2. Si le rendez-vous est le premier, alors le client doit depuis l'application de l'éducateur :
+   1. Choisir le forfait qu'il désire.
+   2. Ajouter sa signature depuis l'application.
+   3. Visualiser la version final des conditions d'inscriptions. 
+   4. Validée s'il est d'accord en cochant une case "Lu et approuvé".
+   5. Les conditions d'inscription sous format PDF ainsi qu'une génération automatique d'une facture sous format PDF sera ajouté au dossier partagé du client.
 
 
 
-L'éducateur canin doit faire signer directement depuis le dispositif, le ou les différents contrats d'amission. Celui-ci peut également scanner la puce canine RFID du chien depuis un appareil externe communiquant en Bluetooth avec l'application afin de rechercher les informations du chien ainsi que son maitre si celui-ci avait déjà fait une rencontre ou bien, d'enregistrer les informations du chien ainsi que son maitre. 
+### Modèle de données
 
-
-
-## Modèle de données
-
-![image database](../database/DB_DouceurDeChien.png)
+![image database](../database/dbdiagram_travail_de_diplome.png)
 
 <table>
     <tr>
@@ -53,43 +130,84 @@ L'éducateur canin doit faire signer directement depuis le dispositif, le ou les
         <td>email</td>
         <td>varchar</td>
         <td>not null</td>
-        <td>Addresse email du client.</td>
+        <td>Addresse email de l'utilisateur.</td>
     </tr>
     <tr>
         <td>firstname</td>
         <td>varchar</td>
         <td>not null</td>
-        <td>Prénom du client.</td>
+        <td>Prénom de l'utilisateur.</td>
     </tr>
     <tr>
         <td>secondname</td>
         <td>varchar</td>
         <td>not null</td>
-        <td>Nom du client.</td>
+        <td>Nom de l'utilisateur.</td>
     </tr>
     <tr>
-        <td>password_iteration_count</td>
-        <td>int</td>
-        <td>not null</td>
-        <td>Nombre d'itération pour l'encryptage du mot de passe avec PBKDF2.</td>
-    </tr>
-    <tr>
-        <td>password_salt</td>
+        <td>phonenumber</td>
         <td>varchar</td>
         <td>not null</td>
-        <td>Donnée de salage du mot de passe.</td>
+        <td>Numéro de téléphone de l'utilisateur.</td>
     </tr>
     <tr>
-        <td>password_hash</td>
+        <td>address</td>
         <td>varchar</td>
         <td>not null</td>
+        <td>Adresse du domicile de l'utilisateur.</td>
+    </tr>
+    <tr>
+        <td>password</td>
+        <td>varchar</td>
+        <td>null</td>
         <td>Mot de passe hashé.</td>
     </tr>
     <tr>
-        <td>isAdministrator</td>
+        <td>is_administrator</td>
         <td>boolean</td>
         <td>not null</td>
         <td>Booléan définisant le rôle de l'utilisateur.</td>
+    </tr>
+</table>
+   <table>
+    <tr>
+    	<th style="text-align:center" COLSPAN="4">dog</th>
+    </tr>
+    <tr>
+        <th>Nom</th>
+        <th>Type</th>
+        <th>Null</th>
+        <th>Définition</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>varchar</td>
+        <td>not null</td>
+        <td>Nom du chien.</td>
+    </tr>
+    <tr>
+        <td>dog_breed</td>
+        <td>varchar</td>
+        <td>not null</td>
+        <td>Race du chien.</td>
+    </tr>
+     <tr>
+        <td>sex</td>
+        <td>varchar</td>
+        <td>not null</td>
+        <td>Sexe du chien.</td>
+    </tr>
+     <tr>
+        <td>path_dog_picture</td>
+        <td>varchar</td>
+        <td>null</td>
+        <td>Chemin d'accès de la photo du chien.</td>
+    </tr>
+    <tr>
+        <td>chip_id</td>
+        <td>varchar</td>
+        <td>null</td>
+        <td>Code composé de 15 chiffres (3 pour le pays, 2 pour le type d'animal, 2 pour le fabricant, 8 pour le n° de l'animal).</td>
     </tr>
 </table>
 
@@ -116,10 +234,9 @@ L'éducateur canin doit faire signer directement depuis le dispositif, le ou les
         <td>Chemin d'accès du document.</td>
     </tr>
 </table>
-
    <table>
     <tr>
-    	<th style="text-align:center" COLSPAN="4">dog</th>
+    	<th style="text-align:center" COLSPAN="4">course_content</th>
     </tr>
     <tr>
         <th>Nom</th>
@@ -128,105 +245,87 @@ L'éducateur canin doit faire signer directement depuis le dispositif, le ou les
         <th>Définition</th>
     </tr>
     <tr>
-        <td>chip_id</td>
+        <td>course_note_text</td>
         <td>varchar</td>
         <td>null</td>
-        <td>Code composé de 15 chiffres (3 pour le pays, 2 pour le type d'animal, 2 pour le fabricant, 8 pour le n° de l'animal).</td>
+        <td>Note du cours sous format texte.</td>
     </tr>
-    <tr>
-        <td>name</td>
+      <tr>
+        <td>path_course_note_graphical</td>
         <td>varchar</td>
-        <td>not null</td>
-        <td>Nom du chien.</td>
+        <td>null</td>
+        <td>Chemin d'accès de note du cours sous format graphique.</td>
+    </tr>
+       <tr>
+        <td>course_summary</td>
+        <td>varchar</td>
+        <td>null</td>
+        <td>Note récapitulatif du cours.</td>
+    </tr>
+       <tr>
+        <td>date</td>
+        <td>datetime</td>
+        <td>null</td>
+        <td>Date du cours.</td>
     </tr>
 </table>
 
-
-## Liste des fonctionnalités
-
-#### Éducateur canin
-
-* Connexion
-  * Ajout d'un client
-    * Avec ou sans scan de puce canine RFID
-  * Recherche d'un client avec ou sans scan de puce canine RFID
-    * Affichage des informations personnelles du client 
-    * Signature de contrat client directement depuis le dispositif
-    * Ajout de fichier sur le dossier partagé
-    * Planification de rendez-vous avec le client
-
-#### Client
-
-* Inscription
-  * Adresse email
-  * Mot de passe
-  * 2ième mot de passe
-* Connexion
-  * Affichage des informations personnelles
-  * Accès aux fichiers sur le dossier partagé
-  * Visualisation du calendrier avec les prochains rendez-vous
-
-## Liste des fonctionnalités en mode offline
-
-#### Éducateur canin et client
-
-* Information du client
-* Fichier(s) dans le dossier partagé
-
-## Mode offline fonctionnement
-##### Méthode de stockage
-
-Local Storage
-
 ##### Diagramme de séquence
-![image diagram sequence](./diagram/BJ_SequenceDiagram.png)
+![image diagram sequence](./diagram/sequence_diagram_travail_de_diplome.png)
 
-##### Scénarios
+### Maquettes de l'application
+#### Client
 
-1. Rendez-vous au préalable indépendamment de l'application
-2. Rencontre physique entre l'éducateur canin et le client
-   1. Si première rencontre, alors création du compte client
-3. Complétion des informations du contrat ainsi que de la signature depuis l'application
-4. Ajout dans le dossier partagé de l'éducateur et du client
-5. Téléchargement du contrat PDF depuis le dossier partagé
+##### Information personnelles
 
-## Maquettes de l'application
-#### Utilisateur
+![image login](./mockup/clientpersonalinformation.png)
 
-![image login](./model/login.png)
+##### Calendrier
+
+![image login](./mockup/clientcalendar.png)
+
+##### Contenue séances
+
+![image login](./mockup/clientcoursecontent.png)
 
 #### Éducateur canin
 
-![image admin research](./model/adminresearch.png)
-![image admin show client](./model/adminshowspecificclient.png)
-![image admin edit client](./model/admineditclient.png)
-![image admin add contract](./model/adminaddcontract.png)
+##### Affichage de tout les clients
 
-#### Client
+![image login](./mockup/adminallclients.png)
 
-![image inscription](./model/inscription.png)
-![image inscription](./model/clientshowinformation.png)
+##### Calendrier
 
-## Listes des tâches par priorité
+![image login](./mockup/admincalendar.png)
 
-| **Tâches**                                                   | **Priorité** | **Estimation de temps en période** | MVP  |
-| ------------------------------------------------------------ | ------------ | ---------------------------------- | ---- |
-| Publication                                                  | 6            | 8                                  | Oui  |
-| Créer la base de données                                     | 3            | 2                                  | Oui  |
-| Créer la page d'inscription                                  | 5            | 4                                  | Oui  |
-| Créer la page de connexion                                   | 4            | 2                                  | Oui  |
-| Créer la page de recherche d'utilisateur pour les administrateurs | 7            | 2                                  | Non  |
-| Créer la page de consultation des informations de l'utilisateur pour client et administrateur \(info \+ fichier partagé\) | 2            | 12                                 | Oui  |
-| Créer la page d'édition du client                            | 8            | 2                                  | Non  |
-| Créer la page de création de contrat                         | 1            | 8                                  | Oui  |
-| Tests et résolution de bugs                                  | 9            | 8                                  | Non  |
+##### Création de fiche client préliminaire
+
+![image login](./mockup/adminaddclient.png)
+
+##### Affichage fiche client
+
+![image login](./mockup/adminclientinformations.png)
+
+##### Validation de fiche client
+
+![image login](./mockup/adminclientvalidification.png)
+
+##### Contenue séance d'un client
+
+![image login](./mockup/adminclientcourse.png)
 
 
-## Planning
+
+##### Ajout de document
+
+![image login](./mockup/adminadddocument.png)
+
+
+### Planning
 
 ![image planning](./planning/BJ_Planning.PNG)
 
-## Matériel et logiciel
+### Matériel et logiciel
 
 - Ordinateur Windows 10
 - IDE (Visual Studio Code)
@@ -236,11 +335,10 @@ Local Storage
 - Éditeur de base de données ([dbdiagram.io](https://dbdiagram.io/home))
 - Éditeur de maquette ([Pencil](https://pencil.evolus.vn/))
 
-## Librairies utilisées
+### Librairies utilisées
 
-* Création de pdf en PHP ([TCPDF](https://tcpdf.org/examples/))
+* Création de PDF en PHP ([TCPDF](https://tcpdf.org/examples/))
 * Dessiner dans un canevas ([responsive-sketchpad](https://github.com/tsand/responsive-sketchpad))
-* Encryption de mot de passe ([PBKDF2](https://github.com/padloc/cordova-plugin-pbkdf2))
 
 
 
