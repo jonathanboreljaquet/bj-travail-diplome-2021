@@ -323,7 +323,7 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
 
 ### Planning
 
-![image planning](./planning/BJ_Planning.PNG)
+
 
 ### Matériel et logiciel
 
