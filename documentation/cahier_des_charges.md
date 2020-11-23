@@ -163,6 +163,12 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
         <td>Mot de passe hashé.</td>
     </tr>
     <tr>
+        <td>api_token</td>
+        <td>varchar</td>
+        <td>not null</td>
+        <td>Token d'authentification de l'utilisateur.</td>
+    </tr>
+    <tr>
         <td>is_administrator</td>
         <td>boolean</td>
         <td>not null</td>
@@ -210,7 +216,6 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
         <td>Code composé de 15 chiffres (3 pour le pays, 2 pour le type d'animal, 2 pour le fabricant, 8 pour le n° de l'animal).</td>
     </tr>
 </table>
-
    <table>
     <tr>
     	<th style="text-align:center" COLSPAN="4">document</th>
@@ -236,7 +241,7 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
 </table>
    <table>
     <tr>
-    	<th style="text-align:center" COLSPAN="4">course_content</th>
+    	<th style="text-align:center" COLSPAN="4">courseContent</th>
     </tr>
     <tr>
         <th>Nom</th>
@@ -262,20 +267,17 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
         <td>null</td>
         <td>Note récapitulatif du cours.</td>
     </tr>
+       </tr>
        <tr>
         <td>date</td>
         <td>datetime</td>
-        <td>null</td>
+        <td>not null</td>
         <td>Date du cours.</td>
     </tr>
 </table>
 
 ##### Diagramme de séquence
 ![image diagram sequence](./diagram/sequence_diagram_travail_de_diplome.png)
-
-##### Cas d'utilisation
-
-
 
 ### Maquettes de l'application
 #### Client
@@ -340,11 +342,13 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
 - Éditeur de diagramme ([Visual Paradigm Online](https://online.visual-paradigm.com/fr/))
 - Éditeur de base de données ([dbdiagram.io](https://dbdiagram.io/home))
 - Éditeur de maquette ([Pencil](https://pencil.evolus.vn/))
+- Éditeur de planning ([Microsoft Project](https://www.microsoft.com/fr-ch/microsoft-365/project/project-management-software))
 
 ### Librairies utilisées
 
 * Création de PDF en PHP ([TCPDF](https://tcpdf.org/examples/))
 * Dessiner dans un canevas ([responsive-sketchpad](https://github.com/tsand/responsive-sketchpad))
+* Création de calendrier en JavaScript ([fullcalendar.io](https://fullcalendar.io/))
 
 
 

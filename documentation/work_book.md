@@ -98,3 +98,12 @@ Quelles sont les informations que le client doit avoir la possibilité de consul
 - Accès à ces informations personnelles (avec contrat signé)
 - Accès à ces différents contenues séances (note récapitulatif du cours ainsi que affiche PDF du cours)
 
+### Lundi 23 novembre 2020
+
+Feedback du cahier des charges de Monsieur Garcia lors du cours du lundi matin via Google Meet. Retour positif de celui-ci, mais il manque le planning prévisionnel.
+
+Création des différentes tâches du planning prévisionnel sans attribution de temps.
+
+Modification du modèle de données :
+
+- Ajout d'une champ api_token dans la table user permettant l'authentification à l'API Rest d'un utilisateur.

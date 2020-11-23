@@ -5,6 +5,7 @@ CREATE TABLE `user` (
   `secondname` varchar(255) NOT NULL,
   `phonenumber` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
+  `api_token` varchar(255) NOT NULL,
   `password` varchar(255),
   `is_administrator` boolean NOT NULL
 );
@@ -26,11 +27,12 @@ CREATE TABLE `document` (
   `client_id` int
 );
 
-CREATE TABLE `course_content` (
+CREATE TABLE `courseContent` (
   `id` int PRIMARY KEY,
   `course_note_text` varchar(255),
   `path_course_note_graphical` varchar(255),
   `course_summary` varchar(255),
+  `date` datetime NOT NULL,
   `client_id` int
 );
 
@@ -38,4 +40,4 @@ ALTER TABLE `dog` ADD FOREIGN KEY (`client_id`) REFERENCES `user` (`id`);
 
 ALTER TABLE `document` ADD FOREIGN KEY (`client_id`) REFERENCES `user` (`id`);
 
-ALTER TABLE `course_content` ADD FOREIGN KEY (`client_id`) REFERENCES `user` (`id`);
+ALTER TABLE `courseContent` ADD FOREIGN KEY (`client_id`) REFERENCES `user` (`id`);
