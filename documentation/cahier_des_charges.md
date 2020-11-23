@@ -1,4 +1,4 @@
-# [nom de l'application]
+# DDC'App
 
 ## Cahier des charges
 
@@ -29,7 +29,7 @@ L'éducateur canin a accès à un calendrier avec tout ces rendez-vous planifié
   * Fiches récapitulatif du cours
   * Autres
 
-L'éducateur canin peut procéder à une création préliminaire d'une fiche client, le client concerné sera avertit par mail qu'une fiche à été créé avec ces informations, il devra alors validé son compte pour pouvoir y accéder. Lors du premier rendez-vous, l'éducateur canin pourra compléter la fiche client avec les données qui nécessite une rencontre physique.
+L'éducateur canin doit procéder à une création préliminaire d'une fiche client, le client concerné sera avertit par mail qu'une fiche à été créé avec ces informations, il devra alors validé son compte pour pouvoir y accéder. Lors du premier rendez-vous, l'éducateur canin doit compléter la fiche client avec les données qui nécessite une rencontre physique.
 
 L'éducateur canin peut à tout moment lors d'un rendez-vous, accéder à la fiche du client afin de pouvoir y rentrer différentes informations :
 
@@ -273,6 +273,10 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
 ##### Diagramme de séquence
 ![image diagram sequence](./diagram/sequence_diagram_travail_de_diplome.png)
 
+##### Cas d'utilisation
+
+
+
 ### Maquettes de l'application
 #### Client
 
@@ -320,14 +324,16 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
 
 ![image login](./mockup/adminadddocument.png)
 
+#### Mindmap
+
+![image login](./mindmap/mindmap_travail_de_diplome.png)
 
 ### Planning
-
-
 
 ### Matériel et logiciel
 
 - Ordinateur Windows 10
+- Lecteur Bluetooth de puce sous-cutanée canine ([A faire](www.google.ch))
 - IDE (Visual Studio Code)
 - Outil de versioning de code (GIT avec repository en ligne sur GitHub)
 - Outil bureautique ([Typora](https://typora.io/))

@@ -1,4 +1,4 @@
-# [Nom de l'application]
+# DDC'App
 ## Work book
 
 ### Vendredi 20 novembre 2020

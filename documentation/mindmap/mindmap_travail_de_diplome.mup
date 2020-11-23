@@ -1,0 +1,253 @@
+{
+  "formatVersion": 3,
+  "id": "root",
+  "ideas": {
+    "1": {
+      "title": "DDC'App",
+      "id": 1,
+      "attr": {
+        "position": [
+          -79,
+          -24,
+          1
+        ]
+      },
+      "ideas": {
+        "1": {
+          "title": "API Rest",
+          "id": 2
+        },
+        "-1": {
+          "title": "Application mobile",
+          "id": 3,
+          "ideas": {
+            "1": {
+              "title": "Fonctionnalités éducateur canin",
+              "id": 5,
+              "ideas": {
+                "1": {
+                  "title": "Recherche de client par nom du propriétaire\nou scan puce sous-cutanée canine",
+                  "id": 7,
+                  "ideas": {
+                    "1": {
+                      "title": "Informations personnelles client",
+                      "id": 8,
+                      "ideas": {
+                        "1": {
+                          "title": "Propriétaire du chien",
+                          "id": 9,
+                          "ideas": {
+                            "1": {
+                              "title": "email",
+                              "id": 10
+                            },
+                            "2": {
+                              "title": "nom",
+                              "id": 12
+                            },
+                            "3": {
+                              "title": "adresse",
+                              "id": 13
+                            },
+                            "4": {
+                              "title": "numéro de téléphone",
+                              "id": 14
+                            },
+                            "5": {
+                              "title": "prénom",
+                              "id": 15
+                            }
+                          }
+                        },
+                        "2": {
+                          "title": "Chien",
+                          "id": 17,
+                          "ideas": {
+                            "1": {
+                              "title": "nom",
+                              "id": 19
+                            },
+                            "2": {
+                              "title": "race",
+                              "id": 20
+                            },
+                            "3": {
+                              "title": "sexe",
+                              "id": 21
+                            },
+                            "4": {
+                              "title": "photo du chien",
+                              "id": 22
+                            },
+                            "5": {
+                              "title": "numéro de puce sous-cutanée canine",
+                              "id": 23
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "2": {
+                      "title": "Contenue séance",
+                      "id": 25,
+                      "ideas": {
+                        "1": {
+                          "title": "Consultation de note textuel personnelle",
+                          "id": 26
+                        },
+                        "2": {
+                          "title": "Consultation de note graphique personnelle",
+                          "id": 27
+                        },
+                        "3": {
+                          "title": "Consultation de note récapitulatif du cours",
+                          "id": 28
+                        }
+                      }
+                    }
+                  }
+                },
+                "2": {
+                  "title": "Création fiche client préliminaire",
+                  "id": 29,
+                  "ideas": {
+                    "1": {
+                      "title": "Envoie de mail au client pour créer un compte",
+                      "id": 30
+                    }
+                  }
+                },
+                "3": {
+                  "title": "Validation fiche client",
+                  "id": 31,
+                  "ideas": {
+                    "1": {
+                      "title": "Ajout photo du chien",
+                      "id": 55
+                    },
+                    "2": {
+                      "title": "Ajout numéro de puce sous-cutanée canine",
+                      "id": 56,
+                      "ideas": {
+                        "1": {
+                          "title": "Manuellement",
+                          "id": 57
+                        },
+                        "2": {
+                          "title": "Scan",
+                          "id": 59
+                        }
+                      }
+                    }
+                  }
+                },
+                "4": {
+                  "title": "Création de contenue séance",
+                  "id": 32,
+                  "ideas": {
+                    "1": {
+                      "title": "Ajout de note textuel",
+                      "id": 33
+                    },
+                    "2": {
+                      "title": "Ajout de note graphique",
+                      "id": 34
+                    },
+                    "3": {
+                      "title": "Ajout de note récapitulatif du cours",
+                      "id": 35
+                    },
+                    "4": {
+                      "title": "Ajout de document PDF",
+                      "id": 36,
+                      "ideas": {
+                        "1": {
+                          "title": "Conditions d'inscription",
+                          "id": 37,
+                          "ideas": {
+                            "1": {
+                              "title": "Forfait",
+                              "id": 38
+                            },
+                            "2": {
+                              "title": "Signature",
+                              "id": 39
+                            },
+                            "3": {
+                              "title": "Lu et approuvé",
+                              "id": 40
+                            },
+                            "4": {
+                              "title": "Planification des  futurs rendez-vous",
+                              "id": 41
+                            }
+                          }
+                        },
+                        "2": {
+                          "title": "Affiche du cours",
+                          "id": 42
+                        },
+                        "3": {
+                          "title": "Facture",
+                          "id": 43
+                        },
+                        "4": {
+                          "title": "Autres",
+                          "id": 44
+                        }
+                      }
+                    }
+                  }
+                },
+                "1.5": {
+                  "title": "Consultation de calendrier personnelle",
+                  "id": 48,
+                  "attr": {
+                    "position": [
+                      136.98822021484375,
+                      -184.9921875,
+                      1
+                    ]
+                  }
+                }
+              }
+            },
+            "2": {
+              "title": "Fonctionnalité client",
+              "id": 45,
+              "ideas": {
+                "1": {
+                  "title": "Consultation de calendrier personelle",
+                  "id": 50
+                },
+                "2": {
+                  "title": "Consultation des informations personnelles",
+                  "id": 51
+                },
+                "3": {
+                  "title": "Consultation contenue séance",
+                  "id": 52,
+                  "ideas": {
+                    "1": {
+                      "title": "Note récapitulatif du cours",
+                      "id": 53
+                    },
+                    "2": {
+                      "title": "Document PDF",
+                      "id": 54
+                    }
+                  }
+                },
+                "4": {
+                  "title": "Rappel par mail des futurs rendez-vous",
+                  "id": 60
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "title": "DDC'App"
+}
