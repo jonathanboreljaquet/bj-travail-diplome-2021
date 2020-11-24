@@ -332,6 +332,10 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
 
 ### Planning
 
+![image login](./planning/planning_previsionnel_travail_de_diplome-1.jpg)
+
+![image login](./planning/planning_previsionnel_travail_de_diplome-2.jpg)
+
 ### Matériel et logiciel
 
 - Ordinateur Windows 10

@@ -107,3 +107,9 @@ Création des différentes tâches du planning prévisionnel sans attribution de
 Modification du modèle de données :
 
 - Ajout d'une champ api_token dans la table user permettant l'authentification à l'API Rest d'un utilisateur.
+
+### Mardi 24 novembre 2020
+
+Attribution du temps aux tâches et attribution des tâches aux jours.
+
+Ajout du planning prévisionnel au cahier des charges.
