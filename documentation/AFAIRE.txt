@@ -1,0 +1,4 @@
+-Inclure PWA cahier des charges
+-Modifier les maquettes
+-Modifier le planning
+-Modifier le diagramme de séquence

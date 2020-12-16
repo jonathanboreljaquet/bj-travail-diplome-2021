@@ -4,12 +4,12 @@
 
 ### Objectif du projet
 
-L'application mobile permettra de faciliter les différentes tâches d'organisation, de prise en charge et de relation d'un client et d'un éducateur canin. L'éducateur canin aura la possibilité de se connecter à l'application afin de pouvoir gérer/visualiser/éditer les différentes informations des ses clients. Il pourra consulter son planning de rendez-vous afin de pouvoir trouver une date adéquate pour un rendez-vous avec un client. L'éducateur canin aura la possibilité de faire signer numériquement les différents contrats lors d'un rendez-vous et d'y stocker avec d'autre documents dans un dossier partagé que le client aura accès depuis son compte. Il aura la possibilité de pouvoir scanner la puce sous-cutanée canine grâce à un appareil externe communiquant en Bluetooth les données de celle-ci. Le client quant-à lui, aura le pouvoir de se connecter à l'application afin d'accéder à ses informations personnelles, ses contrats signé/documents et ses rendez-vous planifiés avec un éducateur canin.
+La PWA (Progressive web app) permettra de faciliter les différentes tâches d'organisation, de prise en charge et de relation d'un client et d'un éducateur canin. L'éducateur canin aura la possibilité de se connecter à l'application afin de pouvoir gérer/visualiser/éditer les différentes informations des ses clients. Il pourra consulter son planning de rendez-vous afin de pouvoir trouver une date adéquate pour un rendez-vous avec un client. L'éducateur canin aura la possibilité de faire signer numériquement les différents contrats lors d'un rendez-vous et d'y stocker avec d'autre documents dans un dossier partagé que le client aura accès depuis son compte. Le client quant-à lui, aura la possibilité de se connecter à l'application afin d'accéder à ses informations personnelles, ses contrats signé/documents et ses rendez-vous planifiés avec un éducateur canin.
 
 ### Description détaillée
 
-L'application mobile permet à un éducateur canin ou à un client de se connecter à l'application pour avoir accès à différentes fonctionnalités.
-L'éducateur canin a accès à un calendrier avec tout ces rendez-vous planifié et à une liste contenant tous ses actuels clients ou il peut, si il le souhaite, faire une recherche spécifique par nom ou par scan de puce sous-cutanée canine afin de visualiser leurs différentes informations, telle que :
+La PWA permet à un éducateur canin ou à un client de se connecter à l'application pour avoir accès à différentes fonctionnalités.
+L'éducateur canin a accès à un calendrier avec tout ces rendez-vous planifié et à une liste contenant tous ses actuels clients ou il peut, si il le souhaite, faire une recherche spécifique par nom afin de visualiser leurs différentes informations, telle que :
 
 * Les informations personnelles du client
   * Nom
@@ -33,8 +33,8 @@ L'éducateur canin doit procéder à une création préliminaire d'une fiche cli
 
 L'éducateur canin peut à tout moment lors d'un rendez-vous, accéder à la fiche du client afin de pouvoir y rentrer différentes informations :
 
-- Note du cours sous format texte
-- Note du cours sous format graphique
+- Note personnel de l'éducateur canin du cours sous format texte
+- Note personnel de l'éducateur canin du cours sous format graphique
 - Note récapitulatif du cours
 - Documents à partager
 
@@ -49,7 +49,7 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
 - Connexion à l'application
 - Accès au calendrier de ces rendez-vous
 - Affichage de tout les clients avec photo du chien et nom de son maitre
-- Recherche spécifique d'un client par nom ou depuis un scan de puce sous-cutanée canine
+- Recherche spécifique d'un client par nom
 - Accès aux informations personnelles d'un client depuis la recherche spécifique ou du calendrier de rendez-vous
 - Création préliminaire d'une fiche client
 - Accès et création de contenue séance d'un client depuis la recherche spécifique ou le calendrier de rendez-vous
@@ -70,7 +70,7 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
 ##### Étape 1 : Création de fiche cliente préliminaire par téléphone
 
 1. Le client appel l'éducateur canin avec son téléphone car il a besoin de ces services.
-2. L'éducateur canin va se rendre sur l'application mobile et se connecter avec ses identifiants.
+2. L'éducateur canin va se rendre sur l'application et se connecter avec ses identifiants.
 3. Il va se rendre sur l'interface de création d'une nouvelle fiche client.
 4. Il va y renter les informations personnelles du client communiqué par téléphone :
    - Nom du client
@@ -90,11 +90,11 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
 ##### Étape 2 : Rencontre physique avec le client 
 
 1. L'éducateur canin se rend au domicile du client à la date spécifié lors de l'appel téléphonique. 
-2. Il va se rendre sur l'application mobile et se connecter avec ses identifiants.
+2. Il va se rendre sur l'application et se connecter avec ses identifiants.
 3. Il va rechercher le client grâce à son nom et accéder à sa fiche client précédemment créée lors de l'appel téléphonique.
 4. Il va montrer les données personnelles du client et lui demander une vérification de celle-ci.
 5. Si elles sont fausses, modification de celle-ci.
-6. Si elles sont correctes, l'éducateur canin devra prendre une photo du chien ainsi que de rentrer manuellement ou avec un lecteur RFID communiquant en Bluetooth avec l'application, les 15 chiffres du code de la puce sous-cutanée du chien.
+6. Si elles sont correctes, l'éducateur canin devra prendre une photo du chien ainsi que de rentrer manuellement les 15 chiffres du code de la puce sous-cutanée du chien.
 7. Il pourra ensuite sauvegarder cette version final de la fiche client.
 
 #### Rendez-vous avec un client
@@ -328,7 +328,7 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
 
 #### Mindmap
 
-![image login](./mindmap/mindmap_travail_de_diplome.png)
+![image login](./mindmap/bj-travail-de-diplome (3).jpg)
 
 ### Planning
 
@@ -339,14 +339,14 @@ Le client quant-à lui, peut se connecter à l'application après s'être inscri
 ### Matériel et logiciel
 
 - Ordinateur Windows 10
-- Lecteur Bluetooth de puce sous-cutanée canine ([A faire](www.google.ch))
 - IDE (Visual Studio Code)
 - Outil de versioning de code (GIT avec repository en ligne sur GitHub)
 - Outil bureautique ([Typora](https://typora.io/))
 - Éditeur de diagramme ([Visual Paradigm Online](https://online.visual-paradigm.com/fr/))
 - Éditeur de base de données ([dbdiagram.io](https://dbdiagram.io/home))
 - Éditeur de maquette ([Pencil](https://pencil.evolus.vn/))
-- Éditeur de planning ([Microsoft Project](https://www.microsoft.com/fr-ch/microsoft-365/project/project-management-software))
+- Éditeur de planning (Excel)
+- Éditeur de MindMap ([Miro](https://miro.com/))
 
 ### Librairies utilisées
 

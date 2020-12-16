@@ -113,3 +113,10 @@ Modification du modèle de données :
 Attribution du temps aux tâches et attribution des tâches aux jours.
 
 Ajout du planning prévisionnel au cahier des charges.
+
+### Mercredi 16 décembre 2020
+
+Modification du cahier des charges suite à des discussions avec les professeurs M.Bonvin et M.Garchery, les différents points traités sont les suivants :
+
+- L'application mobile devient une PWA (Progressive web app)
+- Suppression de la fonctionnalité de lecture de donnée RFID par Bluetooth
