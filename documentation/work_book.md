@@ -120,3 +120,24 @@ Modification du cahier des charges suite à des discussions avec les professeurs
 
 - L'application mobile devient une PWA (Progressive web app)
 - Suppression de la fonctionnalité de lecture de donnée RFID par Bluetooth
+
+### Samedi 9 janvier 2021
+
+Rencontre physique avec le client afin de répondre au maximum aux exigences de celui-ci.
+
+#### Question posé :
+
+Calendrier natif ou intégrer à l'application ?
+
+Qui peut modifier les informations personnelles d'un client ?
+
+Quand faut-il envoyer le mail lors de l'ajout de document ?
+
+#### Résumé de la discussion
+
+Le client désire centraliser tous ses rendez-vous professionnels avec un calendrier intégré à l'application afin de ne pas mélanger les rendez-vous pro et les rendez-vous privés.
+
+Les informations personnelles des clients pourront être modifiées uniquement par l'administrateur(éducateur canin).
+
+Un mail devra être envoyé lors de la création/ajout de document. Celui-ci contiendra en pièce-jointe le/les documents en question.
+
