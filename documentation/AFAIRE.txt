@@ -1,4 +1,7 @@
--Inclure PWA cahier des charges
--Modifier les maquettes
--Modifier le planning
--Modifier le diagramme de séquence
+Pourquoi ne pas faire le scan bluethoot rfid et de le faire à la main
+Modificaiton MCD
+Modificaiton maquette
+-Correction ortographe
+-Visualisation de tout les rendez-vous pour un client spécifique
+-Inscription de plusieurs chien ou propriétaire
+-Ajout de 1 ou plusieurs documents
