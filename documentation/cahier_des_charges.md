@@ -59,7 +59,7 @@ Le client quant à lui peut planifier son propre rendez-vous respectant les hora
 
 #### Fonctionnalités du client
 
-- Prise de rendez-vous
+- Prise de rendez-vous autonome
 - Inscription à l'application
 - Connexion à l'application
 - Accès au calendrier de ces rendez-vous
@@ -175,7 +175,25 @@ Afin d'envoyer les différents mails aux clients lors de la création du compte 
 
 ##### Bootstrap
 
-Afin de développer le frontend de mon application, plus précisément de ma PWA (Progressive web app), j'ai été confronté à différents choix de framework. J'ai choisi d'utiliser le framework Bootstrap pour la réalisation du frontend de mon application. Bootstrap étant malgré tout loin d'être le plus performant, il convient très bien à mes attentes et me permettra de ne pas perdre trop de temps sur mon développement. 
+Afin de développer le frontend de mon application, plus précisément de ma PWA (Progressive web app), j'ai été confronté à différents choix de framework, comme :
+
+* Angular
+* React
+* Vue
+* Cordova
+* Bootstrap
+
+Angular offre beaucoup de fonctionnalité très pratique. Il permet de réduire la quantité de code en fournissant des fonctionnalités importantes par défaut, il est le seul à proposer une synchronisation en temps réel entre le modèle et la vue et de ce fait, le rend très performant. Malgré sa documentation très détaillée, Angular est très complexe et demande l'apprentissage de nouveaux concepts comme l'utilisation de TypeScript. 
+
+React est connu pour être la concurrence directe d'Angular. En effet, ce framework est connu pour offrir une meilleure courbe d'apprentissage, React se démarque par sa simplicité et son développement rapide permettant un gain de temps, il permet également une intégration rapide sur mobile via React Native. Comme inconvénient, on pourrait reprocher à React un manque de documentation officielle.
+
+Ayant partiellement utilisé Vue lors de mon apprentissage, je me suis dit qu'il était bon de l'inclure dans ma recherche. En effet, Vue met à disposition de ses utilisateurs une documentation complète et très détaillée ainsi qu'une syntaxe simple et pur JavaScript. Le plus grand point faible de Vue est sa très petite communauté. 
+
+Cordova est un framework développé principalement pour les applications multi-plateformes. Son mélange de simplicité et de robustesse en fait un outil très puissant. Cordova propose un éventail de fonctionnalité, comme la possibilité d'utiliser des fonctionnalités natives ainsi que des fonctionnalités développées par sa communauté. Malheureusement, les forces de Cordova en sont aussi des faiblesses. En effet, l'utilisation de plugin entraîne des problèmes de compatibilité et demande une maintenance régulière engendrant un surcroît de temps et d'effort, sa comptabilité multi-plateforme entraîne également un manque de performance non-négligeable. 
+
+Le dernier de ma liste, mais non le moindre est Bootstrap. Ce framework plus que complet propose un nombre conséquent de composant facilement intégrable ainsi qu'une énorme communauté contribuant au développement d'autres composants. Sa simplicité déconcertante, sa documentation très complète et son système de grille en fait également l'un des framework les plus utilisés. Le point faible de Bootstrap est le fait qu'il soit plus lourd que ces concurrents et de ce fait, moins performant.
+
+Angular étant plutôt complexe, React ayant une faible documentation, Vue ayant une petite communauté et Cordova étant peu performant pour les application hybrides et difficilement maintenable, j'ai choisi de me tourner vers la simplicité et non la performance pour la réalisation de mon travail de diplôme. Malgré ses plus faibles performances, et afin de ne pas perdre trop de temps lors de mon développement, je compte utiliser le framework Bootstrap afin de développer ma PWA. 
 
 [Bootstrap](https://getbootstrap.com/)
 
@@ -414,6 +432,12 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
 ![image login](./planning/planning_previsionnel_travail_de_diplome-1.jpg)
 
 ![image login](./planning/planning_previsionnel_travail_de_diplome-2.jpg)
+
+### Fonctionnalités envisagées mais non retenues
+
+#### Scan Bluetooth des puces sous-cutanées canine RFID
+
+Lors de la réalisation de ce cahier des charges, j'ai envisagé le fait d'introduire la possibilité de scanner la puce sous-cutanée canine directement en Bluetooth grâce à un équipement externe. J'ai décidé de ne pas retenir cette fonctionnalité due à sa grande complexité et à son utilité minime. En effet, premièrement, le temps de développement est trop conséquent par rapport à la plus-value direct que peut me rajouter cette fonctionnalité. Deuxièmement, ce code est utilisable uniquement par des vétérinaires et autre autorité compétente. Je compte tout de même garder cette donnée afin de rendre mes données compatibles avec d'autres projets futurs pour la société Douceur de Chien.
 
 ### Matériel et logiciel
 
