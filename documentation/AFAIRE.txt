@@ -5,3 +5,4 @@ Modificaiton maquette
 -Inscription de plusieurs chien ou propriétaire
 -Ajout de 1 ou plusieurs documents
 
+Cordova est un framework développé principalement pour les applications multi-plateformes. Son mélange de simplicité et de robustesse en fait un outil très puissant. Cordova propose un éventail de fonctionnalité, comme la possibilité d'utiliser des fonctionnalités natives ainsi que des fonctionnalités développées par sa communauté. Malheureusement, les forces de Cordova en sont aussi des faiblesses. En effet, l'utilisation de plugin entraîne des problèmes de compatibilité et demande une maintenance régulière engendrant un surcroît de temps et d'effort, sa comptabilité multi-plateforme entraîne également un manque de performance non-négligeable. 

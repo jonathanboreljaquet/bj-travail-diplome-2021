@@ -9,7 +9,7 @@ La PWA (Progressive web app) permettra de faciliter les différentes tâches d'o
 ### Description détaillée
 
 La PWA permet à un éducateur canin ou à un client de se connecter à l'application pour avoir accès à différentes fonctionnalités.
-L'éducateur canin a accès à un calendrier avec tous ces rendez-vous planifié et à une liste contenant tous ses actuels clients où il peut, s'il le souhaite, faire une recherche spécifique par nom afin de visualiser leurs différentes informations, telles que :
+L'éducateur canin a accès à un calendrier avec tous ses rendez-vous planifié et à une liste contenant tous ses actuels clients où il peut, s'il le souhaite, faire une recherche spécifique par nom afin de visualiser leurs différentes informations, telles que :
 
 * Les informations personnelles du client
   * Nom
@@ -31,7 +31,7 @@ L'éducateur canin a accès à un calendrier avec tous ces rendez-vous planifié
 
 L'éducateur doit éditer son horaire afin de permettre au futur client de planifier leurs propres rendez-vous. 
 
-L'éducateur canin doit procéder à une création préliminaire d'une fiche cliente, le client concerné sera averti par mail qu'une fiche à été créé avec ces informations, il devra alors valider son compte pour pouvoir y accéder. Lors du premier rendez-vous, l'éducateur canin doit compléter la fiche cliente avec les données qui nécessite une rencontre physique.
+L'éducateur canin doit procéder à une création préliminaire d'une fiche cliente, le client concerné sera averti par mail qu'une fiche à été créé avec ses informations, il devra alors valider son compte pour pouvoir y accéder. Lors du premier rendez-vous, l'éducateur canin doit compléter la fiche cliente avec les données qui nécessite une rencontre physique.
 
 L'éducateur canin peut à tout moment lors d'un rendez-vous, accéder à la fiche du client afin de pouvoir y rentrer différentes informations :
 
@@ -42,14 +42,14 @@ L'éducateur canin peut à tout moment lors d'un rendez-vous, accéder à la fic
 
 Si le rendez-vous entre l'éducateur canin et le client est le premier, alors l'éducateur doit faire signer depuis l'application, les conditions d'inscription au client.
 
-Le client quant à lui peut planifier son propre rendez-vous respectant les horaires spécifié par l'éducateur canin depuis le calendrier disponible sur la page d'accueil de l'application, il rentrera lui-même ces propres informations personnelles que l'éducateur canin validera lors de la première rencontre. Le client peut également se connecter à l'application après s'être inscrit pour accéder à ses informations personnelles ainsi que ces documents.
+Le client quant à lui peut planifier son propre rendez-vous respectant les horaires spécifié par l'éducateur canin depuis le calendrier disponible sur la page d'accueil de l'application, il rentrera lui-même ses propres informations personnelles que l'éducateur canin validera lors de la première rencontre. Le client peut également se connecter à l'application après s'être inscrit pour accéder à ses informations personnelles ainsi que ses documents.
 
 ### Liste des fonctionnalités
 
 #### Fonctionnalités de l'éducateur canin
 
 - Connexion à l'application
-- Accès au calendrier de ces rendez-vous
+- Accès au calendrier de ses rendez-vous
 - Édition de l'horaire personnel
 - Affichage de tout les clients avec photo du chien et nom de son maitre
 - Recherche spécifique d'un client par nom
@@ -62,10 +62,10 @@ Le client quant à lui peut planifier son propre rendez-vous respectant les hora
 - Prise de rendez-vous autonome
 - Inscription à l'application
 - Connexion à l'application
-- Accès au calendrier de ces rendez-vous
-- Accès à ces informations personnelles
+- Accès au calendrier de ses rendez-vous
+- Accès à ses informations personnelles
 - Accès à ses documents personnelles
-- Accès à ces différents contenus séances 
+- Accès à ses différents contenus séances 
 
 ### Scénario d'utilisation
 
@@ -92,7 +92,7 @@ Le client quant à lui peut planifier son propre rendez-vous respectant les hora
 
 #### Prise en charge d'un nouveau client par téléphone
 
-1. Le client appel l'éducateur canin avec son téléphone car il a besoin de ces services.
+1. Le client appel l'éducateur canin avec son téléphone car il a besoin de ses services.
 2. L'éducateur canin va se rendre sur l'application et se connecter avec ses identifiants.
 3. Il va se rendre sur l'interface de création d'une nouvelle fiche client.
 4. Il va y renter les informations personnelles du client communiqué par téléphone :
@@ -135,6 +135,10 @@ Le client quant à lui peut planifier son propre rendez-vous respectant les hora
    5. Les conditions d'inscription sous format PDF ainsi qu'une génération automatique d'une facture sous format PDF sera ajouté au dossier partagé du client et envoyé par mail au client.
 
 ### Étude des technologies
+
+#### Application mobile ou application WEB
+
+
 
 #### Backend
 
@@ -180,7 +184,6 @@ Afin de développer le frontend de mon application, plus précisément de ma PWA
 * Angular
 * React
 * Vue
-* Cordova
 * Bootstrap
 
 Angular offre beaucoup de fonctionnalité très pratique. Il permet de réduire la quantité de code en fournissant des fonctionnalités importantes par défaut, il est le seul à proposer une synchronisation en temps réel entre le modèle et la vue et de ce fait, le rend très performant. Malgré sa documentation très détaillée, Angular est très complexe et demande l'apprentissage de nouveaux concepts comme l'utilisation de TypeScript. 
@@ -189,11 +192,9 @@ React est connu pour être la concurrence directe d'Angular. En effet, ce framew
 
 Ayant partiellement utilisé Vue lors de mon apprentissage, je me suis dit qu'il était bon de l'inclure dans ma recherche. En effet, Vue met à disposition de ses utilisateurs une documentation complète et très détaillée ainsi qu'une syntaxe simple et pur JavaScript. Le plus grand point faible de Vue est sa très petite communauté. 
 
-Cordova est un framework développé principalement pour les applications multi-plateformes. Son mélange de simplicité et de robustesse en fait un outil très puissant. Cordova propose un éventail de fonctionnalité, comme la possibilité d'utiliser des fonctionnalités natives ainsi que des fonctionnalités développées par sa communauté. Malheureusement, les forces de Cordova en sont aussi des faiblesses. En effet, l'utilisation de plugin entraîne des problèmes de compatibilité et demande une maintenance régulière engendrant un surcroît de temps et d'effort, sa comptabilité multi-plateforme entraîne également un manque de performance non-négligeable. 
-
 Le dernier de ma liste, mais non le moindre est Bootstrap. Ce framework plus que complet propose un nombre conséquent de composant facilement intégrable ainsi qu'une énorme communauté contribuant au développement d'autres composants. Sa simplicité déconcertante, sa documentation très complète et son système de grille en fait également l'un des framework les plus utilisés. Le point faible de Bootstrap est le fait qu'il soit plus lourd que ces concurrents et de ce fait, moins performant.
 
-Angular étant plutôt complexe, React ayant une faible documentation, Vue ayant une petite communauté et Cordova étant peu performant pour les application hybrides et difficilement maintenable, j'ai choisi de me tourner vers la simplicité et non la performance pour la réalisation de mon travail de diplôme. Malgré ses plus faibles performances, et afin de ne pas perdre trop de temps lors de mon développement, je compte utiliser le framework Bootstrap afin de développer ma PWA. 
+Angular étant plutôt complexe, React ayant une faible documentation et Vue ayant une petite communauté, j'ai choisi de me tourner vers la simplicité et non la performance pour la réalisation de mon travail de diplôme. Malgré ses plus faibles performances, et afin de ne pas perdre trop de temps lors de mon développement, je compte utiliser le framework Bootstrap afin de développer ma PWA. 
 
 [Bootstrap](https://getbootstrap.com/)
 
