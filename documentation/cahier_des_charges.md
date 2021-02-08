@@ -9,7 +9,7 @@ La PWA (Progressive web app) permettra de faciliter les différentes tâches d'o
 ### Description détaillée
 
 La PWA permet à un éducateur canin ou à un client de se connecter à l'application pour avoir accès à différentes fonctionnalités.
-L'éducateur canin a accès à un calendrier avec tous ses rendez-vous planifié et à une liste contenant tous ses actuels clients où il peut, s'il le souhaite, faire une recherche spécifique par nom afin de visualiser leurs différentes informations, telles que :
+L'éducateur canin a accès à un calendrier avec tous ses rendez-vous planifié et à une liste contenant tous ses actuels clients où il peut, s'il le souhaite, faire une recherche spécifique par nom afin de visualiser ou éditer leurs différentes informations, telles que :
 
 * Les informations personnelles du client
   * Nom
@@ -17,7 +17,7 @@ L'éducateur canin a accès à un calendrier avec tous ses rendez-vous planifié
   * Téléphone
   * Adresse mail
   * Adresse du domicile
-* Les informations personnelles du chien
+* Les informations personnelles du/des chiens
   * Date de naissance
   * Race
   * Sexe
@@ -138,7 +138,7 @@ Le client quant à lui peut planifier son propre rendez-vous respectant les hora
 
 #### Application mobile ou application WEB
 
-
+Après avoir discuté avec le client de mon application, nous avons convenu qu'il lui fallait une application disponible et utilisable sur mobile, je me suis premièrement tourné vers le développement d'une application mobile avec Cordova. Après discussion avec des professeurs du CFPT, ceux-là ont mis en évidence une certaine problématique, le développement et la mise en place d'une application mobile pour les clients d'un éducateur canin est trop restrictive et pas réellement pratique. Afin de répondre aux attentes de mon application, je me suis orienté sur le développement d'une PWA. C'est-à-dire une application WEB disponible sur grand écran ainsi que de la même manière que les applications mobiles. 
 
 #### Backend
 
