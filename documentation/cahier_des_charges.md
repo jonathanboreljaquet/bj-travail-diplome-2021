@@ -95,7 +95,7 @@ Le client quant à lui peut planifier son propre rendez-vous respectant les hora
 1. Le client appel l'éducateur canin avec son téléphone car il a besoin de ses services.
 2. L'éducateur canin va se rendre sur l'application et se connecter avec ses identifiants.
 3. Il va se rendre sur l'interface de création d'une nouvelle fiche client.
-4. Il va y renter les informations personnelles du client communiqué par téléphone :
+4. Il va y rentrer les informations personnelles du client communiqué par téléphone :
    - Nom du client
    - Prénom du client
    - Téléphone du client
@@ -138,13 +138,13 @@ Le client quant à lui peut planifier son propre rendez-vous respectant les hora
 
 #### Application mobile ou application WEB
 
-Après avoir discuté avec le client de mon application, nous avons convenu qu'il lui fallait une application disponible et utilisable sur mobile, je me suis premièrement tourné vers le développement d'une application mobile avec Cordova. Après discussion avec des professeurs du CFPT, ceux-là ont mis en évidence une certaine problématique, le développement et la mise en place d'une application mobile pour les clients d'un éducateur canin est trop restrictive et pas réellement pratique. Afin de répondre aux attentes de mon application, je me suis orienté sur le développement d'une PWA. C'est-à-dire une application WEB disponible sur grand écran ainsi que de la même manière que les applications mobiles. 
+Après avoir discuté avec le client de mon application, nous avons convenu qu'il lui fallait une application disponible et utilisable sur mobile, je me suis premièrement tourné vers le développement d'une application mobile avec Cordova. Après discussion avec des professeurs du CFPT, ceux-là ont mis en évidence une certaine problématique, le développement et la mise en place d'une application mobile pour les clients d'un éducateur canin est trop restrictive et pas réellement pratique. Afin de répondre aux attentes de mon application, je me suis orienté sur le développement d'une PWA. C'est-à-dire une application WEB disponible autant sur grand écran que petit écran et affiché de la même manière qu'une application mobile. 
 
 #### Backend
 
 ##### API REST
 
-Afin de gérer les différentes données de mon application, j'ai décidé de développer une API respectant l'ensemble de principes architecturaux REST me permettant de rendre mes données plus facilement utilisable lors de futurs projets en lien avec mon travail de diplôme. Pour la réalisation de cette API REST, j'ai été confronté à plusieurs choix de framework, comme :
+Afin de gérer les différentes données de mon application, j'ai décidé de développer une API respectant l'ensemble de principes architecturaux REST me permettant de rendre mes données plus facilement utilisable lors de futurs projets en lien avec mon travail de diplôme. Pour la réalisation de cette API REST, j'ai été tenté plusieurs choix de framework, comme :
 
 * Ruby on Rails
 * Phoenix
@@ -152,28 +152,19 @@ Afin de gérer les différentes données de mon application, j'ai décidé de d�
 * Django
 * Yii
 
-Ruby on Rails utilisant comme langage Ruby, Phoenix utilisant Elixir et Django utilisant Python, je me suis tous naturellement tourné vers l'utilisation d'un framework PHP. En effet, PHP est un langage beaucoup plus familier pour moi, car je l'ai utilisé tout au long de ma formation. Restant les framework PHP Yii et Laravel à départagé, j'ai choisi Laravel pour différentes raisons. La première est que je l'ai déjà utilisé lors de ma formation. La deuxième est que Laravel fournit une documentation complète et lisible ainsi qu'une communauté conséquente. La dernière est que Laravel propose un nombre incalculable de fonctionnalités très utile comme :
-
-* Un système de migration
-* La création de données de test
-* Une interface de ligne de commande
-* Un moteur de routage simple et rapide
-* Des tests faciles à exécuter
-* Et encore...  
-
-[Laravel](https://laravel.com/)
+Ruby on Rails utilisant comme langage Ruby, Phoenix utilisant Elixir et Django utilisant Python, je me suis tous naturellement tourné vers l'utilisation d'un framework PHP. En effet, PHP est un langage beaucoup plus familier pour moi, car je l'ai utilisé tout au long de ma formation. Restant les framework PHP Yii et Laravel à départagé, j'ai en premier lieu choisi Laravel pour différentes raisons. La première est que je l'ai déjà utilisé lors de ma formation. La deuxième est que Laravel fournit une documentation complète et lisible ainsi qu'une communauté conséquente. La dernière est que Laravel propose un nombre incalculable de fonctionnalités très utile directement intégré au Framework. Malgré toutes ces qualités, le choix d'un Framework PHP quelconque pour mon backend est source de problème et d'incompréhension, de ce fait, je compte développé le backend de mon application en PHP brut.
 
 ##### Génération de PDF
 
-Afin de pouvoir créer manuellement les différents contrats PDF de mon application, j'ai recherché différentes façons de procéder. Après mettre rendu compte que la plupart des outils existants étaient payant(PDFTron, radaeePDF), je me suis dirigé vers une solution gratuite et open-source de génération de PDF en PHP.
+Afin de pouvoir créer manuellement les différents documents PDF de mon application, j'ai recherché différentes façons de procéder. Après mettre rendu compte que la plupart des outils existants étaient payant (PDFTron, radaeePDF), je me suis dirigé vers une solution gratuite et open-source de génération de PDF en PHP proposé par mon maitre de diplôme : TCPDF. Malheureusement, lors de mon POC, je me suis rendu compte que la version actuelle n'était pas maintenue. J'ai donc continué mes recherches jusqu'à trouver une librairie très pratique me permettant de convertir du HTML en PDF.
 
-[TCPDF](https://tcpdf.org/)
+[DOMPDF](https://github.com/dompdf/dompdf)
 
 ##### Envoie de mail
 
-Afin d'envoyer les différents mails aux clients lors de la création du compte ou la création des documents PDF comme les conditions d'inscription ou les factures. Je compte utiliser directement l'API de messagerie proposé par Laravel.
+Afin d'envoyer les différents mails aux clients lors de la création du compte ou la création des documents PDF. Je compte utiliser la librairie PHPMailer.
 
-[Laravel Mail](https://laravel.com/docs/8.x/mail)
+[PHPMailer](https://github.com/PHPMailer/PHPMailer)
 
 #### Frontend
 
@@ -186,15 +177,15 @@ Afin de développer le frontend de mon application, plus précisément de ma PWA
 * Vue
 * Bootstrap
 
-Angular offre beaucoup de fonctionnalité très pratique. Il permet de réduire la quantité de code en fournissant des fonctionnalités importantes par défaut, il est le seul à proposer une synchronisation en temps réel entre le modèle et la vue et de ce fait, le rend très performant. Malgré sa documentation très détaillée, Angular est très complexe et demande l'apprentissage de nouveaux concepts comme l'utilisation de TypeScript. 
+Angular offre beaucoup de fonctionnalité très pratique. Il permet de réduire la quantité de code en fournissant des fonctionnalités importantes par défaut, il propose une synchronisation en temps réel entre le modèle et la vue et de ce fait, le rend très performant. Malgré sa documentation très détaillée, Angular est très complexe et demande l'apprentissage de nouveaux concepts comme l'utilisation de TypeScript. 
 
 React est connu pour être la concurrence directe d'Angular. En effet, ce framework est connu pour offrir une meilleure courbe d'apprentissage, React se démarque par sa simplicité et son développement rapide permettant un gain de temps, il permet également une intégration rapide sur mobile via React Native. Comme inconvénient, on pourrait reprocher à React un manque de documentation officielle.
 
-Ayant partiellement utilisé Vue lors de mon apprentissage, je me suis dit qu'il était bon de l'inclure dans ma recherche. En effet, Vue met à disposition de ses utilisateurs une documentation complète et très détaillée ainsi qu'une syntaxe simple et pur JavaScript. Le plus grand point faible de Vue est sa très petite communauté. 
+Ayant partiellement utilisé Vue lors de mon apprentissage, je me suis dit qu'il était bon de l'inclure dans ma recherche. En effet, Vue met à disposition de ses utilisateurs une documentation complète et très détaillée ainsi qu'une syntaxe simple et pur JavaScript. Malgré le fait que Vue ait été implémenté récemment à Laravel, le point faible de Vue pour moi est sa complexité. 
 
-Le dernier de ma liste, mais non le moindre est Bootstrap. Ce framework plus que complet propose un nombre conséquent de composant facilement intégrable ainsi qu'une énorme communauté contribuant au développement d'autres composants. Sa simplicité déconcertante, sa documentation très complète et son système de grille en fait également l'un des framework les plus utilisés. Le point faible de Bootstrap est le fait qu'il soit plus lourd que ces concurrents et de ce fait, moins performant.
+Le dernier de ma liste est Bootstrap. Ce framework plus que complet propose un nombre conséquent de composant facilement intégrable ainsi qu'une énorme communauté contribuant au développement d'autres composants. Sa simplicité, sa documentation très complète et son système de grille en fait également l'un des framework les plus utilisés. Le point faible de Bootstrap est le fait qu'il soit plus lourd que ces concurrents et de ce fait, moins performant.
 
-Angular étant plutôt complexe, React ayant une faible documentation et Vue ayant une petite communauté, j'ai choisi de me tourner vers la simplicité et non la performance pour la réalisation de mon travail de diplôme. Malgré ses plus faibles performances, et afin de ne pas perdre trop de temps lors de mon développement, je compte utiliser le framework Bootstrap afin de développer ma PWA. 
+Angular et Vue étant plutôt complexe, React ayant une faible documentation, j'ai choisi de me tourner vers la simplicité et non la performance pour la réalisation de mon travail de diplôme. Malgré ses plus faibles performances, et afin de ne pas perdre trop de temps lors de mon développement, je compte utiliser le framework Bootstrap afin de développer ma PWA. 
 
 [Bootstrap](https://getbootstrap.com/)
 
