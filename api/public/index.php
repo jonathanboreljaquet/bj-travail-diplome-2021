@@ -13,7 +13,7 @@ $mail->isSMTP();                                            //Send using SMTP
 $mail->Host       = 'mail.infomaniak.com';                     //Set the SMTP server to send through
 $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
 $mail->Username   = 'dev@boreljaquet.ch';                     //SMTP username
-$mail->Password   = 'DsJSH_HNhR8';                               //SMTP password
+$mail->Password   = '';                               //SMTP password
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
 $mail->Port       = 587; 
 
