@@ -250,6 +250,7 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
 
 ![image database](../database/dbdiagram_travail_de_diplome.png)
 
+
 <table>
     <tr>
     	<th style="text-align:center" COLSPAN="4">user</th>
@@ -409,7 +410,8 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>Date du cours.</td>
     </tr>
 </table>
-### API 
+
+### API
 
 Afin de rendre les données de l'application utilisables sur différents futurs projets pour la société Douceur de Chien, je compte développer ma propre API. Celle-ci me permettra de rendre mes données réutilisables pour une application mobile native ou une application d'entreprise par exemple.
 
