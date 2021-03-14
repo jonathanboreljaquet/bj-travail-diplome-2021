@@ -470,6 +470,7 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
         <th>VERB</th>
         <th>URL</th>
         <th>Description</th>
+        <th>Permission</th>
     </tr>
     <tr>
     	<td>POST</td>
@@ -508,6 +509,7 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
         <th>VERB</th>
         <th>URL</th>
         <th>Description</th>
+        <th>Permission</th>
     </tr>
     <tr>
     	<td>POST</td>
