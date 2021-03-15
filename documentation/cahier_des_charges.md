@@ -536,8 +536,11 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
         <td>Administrateur</td>
     </tr>
 </table>
-
 ### Diagramme de séquence
+
+
+
+
 
 ![image diagram sequence](./diagram/sequence_diagram_travail_de_diplome.png)
 
@@ -614,9 +617,9 @@ Lors de la réalisation de ce cahier des charges, j'ai envisagé le fait d'intro
 
 ## Librairies utilisées
 
-* Création de PDF grâce à du HTML [DOMPDF](https://github.com/dompdf/dompdf) 
+* Création de PDF grâce à du HTML ([DOMPDF](https://github.com/dompdf/dompdf)) 
 * Dessiner dans un canevas ([responsive-sketchpad](https://github.com/tsand/responsive-sketchpad))
-* Création de calendrier en JavaScript ([fullcalendar.io](https://fullcalendar.io/))
+* Création de calendrier en JavaScript ([fullcalendar](https://fullcalendar.io/))
 
 ## Dates importantes
 
