@@ -1,13 +1,30 @@
+Modificaiton MCD
 Section sur l'api
 -Comment respecter l'architecture REST mais ajouter/modifier/supprimer un chien ou un document à un utilisateur ?
--Créer plusieurs routes pour chaque type de document PDF (condition_inscription, facture)
+-Créer plusieurs routes pour chaque type de document PDF ? (condition_inscription, facture)
 -CourseContent ?
 -Rendez-vous ? 
-Modificaiton MCD
-Modificaiton maquette
--Correction ortographe
--Inscription de plusieurs chien ou propriétaire
--Ajout de 1 ou plusieurs documents
+
+Maquette client
+->Maquette Login
+->Maquette rendez-vous autonome client
+|--->Maquette calendrier publique
+|--->Maquette saisie des informations (inscription)
+->Maquette Information personnelles
+->Maquette calendrier
+->Maquette contenu séances
+
+Maquette éducateur canin
+->Maquette affichage tout les clients
+->Maquette rendez-vous autonome client
+->Maquette calendrier
+->Maquette création de fiche client préliminaire (bouton ajouter chien sur maquette)
+->Maquette affichage fiche client (Bouton valider)
+->Maquette validation fiche client
+->Maquette contenu séances client
+->Maquette ajout de document
+
+Modification planning
 
 
 

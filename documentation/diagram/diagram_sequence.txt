@@ -10,7 +10,7 @@ participant API Serveur
 note over Client,API Serveur: Prise de rendez-vous par téléphone
 Client->Éducateur canin: Appel téléphonique
 Éducateur canin->Application WEB: Création fiche client préliminaire
-Application WEB->API Serveur: Stockage fiche client préliminaire
+Application WEB->API Serveur: Stockage fiche client préliminaire sans login
 API Serveur->Client: Envoie de mail
 Client->Application WEB: Création du compte
 Application WEB->API Serveur: Modification de la fiche client
@@ -21,19 +21,41 @@ Client->Application WEB: Rendez-vous autonome et création du compte
 Application WEB->API Serveur: Stockage fiche client préliminaire avec login
 
 note over Client,API Serveur: Premier rendez-vous
-Éducateur canin->Client: Premier rendez-vous
-Client->Éducateur canin: Finalisation de la fiche client / signature des conditions d'inscription
-Éducateur canin->Application WEB: Stockage fiche client final
+Client->Éducateur canin: Premier rendez-vous
+Éducateur canin->Application WEB: Finalisation de la fiche client / signature des conditions d'inscription
+Application WEB-> API Serveur: Stockage fiche client final
 
 note over Client,API Serveur: Prochains rendez-vous
-Éducateur canin->Client: Prochains rendez-vous
-Client->Application WEB: Saisie de note et upload de document pour le client
+Client->Éducateur canin: Prochains rendez-vous
+Éducateur canin->Application WEB: Saisie de note et upload de document pour le client
 Application WEB->API Serveur: Stockage notes et documents
 
 note over Client,API Serveur: Connexion client
 Client->Application WEB: Connexion
 Application WEB->API Serveur: Accès données personnelles
-Application WEB->API Serveur: Accès 
+Application WEB->API Serveur: Accès calendrier
+Application WEB->API Serveur: Accès notes de rendez-vous client et documents
+
+note over Client,API Serveur: Connexion éducateur canin
+Éducateur canin->Application WEB: Connexion
+Application WEB->API Serveur: Accès données personnelles des clients
+Application WEB->API Serveur: Accès calendrier
+Application WEB->API Serveur: Accès notes de rendez-vous client et documents client
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

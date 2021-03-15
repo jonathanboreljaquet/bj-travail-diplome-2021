@@ -415,7 +415,9 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
 
 Afin de rendre les données de l'application utilisables sur différents futurs projets pour la société Douceur de Chien, je compte développer ma propre API. Celle-ci me permettra de rendre mes données réutilisables pour une application mobile native ou une application d'entreprise par exemple.
 
-![image diagram sequence](./img/api_diagam.png) 
+<p align="center">
+    <img src="./img/api_diagam.png">
+</p> 
 
    <table>
     <tr>
@@ -538,11 +540,7 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
 </table>
 ### Diagramme de séquence
 
-
-
-
-
-![image diagram sequence](./diagram/sequence_diagram_travail_de_diplome.png)
+![image diagram sequence](./diagram/sequence_diagram_travail_de_diplome.svg)
 
 ## Maquettes de l'application
 ### Client
@@ -609,7 +607,7 @@ Lors de la réalisation de ce cahier des charges, j'ai envisagé le fait d'intro
 - IDE (Visual Studio Code)
 - Outil de versioning de code (GIT avec repository en ligne sur GitHub)
 - Outil bureautique ([Typora](https://typora.io/))
-- Éditeur de diagramme ([Visual Paradigm Online](https://online.visual-paradigm.com/fr/))
+- Éditeur de diagramme ([Visual Paradigm Online](https://online.visual-paradigm.com/fr/) - [sequencediagram](https://sequencediagram.org/))
 - Éditeur de base de données ([dbdiagram.io](https://dbdiagram.io/home))
 - Éditeur de maquette ([Pencil](https://pencil.evolus.vn/))
 - Éditeur de planning (Excel)
