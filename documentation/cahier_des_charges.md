@@ -538,6 +538,7 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
         <td>Administrateur</td>
     </tr>
 </table>
+
 ### Diagramme de séquence
 
 ![image diagram sequence](./diagram/sequence_diagram_travail_de_diplome.svg)
