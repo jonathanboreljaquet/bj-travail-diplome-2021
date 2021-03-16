@@ -1,7 +1,9 @@
-Modificaiton MCD
+﻿Modificaiton MCD
 Section sur l'api
--Comment respecter l'architecture REST mais ajouter/modifier/supprimer un chien ou un document à un utilisateur ?
+-Comment respecter l'architecture REST mais ajouter/modifier/supprimer un chien ou un document à un utilisateur ? 
+--> ID dans le body
 -Créer plusieurs routes pour chaque type de document PDF ? (condition_inscription, facture)
+--> Une seul route
 -CourseContent ?
 -Rendez-vous ? 
 
