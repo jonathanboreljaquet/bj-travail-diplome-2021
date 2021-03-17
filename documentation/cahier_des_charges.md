@@ -197,7 +197,7 @@ Afin de gérer les différentes données de mon application, j'ai décidé de d�
 * Django
 * Yii
 
-Ruby on Rails utilisant comme langage Ruby, Phoenix utilisant Elixir et Django utilisant Python, je me suis tous naturellement tourné vers l'utilisation d'un framework PHP. En effet, PHP est un langage beaucoup plus familier pour moi, car je l'ai utilisé tout au long de ma formation. Restant les framework PHP Yii et Laravel à départagé, j'ai en premier lieu choisi Laravel pour différentes raisons. La première est que je l'ai déjà utilisé lors de ma formation. La deuxième est que Laravel fournit une documentation complète et lisible ainsi qu'une communauté conséquente. La dernière est que Laravel propose un nombre incalculable de fonctionnalités très utile directement intégré au Framework. Malgré toutes ces qualités, le choix d'un Framework PHP quelconque pour mon backend est source de problème et d'incompréhension, de ce fait, je compte développé le backend de mon application en PHP brut.
+Ruby on Rails utilisant comme langage Ruby, Phoenix utilisant Elixir et Django utilisant Python, je me suis tous naturellement tourné vers l'utilisation d'un framework PHP. En effet, PHP est un langage beaucoup plus familier pour moi, car je l'ai utilisé tout au long de ma formation. Restant les framework PHP Yii et Laravel à départagé, j'ai en premier lieu choisi Laravel pour différentes raisons. La première est que je l'ai déjà utilisé lors de ma formation. La deuxième est que Laravel fournit une documentation complète et lisible ainsi qu'une communauté conséquente. La dernière est que Laravel propose un nombre incalculable de fonctionnalités très utile directement intégré au Framework. Malgré toutes ces qualités, le choix d'un Framework PHP quelconque pour mon backend est source de problème et d'incompréhension, de ce fait, je compte développé le backend de mon application en PHP pur.
 
 #### Génération de PDF
 
@@ -418,7 +418,6 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
 <p align="center">
     <img src="./img/api_diagam.png">
 </p> 
-
    <table>
     <tr>
     	<th style="text-align:center; font-size: 24px;" COLSPAN="4">USER</th>
@@ -476,7 +475,7 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
     </tr>
     <tr>
     	<td>POST</td>
-        <td>/dog/{idUser}</td>
+        <td>/dog</td>
         <td>Créé un chien pour un utilisateur.</td>
         <td>Administrateur</td>
     </tr>
@@ -494,13 +493,13 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
     </tr>
      <tr>
     	<td>PATCH</td>
-        <td>/dog/{userId}</td>
+        <td>/dog/{id}</td>
         <td>Modifie les données d'un chien d'un utilisateur.</td>
         <td>Administrateur</td>
     </tr>
     <tr>
     	<td>DELETE</td>
-        <td>/dog/{userId}</td>
+        <td>/dog/{id}</td>
         <td>Supprime les données d'un chien d'un utilisateur.</td>
         <td>Administrateur</td>
     </tr>
@@ -515,7 +514,7 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
     </tr>
     <tr>
     	<td>POST</td>
-        <td>/document/{idUser}</td>
+        <td>/document</td>
         <td>Créé un document pour un utilisateur.</td>
         <td>Administrateur</td>
     </tr>
@@ -538,6 +537,7 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
         <td>Administrateur</td>
     </tr>
 </table>
+
 
 ### Diagramme de séquence
 
