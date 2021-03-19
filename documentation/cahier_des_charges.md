@@ -197,7 +197,7 @@ Afin de gérer les différentes données de mon application, j'ai décidé de d�
 * Django
 * Yii
 
-Ruby on Rails utilisant comme langage Ruby, Phoenix utilisant Elixir et Django utilisant Python, je me suis tous naturellement tourné vers l'utilisation d'un framework PHP. En effet, PHP est un langage beaucoup plus familier pour moi, car je l'ai utilisé tout au long de ma formation. Restant les framework PHP Yii et Laravel à départagé, j'ai en premier lieu choisi Laravel pour différentes raisons. La première est que je l'ai déjà utilisé lors de ma formation. La deuxième est que Laravel fournit une documentation complète et lisible ainsi qu'une communauté conséquente. La dernière est que Laravel propose un nombre incalculable de fonctionnalités très utile directement intégré à celui-ci. Toutefois, Malgré toutes les qualités qu'un Framework quelconque peut m'offrir lors du développement de mon API, j'ai décidé de développer mon API en PHP pur afin de rendre mon api maintenable plus facilement. En effet, le développement natif de mon API permettrait à un autre développeur de reprendre le développement de celle-ci plus facilement.
+Ruby on Rails utilisant comme langage Ruby, Phoenix utilisant Elixir et Django utilisant Python, je me suis tous naturellement tourné vers l'utilisation d'un framework PHP. En effet, PHP est un langage beaucoup plus familier pour moi, car je l'ai utilisé tout au long de ma formation. Restant les framework PHP Yii et Laravel à départagé, j'ai en premier lieu choisi Laravel pour différentes raisons. La première est que je l'ai déjà utilisé lors de ma formation. La deuxième est que Laravel fournit une documentation complète et lisible ainsi qu'une communauté conséquente. La dernière est que Laravel propose un nombre incalculable de fonctionnalités très utile directement intégré à celui-ci. Toutefois, Malgré toutes les qualités qu'un Framework quelconque peut m'offrir lors du développement de mon API, j'ai décidé de développer mon API en PHP pur afin de rendre mon api maintenable plus facilement. En effet, le développement natif de mon API permettrait à un autre développeur de reprendre le développement de celle-ci sans contrainte de connaissance dans un framework particulier.
 
 #### Génération de PDF
 
@@ -250,7 +250,6 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
 
 ![image database](../database/dbdiagram_travail_de_diplome.png)
 
-
 <table>
     <tr>
     	<th style="text-align:center" COLSPAN="4">user</th>
@@ -274,7 +273,7 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>Prénom de l'utilisateur.</td>
     </tr>
     <tr>
-        <td>secondname</td>
+        <td>lastname</td>
         <td>varchar</td>
         <td>not null</td>
         <td>Nom de l'utilisateur.</td>
@@ -292,22 +291,28 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>Adresse du domicile de l'utilisateur.</td>
     </tr>
     <tr>
-        <td>password</td>
-        <td>varchar</td>
-        <td>null</td>
-        <td>Mot de passe hashé.</td>
-    </tr>
-    <tr>
         <td>api_token</td>
         <td>varchar</td>
         <td>not null</td>
         <td>Token d'authentification de l'utilisateur.</td>
     </tr>
     <tr>
-        <td>is_administrator</td>
-        <td>boolean</td>
+        <td>code_role</td>
+        <td>varchar</td>
         <td>not null</td>
-        <td>Booléan définisant le rôle de l'utilisateur.</td>
+        <td>Code corréspondant au rôle de l'utilisateur (client, éducateur canin, autre).</td>
+    </tr>
+    <tr>
+        <td>password_hash</td>
+        <td>varchar</td>
+        <td>null</td>
+        <td>Hash du mot de passe de l'utilisateur.</td>
+    </tr>
+    <tr>
+        <td>password_salt</td>
+        <td>varchar</td>
+        <td>null</td>
+        <td>Salt du mot de passe de l'utilisateur.</td>
     </tr>
 </table>
    <table>
@@ -327,7 +332,7 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>Nom du chien.</td>
     </tr>
     <tr>
-        <td>dog_breed</td>
+        <td>breed</td>
         <td>varchar</td>
         <td>not null</td>
         <td>Race du chien.</td>
@@ -339,10 +344,10 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>Sexe du chien.</td>
     </tr>
      <tr>
-        <td>path_dog_picture</td>
+        <td>picture_serial_number</td>
         <td>varchar</td>
         <td>null</td>
-        <td>Chemin d'accès de la photo du chien.</td>
+        <td>Numéro d'identification de la photo du chien.</td>
     </tr>
     <tr>
         <td>chip_id</td>
@@ -362,21 +367,21 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <th>Définition</th>
     </tr>
     <tr>
-        <td>type</td>
-        <td>type_document</td>
-        <td>not null</td>
-        <td>Type de document (conditions d'inscription, poster, résumé du cours canin,ect...) .</td>
-    </tr>
-    <tr>
-        <td>path</td>
+        <td>document_serial_number</td>
         <td>varchar</td>
         <td>not null</td>
-        <td>Chemin d'accès du document.</td>
+        <td>Numéro d'identification du document PDF.</td>
+    </tr>
+    <tr>
+        <td>type</td>
+        <td>type</td>
+        <td>not null</td>
+        <td>Type de document (conditions d'inscription, poster, autre).</td>
     </tr>
 </table>
    <table>
     <tr>
-    	<th style="text-align:center" COLSPAN="4">courseContent</th>
+    	<th style="text-align:center" COLSPAN="4">appoitment</th>
     </tr>
     <tr>
         <th>Nom</th>
@@ -385,31 +390,167 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <th>Définition</th>
     </tr>
     <tr>
-        <td>course_note_text</td>
-        <td>varchar</td>
-        <td>null</td>
-        <td>Note du cours sous format texte.</td>
+        <td>datetime_appoitment</td>
+        <td>datetime</td>
+        <td>not null</td>
+        <td>Date du rendez-vous.</td>
     </tr>
       <tr>
-        <td>path_course_note_graphical</td>
+        <td>duration_in_hour</td>
         <td>varchar</td>
-        <td>null</td>
-        <td>Chemin d'accès de note du cours sous format graphique.</td>
+        <td>not null</td>
+        <td>Durée en heure du rendez-vous.</td>
     </tr>
        <tr>
-        <td>course_summary</td>
-        <td>varchar</td>
+        <td>note_text</td>
+        <td>text</td>
         <td>null</td>
-        <td>Note récapitulatif du cours.</td>
+        <td>Note textuel du rendez-vous.</td>
     </tr>
        </tr>
        <tr>
-        <td>date</td>
+        <td>note_graphical_serial_number</td>
+        <td>varchar</td>
+        <td>null</td>
+        <td>Numéro d'identification de l'image des notes graphiques du rendez-vous.</td>
+    </tr>
+	<tr>
+        <td>summary</td>
+        <td>text</td>
+        <td>null</td>
+        <td>Résumé du rendez-vous.</td>
+    </tr>
+	<tr>
+        <td>datetime_deletion</td>
         <td>datetime</td>
-        <td>not null</td>
-        <td>Date du cours.</td>
+        <td>null</td>
+        <td>Date de la suppression du rendez-vous.</td>
     </tr>
 </table>
+  <table>
+    <tr>
+    	<th style="text-align:center" COLSPAN="4">weekly_schedule</th>
+    </tr>
+    <tr>
+        <th>Nom</th>
+        <th>Type</th>
+        <th>Null</th>
+        <th>Définition</th>
+    </tr>
+    <tr>
+        <td>date_valid_from</td>
+        <td>date</td>
+        <td>not null</td>
+        <td>Date de début d'un planning.</td>
+    </tr>
+      <tr>
+        <td>date_valid_from</td>
+        <td>date</td>
+        <td>null</td>
+        <td>Date de fin d'un planning.</td>
+    </tr>
+       <tr>
+        <td>is_deleted</td>
+        <td>text</td>
+        <td>not null</td>
+        <td>Status du planning.</td>
+    </tr>
+</table>
+<table>
+    <tr>
+    	<th style="text-align:center" COLSPAN="4">time_slot</th>
+    </tr>
+    <tr>
+        <th>Nom</th>
+        <th>Type</th>
+        <th>Null</th>
+        <th>Définition</th>
+    </tr>
+    <tr>
+        <td>code_day</td>
+        <td>varchar</td>
+        <td>not null</td>
+        <td>Code correspondant à un jour de la semaine.</td>
+    </tr>
+      <tr>
+        <td>time_start</td>
+        <td>TIME</td>
+        <td>not null</td>
+        <td>horraire de début du slot de rendez-vous.</td>
+    </tr>
+    <tr>
+        <td>time_end</td>
+        <td>TIME</td>
+        <td>not null</td>
+        <td>horraire de fin du slot de rendez-vous.</td>
+    </tr>
+   	 <tr>
+        <td>is_deleted</td>
+        <td>text</td>
+        <td>not null</td>
+        <td>Status du slot.</td>
+    </tr>
+</table>
+<table>
+    <tr>
+    	<th style="text-align:center" COLSPAN="4">schedule_override</th>
+    </tr>
+    <tr>
+        <th>Nom</th>
+        <th>Type</th>
+        <th>Null</th>
+        <th>Définition</th>
+    </tr>
+    <tr>
+        <td>datetime_schedule_override</td>
+        <td>date</td>
+        <td>not null</td>
+        <td>Date d'une exception dans un planning.</td>
+    </tr>
+       <tr>
+        <td>is_deleted</td>
+        <td>text</td>
+        <td>not null</td>
+        <td>Status de l'exception.</td>
+    </tr>
+</table>
+<table>
+    <tr>
+    	<th style="text-align:center" COLSPAN="4">absence</th>
+    </tr>
+    <tr>
+        <th>Nom</th>
+        <th>Type</th>
+        <th>Null</th>
+        <th>Définition</th>
+    </tr>
+    <tr>
+        <td>date_absence_from</td>
+        <td>date</td>
+        <td>not null</td>
+        <td>Date de début de congé.</td>
+    </tr>
+        <tr>
+        <td>date_absence_to</td>
+        <td>date</td>
+        <td>null</td>
+        <td>Date de fin de congé.</td>
+    </tr>
+    </tr>
+        <tr>
+        <td>description</td>
+        <td>varchar</td>
+        <td>null</td>
+        <td>Description du congé.</td>
+    </tr>
+       <tr>
+        <td>is_deleted</td>
+        <td>text</td>
+        <td>not null</td>
+        <td>Status du congé.</td>
+    </tr>
+</table>
+
 
 ### API
 
