@@ -1,4 +1,8 @@
-﻿Section sur l'api
+﻿QUESTION M.MATHIEU
+-Time slot forcément pour un planning donc "not null" ?
+-Est ce que utiliser le VERB delete pour le planning alors qu'on modifie uniquement is_deleted à 1 donc un update ?
+
+Section sur l'api
 -Comment respecter l'architecture REST mais ajouter/modifier/supprimer un chien ou un document à un utilisateur ? 
 --> ID dans le body
 -Créer plusieurs routes pour chaque type de document PDF ? (condition_inscription, facture)

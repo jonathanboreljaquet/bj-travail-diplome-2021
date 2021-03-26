@@ -668,7 +668,7 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
     <tr>
     	<td>GET</td>
         <td>/display-document/{id}</td>
-        <td>Affiche le document de l'utilisateur authentifié</td>
+        <td>Affiche le document si il appartient à l'utilisateur authentifié</td>
         <td>Utilisateur authentifié, administrateur</td>
     </tr>
     <tr>
@@ -677,7 +677,102 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
         <td>Supprime un document</td>
         <td>Administrateur</td>
     </tr>
+    <th style="text-align:center; font-size: 24px;" COLSPAN="4">APPOITMENT</th>
+    </tr>
+    <tr>
+        <th>VERB</th>
+        <th>URL</th>
+        <th>Description</th>
+        <th>Permission</th>
+    </tr>
+    <tr>
+    	<td>POST</td>
+        <td>/appoitment</td>
+        <td>Créé un rendez-vous pour un utilisateur.</td>
+        <td>Utilisateur non authentifié, Utilisateur authentifié, administrateur</td>
+    </tr>
+    <tr>
+    	<td>GET</td>
+        <td>/appoitment</td>
+        <td>Récupère les informations de rendez-vous de l'utilisateur authentifié</td>
+        <td>Utilisateur authentifié, administrateur</td>
+    </tr>
+    <tr>
+    	<td>GET</td>
+        <td>/appoitments</td>
+        <td>Récupère toutes les informations de rendez-vous de tout les utilisateurs.</td>
+        <td>Utilisateur authentifié, administrateur</td>
+    </tr>
+	<tr>
+    	<td>PATCH</td>
+        <td>/appoitment/{id}</td>
+        <td>Modifie les informations de rendez-vous d'un utilisateur.</td>
+        <td>Administrateur</td>
+    </tr>
+    <tr>
+    	<td>DELETE</td>
+        <td>/appoitment/{id}</td>
+        <td>Supprime les informations de rendez-vous d'un utilisateur</td>
+        <td>Administrateur</td>
+    </tr>
+	<th style="text-align:center; font-size: 24px;" COLSPAN="4">PLANNING</th>
+    </tr>
+    <tr>
+        <th>VERB</th>
+        <th>URL</th>
+        <th>Description</th>
+        <th>Permission</th>
+    </tr>
+    <tr>
+    	<td>POST</td>
+        <td>/weekly_schedule</td>
+        <td>Créé un calendrier hebdomadaire.</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>POST</td>
+        <td>/time_slot</td>
+        <td>Créé un créneau horaire pour un calendrier hebdomadaire.</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>POST</td>
+        <td>/schedule_override</td>
+        <td>Créé une exception pour un créneau horaire de rendez-vous.</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>GET</td>
+        <td>/weekly_schedule/{id}</td>
+        <td>Récupère toutes les données d'un calendrier hebdomadaire</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>GET</td>
+        <td>/weekly_schedules</td>
+        <td>Récupère toutes les données de tout les calendriers hebdomadaires</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>PATCH ou DELETE</td>
+        <td>/weekly_schedule/{id}</td>
+        <td>Modifie/Supprime les données d'un calendrier hebdomadaire.</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>PATCH ou DELETE</td>
+        <td>/time_slot/{id}</td>
+        <td>Modifie/Supprime les données d'un créneau horaire.</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>PATCH ou DELETE</td>
+        <td>/schedule_override/{id}</td>
+        <td>Modifie/Supprime les données d'une exception.</td>
+        <td>Administrateur</td>
+    </tr>
 </table>
+
 
 
 ### Diagramme de séquence
