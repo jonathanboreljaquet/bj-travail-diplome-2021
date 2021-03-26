@@ -252,7 +252,7 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
 
 <table>
     <tr>
-    	<th style="text-align:center" COLSPAN="4">user</th>
+    	<th style="text-align:center; font-size: 26px;" COLSPAN="4">user</th>
     </tr>
     <tr>
         <th>Nom</th>
@@ -314,10 +314,8 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>null</td>
         <td>Salt du mot de passe de l'utilisateur.</td>
     </tr>
-</table>
-   <table>
     <tr>
-    	<th style="text-align:center" COLSPAN="4">dog</th>
+    	<th style="text-align:center; font-size: 26px;" COLSPAN="4">dog</th>
     </tr>
     <tr>
         <th>Nom</th>
@@ -355,10 +353,8 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>null</td>
         <td>Code composé de 15 chiffres (3 pour le pays, 2 pour le type d'animal, 2 pour le fabricant, 8 pour le n° de l'animal).</td>
     </tr>
-</table>
-   <table>
     <tr>
-    	<th style="text-align:center" COLSPAN="4">document</th>
+    	<th style="text-align:center; font-size: 26px;" COLSPAN="4">document</th>
     </tr>
     <tr>
         <th>Nom</th>
@@ -378,10 +374,8 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>not null</td>
         <td>Type de document (conditions d'inscription, poster, autre).</td>
     </tr>
-</table>
-   <table>
     <tr>
-    	<th style="text-align:center" COLSPAN="4">appoitment</th>
+    	<th style="text-align:center; font-size: 26px;" COLSPAN="4">appoitment</th>
     </tr>
     <tr>
         <th>Nom</th>
@@ -426,10 +420,8 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>null</td>
         <td>Date de la suppression du rendez-vous.</td>
     </tr>
-</table>
-  <table>
     <tr>
-    	<th style="text-align:center" COLSPAN="4">weekly_schedule</th>
+    	<th style="text-align:center; font-size: 26px;" COLSPAN="4">weekly_schedule</th>
     </tr>
     <tr>
         <th>Nom</th>
@@ -455,10 +447,8 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>not null</td>
         <td>Status du planning.</td>
     </tr>
-</table>
-<table>
     <tr>
-    	<th style="text-align:center" COLSPAN="4">time_slot</th>
+    	<th style="text-align:center; font-size: 26px;" COLSPAN="4">time_slot</th>
     </tr>
     <tr>
         <th>Nom</th>
@@ -490,10 +480,8 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>not null</td>
         <td>Status du slot.</td>
     </tr>
-</table>
-<table>
     <tr>
-    	<th style="text-align:center" COLSPAN="4">schedule_override</th>
+    	<th style="text-align:center; font-size: 26px;" COLSPAN="4">schedule_override</th>
     </tr>
     <tr>
         <th>Nom</th>
@@ -513,10 +501,8 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>not null</td>
         <td>Status de l'exception.</td>
     </tr>
-</table>
-<table>
     <tr>
-    	<th style="text-align:center" COLSPAN="4">absence</th>
+    	<th style="text-align:center; font-size: 26px;" COLSPAN="4">absence</th>
     </tr>
     <tr>
         <th>Nom</th>
@@ -550,6 +536,7 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>Status du congé.</td>
     </tr>
 </table>
+
 
 
 ### API
