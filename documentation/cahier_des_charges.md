@@ -466,13 +466,13 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>time_start</td>
         <td>TIME</td>
         <td>not null</td>
-        <td>horraire de début du slot de rendez-vous.</td>
+        <td>Horaire de début du slot de rendez-vous.</td>
     </tr>
     <tr>
         <td>time_end</td>
         <td>TIME</td>
         <td>not null</td>
-        <td>horraire de fin du slot de rendez-vous.</td>
+        <td>Horaire de fin du slot de rendez-vous.</td>
     </tr>
    	 <tr>
         <td>is_deleted</td>
@@ -536,6 +536,7 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>Status du congé.</td>
     </tr>
 </table>
+
 
 
 
