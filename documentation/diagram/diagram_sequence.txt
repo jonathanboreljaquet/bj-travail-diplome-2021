@@ -11,7 +11,7 @@ note over Client,API Serveur: Prise de rendez-vous par téléphone
 Client->Éducateur canin: Appel téléphonique
 Éducateur canin->Application WEB: Création fiche client préliminaire
 Application WEB->API Serveur: Stockage fiche client préliminaire sans login
-API Serveur->Client: Envoie de mail
+API Serveur->Client: Envoie de e-mail
 Client->Application WEB: Création du compte
 Application WEB->API Serveur: Modification de la fiche client
 
@@ -27,7 +27,7 @@ Application WEB-> API Serveur: Stockage fiche client final
 
 note over Client,API Serveur: Prochains rendez-vous
 Client->Éducateur canin: Prochains rendez-vous
-Éducateur canin->Application WEB: Saisie de note et upload de document pour le client
+Éducateur canin->Application WEB: Saisie de note et upload de documents pour le client
 Application WEB->API Serveur: Stockage notes et documents
 
 note over Client,API Serveur: Connexion client
@@ -40,10 +40,7 @@ note over Client,API Serveur: Connexion éducateur canin
 Éducateur canin->Application WEB: Connexion
 Application WEB->API Serveur: Accès données personnelles des clients
 Application WEB->API Serveur: Accès calendrier
-Application WEB->API Serveur: Accès notes de rendez-vous client et documents client
-
-
-
+Application WEB->API Serveur: Accès notes de rendez-vous clients et documents clients
 
 
 
