@@ -27,8 +27,9 @@
   - [Modèle de données](#modèle-de-données)
     - [API](#api)
     - [Diagramme de séquence](#diagramme-de-séquence)
-  - [Maquettes de l'application](#maquettes-de-lapplication)
+  - [Maquettes prévisionnelles de l'application](#maquettes-prévisionnelles-de-lapplication)
     - [Client](#client)
+      - [Connexion ou rendez-vous autonome](#connexion-ou-rendez-vous-autonome)
       - [Information personnelles](#information-personnelles)
       - [Calendrier](#calendrier-1)
       - [Contenu séances](#contenu-séances)
@@ -40,7 +41,7 @@
       - [Validation de fiche client](#validation-de-fiche-client)
       - [Contenue séance d'un client](#contenue-séance-dun-client)
       - [Ajout de document](#ajout-de-document)
-  - [Planning](#planning)
+  - [Planning prévisionnel](#planning-prévisionnel)
   - [Fonctionnalités envisagées mais non retenues](#fonctionnalités-envisagées-mais-non-retenues)
     - [Scan Bluetooth des puces sous-cutanées canine RFID](#scan-bluetooth-des-puces-sous-cutanées-canine-rfid)
   - [Matériel et logiciel](#matériel-et-logiciel)
@@ -818,7 +819,7 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
 
 ![image diagram sequence](./diagram/sequence_diagram_travail_de_diplome.svg)
 
-## Maquettes de l'application
+## Maquettes prévisionnelles de l'application
 
 ### Client
 
@@ -870,9 +871,7 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
 
 ![image login](./mockup/adminadddocument.png)
 
-## Planning
-
-![image login](./planning/planning_previsionnel_travail_de_diplome2-1.png)
+## Planning prévisionnel
 
 ![image login](./planning/planning_previsionnel_travail_de_diplome2-2.png)
 
