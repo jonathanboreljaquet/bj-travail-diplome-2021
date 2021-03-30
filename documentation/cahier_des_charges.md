@@ -514,31 +514,28 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
         <td>date_absence_from</td>
         <td>date</td>
         <td>not null</td>
-        <td>Date de début de congé.</td>
+        <td>Date de début de vacance.</td>
     </tr>
         <tr>
         <td>date_absence_to</td>
         <td>date</td>
         <td>null</td>
-        <td>Date de fin de congé.</td>
+        <td>Date de fin de vacance.</td>
     </tr>
     </tr>
         <tr>
         <td>description</td>
         <td>varchar</td>
         <td>null</td>
-        <td>Description du congé.</td>
+        <td>Description des vacances.</td>
     </tr>
        <tr>
         <td>is_deleted</td>
         <td>text</td>
         <td>not null</td>
-        <td>Status du congé.</td>
+        <td>Status des vacances.</td>
     </tr>
 </table>
-
-
-
 
 ### API
 
@@ -742,33 +739,92 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
         <td>Administrateur</td>
     </tr>
 	<tr>
-    	<td>PATCH ou DELETE</td>
+    	<td>PATCH</td>
         <td>/weekly_schedule/{id}</td>
-        <td>Modifie/Supprime les données d'un calendrier hebdomadaire.</td>
+        <td>Modifie les données d'un calendrier hebdomadaire.</td>
         <td>Administrateur</td>
     </tr>
 	<tr>
-    	<td>PATCH ou DELETE</td>
+    	<td>PATCH</td>
         <td>/time_slot/{id}</td>
-        <td>Modifie/Supprime les données d'un créneau horaire.</td>
+        <td>Modifie les données d'un créneau horaire.</td>
         <td>Administrateur</td>
     </tr>
 	<tr>
-    	<td>PATCH ou DELETE</td>
+    	<td>PATCH</td>
         <td>/schedule_override/{id}</td>
-        <td>Modifie/Supprime les données d'une exception.</td>
+        <td>Modifie les données d'une exception.</td>
         <td>Administrateur</td>
     </tr>
+	<tr>
+    	<td>DELETE</td>
+        <td>/weekly_schedule/{id}</td>
+        <td>Supprime les données d'un calendrier hebdomadaire.</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>DELETE</td>
+        <td>/time_slot/{id}</td>
+        <td>Supprime les données d'un créneau horaire.</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>DELETE</td>
+        <td>/schedule_override/{id}</td>
+        <td>Supprime les données d'une exception.</td>
+        <td>Administrateur</td>
+    </tr>
+	<th style="text-align:center; font-size: 24px;" COLSPAN="4">ABSENCE</th>
+    </tr>
+	<tr>
+        <th>VERB</th>
+        <th>URL</th>
+        <th>Description</th>
+        <th>Permission</th>
+    </tr>
+	<tr>
+    	<td>POST</td>
+        <td>/absence</td>
+        <td>Créé des horaires de vacances.</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>GET</td>
+        <td>/absence/{id}</td>
+        <td>Récupère les données d'un horaire de vacance.</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>GET</td>
+        <td>/absences</td>
+        <td>Récupère toutes les données des horaires de vacance.</td>
+        <td>Administrateur</td>
+    </tr>
+	<tr>
+    	<td>PATCH</td>
+        <td>/absence/{id}</td>
+        <td>Modifie les données d'un horaire de vacance.</td>
+    	<td>Administrateur</td>
+	</tr>
+	<tr>
+		<td>DELETE</td>
+    	<td>/absence/{id}</td>
+    	<td>Supprime les données d'un horaire de vacances.</td>
+    	<td>Administrateur</td>
+</tr>
 </table>
-
-
 
 ### Diagramme de séquence
 
 ![image diagram sequence](./diagram/sequence_diagram_travail_de_diplome.svg)
 
 ## Maquettes de l'application
+
 ### Client
+
+#### Connexion ou rendez-vous autonome
+
+![image login](./mockup/clientlogin.png)
 
 #### Information personnelles
 
@@ -816,9 +872,11 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
 
 ## Planning
 
-![image login](./planning/planning_previsionnel_travail_de_diplome-1.jpg)
+![image login](./planning/planning_previsionnel_travail_de_diplome2-1.png)
 
-![image login](./planning/planning_previsionnel_travail_de_diplome-2.jpg)
+![image login](./planning/planning_previsionnel_travail_de_diplome2-2.png)
+
+![image login](./planning/planning_previsionnel_travail_de_diplome2-3.png)
 
 ## Fonctionnalités envisagées mais non retenues
 
