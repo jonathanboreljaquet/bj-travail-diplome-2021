@@ -10,6 +10,9 @@ Section sur l'api
 --> Une seul route
 
 
+schedule_override
+datetime -> date
+
 Format ics envoyé par mail au client
 
 Authentification d’API via JWT et les Cookies
