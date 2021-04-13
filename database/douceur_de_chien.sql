@@ -120,7 +120,7 @@ ENGINE = InnoDB;
 -- Table `api-rest_douceur-de-chien`.`weekly_schedule`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `api-rest_douceur-de-chien`.`weekly_schedule` (
-  `Id` INT NOT NULL AUTO_INCREMENT,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `date_valid_from` DATE NOT NULL,
   `date_valid_to` DATE NULL,
   `is_deleted` TINYINT NOT NULL DEFAULT 0,
