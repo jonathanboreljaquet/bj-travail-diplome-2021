@@ -172,3 +172,7 @@ Modification de la base de données afin de permettre la création, l'utilisatio
 Modification de tout les modèles et contrôleurs concernés.
 
 * Les méthodes concernés des modèles contiennent maintenant en paramètre => `int $idEducator` afin de permettre aux différentes requêtes SQL de traiter uniquement les données pour un éducateur canin.
+
+Envoie de mail à M. Mathieu afin de poser la question suivante : Faut-il réaliser un Trello pour notre travail de diplôme malgré le fait qu'on soit seul à le réaliser ? 
+
+Documentation et recherche de la fonctionnalité de test proposé par Postman afin de tester mon API REST.
