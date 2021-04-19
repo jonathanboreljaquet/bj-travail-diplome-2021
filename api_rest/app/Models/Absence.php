@@ -31,15 +31,17 @@ class Absence {
      * @param bool $isDeleted Bool to define whether to search for existing or deleted absences
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findAll(bool $isDeleted)
+    public function findAll(bool $isDeleted,int $idEducator)
     {
         $statement ="
         SELECT id, date_absence_from, date_absence_to, description
         FROM absence
-        WHERE is_deleted=".(int)$isDeleted;
+        WHERE is_deleted=".(int)$isDeleted."
+        AND id_educator = :ID_EDUCATOR";
         
         try {
             $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -55,17 +57,19 @@ class Absence {
      * @param int $id The absence identifier 
      * @return array The associative array containing all the result rows of the query 
      */
-    public function find(int $id)
+    public function find(int $id,int $idEducator)
     {
         $statement = "
         SELECT id, date_absence_from, date_absence_to, description
         FROM absence
         WHERE id = :ID_ABSENCE
-        AND is_deleted = 0;";
+        AND is_deleted = 0
+        AND id_educator = :ID_EDUCATOR;";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_ABSENCE', $id, \PDO::PARAM_INT);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -81,17 +85,18 @@ class Absence {
      * @param array $input The associative table with the corresponding keys and values 
      * @return int The number of rows affected by the insert
      */
-    public function insert(array $input)
+    public function insert(array $input,int $idEducator)
     {
         $statement = "
-        INSERT INTO absence (date_absence_from, date_absence_to, description, is_deleted) 
-        VALUES(STR_TO_DATE(:DATE_ABSENCE_FROM, \"%d-%m-%Y\"), STR_TO_DATE(:DATE_ABSENCE_TO, \"%d-%m-%Y\"), :DESCRIPTION, 0);";
+        INSERT INTO absence (date_absence_from, date_absence_to, description,id_educator ,is_deleted) 
+        VALUES(STR_TO_DATE(:DATE_ABSENCE_FROM, \"%d-%m-%Y\"), STR_TO_DATE(:DATE_ABSENCE_TO, \"%d-%m-%Y\"), :DESCRIPTION,:ID_EDUCATOR ,0);";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':DATE_ABSENCE_FROM', $input['date_absence_from'], \PDO::PARAM_STR);
             $statement->bindParam(':DATE_ABSENCE_TO', $input['date_absence_to'], \PDO::PARAM_STR);  
             $statement->bindParam(':DESCRIPTION', $input['description'], \PDO::PARAM_STR);  
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);  
             $statement->execute();
             return $statement->rowCount();
         } catch (\PDOException $e) {

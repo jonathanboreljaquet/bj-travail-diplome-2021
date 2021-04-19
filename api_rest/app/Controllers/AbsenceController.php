@@ -88,13 +88,13 @@ class AbsenceController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
        
-        $result = $this->absence->findAll(false);        
+        $result = $this->absence->findAll(false,$user["id"]);        
         
         return ResponseController::successfulRequest($result);  
     }
@@ -114,13 +114,14 @@ class AbsenceController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->absence->find($id);
+        $result = $this->absence->find($id,$user["id"]);
+
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
@@ -142,9 +143,9 @@ class AbsenceController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
@@ -162,7 +163,7 @@ class AbsenceController {
             return ResponseController::chronologicalDateProblem();
         }
 
-        $this->absence->insert($input);
+        $this->absence->insert($input,$user["id"]);
 
         return ResponseController::successfulCreatedRessource();
     }
@@ -182,13 +183,13 @@ class AbsenceController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->absence->find($id);
+        $result = $this->absence->find($id,$user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
@@ -228,13 +229,13 @@ class AbsenceController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->absence->find($id);
+        $result = $this->absence->find($id,$user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();

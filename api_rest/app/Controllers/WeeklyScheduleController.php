@@ -88,13 +88,13 @@ class WeeklyScheduleController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
        
-        $result = $this->weeklySchedule->findAll(false);        
+        $result = $this->weeklySchedule->findAll(false,$user["id"]);        
         
         return ResponseController::successfulRequest($result);  
     }
@@ -114,13 +114,13 @@ class WeeklyScheduleController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->weeklySchedule->find($id);
+        $result = $this->weeklySchedule->find($id,$user["id"]);
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
@@ -142,9 +142,9 @@ class WeeklyScheduleController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
@@ -167,16 +167,16 @@ class WeeklyScheduleController {
             }
         }
         else{
-            if ($this->weeklySchedule->findActifPermanentSchedule()) {
+            if ($this->weeklySchedule->findActifPermanentSchedule($user["id"])) {
                 return ResponseController::permanentScheduleAlreadyExist();
             }
         }   
 
-        if ($this->weeklySchedule->findOverlap($input)) {
+        if ($this->weeklySchedule->findOverlap($input,$user["id"])) {
             return ResponseController::dateOverlapProblem();
         }
 
-        $this->weeklySchedule->insert($input);
+        $this->weeklySchedule->insert($input,$user["id"]);
 
         return ResponseController::successfulCreatedRessource();
     }
@@ -196,13 +196,13 @@ class WeeklyScheduleController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->weeklySchedule->find($id);
+        $result = $this->weeklySchedule->find($id, $user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
@@ -227,12 +227,12 @@ class WeeklyScheduleController {
             }
         }
         else{
-            if ($this->weeklySchedule->findActifPermanentSchedule()) {
+            if ($this->weeklySchedule->findActifPermanentSchedule($user["id"])) {
                 return ResponseController::permanentScheduleAlreadyExist();
             }
         }  
 
-        if ($this->weeklySchedule->findOverlap($input)) {
+        if ($this->weeklySchedule->findOverlap($input,$user["id"])) {
             return ResponseController::dateOverlapProblem();
         }
 
@@ -256,13 +256,13 @@ class WeeklyScheduleController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->weeklySchedule->find($id);
+        $result = $this->weeklySchedule->find($id, $user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();

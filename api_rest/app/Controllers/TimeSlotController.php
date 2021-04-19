@@ -100,13 +100,13 @@ class TimeSlotController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
        
-        $result = $this->timeSlot->findAll(false);        
+        $result = $this->timeSlot->findAll(false, $user["id"]);        
         
         return ResponseController::successfulRequest($result);  
     }
@@ -126,13 +126,13 @@ class TimeSlotController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->timeSlot->find($id);
+        $result = $this->timeSlot->find($id, $user["id"]);
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
@@ -154,15 +154,15 @@ class TimeSlotController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateTimeSlot($input)) {
+        if (!$this->validateTimeSlot($input, $user["id"])) {
             return ResponseController::unprocessableEntityResponse();
         }
 
@@ -170,16 +170,20 @@ class TimeSlotController {
             return ResponseController::invalidTimeFormat();
         }
 
+        if (!HelperController::validateCodeDayFormat($input["code_day"])) {
+            return ResponseController::invalidCodeDayFormat();
+        }
+
         if (!HelperController::validateChornologicalTime($input["time_start"],$input["time_end"])) {
             return ResponseController::chronologicalDateProblem();
         }
 
-        if ($this->timeSlot->findOverlapInWeeklySchedule($input))
+        if ($this->timeSlot->findOverlapInWeeklySchedule($input, $user["id"]))
         {
             return ResponseController::timeOverlapProblem();
         }
 
-        $this->timeSlot->insert($input);
+        $this->timeSlot->insert($input, $user["id"]);
 
         return ResponseController::successfulCreatedRessource();
     }
@@ -199,13 +203,13 @@ class TimeSlotController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->timeSlot->find($id);
+        $result = $this->timeSlot->find($id, $user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
@@ -213,7 +217,7 @@ class TimeSlotController {
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateTimeSlot($input)) {
+        if (!$this->validateTimeSlot($input, $user["id"])) {
             return ResponseController::unprocessableEntityResponse();
         }
 
@@ -221,11 +225,15 @@ class TimeSlotController {
             return ResponseController::invalidTimeFormat();
         }
 
+        if (!HelperController::validateCodeDayFormat($input["code_day"])) {
+            return ResponseController::invalidCodeDayFormat();
+        }
+
         if (!HelperController::validateChornologicalTime($input["time_start"],$input["time_end"])) {
             return ResponseController::chronologicalDateProblem();
         }
 
-        if ($this->timeSlot->findOverlapInWeeklySchedule($input))
+        if ($this->timeSlot->findOverlapInWeeklySchedule($input, $user["id"]))
         {
             return ResponseController::timeOverlapProblem();
         }
@@ -250,13 +258,13 @@ class TimeSlotController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->timeSlot->find($id);
+        $result = $this->timeSlot->find($id, $user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
@@ -281,13 +289,13 @@ class TimeSlotController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
        
-        $result = $this->timeSlot->findPlanningTimeSlots();        
+        $result = $this->timeSlot->findPlanningTimeSlots($user["id"]);        
         
         return ResponseController::successfulRequest($result);  
     }
@@ -299,7 +307,7 @@ class TimeSlotController {
      * @param array $input The associative table of the query fields 
      * @return bool
      */
-    private function validateTimeSlot(array $input)
+    private function validateTimeSlot(array $input, int $idEducator)
     {
         if (!isset($input['code_day'])) {
             return false;
@@ -318,11 +326,11 @@ class TimeSlotController {
         }
 
         if (isset($input['id_weekly_schedule'])) {
-            $result = $this->weeklySchedule->find($input['id_weekly_schedule']);
+            $result = $this->weeklySchedule->find($input['id_weekly_schedule'], $idEducator);
         }
 
         if (isset($input['id_schedule_override'])) {
-            $result = $this->scheduleOverride->find($input['id_schedule_override']);
+            $result = $this->scheduleOverride->find($input['id_schedule_override'],$idEducator);
         }
         
         if (!$result) {

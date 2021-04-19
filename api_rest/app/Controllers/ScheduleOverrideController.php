@@ -88,13 +88,13 @@ class ScheduleOverrideController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
        
-        $result = $this->scheduleOverride->findAll(false);        
+        $result = $this->scheduleOverride->findAll(false,$user["id"]);        
         
         return ResponseController::successfulRequest($result);  
     }
@@ -114,13 +114,14 @@ class ScheduleOverrideController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
+       
 
-        $result = $this->scheduleOverride->find($id);
+        $result = $this->scheduleOverride->find($id,$user["id"]);
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
@@ -142,11 +143,12 @@ class ScheduleOverrideController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
+       
 
         parse_str(file_get_contents('php://input'), $input);
 
@@ -158,11 +160,11 @@ class ScheduleOverrideController {
             return ResponseController::invalidDateFormat();
         }
 
-        if ($this->scheduleOverride->findExistence($input["date_schedule_override"])) {
+        if ($this->scheduleOverride->findExistence($input["date_schedule_override"],$user["id"])) {
             return ResponseController::dateOverlapProblem();
         }
 
-        $this->scheduleOverride->insert($input);
+        $this->scheduleOverride->insert($input,$user["id"]);
 
         return ResponseController::successfulCreatedRessource();
     }
@@ -182,13 +184,14 @@ class ScheduleOverrideController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
+       
 
-        $result = $this->scheduleOverride->find($id);
+        $result = $this->scheduleOverride->find($id,$user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
@@ -204,7 +207,7 @@ class ScheduleOverrideController {
             return ResponseController::invalidDateFormat();
         }
 
-        if ($this->scheduleOverride->findExistence($input["date_schedule_override"])) {
+        if ($this->scheduleOverride->findExistence($input["date_schedule_override"],$user["id"])) {
             return ResponseController::dateOverlapProblem();
         }
 
@@ -228,13 +231,14 @@ class ScheduleOverrideController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
+       
 
-        $result = $this->scheduleOverride->find($id);
+        $result = $this->scheduleOverride->find($id,$user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();

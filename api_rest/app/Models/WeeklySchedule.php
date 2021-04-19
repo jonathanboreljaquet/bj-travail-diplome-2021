@@ -31,15 +31,17 @@ class WeeklySchedule {
      * @param bool $isDeleted Bool to define whether to search for existing or deleted weekly schedules
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findAll(bool $isDeleted)
+    public function findAll(bool $isDeleted, int $idEducator)
     {
         $statement = "
         SELECT id, date_valid_from, date_valid_to
         FROM weekly_schedule
-        WHERE is_deleted=".(int)$isDeleted;
+        WHERE is_deleted=".(int)$isDeleted."
+        AND id_educator = :ID_EDUCATOR;";
         
         try {
             $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -55,17 +57,19 @@ class WeeklySchedule {
      * @param int $id The weekly schedule identifier 
      * @return array The associative array containing all the result rows of the query 
      */
-    public function find(int $id)
+    public function find(int $id, int $idEducator)
     {
         $statement = "
         SELECT id, date_valid_from, date_valid_to
         FROM weekly_schedule
         WHERE id = :ID_WEEKLY_SCHEDULE
-        AND is_deleted = 0;";
+        AND is_deleted = 0
+        AND id_educator = :ID_EDUCATOR;";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_WEEKLY_SCHEDULE', $id, \PDO::PARAM_INT);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -81,16 +85,17 @@ class WeeklySchedule {
      * @param array $input The associative table with the corresponding keys and values 
      * @return int The number of rows affected by the insert
      */
-    public function insert(array $input)
+    public function insert(array $input, int $idEducator)
     {
         $statement = "
-        INSERT INTO weekly_schedule (date_valid_from, date_valid_to, is_deleted) 
-        VALUES(STR_TO_DATE(:DATE_VALID_FROM, \"%d-%m-%Y\"),STR_TO_DATE(:DATE_VALID_TO, \"%d-%m-%Y\"), 0);";
+        INSERT INTO weekly_schedule (date_valid_from, date_valid_to,id_educator, is_deleted) 
+        VALUES(STR_TO_DATE(:DATE_VALID_FROM, \"%d-%m-%Y\"),STR_TO_DATE(:DATE_VALID_TO, \"%d-%m-%Y\"),:ID_EDUCATOR, 0);";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':DATE_VALID_FROM', $input['date_valid_from'], \PDO::PARAM_STR);
-            $statement->bindParam(':DATE_VALID_TO', $input['date_valid_to'], \PDO::PARAM_STR);    
+            $statement->bindParam(':DATE_VALID_TO', $input['date_valid_to'], \PDO::PARAM_STR);  
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);  
             $statement->execute();
             return $statement->rowCount();
         } catch (\PDOException $e) {
@@ -156,12 +161,13 @@ class WeeklySchedule {
      * @param array $input The associative table with the corresponding keys and values 
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findOverlap(array $input)
+    public function findOverlap(array $input, int $idEducator)
     {
         $statement = "
         SELECT *
         FROM weekly_schedule
         WHERE is_deleted = 0
+        AND id_educator = :ID_EDUCATOR
         AND (STR_TO_DATE(:DATE_VALID_FROM, \"%d-%m-%Y\") < date_valid_to OR date_valid_to IS NULL)
         AND STR_TO_DATE(:DATE_VALID_TO, \"%d-%m-%Y\") > date_valid_from
         OR (STR_TO_DATE(:DATE_VALID_TO, \"%d-%m-%Y\") IS NULL AND (STR_TO_DATE(:DATE_VALID_FROM, \"%d-%m-%Y\") < date_valid_to))";
@@ -172,7 +178,8 @@ class WeeklySchedule {
             }
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':DATE_VALID_FROM', $input['date_valid_from'], \PDO::PARAM_STR);
-            $statement->bindParam(':DATE_VALID_TO', $input['date_valid_to'], \PDO::PARAM_STR);    
+            $statement->bindParam(':DATE_VALID_TO', $input['date_valid_to'], \PDO::PARAM_STR);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);      
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -187,16 +194,18 @@ class WeeklySchedule {
      * 
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findActifPermanentSchedule()
+    public function findActifPermanentSchedule(int $idEducator)
     {
         $statement = "
         SELECT *
         FROM weekly_schedule
         WHERE date_valid_to IS NULL
-        AND is_deleted = 0;";
+        AND is_deleted = 0
+		AND id_educator = :ID_EDUCATOR;";
 
         try {
             $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);   
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;

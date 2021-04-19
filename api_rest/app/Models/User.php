@@ -78,20 +78,20 @@ class User {
      * @param string $api_token The user api token 
      * @return int The user role code
      */
-    public function getRole(string $api_token)
+    public function getUser(string $api_token)
     {
         $statement = "
-        SELECT code_role
+        SELECT id,code_role 
         FROM user
-        WHERE api_token = :API_TOKEN;
+        WHERE api_token = :API_TOKEN
         LIMIT 1";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':API_TOKEN', $api_token, \PDO::PARAM_STR);
             $statement->execute();
-            $result = $statement->fetchColumn();
-            return intval($result);
+            $result = $statement->fetch(\PDO::FETCH_ASSOC);
+            return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }    

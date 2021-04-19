@@ -31,15 +31,17 @@ class ScheduleOverride {
      * @param bool $isDeleted Bool to define whether to search for existing or deleted schedule overrides
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findAll(bool $isDeleted)
+    public function findAll(bool $isDeleted, int $idEducator)
     {
         $statement ="
         SELECT id, date_schedule_override
         FROM schedule_override
-        WHERE is_deleted=".(int)$isDeleted;
+        WHERE is_deleted=".(int)$isDeleted."
+        AND id_educator = :ID_EDUCATOR";
         
         try {
             $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -55,17 +57,19 @@ class ScheduleOverride {
      * @param int $id The schedule override identifier 
      * @return array The associative array containing all the result rows of the query 
      */
-    public function find(int $id)
+    public function find(int $id, int $idEducator)
     {
         $statement = "
         SELECT id, date_schedule_override
         FROM schedule_override
         WHERE id = :ID_SCHEDULE_OVERRIDE
-        AND is_deleted = 0;";
+        AND is_deleted = 0
+        AND id_educator = :ID_EDUCATOR;";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_SCHEDULE_OVERRIDE', $id, \PDO::PARAM_INT);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -81,15 +85,16 @@ class ScheduleOverride {
      * @param array $input The associative table with the corresponding keys and values 
      * @return int The number of rows affected by the insert
      */
-    public function insert(array $input)
+    public function insert(array $input, int $idEducator)
     {
         $statement = "
-        INSERT INTO schedule_override (date_schedule_override, is_deleted) 
-        VALUES(STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%d-%m-%Y\"), 0);";
+        INSERT INTO schedule_override (date_schedule_override, id_educator,is_deleted) 
+        VALUES(STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%d-%m-%Y\"), :ID_EDUCATOR, 0);";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':DATE_SCHEDULE_OVERRIDE', $input['date_schedule_override'], \PDO::PARAM_STR);  
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
             return $statement->rowCount();
         } catch (\PDOException $e) {
@@ -154,17 +159,19 @@ class ScheduleOverride {
      * @param string $date The date to check
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findExistence(string $date)
+    public function findExistence(string $date,int $idEducator)
     {
         $statement = "
         SELECT *
         FROM schedule_override
         WHERE date_schedule_override = STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%d-%m-%Y\")
-        AND is_deleted = 0;";
+        AND is_deleted = 0
+        AND id_educator = :ID_EDUCATOR;";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':DATE_SCHEDULE_OVERRIDE', $date, \PDO::PARAM_STR);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;

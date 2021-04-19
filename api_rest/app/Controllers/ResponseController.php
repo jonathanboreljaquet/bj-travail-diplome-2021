@@ -185,4 +185,20 @@ class ResponseController {
         ]);
         return $response;
     }
+
+    /**
+     * 
+     * Method to return the error message in case of invalid code day format.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public static function invalidCodeDayFormat(){
+        $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
+        $response['body'] = json_encode([
+            'error' => 'Format de jour invalide => (1 jusqu\'à 7, dimanche = 1).'
+        ]);
+        return $response;
+    }
+
+    
 }

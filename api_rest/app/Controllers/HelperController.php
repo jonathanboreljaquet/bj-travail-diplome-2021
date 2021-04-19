@@ -47,6 +47,22 @@ class HelperController {
 
     /**
      * 
+     * Method to check if a code day has the right format (1-6).
+     * 
+     * @param string $time code day to check
+     * @return bool
+     */
+    public static function validateCodeDayFormat(string $code_day)
+    {
+        if (!preg_match("/^[1-7]$/",$code_day)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 
      * Method to check if the first time is smaller or equal to the second one.
      * 
      * @param string $firsttime First time to check

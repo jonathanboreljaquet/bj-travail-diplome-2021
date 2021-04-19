@@ -31,7 +31,7 @@ class TimeSlot {
      * @param bool $isDeleted Bool to define whether to search for existing or deleted time slots
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findAll(bool $isDeleted)
+    public function findAll(bool $isDeleted,int $idEducator)
     {
         $statement ="
         SELECT ts.id, ts.code_day, ts.time_start, ts.time_end
@@ -39,14 +39,15 @@ class TimeSlot {
         LEFT JOIN weekly_schedule AS ws
         ON ts.id_weekly_schedule = ws.id 
         LEFT JOIN schedule_override AS so
-        ON ts.id_weekly_schedule = ws.id 
-        WHERE ts.is_deleted = ".(int)$isDeleted."
-        AND ws.is_deleted = 0
-        AND so.is_deleted = 0
+        ON ts.id_schedule_override = so.id 
+        WHERE ts.is_deleted = ".(int)$isDeleted." 
+        AND (so.is_deleted = 0 OR ws.is_deleted = 0)
+        AND ts.id_educator = :ID_EDUCATOR
         GROUP BY ts.id;";
         
         try {
             $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -62,17 +63,19 @@ class TimeSlot {
      * @param int $id The time slot identifier 
      * @return array The associative array containing all the result rows of the query 
      */
-    public function find(int $id)
+    public function find(int $id, int $idEducator)
     {
         $statement = "
         SELECT id, code_day, time_start, time_end
         FROM time_slot
         WHERE id = :ID_TIMESLOT
-        AND is_deleted = 0;";
+        AND is_deleted = 0
+        AND id_educator = :ID_EDUCATOR;";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_TIMESLOT', $id, \PDO::PARAM_INT);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -88,11 +91,11 @@ class TimeSlot {
      * @param array $input The associative table with the corresponding keys and values 
      * @return int The number of rows affected by the insert
      */
-    public function insert(array $input)
+    public function insert(array $input, int $idEducator)
     {
         $statement = "
-        INSERT INTO time_slot (code_day, time_start, time_end, is_deleted, id_weekly_schedule, id_schedule_override) 
-        VALUES(:CODE_DAY, :TIME_START, :TIME_END, 0, :ID_WEEKLY_SCHEDULE, :ID_SCHEDULE_OVERRIDE);";
+        INSERT INTO time_slot (code_day, time_start, time_end, is_deleted, id_weekly_schedule, id_schedule_override, id_educator) 
+        VALUES(:CODE_DAY, :TIME_START, :TIME_END, 0, :ID_WEEKLY_SCHEDULE, :ID_SCHEDULE_OVERRIDE,:ID_EDUCATOR);";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -100,7 +103,8 @@ class TimeSlot {
             $statement->bindParam(':TIME_START', $input['time_start'], \PDO::PARAM_STR);    
             $statement->bindParam(':TIME_END', $input['time_end'], \PDO::PARAM_STR);  
             $statement->bindParam(':ID_WEEKLY_SCHEDULE', $input['id_weekly_schedule'], \PDO::PARAM_INT);  
-            $statement->bindParam(':ID_SCHEDULE_OVERRIDE', $input['id_schedule_override'], \PDO::PARAM_INT);   
+            $statement->bindParam(':ID_SCHEDULE_OVERRIDE', $input['id_schedule_override'], \PDO::PARAM_INT);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);   
             $statement->execute();
             return $statement->rowCount();
         } catch (\PDOException $e) {
@@ -169,7 +173,7 @@ class TimeSlot {
      * @param array $input The associative table with the corresponding keys and values 
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findOverlapInWeeklySchedule(array $input)
+    public function findOverlapInWeeklySchedule(array $input,int $idEducator)
     {
         $statement = "
         SELECT ts.code_day, ts.time_start, ts.time_end
@@ -181,7 +185,8 @@ class TimeSlot {
         AND ws.is_deleted = 0
         AND :TIME_START < time_end
         AND :TIME_END > time_start
-        AND code_day = :CODE_DAY;";
+        AND code_day = :CODE_DAY
+        AND ts.id_educator = :ID_EDUCATOR;";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -189,6 +194,7 @@ class TimeSlot {
             $statement->bindParam(':TIME_START', $input['time_start'], \PDO::PARAM_STR);    
             $statement->bindParam(':TIME_END', $input['time_end'], \PDO::PARAM_STR);  
             $statement->bindParam(':ID_WEEKLY_SCHEDULE', $input['id_weekly_schedule'], \PDO::PARAM_INT); 
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);   
             $statement->execute();
             return $statement->rowCount();
         } catch (\PDOException $e) {
@@ -237,7 +243,7 @@ class TimeSlot {
      * 
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findPlanningTimeSlots()
+    public function findPlanningTimeSlots($idEducator)
     {
         $this->generateViews();
         $statement = "
@@ -256,6 +262,7 @@ class TimeSlot {
         AND IF(ws.date_valid_to IS NULL, DATE_ADD(NOW(), INTERVAL 365 DAY), ws.date_valid_to) 
 
         WHERE ts.is_deleted = 0 AND (so.is_deleted = 0 OR ws.is_deleted = 0)
+        AND ts.id_educator = :ID_EDUCATOR
         AND (SELECT COUNT(*) 
         FROM absence AS ab
         WHERE IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override) BETWEEN ab.date_absence_from AND ab.date_absence_to LIMIT 1) = 0
@@ -264,6 +271,7 @@ class TimeSlot {
 
         try {
             $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);  
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;

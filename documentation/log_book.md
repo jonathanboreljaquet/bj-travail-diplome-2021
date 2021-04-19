@@ -1,5 +1,6 @@
-# DDC'App
-## Work book
+# Douceur de chien 
+
+## Log book
 
 ### Vendredi 20 novembre 2020
 
@@ -141,3 +142,33 @@ Les informations personnelles des clients pourront être modifiées uniquement p
 
 Un mail devra être envoyé lors de la création/ajout de document. Celui-ci contiendra en pièce-jointe le/les documents en question.
 
+### Lundi 19 avril 2021
+
+Commencement officiel du travail de diplôme. Conférence avec M. Garcia afin de discuter du déroulement et du règlement du travail de diplôme.
+
+Importation du travail effectué dans le POC simulant le travail de stage de l'année 2020 (Gestion de planning de l'unique éducateur canin de l'application).
+
+Rendez-vous physique en C109 avec M. Mathieu afin de poser différentes questions par rapport au déroulement du travail de diplôme. Les questions posées étaient :
+
+* Sous quel format devons-nous rédiger la documentation technique du travail de diplôme ?
+  * Réponse : Nous sommes plutôt libre du format (MarkDown, Word, Latex, autres). Nous avons discuté de la documentation technique et avons convenu de la réaliser en MarkDown la documentation réellement technique dans le dépôt distant GIT,  et dans un second document LaTeX ou Word, la documentation théorique.
+* Est-il possible d'organiser des rendez-vous réguliers entre nous et M. Mathieu ?
+  * Réponse : Cela n'a pas encore été validé, mais les jours de rencontres se dérouleront soit les mardi matin, soit les vendredi.
+* Faut-il que je réalise des tests unitaires pour mon API REST ?
+  * Réponse : Oui, réaliser des tests pour mon API REST est une bonne idée. Nous avons appris l'existence de la solution de test d'automatisation [Katalon](https://www.katalon.com/) permettant l'exécution de test automatique sur les futures vues de nos applications. M. Mathieu m'a également conseillé de tester mon API REST avec l'outil [Postman](https://www.postman.com/).
+* Faut-il que permette à mon API REST d'être utilisé par plusieurs éducateur canin ?
+  * Réponse : Oui, c'est une bonne idée qui permettrait de rendre l'application plus complète.
+
+Ajout d'une vérification du format du code day lors de la création ou la modification d'un time slot.
+
+* Création de la méthode `validateCodeDayFormat(string $code_day)`dans le HelperController permettant de vérifier si le code day est entre 1 inclus et 7 inclus.
+* Création de la méthode de réponse `invalidCodeDayFormat() `dans le ResponseController 
+  * La méthode renvoi le code erreur 400 Bad Request avec le message :  Format de jour invalide => (1 jusqu\'à 7, dimanche = 1).
+
+Modification de la base de données afin de permettre la création, l'utilisation et la gestion de planning pour plusieurs éducateur canin. Les 4 tables permettant ces fonctionnalités détiennent dorénavant un champs `id_educator` :
+
+![mcd_planning_modified](.\logbook\mcd_planning_modified.PNG)
+
+Modification de tout les modèles et contrôleurs concernés.
+
+* Les méthodes concernés des modèles contiennent maintenant en paramètre => `int $idEducator` afin de permettre aux différentes requêtes SQL de traiter uniquement les données pour un éducateur canin.
