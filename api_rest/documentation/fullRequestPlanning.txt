@@ -1,0 +1,22 @@
+SELECT time_start,code_day, time_end,date_valid_from, date_valid_to,id_weekly_schedule,id_schedule_override,schedule_override.date_schedule_override, dates.date, time_slot.is_deleted, weekly_schedule.is_deleted, schedule_override.is_deleted,
+IF(dates.date IS NOT NULL, dates.date, schedule_override.date_schedule_override) AS DATE
+
+FROM time_slot
+LEFT JOIN weekly_schedule
+ON weekly_schedule.Id = time_slot.id_weekly_schedule
+
+LEFT JOIN schedule_override
+ON schedule_override.id = time_slot.id_schedule_override
+
+LEFT JOIN dates
+ON DAYOFWEEK(DATE) = time_slot.code_day 
+AND date BETWEEN date_valid_from 
+AND IF(date_valid_to IS NULL, DATE_ADD(NOW(), INTERVAL 365 DAY), date_valid_to) 
+
+
+WHERE time_slot.is_deleted = 0 AND (schedule_override.is_deleted = 0 OR weekly_schedule.is_deleted = 0)
+AND (SELECT COUNT(*) FROM absence WHERE IF(date_schedule_override IS NULL,DATE,date_schedule_override) BETWEEN absence.date_absence_from AND absence.date_absence_to LIMIT 1) = 0
+
+
+
+ORDER BY DATE

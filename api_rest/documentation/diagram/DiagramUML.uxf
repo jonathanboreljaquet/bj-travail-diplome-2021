@@ -1,0 +1,156 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>20</x><y>30</y><w>160</w><h>110</h></coordinates><panel_attributes>User
+--
+-db: PDO
+--
++__construct(db: PDO)
++findAll()
++find(id: int)
++getRole(api_token: string)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>20</x><y>550</y><w>250</w><h>250</h></coordinates><panel_attributes>AbsenceController
+--
+-db: PDO
+-requestMethod: string
+-absenceId: int
+-absence: Absence
+-user: User
+--
++__construct(db: PDO,requestMethod: string,
+ absenceId: int)
++processRequest()
+-getAllAbsences()
+-getAbsence(id: int)
+-createAbsence()
+-updateAbsence(id: int)
+-deleteAbsence(id: int)
+-validateAbsence(input :array)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>30</y><w>210</w><h>160</h></coordinates><panel_attributes>ScheduleOverride
+--
+-db: PDO
+--
++__construct(db:PDO)
++findAll(isDeleted: bool)
++find(id: int)
++insert(input: array)
++update(id: int,input: array)
++delete(id: int)
++findExistence(date: string)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>190</x><y>30</y><w>240</w><h>160</h></coordinates><panel_attributes>TimeSlot
+--
+-db: PDO
+--
++__construct(db: PDO)
++findAll(isDeleted: bool)
++find(id: int)
++insert(input: array)
++update(id: int,input: array)
++delete(id: int)
++findOverlapInWeeklySchedule(input: array)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>440</x><y>30</y><w>180</w><h>180</h></coordinates><panel_attributes>WeeklySchedule
+--
+-db: PDO
+--
++__construct(db: PDO)
++findAll(isDeleted: bool)
++find(id: int)
++insert(input: array)
++update(id: int,input: array)
++delete(id: int)
++findOverlap(input: array)
++findActifPermanentSchedule()
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>20</x><y>280</y><w>250</w><h>180</h></coordinates><panel_attributes>UserController
+--
+-db: PDO
+-requestMethod: string
+-userId: int
+-user: User
+--
++__construct(db: PDO,requestMethod: string,
+ userId: int)
++processRequest()
+-getAllUsers()
+-getUser(id: int)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>280</x><y>550</y><w>260</w><h>250</h></coordinates><panel_attributes>ScheduleOverrideController
+--
+-db: PDO
+-requestMethod: string
+-scheduleOverrideId: int
+-scheduleOverride: ScheduleOverride
+-user: User
+--
++__construct(db: PDO,requestMethod: string,
+ scheduleOverrideId: int)
++processRequest()
+-getAllScheduleOverrides()
+-getScheduleOverride(id: int)
+-createScheduleOverride()
+-updateScheduleOverride(id: int)
+-deleteScheduleOverride(id: int)
+-validateScheduleOverride(input :array)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>550</x><y>280</y><w>260</w><h>250</h></coordinates><panel_attributes>TimeSlotController
+--
+-db: PDO
+-requestMethod: string
+-timeSlotId: int
+-timeSlot: TimeSlot
+-user: User
+--
++__construct(db: PDO,requestMethod: string,
+ timeSlotId: int)
++processRequest()
+-getAllTimeSlots()
+-getTimeSlot(id: int)
+-createTimeSlot()
+-updateTimeSlot(id: int)
+-deleteTimeSlot(id: int)
+-validateTimeSlot(input :array)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>280</x><y>280</y><w>260</w><h>250</h></coordinates><panel_attributes>WeeklyScheduleController
+--
+-db: PDO
+-requestMethod: string
+-weeklyScheduleId: int
+-weeklySchedule: WeeklySchedule
+-user: User
+--
++__construct(db: PDO,requestMethod: string,
+ weeklyScheduleId: int)
++processRequest()
+-getAllWeeklySchedules()
+-getWeeklySchedule(id: int)
+-createWeeklySchedule()
+-updateWeeklySchedule(id: int)
+-deleteWeeklySchedule(id: int)
+-validateWeeklySchedule(input :array)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>550</x><y>550</y><w>260</w><h>200</h></coordinates><panel_attributes>ResponseController
+--
+/+notFoundAuthorizationHeader()/
+/+unauthorizedUser()/
+/+notFoundResponse()/
+/+successfulRequest(result: array)/
+/+unprocessableEntityResponse()/
+/+permanentScheduleAlreadyExist()/
+/+successfulCreatedRessource()/
+/+invalidDateFormat()/
+/+invalidTimeFormat()/
+/+dateOverlapProblem()/
+/+timeOverlapProblem()/</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>20</x><y>470</y><w>250</w><h>70</h></coordinates><panel_attributes>HelperController
+--
+/+validateDateFormat(date: string)/
+/+validateTimeFormat(time: string)/
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>0</y><w>1080</w><h>220</h></coordinates><panel_attributes>Models</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>850</x><y>30</y><w>210</w><h>160</h></coordinates><panel_attributes>Absence
+--
+-db: PDO
+--
++__construct(db:PDO)
++findAll(isDeleted: bool)
++find(id: int)
++insert(input: array)
++update(id: int,input: array)
++delete(id: int)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>250</y><w>830</w><h>570</h></coordinates><panel_attributes>Controllers</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>400</x><y>210</y><w>30</w><h>60</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>10;10;10;40</additional_attributes></element><element><id>UMLClass</id><coordinates><x>870</x><y>250</y><w>210</w><h>30</h></coordinates><panel_attributes>index.php</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>820</x><y>250</y><w>70</w><h>40</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>10;20;50;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>870</x><y>370</y><w>210</w><h>80</h></coordinates><panel_attributes>DatabaseConnector
+--
+-dbConnection: PDO
+--
++__construct()
++getConnection()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>870</x><y>310</y><w>210</w><h>30</h></coordinates><panel_attributes>bootstrap.php</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>960</x><y>270</y><w>30</w><h>60</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>960</x><y>330</y><w>30</w><h>60</h></coordinates><panel_attributes>lt=&lt;.
+</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element></diagram>
