@@ -175,4 +175,18 @@ Modification de tout les modèles et contrôleurs concernés.
 
 Envoie de mail à M. Mathieu afin de poser la question suivante : Faut-il réaliser un Trello pour notre travail de diplôme malgré le fait qu'on soit seul à le réaliser ? 
 
+Modification du script dbseed.php. Dorénavant, en plus de la création des 10 utilisateurs de test, le script permet d'insérer dans la base des données des données de test pour 3 éducateurs canins détenant 3 exemples de planning différents.
+
+Premier éducateur canin :
+
+![mcd_planning_modified](.\logbook\dateTestPlanningFirstUser.png)
+
+Deuxième éducateur canin :
+
+![mcd_planning_modified](.\logbook\dateTestPlanningSecondUser.png)
+
+Troisième éducateur canin :
+
+![mcd_planning_modified](.\logbook\dateTestPlanningThirdUser.png)
+
 Documentation et recherche de la fonctionnalité de test proposé par Postman afin de tester mon API REST.
