@@ -221,7 +221,7 @@ Suite à la discussion avec M. Mathieu, je compte réaliser la documentation de 
 * Une documentation théorique 
 * Une documentation technique
 
-Début de la documentation théorique, les points traités ont été les suivants :
+Début de la documentation théorique en format LaTeX en utilisant l'éditeur en ligne Overleaf. Les points traités ont été les suivants :
 
 * Résumé
 * Rappel du cahier des charges (partiel)
