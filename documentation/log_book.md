@@ -190,3 +190,30 @@ Troisième éducateur canin :
 ![mcd_planning_modified](.\logbook\dateTestPlanningThirdUser.png)
 
 Documentation et recherche de la fonctionnalité de test proposé par Postman afin de tester mon API REST.
+
+### Mardi 20 avril 2021
+
+Création des tests unitaires avec l'outil Postman des différents endpoints développés lors du travail de stage. 
+[Lien de la documentation Postman](https://documenter.getpostman.com/view/9321886/TzJuAd3h)
+
+Tests des endpoints du modèle Absence :
+
+![mcd_planning_modified](.\logbook\unitsTestsAbsence.PNG)
+
+Tests des endpoints du modèle ScheduleOverride :
+
+![mcd_planning_modified](.\logbook\unitsTestsScheduleOverride.PNG)
+
+Tests des endpoints du modèle WeeklySchedule :
+
+![mcd_planning_modified](.\logbook\unitsTestsWeeklySchedule.PNG)
+
+Tests des endpoints du modèle TimeSlot :
+
+![mcd_planning_modified](.\logbook\unitsTestsTimeSlot.PNG)
+
+Pour tester la plupart des scénarios d'utilisations de mon API REST, j'ai rajouté dans le script dbseed.php d'autres données permettant de vérifier la maximum de scénarios d'utilisations.
+
+Dorénavant, avant le développement des futurs endpoints de l'API REST, je réaliserais leurs différents tests en essayant de couvrir le maximum de scénarios d'utilisations.   
+
+### Mercredi 21 avril 2021
