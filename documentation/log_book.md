@@ -212,8 +212,18 @@ Tests des endpoints du modèle TimeSlot :
 
 ![mcd_planning_modified](.\logbook\unitsTestsTimeSlot.PNG)
 
-Pour tester la plupart des scénarios d'utilisations de mon API REST, j'ai rajouté dans le script dbseed.php d'autres données permettant de vérifier la maximum de scénarios d'utilisations.
+Pour tester la plupart des scénarios d'utilisations de mon API REST, j'ai rajouté dans le script dbseed.php d'autres données permettant de vérifier la maximum de scénarios d'utilisations possibles.
 
 Dorénavant, avant le développement des futurs endpoints de l'API REST, je réaliserais leurs différents tests en essayant de couvrir le maximum de scénarios d'utilisations.   
+
+Suite à la discussion avec M. Mathieu, je compte réaliser la documentation de mon travail de diplôme en 2 parties : 
+
+* Une documentation théorique 
+* Une documentation technique
+
+Début de la documentation théorique, les points traités ont été les suivants :
+
+* Résumé
+* Rappel du cahier des charges (partiel)
 
 ### Mercredi 21 avril 2021
