@@ -80,4 +80,15 @@ class HelperController {
 
         return true;
     }
+
+    /**
+     * 
+     * Method to generate an api token.
+     * 
+     * @return string The api token
+     */
+    public static function generateApiToken()
+    {
+        return md5(microtime());
+    }
 }

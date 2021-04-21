@@ -13,8 +13,7 @@ namespace App\Controllers;
 
 class ResponseController {
 
-    const USER_CODE_ROLE = 1;
-    const ADMIN_CODE_ROLE = 2;
+    
 
     /**
      * 

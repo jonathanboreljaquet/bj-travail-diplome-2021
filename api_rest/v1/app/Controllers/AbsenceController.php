@@ -1,42 +1,43 @@
 <?php
 /**
- * ScheduleOverrideController.php
+ * AbsenceController.php
  *
- * Controller of the ScheduleOverride model.
+ * Controller of the Absence model.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
 namespace App\Controllers;
 
-use App\Models\ScheduleOverride;
+use App\Models\Absence;
 use App\Models\User;
 use App\Controllers\ResponseController;
 use App\Controllers\HelperController;
+use App\System\Constants;
 
-class ScheduleOverrideController {
+class AbsenceController {
 
     private $db;
     private $requestMethod;
-    private $scheduleOverrideId;
-    private $scheduleOverride;
+    private $absenceId;
+    private $absence;
     private $user;
 
 
     /**
      * 
-     * Constructor of the ScheduleOverrideController object.
+     * Constructor of the AbsenceController object.
      * 
      * @param PDO $db The database connection
      * @param string $requestMethod The request method (GET,POST,PATCH,DELETE)
-     * @param int $scheduleOverrideId The schedule override id
+     * @param int $absenceId The absence id
      */
-    public function __construct(\PDO $db, string $requestMethod, int $scheduleOverrideId = null)
+    public function __construct(\PDO $db, string $requestMethod, int $absenceId = null)
     {
         $this->db = $db;
         $this->requestMethod = $requestMethod;
-        $this->scheduleOverrideId = $scheduleOverrideId;
-        $this->scheduleOverride = new scheduleOverride($db);
+        $this->absenceId = $absenceId;
+        $this->absence = new Absence($db);
         $this->user = new User($db);
     }
 
@@ -49,20 +50,20 @@ class ScheduleOverrideController {
     {
         switch ($this->requestMethod) {
             case 'GET':
-                if ($this->scheduleOverrideId) {
-                    $response = $this->getScheduleOverride($this->scheduleOverrideId);
+                if ($this->absenceId) {
+                    $response = $this->getAbsence($this->absenceId);
                 } else {
-                    $response = $this->getAllScheduleOverrides();
+                    $response = $this->getAllAbsences();
                 };
                 break;
             case 'POST':
-                $response = $this->createScheduleOverride();
+                $response = $this->createAbsence();
                 break;
             case 'PATCH':
-                $response = $this->updateScheduleOverride($this->scheduleOverrideId);
+                $response = $this->updateAbsence($this->absenceId);
                 break;
             case 'DELETE':
-                $response = $this->deleteScheduleOverride($this->scheduleOverrideId);
+                $response = $this->deleteAbsence($this->absenceId);
                 break;
             default:
                 $response = ResponseController::notFoundResponse();
@@ -76,11 +77,11 @@ class ScheduleOverrideController {
 
     /**
      * 
-     * Method to return all schedule overrides in JSON format.
+     * Method to return all absences in JSON format.
      * 
      * @return string The status and the body in json format of the response
      */
-    private function getAllScheduleOverrides()
+    private function getAllAbsences()
     {
         $headers = apache_request_headers();
 
@@ -90,23 +91,23 @@ class ScheduleOverrideController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
        
-        $result = $this->scheduleOverride->findAll(false,$user["id"]);        
+        $result = $this->absence->findAll(false,$user["id"]);        
         
         return ResponseController::successfulRequest($result);  
     }
 
     /**
      * 
-     * Method to return a schedule override in JSON format.
+     * Method to return a absence in JSON format.
      * 
-     * @param int  $id The schedule override identifier
+     * @param int  $id The absence identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function getScheduleOverride(int $id)
+    private function getAbsence(int $id)
     {
         $headers = apache_request_headers();
 
@@ -116,12 +117,12 @@ class ScheduleOverrideController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
-       
 
-        $result = $this->scheduleOverride->find($id,$user["id"]);
+        $result = $this->absence->find($id,$user["id"]);
+
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
@@ -131,11 +132,11 @@ class ScheduleOverrideController {
 
     /**
      * 
-     * Method to create a schedule override.
+     * Method to create a absence.
      * 
      * @return string The status and the body in JSON format of the response
      */
-    private function createScheduleOverride()
+    private function createAbsence()
     {
         $headers = apache_request_headers();
 
@@ -145,38 +146,37 @@ class ScheduleOverrideController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
-       
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateScheduleOverride($input)) {
+        if (!$this->validateAbsence($input)) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        if (!HelperController::validateDateFormat($input["date_schedule_override"])) {
+        if (!HelperController::validateDateFormat($input["date_absence_from"]) || !HelperController::validateDateFormat($input["date_absence_to"]) ) {
             return ResponseController::invalidDateFormat();
         }
 
-        if ($this->scheduleOverride->findExistence($input["date_schedule_override"],$user["id"])) {
-            return ResponseController::dateOverlapProblem();
+        if (!HelperController::validateChornologicalTime($input["date_absence_from"],$input["date_absence_to"])) {
+            return ResponseController::chronologicalDateProblem();
         }
 
-        $this->scheduleOverride->insert($input,$user["id"]);
+        $this->absence->insert($input,$user["id"]);
 
         return ResponseController::successfulCreatedRessource();
     }
 
     /**
      * 
-     * Method to update a schedule override.
+     * Method to update a absence.
      * 
-     * @param int  $id The schedule override identifier
+     * @param int  $id The absence identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function updateScheduleOverride(int $id)
+    private function updateAbsence(int $id)
     {
         $headers = apache_request_headers();
 
@@ -186,12 +186,11 @@ class ScheduleOverrideController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
-       
 
-        $result = $this->scheduleOverride->find($id,$user["id"]);
+        $result = $this->absence->find($id,$user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
@@ -199,31 +198,31 @@ class ScheduleOverrideController {
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateScheduleOverride($input)) {
+        if (!$this->validateAbsence($input)) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        if (!HelperController::validateDateFormat($input["date_schedule_override"])) {
+        if (!HelperController::validateDateFormat($input["date_absence_from"]) || !HelperController::validateDateFormat($input["date_absence_to"]) ) {
             return ResponseController::invalidDateFormat();
         }
 
-        if ($this->scheduleOverride->findExistence($input["date_schedule_override"],$user["id"])) {
-            return ResponseController::dateOverlapProblem();
+        if (!HelperController::validateChornologicalTime($input["date_absence_from"],$input["date_absence_to"])) {
+            return ResponseController::chronologicalDateProblem();
         }
 
-        $this->scheduleOverride->update($id,$input);
+        $this->absence->update($id,$input);
 
         return ResponseController::successfulRequest(null);
     }
 
     /**
      * 
-     * Method to delete a schedule override.
+     * Method to delete a absence.
      * 
-     * @param int  $id The schedule override identifier
+     * @param int  $id The absence identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function deleteScheduleOverride(int $id)
+    private function deleteAbsence($id)
     {
         $headers = apache_request_headers();
 
@@ -233,18 +232,17 @@ class ScheduleOverrideController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
-       
 
-        $result = $this->scheduleOverride->find($id,$user["id"]);
+        $result = $this->absence->find($id,$user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
 
-        $this->scheduleOverride->delete($id);
+        $this->absence->delete($id);
 
         return ResponseController::successfulRequest(null);
     }
@@ -256,9 +254,13 @@ class ScheduleOverrideController {
      * @param array $input The associative table of the query fields 
      * @return bool
      */
-    private function validateScheduleOverride(array $input)
+    private function validateAbsence($input)
     {
-        if (!isset($input['date_schedule_override'])) {
+        if (!isset($input['date_absence_from'])) {
+            return false;
+        }
+
+        if (!isset($input['date_absence_to'])) {
             return false;
         }
 

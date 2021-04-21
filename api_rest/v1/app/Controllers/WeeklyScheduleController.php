@@ -1,42 +1,43 @@
 <?php
 /**
- * AbsenceController.php
+ * WeeklyScheduleController.php
  *
- * Controller of the Absence model.
+ * Controller of the WeeklySchedule model.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
 namespace App\Controllers;
 
-use App\Models\Absence;
+use App\Models\WeeklySchedule;
 use App\Models\User;
 use App\Controllers\ResponseController;
 use App\Controllers\HelperController;
+use App\System\Constants;
 
-class AbsenceController {
+class WeeklyScheduleController {
 
     private $db;
     private $requestMethod;
-    private $absenceId;
-    private $absence;
+    private $weeklyScheduleId;
+    private $weeklySchedule;
     private $user;
 
 
     /**
      * 
-     * Constructor of the AbsenceController object.
+     * Constructor of the WeeklyScheduleController object.
      * 
      * @param PDO $db The database connection
      * @param string $requestMethod The request method (GET,POST,PATCH,DELETE)
-     * @param int $absenceId The absence id
+     * @param int $weeklyScheduleId The weekly schedule id
      */
-    public function __construct(\PDO $db, string $requestMethod, int $absenceId = null)
+    public function __construct(\PDO $db, string $requestMethod, int $weeklyScheduleId = null)
     {
         $this->db = $db;
         $this->requestMethod = $requestMethod;
-        $this->absenceId = $absenceId;
-        $this->absence = new Absence($db);
+        $this->weeklyScheduleId = $weeklyScheduleId;
+        $this->weeklySchedule = new WeeklySchedule($db);
         $this->user = new User($db);
     }
 
@@ -49,20 +50,20 @@ class AbsenceController {
     {
         switch ($this->requestMethod) {
             case 'GET':
-                if ($this->absenceId) {
-                    $response = $this->getAbsence($this->absenceId);
+                if ($this->weeklyScheduleId) {
+                    $response = $this->getWeeklySchedule($this->weeklyScheduleId);
                 } else {
-                    $response = $this->getAllAbsences();
+                    $response = $this->getAllWeeklySchedules();
                 };
                 break;
             case 'POST':
-                $response = $this->createAbsence();
+                $response = $this->createWeeklySchedule();
                 break;
             case 'PATCH':
-                $response = $this->updateAbsence($this->absenceId);
+                $response = $this->updateWeeklySchedule($this->weeklyScheduleId);
                 break;
             case 'DELETE':
-                $response = $this->deleteAbsence($this->absenceId);
+                $response = $this->deleteWeeklySchedule($this->weeklyScheduleId);
                 break;
             default:
                 $response = ResponseController::notFoundResponse();
@@ -76,11 +77,11 @@ class AbsenceController {
 
     /**
      * 
-     * Method to return all absences in JSON format.
+     * Method to return all weekly schedules in JSON format.
      * 
      * @return string The status and the body in json format of the response
      */
-    private function getAllAbsences()
+    private function getAllWeeklySchedules()
     {
         $headers = apache_request_headers();
 
@@ -90,23 +91,23 @@ class AbsenceController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
        
-        $result = $this->absence->findAll(false,$user["id"]);        
+        $result = $this->weeklySchedule->findAll(false,$user["id"]);        
         
         return ResponseController::successfulRequest($result);  
     }
 
     /**
      * 
-     * Method to return a absence in JSON format.
+     * Method to return a weekly schedule in JSON format.
      * 
-     * @param int  $id The absence identifier
+     * @param int  $id The weekly schedule identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function getAbsence(int $id)
+    private function getWeeklySchedule(int $id)
     {
         $headers = apache_request_headers();
 
@@ -116,12 +117,11 @@ class AbsenceController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->absence->find($id,$user["id"]);
-
+        $result = $this->weeklySchedule->find($id,$user["id"]);
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
@@ -131,11 +131,11 @@ class AbsenceController {
 
     /**
      * 
-     * Method to create a absence.
+     * Method to create a weekly schedule.
      * 
      * @return string The status and the body in JSON format of the response
      */
-    private function createAbsence()
+    private function createWeeklySchedule()
     {
         $headers = apache_request_headers();
 
@@ -145,37 +145,51 @@ class AbsenceController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateAbsence($input)) {
+        if (!$this->validateWeeklySchedule($input)) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        if (!HelperController::validateDateFormat($input["date_absence_from"]) || !HelperController::validateDateFormat($input["date_absence_to"]) ) {
+        if (!HelperController::validateDateFormat($input["date_valid_from"])) {
             return ResponseController::invalidDateFormat();
         }
 
-        if (!HelperController::validateChornologicalTime($input["date_absence_from"],$input["date_absence_to"])) {
-            return ResponseController::chronologicalDateProblem();
+        if (isset($input["date_valid_to"])) {
+            if (!HelperController::validateDateFormat($input["date_valid_to"])) {
+                return ResponseController::invalidDateFormat();
+            }
+            if (!HelperController::validateChornologicalTime($input["date_valid_from"],$input["date_valid_to"])) {
+                return ResponseController::chronologicalDateProblem();
+            }
+        }
+        else{
+            if ($this->weeklySchedule->findActifPermanentSchedule($user["id"])) {
+                return ResponseController::permanentScheduleAlreadyExist();
+            }
+        }   
+
+        if ($this->weeklySchedule->findOverlap($input,$user["id"])) {
+            return ResponseController::dateOverlapProblem();
         }
 
-        $this->absence->insert($input,$user["id"]);
+        $this->weeklySchedule->insert($input,$user["id"]);
 
         return ResponseController::successfulCreatedRessource();
     }
 
     /**
      * 
-     * Method to update a absence.
+     * Method to update a weekly schedule.
      * 
-     * @param int  $id The absence identifier
+     * @param int  $id The weekly schedule identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function updateAbsence(int $id)
+    private function updateWeeklySchedule(int $id)
     {
         $headers = apache_request_headers();
 
@@ -185,11 +199,11 @@ class AbsenceController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->absence->find($id,$user["id"]);
+        $result = $this->weeklySchedule->find($id, $user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
@@ -197,31 +211,45 @@ class AbsenceController {
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateAbsence($input)) {
+        if (!$this->validateWeeklySchedule($input)) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        if (!HelperController::validateDateFormat($input["date_absence_from"]) || !HelperController::validateDateFormat($input["date_absence_to"]) ) {
+        if (!HelperController::validateDateFormat($input["date_valid_from"])) {
             return ResponseController::invalidDateFormat();
         }
 
-        if (!HelperController::validateChornologicalTime($input["date_absence_from"],$input["date_absence_to"])) {
-            return ResponseController::chronologicalDateProblem();
+        if (isset($input["date_valid_to"])) {
+            if (!HelperController::validateDateFormat($input["date_valid_to"])) {
+                return ResponseController::invalidDateFormat();
+            }
+            if (!HelperController::validateChornologicalTime($input["date_valid_from"],$input["date_valid_to"])) {
+                return ResponseController::chronologicalDateProblem();
+            }
+        }
+        else{
+            if ($this->weeklySchedule->findActifPermanentSchedule($user["id"])) {
+                return ResponseController::permanentScheduleAlreadyExist();
+            }
+        }  
+
+        if ($this->weeklySchedule->findOverlap($input,$user["id"])) {
+            return ResponseController::dateOverlapProblem();
         }
 
-        $this->absence->update($id,$input);
+        $this->weeklySchedule->update($id,$input);
 
         return ResponseController::successfulRequest(null);
     }
 
     /**
      * 
-     * Method to delete a absence.
+     * Method to delete a weekly schedule.
      * 
-     * @param int  $id The absence identifier
+     * @param int  $id The weekly schedule identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function deleteAbsence($id)
+    private function deleteWeeklySchedule(int $id)
     {
         $headers = apache_request_headers();
 
@@ -231,17 +259,17 @@ class AbsenceController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->absence->find($id,$user["id"]);
+        $result = $this->weeklySchedule->find($id, $user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
 
-        $this->absence->delete($id);
+        $this->weeklySchedule->delete($id);
 
         return ResponseController::successfulRequest(null);
     }
@@ -253,13 +281,9 @@ class AbsenceController {
      * @param array $input The associative table of the query fields 
      * @return bool
      */
-    private function validateAbsence($input)
+    private function validateWeeklySchedule(array $input)
     {
-        if (!isset($input['date_absence_from'])) {
-            return false;
-        }
-
-        if (!isset($input['date_absence_to'])) {
+        if (!isset($input['date_valid_from'])) {
             return false;
         }
 

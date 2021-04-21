@@ -14,6 +14,7 @@ use App\Controllers\WeeklyScheduleController;
 use App\Controllers\ScheduleOverrideController;
 use App\Controllers\AbsenceController;
 use App\Controllers\TimeSlotController;
+use App\System\Constants;
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -27,12 +28,12 @@ $uri = explode('/', $uri);
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 
-switch ($uri[5]) {
+switch ($uri[6]) {
     case 'users':
         $controller = new UserController($dbConnection, $requestMethod);
 
-        if (isset($uri[6]) && is_numeric($uri[6])) {
-            $userId = (int) $uri[6];
+        if (isset($uri[7]) && is_numeric($uri[7])) {
+            $userId = (int) $uri[7];
             $controller = new UserController($dbConnection, $requestMethod, $userId);
         }
 
@@ -40,8 +41,8 @@ switch ($uri[5]) {
     case 'weeklySchedules':
         $controller = new WeeklyScheduleController($dbConnection,$requestMethod);
 
-        if (isset($uri[6]) && is_numeric($uri[6])) {
-            $weeklyScheduleId = (int) $uri[6];
+        if (isset($uri[7]) && is_numeric($uri[7])) {
+            $weeklyScheduleId = (int) $uri[7];
             $controller = new WeeklyScheduleController($dbConnection, $requestMethod, $weeklyScheduleId);
         }
 
@@ -49,8 +50,8 @@ switch ($uri[5]) {
     case 'scheduleOverrides':
         $controller = new ScheduleOverrideController($dbConnection,$requestMethod);
 
-        if (isset($uri[6]) && is_numeric($uri[6])) {
-            $scheduleOverrideId = (int) $uri[6];
+        if (isset($uri[7]) && is_numeric($uri[7])) {
+            $scheduleOverrideId = (int) $uri[7];
             $controller = new ScheduleOverrideController($dbConnection, $requestMethod, $scheduleOverrideId);
         }
 
@@ -58,8 +59,8 @@ switch ($uri[5]) {
     case 'absences':
         $controller = new AbsenceController($dbConnection,$requestMethod);
 
-        if (isset($uri[6]) && is_numeric($uri[6])) {
-            $absenceId = (int) $uri[6];
+        if (isset($uri[7]) && is_numeric($uri[7])) {
+            $absenceId = (int) $uri[7];
             $controller = new AbsenceController($dbConnection, $requestMethod, $absenceId);
         }
 
@@ -67,12 +68,12 @@ switch ($uri[5]) {
     case 'timeSlots':
         $controller = new TimeSlotController($dbConnection,$requestMethod);
 
-        if (isset($uri[6]) && is_numeric($uri[6])) {
-            $timeSlotId = (int) $uri[6];
+        if (isset($uri[7]) && is_numeric($uri[7])) {
+            $timeSlotId = (int) $uri[7];
             $controller = new TimeSlotController($dbConnection, $requestMethod, $timeSlotId);
         }
 
-        if (isset($uri[6]) && $uri[6] == "planning") {
+        if (isset($uri[7]) && $uri[7] == Constants::PLANNING_ENDPOINT) {
             $controller = new TimeSlotController($dbConnection, $requestMethod,null,true);
         }
         break;

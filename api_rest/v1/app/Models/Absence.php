@@ -28,20 +28,22 @@ class Absence {
      * 
      * Method to return all the absences of the database in an associative array.
      * 
-     * @param bool $isDeleted Bool to define whether to search for existing or deleted absences
+     * @param bool $deleted Bool to define whether to search for existing or deleted absences
+     * @param int $idEducator The educator identifier
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findAll(bool $isDeleted,int $idEducator)
+    public function findAll(bool $deleted,int $idEducator)
     {
         $statement ="
         SELECT id, date_absence_from, date_absence_to, description
         FROM absence
-        WHERE is_deleted=".(int)$isDeleted."
+        WHERE is_deleted= :DELETED
         AND id_educator = :ID_EDUCATOR";
         
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
+            $statement->bindParam(':DELETED', $deleted, \PDO::PARAM_BOOL);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -55,6 +57,7 @@ class Absence {
      * Method to return a absence from the database in an associative array.
      * 
      * @param int $id The absence identifier 
+     * @param int $idEducator The educator identifier
      * @return array The associative array containing all the result rows of the query 
      */
     public function find(int $id,int $idEducator)
@@ -83,6 +86,7 @@ class Absence {
      * Method to insert a absence in the database.
      * 
      * @param array $input The associative table with the corresponding keys and values 
+     * @param int $idEducator The educator identifier
      * @return int The number of rows affected by the insert
      */
     public function insert(array $input,int $idEducator)

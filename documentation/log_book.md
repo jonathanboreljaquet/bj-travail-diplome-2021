@@ -179,15 +179,15 @@ Modification du script dbseed.php. Dorénavant, en plus de la création des 10 u
 
 Premier éducateur canin :
 
-![mcd_planning_modified](.\logbook\dateTestPlanningFirstUser.png)
+![dateTestPlanningFirstUser](.\logbook\dateTestPlanningFirstUser.png)
 
 Deuxième éducateur canin :
 
-![mcd_planning_modified](.\logbook\dateTestPlanningSecondUser.png)
+![dateTestPlanningSecondUser](.\logbook\dateTestPlanningSecondUser.png)
 
 Troisième éducateur canin :
 
-![mcd_planning_modified](.\logbook\dateTestPlanningThirdUser.png)
+![dateTestPlanningThirdUser](.\logbook\dateTestPlanningThirdUser.png)
 
 Documentation et recherche de la fonctionnalité de test proposé par Postman afin de tester mon API REST.
 
@@ -198,19 +198,19 @@ Création des tests unitaires avec l'outil Postman des différents endpoints dé
 
 Tests des endpoints du modèle Absence :
 
-![mcd_planning_modified](.\logbook\unitsTestsAbsence.PNG)
+![unitsTestsAbsence](.\logbook\unitsTestsAbsence.PNG)
 
 Tests des endpoints du modèle ScheduleOverride :
 
-![mcd_planning_modified](.\logbook\unitsTestsScheduleOverride.PNG)
+![unitsTestsScheduleOverride](.\logbook\unitsTestsScheduleOverride.PNG)
 
 Tests des endpoints du modèle WeeklySchedule :
 
-![mcd_planning_modified](.\logbook\unitsTestsWeeklySchedule.PNG)
+![unitsTestsWeeklySchedule](.\logbook\unitsTestsWeeklySchedule.PNG)
 
 Tests des endpoints du modèle TimeSlot :
 
-![mcd_planning_modified](.\logbook\unitsTestsTimeSlot.PNG)
+![unitsTestsTimeSlot](.\logbook\unitsTestsTimeSlot.PNG)
 
 Pour tester la plupart des scénarios d'utilisations de mon API REST, j'ai rajouté dans le script dbseed.php d'autres données permettant de vérifier la maximum de scénarios d'utilisations possibles.
 
@@ -227,3 +227,50 @@ Début de la documentation théorique en format LaTeX en utilisant l'éditeur en
 * Rappel du cahier des charges (partiel)
 
 ### Mercredi 21 avril 2021
+
+Création des tests unitaires du endpoint permettant la récupération du planning final de l'éducateur canin authentifié.
+
+![unitsTestsTimeSlot](.\logbook\unitsTestsPlanning.PNG)
+
+Modification des commentaires des modèles de planning (Absence, ScheduleOverride, WeeklySchedule et TimeSlot) qui ne contenait pas le commentaire de paramètre `$idEducator` . 
+Modification de toute les méthode `findAll(bool $deleted,int $idEducator)` des modèles de planning afin de réaliser un bindparam sur le paramètre `$deleted` . 
+
+Avant :
+
+```SQL
+SELECT id, date_absence_from, date_absence_to, description
+FROM absence
+WHERE is_deleted=".(int)$isDeleted."
+AND id_educator = :ID_EDUCATOR;
+```
+
+Après : 
+
+```sql
+SELECT id, date_absence_from, date_absence_to, description
+FROM absence
+WHERE is_deleted= :DELETED
+AND id_educator = :ID_EDUCATOR;
+```
+
+Suppression du champs `password_salt` dans la table `user` de la base de données afin de suivre l'avertissement de PHP 7.
+*Avertissement : L'option Salt a été désapprouvée à partir de PHP 7.0.0. Il est maintenant préférable d'utiliser simplement le sel qui est généré par défaut.* [source](https://www.php.net/manual/fr/function.password-hash.php)
+En effet, PHP recommande de ne plus utiliser de salt personnel mais d'utiliser la méthode PHP `password_hash`. La méthode prend en paramètre différents algorithme de hachage, je compte utiliser la constante PHP `PASSWORD_DEFAULT` qui utilise l'algorithme bcrypt. Constante évoluant avec son temps afin de trouver des algorithmes de plus en plus robuste, PHP nous conseille également de stocker le résultat dans une colonne de la base de données qui peut contenir au moins 60 caractères. J'ai donc modifier la taille de type VARCHAR du champs `password_hash` initialement 45 en 60.
+
+Création d'un champs `user_id_educator` dans la table `appoitment` lié à l'id de la table `user` de la base de données afin de permettre aux clients de l'application de prendre rendez-vous avec l'éducateur canin de leurs choix car l'application doit maintenant le permettre.
+
+Ajout d'un code à chaque test unitaire de l'API REST. Exemple de code :
+
+[ABS-GA1] 
+
+* ABS => Modèle Absence
+* GA => Get all
+* 1 => Numéro de test
+
+[SCH-UO2]
+
+* SCH => Modèle ScheduleOverride
+* UO => Update one
+* 2 => Numéro de test
+
+Création de la Class Constants dans le fichier `app/system/Constants.php` permettant l'utilisation des différentes constantes de l'application.

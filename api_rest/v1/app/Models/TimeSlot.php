@@ -28,10 +28,11 @@ class TimeSlot {
      * 
      * Method to return all the time slots of the database in an associative array.
      * 
-     * @param bool $isDeleted Bool to define whether to search for existing or deleted time slots
+     * @param bool $deleted Bool to define whether to search for existing or deleted time slots
+     * @param int $idEducator The educator identifier
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findAll(bool $isDeleted,int $idEducator)
+    public function findAll(bool $deleted,int $idEducator)
     {
         $statement ="
         SELECT ts.id, ts.code_day, ts.time_start, ts.time_end
@@ -40,7 +41,7 @@ class TimeSlot {
         ON ts.id_weekly_schedule = ws.id 
         LEFT JOIN schedule_override AS so
         ON ts.id_schedule_override = so.id 
-        WHERE ts.is_deleted = ".(int)$isDeleted." 
+        WHERE ts.is_deleted = :DELETED
         AND (so.is_deleted = 0 OR ws.is_deleted = 0)
         AND ts.id_educator = :ID_EDUCATOR
         GROUP BY ts.id;";
@@ -48,6 +49,7 @@ class TimeSlot {
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
+            $statement->bindParam(':DELETED', $deleted, \PDO::PARAM_BOOL);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -61,6 +63,7 @@ class TimeSlot {
      * Method to return a time slot from the database in an associative array.
      * 
      * @param int $id The time slot identifier 
+     * @param int $idEducator The educator identifier
      * @return array The associative array containing all the result rows of the query 
      */
     public function find(int $id, int $idEducator)
@@ -89,6 +92,7 @@ class TimeSlot {
      * Method to insert a time slot in the database.
      * 
      * @param array $input The associative table with the corresponding keys and values 
+     * @param int $idEducator The educator identifier
      * @return int The number of rows affected by the insert
      */
     public function insert(array $input, int $idEducator)
@@ -171,6 +175,7 @@ class TimeSlot {
      * Method to check if a time slot causes an overlapping problem in a weekly calendar.
      * 
      * @param array $input The associative table with the corresponding keys and values 
+     * @param int $idEducator The educator identifier
      * @return array The associative array containing all the result rows of the query 
      */
     public function findOverlapInWeeklySchedule(array $input,int $idEducator)
@@ -241,6 +246,7 @@ class TimeSlot {
      * 
      * Method to retrieve the available valid time slots with their corresponding dates.
      * 
+     * @param int $idEducator The educator identifier
      * @return array The associative array containing all the result rows of the query 
      */
     public function findPlanningTimeSlots($idEducator)

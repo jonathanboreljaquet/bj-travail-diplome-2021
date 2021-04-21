@@ -1,8 +1,8 @@
 <?php
 /**
- * UserController.php
+ * AuthController.php
  *
- * Controller of the User model.
+ * Controller allowing functions with authentication.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
@@ -11,6 +11,7 @@ namespace App\Controllers;
 
 use App\Models\User;
 use App\Controllers\ResponseController;
+use App\System\Constants;
 
 class UserController {
 
@@ -22,13 +23,12 @@ class UserController {
 
     /**
      * 
-     * Constructor of the UserController object.
+     * Constructor of the AuthController object.
      * 
      * @param PDO $db The database connection
      * @param string $requestMethod  The request method (GET,POST,PATCH,DELETE)
-     * @param int $userId  The user id
      */
-    public function __construct(\PDO $db, string $requestMethod, int $userId = null)
+    public function __construct(\PDO $db, string $requestMethod)
     {
         $this->db = $db;
         $this->requestMethod = $requestMethod;
@@ -75,9 +75,9 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
         
@@ -101,17 +101,15 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $role = $this->user->getRole($headers['Authorization']);
+        
+        $user = $this->user->getUser($headers['Authorization']);
 
-        if ($role != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
         $result = $this->user->find($id);
-        if (!$result) {
-            return ResponseController::notFoundResponse();
-        }
-        
+
         return ResponseController::successfulRequest($result);
     }
 }

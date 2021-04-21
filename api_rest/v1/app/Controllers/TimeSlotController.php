@@ -15,6 +15,7 @@ use App\Models\WeeklySchedule;
 use App\Models\ScheduleOverride;
 use App\Controllers\HelperController;
 use App\Controllers\ResponseController;
+use App\System\Constants;
 
 class TimeSlotController {
 
@@ -102,7 +103,7 @@ class TimeSlotController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
        
@@ -128,7 +129,7 @@ class TimeSlotController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
@@ -156,7 +157,7 @@ class TimeSlotController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
@@ -205,7 +206,7 @@ class TimeSlotController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
@@ -260,7 +261,7 @@ class TimeSlotController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
@@ -291,7 +292,7 @@ class TimeSlotController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
        

@@ -1,42 +1,43 @@
 <?php
 /**
- * WeeklyScheduleController.php
+ * ScheduleOverrideController.php
  *
- * Controller of the WeeklySchedule model.
+ * Controller of the ScheduleOverride model.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
 namespace App\Controllers;
 
-use App\Models\WeeklySchedule;
+use App\Models\ScheduleOverride;
 use App\Models\User;
 use App\Controllers\ResponseController;
 use App\Controllers\HelperController;
+use App\System\Constants;
 
-class WeeklyScheduleController {
+class ScheduleOverrideController {
 
     private $db;
     private $requestMethod;
-    private $weeklyScheduleId;
-    private $weeklySchedule;
+    private $scheduleOverrideId;
+    private $scheduleOverride;
     private $user;
 
 
     /**
      * 
-     * Constructor of the WeeklyScheduleController object.
+     * Constructor of the ScheduleOverrideController object.
      * 
      * @param PDO $db The database connection
      * @param string $requestMethod The request method (GET,POST,PATCH,DELETE)
-     * @param int $weeklyScheduleId The weekly schedule id
+     * @param int $scheduleOverrideId The schedule override id
      */
-    public function __construct(\PDO $db, string $requestMethod, int $weeklyScheduleId = null)
+    public function __construct(\PDO $db, string $requestMethod, int $scheduleOverrideId = null)
     {
         $this->db = $db;
         $this->requestMethod = $requestMethod;
-        $this->weeklyScheduleId = $weeklyScheduleId;
-        $this->weeklySchedule = new WeeklySchedule($db);
+        $this->scheduleOverrideId = $scheduleOverrideId;
+        $this->scheduleOverride = new scheduleOverride($db);
         $this->user = new User($db);
     }
 
@@ -49,20 +50,20 @@ class WeeklyScheduleController {
     {
         switch ($this->requestMethod) {
             case 'GET':
-                if ($this->weeklyScheduleId) {
-                    $response = $this->getWeeklySchedule($this->weeklyScheduleId);
+                if ($this->scheduleOverrideId) {
+                    $response = $this->getScheduleOverride($this->scheduleOverrideId);
                 } else {
-                    $response = $this->getAllWeeklySchedules();
+                    $response = $this->getAllScheduleOverrides();
                 };
                 break;
             case 'POST':
-                $response = $this->createWeeklySchedule();
+                $response = $this->createScheduleOverride();
                 break;
             case 'PATCH':
-                $response = $this->updateWeeklySchedule($this->weeklyScheduleId);
+                $response = $this->updateScheduleOverride($this->scheduleOverrideId);
                 break;
             case 'DELETE':
-                $response = $this->deleteWeeklySchedule($this->weeklyScheduleId);
+                $response = $this->deleteScheduleOverride($this->scheduleOverrideId);
                 break;
             default:
                 $response = ResponseController::notFoundResponse();
@@ -76,11 +77,11 @@ class WeeklyScheduleController {
 
     /**
      * 
-     * Method to return all weekly schedules in JSON format.
+     * Method to return all schedule overrides in JSON format.
      * 
      * @return string The status and the body in json format of the response
      */
-    private function getAllWeeklySchedules()
+    private function getAllScheduleOverrides()
     {
         $headers = apache_request_headers();
 
@@ -90,23 +91,23 @@ class WeeklyScheduleController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
        
-        $result = $this->weeklySchedule->findAll(false,$user["id"]);        
+        $result = $this->scheduleOverride->findAll(false,$user["id"]);        
         
         return ResponseController::successfulRequest($result);  
     }
 
     /**
      * 
-     * Method to return a weekly schedule in JSON format.
+     * Method to return a schedule override in JSON format.
      * 
-     * @param int  $id The weekly schedule identifier
+     * @param int  $id The schedule override identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function getWeeklySchedule(int $id)
+    private function getScheduleOverride(int $id)
     {
         $headers = apache_request_headers();
 
@@ -116,11 +117,12 @@ class WeeklyScheduleController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
+       
 
-        $result = $this->weeklySchedule->find($id,$user["id"]);
+        $result = $this->scheduleOverride->find($id,$user["id"]);
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
@@ -130,11 +132,11 @@ class WeeklyScheduleController {
 
     /**
      * 
-     * Method to create a weekly schedule.
+     * Method to create a schedule override.
      * 
      * @return string The status and the body in JSON format of the response
      */
-    private function createWeeklySchedule()
+    private function createScheduleOverride()
     {
         $headers = apache_request_headers();
 
@@ -144,51 +146,38 @@ class WeeklyScheduleController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
+       
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateWeeklySchedule($input)) {
+        if (!$this->validateScheduleOverride($input)) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        if (!HelperController::validateDateFormat($input["date_valid_from"])) {
+        if (!HelperController::validateDateFormat($input["date_schedule_override"])) {
             return ResponseController::invalidDateFormat();
         }
 
-        if (isset($input["date_valid_to"])) {
-            if (!HelperController::validateDateFormat($input["date_valid_to"])) {
-                return ResponseController::invalidDateFormat();
-            }
-            if (!HelperController::validateChornologicalTime($input["date_valid_from"],$input["date_valid_to"])) {
-                return ResponseController::chronologicalDateProblem();
-            }
-        }
-        else{
-            if ($this->weeklySchedule->findActifPermanentSchedule($user["id"])) {
-                return ResponseController::permanentScheduleAlreadyExist();
-            }
-        }   
-
-        if ($this->weeklySchedule->findOverlap($input,$user["id"])) {
+        if ($this->scheduleOverride->findExistence($input["date_schedule_override"],$user["id"])) {
             return ResponseController::dateOverlapProblem();
         }
 
-        $this->weeklySchedule->insert($input,$user["id"]);
+        $this->scheduleOverride->insert($input,$user["id"]);
 
         return ResponseController::successfulCreatedRessource();
     }
 
     /**
      * 
-     * Method to update a weekly schedule.
+     * Method to update a schedule override.
      * 
-     * @param int  $id The weekly schedule identifier
+     * @param int  $id The schedule override identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function updateWeeklySchedule(int $id)
+    private function updateScheduleOverride(int $id)
     {
         $headers = apache_request_headers();
 
@@ -198,11 +187,12 @@ class WeeklyScheduleController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
+       
 
-        $result = $this->weeklySchedule->find($id, $user["id"]);
+        $result = $this->scheduleOverride->find($id,$user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
@@ -210,45 +200,31 @@ class WeeklyScheduleController {
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateWeeklySchedule($input)) {
+        if (!$this->validateScheduleOverride($input)) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        if (!HelperController::validateDateFormat($input["date_valid_from"])) {
+        if (!HelperController::validateDateFormat($input["date_schedule_override"])) {
             return ResponseController::invalidDateFormat();
         }
 
-        if (isset($input["date_valid_to"])) {
-            if (!HelperController::validateDateFormat($input["date_valid_to"])) {
-                return ResponseController::invalidDateFormat();
-            }
-            if (!HelperController::validateChornologicalTime($input["date_valid_from"],$input["date_valid_to"])) {
-                return ResponseController::chronologicalDateProblem();
-            }
-        }
-        else{
-            if ($this->weeklySchedule->findActifPermanentSchedule($user["id"])) {
-                return ResponseController::permanentScheduleAlreadyExist();
-            }
-        }  
-
-        if ($this->weeklySchedule->findOverlap($input,$user["id"])) {
+        if ($this->scheduleOverride->findExistence($input["date_schedule_override"],$user["id"])) {
             return ResponseController::dateOverlapProblem();
         }
 
-        $this->weeklySchedule->update($id,$input);
+        $this->scheduleOverride->update($id,$input);
 
         return ResponseController::successfulRequest(null);
     }
 
     /**
      * 
-     * Method to delete a weekly schedule.
+     * Method to delete a schedule override.
      * 
-     * @param int  $id The weekly schedule identifier
+     * @param int  $id The schedule override identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function deleteWeeklySchedule(int $id)
+    private function deleteScheduleOverride(int $id)
     {
         $headers = apache_request_headers();
 
@@ -258,17 +234,18 @@ class WeeklyScheduleController {
 
         $user = $this->user->getUser($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != ResponseController::ADMIN_CODE_ROLE) {
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
+       
 
-        $result = $this->weeklySchedule->find($id, $user["id"]);
+        $result = $this->scheduleOverride->find($id,$user["id"]);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
 
-        $this->weeklySchedule->delete($id);
+        $this->scheduleOverride->delete($id);
 
         return ResponseController::successfulRequest(null);
     }
@@ -280,9 +257,9 @@ class WeeklyScheduleController {
      * @param array $input The associative table of the query fields 
      * @return bool
      */
-    private function validateWeeklySchedule(array $input)
+    private function validateScheduleOverride(array $input)
     {
-        if (!isset($input['date_valid_from'])) {
+        if (!isset($input['date_schedule_override'])) {
             return false;
         }
 
