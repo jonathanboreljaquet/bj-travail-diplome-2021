@@ -233,7 +233,7 @@ Création des tests unitaires du endpoint permettant la récupération du planni
 ![unitsTestsTimeSlot](.\logbook\unitsTestsPlanning.PNG)
 
 Modification des commentaires des modèles de planning (Absence, ScheduleOverride, WeeklySchedule et TimeSlot) qui ne contenait pas le commentaire de paramètre `$idEducator` . 
-Modification de toute les méthode `findAll(bool $deleted,int $idEducator)` des modèles de planning afin de réaliser un bindparam sur le paramètre `$deleted` . 
+Modification de toute les méthode `findAll(bool $deleted,int $idEducator)` des modèles de planning afin de réaliser un bindparam sur le paramètre `$deleted`. 
 
 Avant :
 
@@ -274,3 +274,10 @@ Ajout d'un code à chaque test unitaire de l'API REST. Exemple de code :
 * 2 => Numéro de test
 
 Création de la Class Constants dans le fichier `app/system/Constants.php` permettant l'utilisation des différentes constantes de l'application.
+
+Création des tests unitaires des endpoints du modèle User :
+
+![unitsTestsTimeSlot](.\logbook\unitsTestsUser.PNG)
+
+Développement du modèle User et du contrôleur UserController permettant un CRUD nécessitant les droits administrateur.
+Blocage pour la conceptualisation des endpoints qui devront permettre de récupérer uniquement les informations de l'utilisateur grâce à son api token (Données de rendez-vous, informations personnelles, documents, informations du/des chiens). En effet, la structure de l'API REST développée jusqu'à là est difficilement adaptable.  
