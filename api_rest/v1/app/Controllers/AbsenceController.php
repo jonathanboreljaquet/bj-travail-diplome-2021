@@ -190,27 +190,25 @@ class AbsenceController {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->absence->find($id,$user["id"]);
+        $actualAbsence = $this->absence->find($id,$user["id"]);
 
-        if (!$result) {
+        if (!$actualAbsence) {
             return ResponseController::notFoundResponse();
         }
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateAbsence($input)) {
-            return ResponseController::unprocessableEntityResponse();
-        }
+        $newAbsence = array_replace($actualAbsence,$input);
 
-        if (!HelperController::validateDateFormat($input["date_absence_from"]) || !HelperController::validateDateFormat($input["date_absence_to"]) ) {
+        if (!HelperController::validateDateFormat($newAbsence["date_absence_from"]) || !HelperController::validateDateFormat($newAbsence["date_absence_to"]) ) {
             return ResponseController::invalidDateFormat();
         }
 
-        if (!HelperController::validateChornologicalTime($input["date_absence_from"],$input["date_absence_to"])) {
+        if (!HelperController::validateChornologicalTime($newAbsence["date_absence_from"],$newAbsence["date_absence_to"])) {
             return ResponseController::chronologicalDateProblem();
         }
 
-        $this->absence->update($id,$input);
+        $this->absence->update($id,$newAbsence);
 
         return ResponseController::successfulRequest(null);
     }

@@ -96,6 +96,34 @@ class UserController {
         return ResponseController::successfulRequest($result);  
     }
 
+    
+    /**
+     * 
+     * Method to return a user in JSON format.
+     * 
+     * @param int $id The user identifier
+     * @return string The status and the body in JSON format of the response
+     */
+    private function getUser(int $id)
+    {
+        $headers = apache_request_headers();
+
+        if (!isset($headers['Authorization'])) {
+            return ResponseController::notFoundAuthorizationHeader();
+        }
+
+        
+        $user = $this->user->getUser($headers['Authorization']);
+
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+            return ResponseController::unauthorizedUser();
+        }
+
+        $result = $this->user->find($id);
+
+        return ResponseController::successfulRequest($result);
+    }
+
     /**
      * 
      * Method to create a user.
@@ -148,19 +176,17 @@ class UserController {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->user->find($id);
+        $actualUser = $this->user->find($id);
 
-        if (!$result) {
+        if (!$actualUser) {
             return ResponseController::notFoundResponse();
         }
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateUser($input)) {
-            return ResponseController::unprocessableEntityResponse();
-        }
+        $newUser = array_replace($actualUser,$input);
 
-        $this->user->update($id,$input);
+        $this->user->update($id,$newUser);
 
         return ResponseController::successfulRequest(null);
     }
@@ -186,7 +212,7 @@ class UserController {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->user->find($id, $user["id"]);
+        $result = $this->user->find($id);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
@@ -195,33 +221,6 @@ class UserController {
         $this->user->delete($id);
 
         return ResponseController::successfulRequest(null);
-    }
-
-    /**
-     * 
-     * Method to return a user in JSON format.
-     * 
-     * @param int $id The user identifier
-     * @return string The status and the body in JSON format of the response
-     */
-    private function getUser(int $id)
-    {
-        $headers = apache_request_headers();
-
-        if (!isset($headers['Authorization'])) {
-            return ResponseController::notFoundAuthorizationHeader();
-        }
-
-        
-        $user = $this->user->getUser($headers['Authorization']);
-
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
-            return ResponseController::unauthorizedUser();
-        }
-
-        $result = $this->user->find($id);
-
-        return ResponseController::successfulRequest($result);
     }
 
      /**

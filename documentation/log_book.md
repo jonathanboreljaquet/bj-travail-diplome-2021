@@ -279,5 +279,29 @@ Création des tests unitaires des endpoints du modèle User :
 
 ![unitsTestsTimeSlot](.\logbook\unitsTestsUser.PNG)
 
-Développement du modèle User et du contrôleur UserController permettant un CRUD nécessitant les droits administrateur.
+Développement du modèle User et du contrôleur UserController permettant un CRUD nécessitant les droits administrateurs.
+
 Blocage pour la conceptualisation des endpoints qui devront permettre de récupérer uniquement les informations de l'utilisateur grâce à son api token (Données de rendez-vous, informations personnelles, documents, informations du/des chiens). En effet, la structure de l'API REST développée jusqu'à là est difficilement adaptable.  
+
+### Jeudi 22 avril 2021
+
+Modification de toutes les méthodes update des différents contrôleurs déjà développés de l'API, de la méthode de vérification de format de date et des différents tests unitaires. En effet, les endpoints d'update de l'API demandait obligatoirement la présence des tout les champs dans le body afin de ne pas créer d'incohérence ou de problème. Dorénavant, les endpoints d'update peuvent maintenant modifier 1 ou plusieurs champs en utilisant la méthode PHP `array_replace($array1, $array2)`.
+
+1. Récupère la ressource grâce à son identifiant dans la base
+2. Remplace la ressource actuel avec la nouvelle avec la méthode `array_replace`
+3. Update le résultat dans la base de données
+
+Modification du script dbseed.php. Dorénavant, le script insère 3 chiens appartenant à un 1 utilisateur différents.
+Création des tests unitaires des endpoints du modèle Dog :
+
+![unitsTestsTimeSlot](.\logbook\unitsTestsDog.PNG)
+
+Modification de toutes les méthodes `find($id)` de l'API REST afin que celle-ci retourne uniquement un résultat objet et non un objet avec un tableau d'un élément. 
+
+Modification du script dbseed.php. Dorénavant, le script insère 3 documents appartenant à un 1 utilisateur différents.
+Création des tests unitaires des endpoints du modèle Document :
+
+![unitsTestsTimeSlot](.\logbook\unitsTestsDocument.PNG)
+
+Développement du modèle Document et du contrôleur DocumentController permettant un CRUD nécessitant les droits administrateurs.
+

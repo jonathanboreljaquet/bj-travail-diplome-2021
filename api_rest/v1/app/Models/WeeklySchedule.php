@@ -74,7 +74,7 @@ class WeeklySchedule {
             $statement->bindParam(':ID_WEEKLY_SCHEDULE', $id, \PDO::PARAM_INT);
             $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $result = $statement->fetch(\PDO::FETCH_ASSOC);
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());
@@ -93,7 +93,7 @@ class WeeklySchedule {
     {
         $statement = "
         INSERT INTO weekly_schedule (date_valid_from, date_valid_to,id_educator, is_deleted) 
-        VALUES(STR_TO_DATE(:DATE_VALID_FROM, \"%d-%m-%Y\"),STR_TO_DATE(:DATE_VALID_TO, \"%d-%m-%Y\"),:ID_EDUCATOR, 0);";
+        VALUES(STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\"),STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\"),:ID_EDUCATOR, 0);";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -119,7 +119,7 @@ class WeeklySchedule {
     {
         $statement = "
         UPDATE weekly_schedule
-        SET date_valid_from = STR_TO_DATE(:DATE_VALID_FROM, \"%d-%m-%Y\"), date_valid_to = STR_TO_DATE(:DATE_VALID_TO, \"%d-%m-%Y\")
+        SET date_valid_from = STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\"), date_valid_to = STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\")
         WHERE id = :ID_WEEKLY_SCHEDULE;";
 
         try {
@@ -173,9 +173,9 @@ class WeeklySchedule {
         FROM weekly_schedule
         WHERE is_deleted = 0
         AND id_educator = :ID_EDUCATOR
-        AND (STR_TO_DATE(:DATE_VALID_FROM, \"%d-%m-%Y\") < date_valid_to OR date_valid_to IS NULL)
-        AND STR_TO_DATE(:DATE_VALID_TO, \"%d-%m-%Y\") > date_valid_from
-        OR (STR_TO_DATE(:DATE_VALID_TO, \"%d-%m-%Y\") IS NULL AND (STR_TO_DATE(:DATE_VALID_FROM, \"%d-%m-%Y\") < date_valid_to))";
+        AND (STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\") < date_valid_to OR date_valid_to IS NULL)
+        AND STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\") > date_valid_from
+        OR (STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\") IS NULL AND (STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\") < date_valid_to))";
 
         if (!isset($input['date_valid_to'])) {
             $input['date_valid_to'] = null;

@@ -22,7 +22,7 @@ class HelperController {
      */
     public static function validateDateFormat(string $date)
     {
-        if (!preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-[0-9]{4}$/",$date)) {
+        if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$date)) {
             return false;
         }
 
@@ -90,5 +90,21 @@ class HelperController {
     public static function generateApiToken()
     {
         return md5(microtime());
+    }
+
+    /**
+     * 
+     * Method to check if a document type has the right value (conditions_inscription,poster).
+     * 
+     * @param string $document_type document type to check
+     * @return bool The document type
+     */
+    public static function validateDocumentTypeFormat($document_type)
+    {
+        if ($document_type == 'conditions_inscription' || $document_type == 'poster') {
+            return true;
+        }
+
+        return false;
     }
 }

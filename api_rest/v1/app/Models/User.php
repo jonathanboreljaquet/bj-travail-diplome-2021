@@ -59,7 +59,7 @@ class User {
     public function find(int $id)
     {
         $statement = "
-        SELECT email, firstname, lastname, phonenumber, address, api_token, code_role
+        SELECT email, firstname, lastname, phonenumber, address, api_token, code_role,code_role,password_hash
         FROM user
         WHERE id = :ID_USER;";
 
@@ -67,7 +67,7 @@ class User {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_USER', $id, \PDO::PARAM_INT);
             $statement->execute();
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $result = $statement->fetch(\PDO::FETCH_ASSOC);
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());
@@ -117,9 +117,9 @@ class User {
     public function update(int $id, array $input)
     {
         $statement = "
-        UPDATE time_slot
+        UPDATE user
         SET email = :EMAIL, 
-        fisrtname = :FIRSTNAME, 
+        firstname = :FIRSTNAME, 
         lastname = :LASTNAME, 
         phonenumber = :PHONENUMBER, 
         address = :ADDRESS, 

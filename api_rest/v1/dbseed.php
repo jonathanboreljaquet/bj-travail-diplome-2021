@@ -27,6 +27,23 @@ VALUES
     (8, 'alex@eduge.ch', 'Alexis', 'Lapon', '0793786791', 'Arthur la brose 12 1268 Genève','".generateApiToken()."','1', null),
     (9, 'eric@eduge.ch', 'Eric', 'Dubois', '0745761298', 'Chemin du soleil 127 1248 Genève','".generateApiToken()."','1', null)";
 
+$dogStatement = "
+
+INSERT INTO `api-rest_douceur-de-chien`.`dog`
+    (id, name, breed, sex, picture_serial_number, chip_id, user_id)
+VALUES
+    (1, 'Paco', 'Staffy', 'Mâle', 'Kadml23m256', '123456789112345',4),
+    (2, 'Hyron', 'Staffy', 'Mâle', 'l5sjlp32caz', '123451234512345',5),
+    (3, 'Jaya', 'Rhodesian Ridgeback', 'Femelle', 'Oyz2jxbz12l', '123123123123123',6)";
+
+$documentStatement = "
+INSERT INTO `api-rest_douceur-de-chien`.`document`
+    (id, document_serial_number, type, user_id)
+VALUES
+    (1, 'ly5uy43256', 'conditions_inscription', 4),
+    (2, 'p1yay43ko6', 'conditions_inscription', 5),
+    (3, 'u1rfa432op', 'conditions_inscription', 6)";
+
 $absenceStatement = "
 INSERT INTO `api-rest_douceur-de-chien`.`absence`
     (id, date_absence_from, date_absence_to, description, is_deleted, id_educator)
@@ -85,6 +102,21 @@ VALUES
 try {
     $dbConnection->exec($userStatement);
     echo "Table user success ";
+} catch (PDOException $e) {
+    exit($e->getMessage());
+}
+
+try {
+    $dbConnection->exec($dogStatement);
+    echo "Table dog success ";
+} catch (PDOException $e) {
+    exit($e->getMessage());
+}
+
+
+try {
+    $dbConnection->exec($documentStatement);
+    echo "Table document success ";
 } catch (PDOException $e) {
     exit($e->getMessage());
 }

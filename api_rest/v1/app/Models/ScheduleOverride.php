@@ -74,7 +74,7 @@ class ScheduleOverride {
             $statement->bindParam(':ID_SCHEDULE_OVERRIDE', $id, \PDO::PARAM_INT);
             $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $result = $statement->fetch(\PDO::FETCH_ASSOC);
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());
@@ -93,7 +93,7 @@ class ScheduleOverride {
     {
         $statement = "
         INSERT INTO schedule_override (date_schedule_override, id_educator,is_deleted) 
-        VALUES(STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%d-%m-%Y\"), :ID_EDUCATOR, 0);";
+        VALUES(STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%Y-%m-%d\"), :ID_EDUCATOR, 0);";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -118,7 +118,7 @@ class ScheduleOverride {
     {
         $statement = "
         UPDATE schedule_override
-        SET date_schedule_override = STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%d-%m-%Y\")
+        SET date_schedule_override = STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%Y-%m-%d\")
         WHERE id = :ID_SCHEDULE_OVERRIDE;";
 
         try {
@@ -169,7 +169,7 @@ class ScheduleOverride {
         $statement = "
         SELECT *
         FROM schedule_override
-        WHERE date_schedule_override = STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%d-%m-%Y\")
+        WHERE date_schedule_override = STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%Y-%m-%d\")
         AND is_deleted = 0
         AND id_educator = :ID_EDUCATOR;";
 

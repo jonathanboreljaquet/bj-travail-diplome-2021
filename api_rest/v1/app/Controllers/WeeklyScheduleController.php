@@ -203,27 +203,30 @@ class WeeklyScheduleController {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->weeklySchedule->find($id, $user["id"]);
+        $actualWeeklySchedule = $this->weeklySchedule->find($id, $user["id"]);
 
-        if (!$result) {
+        if (!$actualWeeklySchedule) {
             return ResponseController::notFoundResponse();
         }
 
         parse_str(file_get_contents('php://input'), $input);
+        
+        if(!isset($input["date_valid_to"])){
+            $input["date_valid_to"] = null;  
+        }   
+        
+        $newWeeklySchedule = array_replace($actualWeeklySchedule,$input);
 
-        if (!$this->validateWeeklySchedule($input)) {
-            return ResponseController::unprocessableEntityResponse();
-        }
 
-        if (!HelperController::validateDateFormat($input["date_valid_from"])) {
+        if (!HelperController::validateDateFormat($newWeeklySchedule["date_valid_from"])) {
             return ResponseController::invalidDateFormat();
         }
 
-        if (isset($input["date_valid_to"])) {
-            if (!HelperController::validateDateFormat($input["date_valid_to"])) {
+        if (isset($newWeeklySchedule["date_valid_to"])) {
+            if (!HelperController::validateDateFormat($newWeeklySchedule["date_valid_to"])) {
                 return ResponseController::invalidDateFormat();
             }
-            if (!HelperController::validateChornologicalTime($input["date_valid_from"],$input["date_valid_to"])) {
+            if (!HelperController::validateChornologicalTime($newWeeklySchedule["date_valid_from"],$newWeeklySchedule["date_valid_to"])) {
                 return ResponseController::chronologicalDateProblem();
             }
         }
@@ -233,11 +236,11 @@ class WeeklyScheduleController {
             }
         }  
 
-        if ($this->weeklySchedule->findOverlap($input,$user["id"])) {
+        if ($this->weeklySchedule->findOverlap($newWeeklySchedule,$user["id"])) {
             return ResponseController::dateOverlapProblem();
         }
 
-        $this->weeklySchedule->update($id,$input);
+        $this->weeklySchedule->update($id,$newWeeklySchedule);
 
         return ResponseController::successfulRequest(null);
     }

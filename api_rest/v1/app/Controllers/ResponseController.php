@@ -124,7 +124,7 @@ class ResponseController {
     public static function invalidDateFormat(){
         $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
         $response['body'] = json_encode([
-            'error' => 'Format de date invalide => (DD-MM-YYYY).'
+            'error' => 'Format de date invalide => (YYYY-MM-DD).'
         ]);
         return $response;
     }
@@ -195,6 +195,20 @@ class ResponseController {
         $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
         $response['body'] = json_encode([
             'error' => 'Format de jour invalide => (1 jusqu\'à 7, dimanche = 1).'
+        ]);
+        return $response;
+    }
+
+    /**
+     * 
+     * Method to return the error message in case of invalid document type format.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public static function invalidDocumentTypeFormat(){
+        $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
+        $response['body'] = json_encode([
+            'error' => 'Type de document invalide => (conditions_inscription,poster).'
         ]);
         return $response;
     }

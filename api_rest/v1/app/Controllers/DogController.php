@@ -1,43 +1,42 @@
 <?php
 /**
- * ScheduleOverrideController.php
+ * DogController.php
  *
- * Controller of the ScheduleOverride model.
+ * Controller of the Dog model.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
 namespace App\Controllers;
 
-use App\Models\ScheduleOverride;
-use App\Models\User;
+use App\Models\Dog;
 use App\Controllers\ResponseController;
-use App\Controllers\HelperController;
+use App\Models\User;
 use App\System\Constants;
 
-class ScheduleOverrideController {
+class DogController {
 
     private $db;
     private $requestMethod;
-    private $scheduleOverrideId;
-    private $scheduleOverride;
+    private $dogId;
+    private $dog;
     private $user;
 
 
     /**
      * 
-     * Constructor of the ScheduleOverrideController object.
+     * Constructor of the DogController object.
      * 
      * @param PDO $db The database connection
-     * @param string $requestMethod The request method (GET,POST,PATCH,DELETE)
-     * @param int $scheduleOverrideId The schedule override id
+     * @param string $requestMethod  The request method (GET,POST,PATCH,DELETE)
+     * @param int $dogId  The dog id
      */
-    public function __construct(\PDO $db, string $requestMethod, int $scheduleOverrideId = null)
+    public function __construct(\PDO $db, string $requestMethod, int $dogId = null)
     {
         $this->db = $db;
         $this->requestMethod = $requestMethod;
-        $this->scheduleOverrideId = $scheduleOverrideId;
-        $this->scheduleOverride = new scheduleOverride($db);
+        $this->dogId = $dogId;
+        $this->dog = new Dog($db);
         $this->user = new User($db);
     }
 
@@ -50,20 +49,20 @@ class ScheduleOverrideController {
     {
         switch ($this->requestMethod) {
             case 'GET':
-                if ($this->scheduleOverrideId) {
-                    $response = $this->getScheduleOverride($this->scheduleOverrideId);
+                if ($this->dogId) {
+                    $response = $this->getDog($this->dogId);
                 } else {
-                    $response = $this->getAllScheduleOverrides();
+                    $response = $this->getAllDogs();
                 };
                 break;
             case 'POST':
-                $response = $this->createScheduleOverride();
+                $response = $this->createDog();
                 break;
             case 'PATCH':
-                $response = $this->updateScheduleOverride($this->scheduleOverrideId);
+                $response = $this->updateDog($this->dogId);
                 break;
             case 'DELETE':
-                $response = $this->deleteScheduleOverride($this->scheduleOverrideId);
+                $response = $this->deleteDog($this->dogId);
                 break;
             default:
                 $response = ResponseController::notFoundResponse();
@@ -77,11 +76,11 @@ class ScheduleOverrideController {
 
     /**
      * 
-     * Method to return all schedule overrides in JSON format.
+     * Method to return all dogs in JSON format.
      * 
      * @return string The status and the body in json format of the response
      */
-    private function getAllScheduleOverrides()
+    private function getAllDogs()
     {
         $headers = apache_request_headers();
 
@@ -94,20 +93,20 @@ class ScheduleOverrideController {
         if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
-       
-        $result = $this->scheduleOverride->findAll(false,$user["id"]);        
         
+        $result = $this->dog->findAll();
+
         return ResponseController::successfulRequest($result);  
     }
 
-    /**
+        /**
      * 
-     * Method to return a schedule override in JSON format.
+     * Method to return a dog in JSON format.
      * 
-     * @param int  $id The schedule override identifier
+     * @param int $id The dog identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function getScheduleOverride(int $id)
+    private function getDog(int $id)
     {
         $headers = apache_request_headers();
 
@@ -115,28 +114,25 @@ class ScheduleOverrideController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
+        
         $user = $this->user->getUser($headers['Authorization']);
 
         if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
-       
 
-        $result = $this->scheduleOverride->find($id,$user["id"]);
-        if (!$result) {
-            return ResponseController::notFoundResponse();
-        }
+        $result = $this->dog->find($id);
 
         return ResponseController::successfulRequest($result);
     }
 
     /**
      * 
-     * Method to create a schedule override.
+     * Method to create a dog.
      * 
      * @return string The status and the body in JSON format of the response
      */
-    private function createScheduleOverride()
+    private function createDog()
     {
         $headers = apache_request_headers();
 
@@ -149,35 +145,26 @@ class ScheduleOverrideController {
         if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
-       
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateScheduleOverride($input)) {
+        if (!$this->validateDog($input)) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        if (!HelperController::validateDateFormat($input["date_schedule_override"])) {
-            return ResponseController::invalidDateFormat();
-        }
-
-        if ($this->scheduleOverride->findExistence($input["date_schedule_override"],$user["id"])) {
-            return ResponseController::dateOverlapProblem();
-        }
-
-        $this->scheduleOverride->insert($input,$user["id"]);
+        $this->dog->insert($input);
 
         return ResponseController::successfulCreatedRessource();
     }
 
     /**
      * 
-     * Method to update a schedule override.
+     * Method to update a dog.
      * 
-     * @param int  $id The schedule override identifier
+     * @param int  $id The dog identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function updateScheduleOverride(int $id)
+    private function updateDog(int $id)
     {
         $headers = apache_request_headers();
 
@@ -191,37 +178,29 @@ class ScheduleOverrideController {
             return ResponseController::unauthorizedUser();
         }
 
-        $actualScheduleOverride = $this->scheduleOverride->find($id,$user["id"]);
+        $actualDog = $this->dog->find($id);
 
-        if (!$actualScheduleOverride) {
+        if (!$actualDog) {
             return ResponseController::notFoundResponse();
         }
 
         parse_str(file_get_contents('php://input'), $input);
 
-        $newScheduleOverride = array_replace($actualScheduleOverride,$input);
+        $newDog = array_replace($actualDog,$input);
 
-        if (!HelperController::validateDateFormat($newScheduleOverride["date_schedule_override"])) {
-            return ResponseController::invalidDateFormat();
-        }
-
-        if ($this->scheduleOverride->findExistence($newScheduleOverride["date_schedule_override"],$user["id"])) {
-            return ResponseController::dateOverlapProblem();
-        }
-
-        $this->scheduleOverride->update($id,$newScheduleOverride);
+        $this->dog->update($id,$newDog);
 
         return ResponseController::successfulRequest(null);
     }
 
     /**
      * 
-     * Method to delete a schedule override.
+     * Method to delete a dog.
      * 
-     * @param int  $id The schedule override identifier
+     * @param int  $id The dog identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function deleteScheduleOverride(int $id)
+    private function deleteDog(int $id)
     {
         $headers = apache_request_headers();
 
@@ -234,29 +213,40 @@ class ScheduleOverrideController {
         if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
-       
 
-        $result = $this->scheduleOverride->find($id,$user["id"]);
+        $result = $this->dog->find($id);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
 
-        $this->scheduleOverride->delete($id);
+        $this->dog->delete($id);
 
         return ResponseController::successfulRequest(null);
     }
 
-    /**
+     /**
      * 
      * Method to check if the required fields have been defined.
      * 
      * @param array $input The associative table of the query fields 
      * @return bool
      */
-    private function validateScheduleOverride(array $input)
+    private function validateDog(array $input)
     {
-        if (!isset($input['date_schedule_override'])) {
+        if (!isset($input['name'])) {
+            return false;
+        }
+
+        if (!isset($input['breed'])) {
+            return false;
+        }
+
+        if (!isset($input['sex'])) {
+            return false;
+        }
+
+        if (!isset($input['user_id'])) {
             return false;
         }
 

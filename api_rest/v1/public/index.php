@@ -10,6 +10,8 @@
 require "../bootstrap.php";
 
 use App\Controllers\UserController;
+use App\Controllers\DogController;
+use App\Controllers\DocumentController;
 use App\Controllers\WeeklyScheduleController;
 use App\Controllers\ScheduleOverrideController;
 use App\Controllers\AbsenceController;
@@ -35,6 +37,24 @@ switch ($uri[6]) {
         if (isset($uri[7]) && is_numeric($uri[7])) {
             $userId = (int) $uri[7];
             $controller = new UserController($dbConnection, $requestMethod, $userId);
+        }
+
+        break;
+    case 'dogs':
+        $controller = new DogController($dbConnection, $requestMethod);
+
+        if (isset($uri[7]) && is_numeric($uri[7])) {
+            $dogId = (int) $uri[7];
+            $controller = new DogController($dbConnection, $requestMethod, $dogId);
+        }
+
+        break;
+    case 'documents':
+        $controller = new DocumentController($dbConnection, $requestMethod);
+
+        if (isset($uri[7]) && is_numeric($uri[7])) {
+            $documentId = (int) $uri[7];
+            $controller = new DocumentController($dbConnection, $requestMethod, $documentId);
         }
 
         break;

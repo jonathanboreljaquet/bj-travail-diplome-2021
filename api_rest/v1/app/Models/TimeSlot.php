@@ -80,7 +80,7 @@ class TimeSlot {
             $statement->bindParam(':ID_TIMESLOT', $id, \PDO::PARAM_INT);
             $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->execute();
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $result = $statement->fetch(\PDO::FETCH_ASSOC);
             return $result;
         } catch (\PDOException $e) {
             exit($e->getMessage());

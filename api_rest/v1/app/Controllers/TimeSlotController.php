@@ -210,36 +210,34 @@ class TimeSlotController {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->timeSlot->find($id, $user["id"]);
+        $actualTimeSlot = $this->timeSlot->find($id, $user["id"]);
 
-        if (!$result) {
+        if (!$actualTimeSlot) {
             return ResponseController::notFoundResponse();
         }
 
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateTimeSlot($input, $user["id"])) {
-            return ResponseController::unprocessableEntityResponse();
-        }
+        $newTimeSlot = array_replace($actualTimeSlot,$input);
 
-        if (!HelperController::validateTimeFormat($input["time_start"]) || !HelperController::validateTimeFormat($input["time_end"]) ) {
+        if (!HelperController::validateTimeFormat($newTimeSlot["time_start"]) || !HelperController::validateTimeFormat($newTimeSlot["time_end"]) ) {
             return ResponseController::invalidTimeFormat();
         }
 
-        if (!HelperController::validateCodeDayFormat($input["code_day"])) {
+        if (!HelperController::validateCodeDayFormat($newTimeSlot["code_day"])) {
             return ResponseController::invalidCodeDayFormat();
         }
 
-        if (!HelperController::validateChornologicalTime($input["time_start"],$input["time_end"])) {
+        if (!HelperController::validateChornologicalTime($newTimeSlot["time_start"],$newTimeSlot["time_end"])) {
             return ResponseController::chronologicalDateProblem();
         }
 
-        if ($this->timeSlot->findOverlapInWeeklySchedule($input, $user["id"]))
+        if ($this->timeSlot->findOverlapInWeeklySchedule($newTimeSlot, $user["id"]))
         {
             return ResponseController::timeOverlapProblem();
         }
 
-        $this->timeSlot->update($id,$input);
+        $this->timeSlot->update($id,$newTimeSlot);
 
         return ResponseController::successfulRequest(null);
     }
