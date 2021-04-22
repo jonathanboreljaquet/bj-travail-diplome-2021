@@ -305,3 +305,33 @@ Création des tests unitaires des endpoints du modèle Document :
 
 Développement du modèle Document et du contrôleur DocumentController permettant un CRUD nécessitant les droits administrateurs.
 
+Modification du script dbseed.php. Dorénavant, le script insère 3 rendez-vous appartenant entre un client et un éducateur canin.
+Création des tests unitaires des endpoints du modèle Appoitment :
+
+![unitsTestsTimeSlot](.\logbook\unitsTestsAppoitment.PNG)
+
+Développement du modèle Appoitment et du contrôleur AppoitmentController permettant un CRUD nécessitant les droits administrateurs.
+
+Maintenant que tout les endpoints de base de la partie clientèle ont été développés. Réflexion par rapport aux endpoints qui devront être modifiés afin de répondre aux réels besoins de application. En effet, je vais dorénavant procéder à une réflexion cas par cas des endpoints qui devront être utilisables par les clients et non uniquement par les administrateurs (éducateurs canins).
+
+**Cas d'utilisation de l'API numéro 1 : Inscription de l'utilisateur autonome**
+
+![unitsTestsTimeSlot](.\diagram\UseCaseInscription.png)
+
+Modification du endpoint [POST] api/v1/users afin qu'il soit accessible pour les utilisateurs non-authentifiés. Lors de la création de fiche client via l'appel téléphonique, l'éducateur canin ne spécifiera pas le mot de passe de l'utilisateur, de ce fait, le endpoint devra permettre de générer un mot de passe automatique et de l'envoyer par mail au client.
+
+Création et utilisation de la méthode permettant de générer un mot de passe aléatoire :
+
+```php
+public static function generateRandomPassword() {
+    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    $password = array();
+    $alphaLength = strlen($alphabet) - 1; 
+    for ($i = 0; $i < 8; $i++) {
+        $n = rand(0, $alphaLength);
+        $password[] = $alphabet[$n];
+    }
+    return implode($password);
+}
+```
+

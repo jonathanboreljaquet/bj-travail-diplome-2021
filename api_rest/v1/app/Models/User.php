@@ -84,11 +84,23 @@ class User {
     public function insert(array $input)
     {
         $statement = "
-        INSERT INTO user (email, firstname, lastname, phonenumber, address, api_token, code_role) 
-        VALUES(:EMAIL, :FIRSTNAME, :LASTNAME, :PHONENUMBER, :ADDRESS, :API_TOKEN, :CODE_ROLE);";
+        INSERT INTO user (email, firstname, lastname, phonenumber, address, api_token, code_role, password_hash) 
+        VALUES(:EMAIL, :FIRSTNAME, :LASTNAME, :PHONENUMBER, :ADDRESS, :API_TOKEN, :CODE_ROLE, :PASSWORD_HASH);";
 
         $api_token = HelperController::generateApiToken();
+
         $code_role = Constants::USER_CODE_ROLE;
+
+        $sendmail = false;
+
+        if (!isset($input['password'])) {
+            $password = HelperController::generateRandomPassword();
+            $sendmail =true;
+        }
+        else{
+            $password = $input['password'];
+        }
+        $password_hash = password_hash($password,PASSWORD_DEFAULT);
 
         try {
             $statement = $this->db->prepare($statement);
@@ -98,8 +110,12 @@ class User {
             $statement->bindParam(':PHONENUMBER', $input['phonenumber'], \PDO::PARAM_STR);  
             $statement->bindParam(':ADDRESS', $input['address'], \PDO::PARAM_STR);
             $statement->bindParam(':API_TOKEN', $api_token, \PDO::PARAM_STR);  
-            $statement->bindParam(':CODE_ROLE', $code_role, \PDO::PARAM_STR);  
+            $statement->bindParam(':CODE_ROLE', $code_role, \PDO::PARAM_INT);  
+            $statement->bindParam(':PASSWORD_HASH', $password_hash, \PDO::PARAM_STR); 
             $statement->execute();
+            if ($sendmail) {
+                HelperController::sendMail("MAIL","jonathan.brljq@eduge.ch");
+            }
             return $statement->rowCount();
         } catch (\PDOException $e) {
             exit($e->getMessage());
@@ -132,6 +148,7 @@ class User {
         else{
             $input['password_hash'] = password_hash($input['password_hash'],PASSWORD_DEFAULT);
         }
+
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':EMAIL', $input['email'], \PDO::PARAM_STR);

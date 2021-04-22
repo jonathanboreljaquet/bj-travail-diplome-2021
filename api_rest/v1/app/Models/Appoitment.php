@@ -33,8 +33,8 @@ class Appoitment {
     {
         $statement = "
         SELECT id, datetime_appoitment,duration_in_hour, note_text, 
-        note_graphical_serial_number, summary, chip_id, user_id,
-        datetime_deletion,user_id_customer,user_id_educator,user_id_deletion
+        note_graphical_serial_number, summary, datetime_deletion,
+        user_id_customer,user_id_educator,user_id_deletion
         FROM appoitment;";
 
         try {
@@ -61,6 +61,7 @@ class Appoitment {
         SELECT id, datetime_appoitment,duration_in_hour, note_text, 
         note_graphical_serial_number, summary, datetime_deletion,
         user_id_customer,user_id_educator,user_id_deletion
+        FROM appoitment
         WHERE id = :ID_APPOITMENT;";
 
         try {
@@ -85,11 +86,11 @@ class Appoitment {
     {
         $statement = "
         INSERT INTO appoitment (datetime_appoitment,duration_in_hour, note_text, 
-        note_graphical_serial_number, summary, datetime_deletion,
+        note_graphical_serial_number, summary,
         user_id_customer,user_id_educator) 
 
         VALUES(:DATETIME_APPOITMENT, :DURATION_IN_HOUR, :NOTE_TEXT, 
-        :NOTE_GRAPHICAL_SERIAL_NUMBER, :SUMMARY, :DATETIME_DELETION,
+        :NOTE_GRAPHICAL_SERIAL_NUMBER, :SUMMARY,
         :USER_ID_CUSTOMER,:USER_ID_EDUCATOR);";
 
         
@@ -137,7 +138,7 @@ class Appoitment {
         duration_in_hour = :DURATION_IN_HOUR,
         note_text = :NOTE_TEXT, 
         note_graphical_serial_number = :NOTE_GRAPHICAL_SERIAL_NUMBER, 
-        summary = :SUMMARY, 
+        summary = :SUMMARY
         WHERE id = :ID_APPOITMENT;";
         try {
             $statement = $this->db->prepare($statement);
@@ -166,7 +167,7 @@ class Appoitment {
     {
         $statement = "
         UPDATE appoitment
-        SET datetime_appoitment = :DATETIME_APPOITMENT, 
+        SET datetime_deletion = NOW(), 
         user_id_deletion = :ID_USER
         WHERE id = :ID_APPOITMENT;";
 

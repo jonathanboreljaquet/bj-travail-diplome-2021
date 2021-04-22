@@ -9,14 +9,22 @@
 
 require "../bootstrap.php";
 
+use App\System\Constants;
 use App\Controllers\UserController;
 use App\Controllers\DogController;
 use App\Controllers\DocumentController;
+use App\Controllers\AppoitmentController;
+use App\Controllers\AbsenceController;
 use App\Controllers\WeeklyScheduleController;
 use App\Controllers\ScheduleOverrideController;
-use App\Controllers\AbsenceController;
 use App\Controllers\TimeSlotController;
-use App\System\Constants;
+
+
+
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -29,6 +37,10 @@ $uri = explode('/', $uri);
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
+if (!isset($uri[6])) {
+    header("HTTP/1.1 404 Not Found");
+    exit();
+}
 
 switch ($uri[6]) {
     case 'users':
@@ -55,6 +67,15 @@ switch ($uri[6]) {
         if (isset($uri[7]) && is_numeric($uri[7])) {
             $documentId = (int) $uri[7];
             $controller = new DocumentController($dbConnection, $requestMethod, $documentId);
+        }
+
+        break;
+    case 'appoitments':
+        $controller = new AppoitmentController($dbConnection, $requestMethod);
+
+        if (isset($uri[7]) && is_numeric($uri[7])) {
+            $appoitmentId = (int) $uri[7];
+            $controller = new AppoitmentController($dbConnection, $requestMethod, $appoitmentId);
         }
 
         break;
@@ -115,9 +136,10 @@ $controller->processRequest();
 //Server settings
 
 /*
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+use App\Controllers\TimeSlotController;
+use App\Controllers\AppoitmentController;
+use App\Controllers\WeeklyScheduleController;
+use App\Controllers\ScheduleOverrideController;
 
 $mail = new PHPMailer(true);
 

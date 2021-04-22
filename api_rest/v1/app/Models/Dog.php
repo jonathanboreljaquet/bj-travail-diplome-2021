@@ -73,6 +73,31 @@ class Dog {
 
     /**
      * 
+     * Method to return a dog from the database with the user id in an associative array.
+     * 
+     * @param int $userId The user identifier 
+     * @return array The associative array containing all the result rows of the query 
+     */
+    public function findWithUserId(int $userId)
+    {
+        $statement = "
+        SELECT id, name, breed, sex, picture_serial_number, chip_id, user_id
+        FROM dog
+        WHERE user_id = :ID_USER;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_USER', $userId, \PDO::PARAM_INT);
+            $statement->execute();
+            $result = $statement->fetch(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    /**
+     * 
      * Method to insert a dog in the database.
      * 
      * @param array $input The associative table with the corresponding keys and values 

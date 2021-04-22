@@ -1,43 +1,43 @@
 <?php
 /**
- * UserController.php
+ * AppoitmentController.php
  *
- * Controller of the User model.
+ * Controller of the Appoitment model.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
 namespace App\Controllers;
 
-use App\Models\User;
+use App\Models\Appoitment;
 use App\Controllers\ResponseController;
-use App\Models\Dog;
+use App\Models\User;
 use App\System\Constants;
 
-class UserController {
+class AppoitmentController {
 
     private $db;
     private $requestMethod;
-    private $userId;
+    private $appoitmentId;
+    private $appoitment;
     private $user;
-    private $dog;
 
 
     /**
      * 
-     * Constructor of the UserController object.
+     * Constructor of the AppoitmentController object.
      * 
      * @param PDO $db The database connection
      * @param string $requestMethod  The request method (GET,POST,PATCH,DELETE)
-     * @param int $userId  The user id
+     * @param int $appoitmentId  The appoitment id
      */
-    public function __construct(\PDO $db, string $requestMethod, int $userId = null)
+    public function __construct(\PDO $db, string $requestMethod, int $appoitmentId = null)
     {
         $this->db = $db;
         $this->requestMethod = $requestMethod;
-        $this->userId = $userId;
+        $this->appoitmentId = $appoitmentId;
+        $this->appoitment = new Appoitment($db);
         $this->user = new User($db);
-        $this->dog = new Dog($db);
     }
 
     /**
@@ -49,20 +49,20 @@ class UserController {
     {
         switch ($this->requestMethod) {
             case 'GET':
-                if ($this->userId) {
-                    $response = $this->getUser($this->userId);
+                if ($this->appoitmentId) {
+                    $response = $this->getAppoitment($this->appoitmentId);
                 } else {
-                    $response = $this->getAllUsers();
+                    $response = $this->getAllAppoitments();
                 };
                 break;
             case 'POST':
-                $response = $this->createUser();
+                $response = $this->createAppoitment();
                 break;
             case 'PATCH':
-                $response = $this->updateUser($this->userId);
+                $response = $this->updateAppoitment($this->appoitmentId);
                 break;
             case 'DELETE':
-                $response = $this->deleteUser($this->userId);
+                $response = $this->deleteAppoitment($this->appoitmentId);
                 break;
             default:
                 $response = ResponseController::notFoundResponse();
@@ -76,11 +76,11 @@ class UserController {
 
     /**
      * 
-     * Method to return all users in JSON format.
+     * Method to return all Appoitments in JSON format.
      * 
      * @return string The status and the body in json format of the response
      */
-    private function getAllUsers()
+    private function getAllAppoitments()
     {
         $headers = apache_request_headers();
 
@@ -94,28 +94,19 @@ class UserController {
             return ResponseController::unauthorizedUser();
         }
         
-        $allUsers = $this->user->findAll();
+        $result = $this->appoitment->findAll();
 
-        $usersWithDogs = array();
-
-        foreach ($allUsers as $user) {
-            $dogs = $this->dog->findWithUserId($user["id"]);
-            $user["dogs"] = $dogs;
-            array_push($usersWithDogs,$user);
-        }
-
-        return ResponseController::successfulRequest($usersWithDogs);  
+        return ResponseController::successfulRequest($result);  
     }
 
-    
-    /**
+        /**
      * 
-     * Method to return a user in JSON format.
+     * Method to return a appoitment in JSON format.
      * 
-     * @param int $id The user identifier
+     * @param int $id The appoitment identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function getUser(int $id)
+    private function getAppoitment(int $id)
     {
         $headers = apache_request_headers();
 
@@ -130,38 +121,50 @@ class UserController {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->user->find($id);
+        $result = $this->appoitment->find($id);
 
         return ResponseController::successfulRequest($result);
     }
 
     /**
      * 
-     * Method to create a user.
+     * Method to create a appoitment.
      * 
      * @return string The status and the body in JSON format of the response
      */
-    private function createUser()
+    private function createAppoitment()
     {
+        $headers = apache_request_headers();
+
+        if (!isset($headers['Authorization'])) {
+            return ResponseController::notFoundAuthorizationHeader();
+        }
+
+        $user = $this->user->getUser($headers['Authorization']);
+
+        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+            return ResponseController::unauthorizedUser();
+        }
+
         parse_str(file_get_contents('php://input'), $input);
 
-        if (!$this->validateUser($input)) {
+        if (!$this->validateAppoitment($input)) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        $this->user->insert($input);
+        $this->appoitment->insert($input);
 
         return ResponseController::successfulCreatedRessource();
     }
 
     /**
      * 
-     * Method to update a user.
+     * Method to update a appoitment.
      * 
-     * @param int  $id The user identifier
+     * @param int  $id The appoitment identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function updateUser(int $id)
+    private function updateAppoitment(int $id)
     {
         $headers = apache_request_headers();
 
@@ -175,29 +178,30 @@ class UserController {
             return ResponseController::unauthorizedUser();
         }
 
-        $actualUser = $this->user->find($id);
+        $actualAppoitment = $this->appoitment->find($id);
 
-        if (!$actualUser) {
+
+        if (!$actualAppoitment) {
             return ResponseController::notFoundResponse();
         }
 
         parse_str(file_get_contents('php://input'), $input);
 
-        $newUser = array_replace($actualUser,$input);
+        $newAppoitment = array_replace($actualAppoitment,$input);
 
-        $this->user->update($id,$newUser);
+        $this->appoitment->update($id,$newAppoitment);
 
         return ResponseController::successfulRequest(null);
     }
 
     /**
      * 
-     * Method to delete a user.
+     * Method to delete a appoitment.
      * 
-     * @param int  $id The user identifier
+     * @param int  $id The appoitment identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function deleteUser(int $id)
+    private function deleteAppoitment(int $id)
     {
         $headers = apache_request_headers();
 
@@ -211,13 +215,13 @@ class UserController {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->user->find($id);
+        $result = $this->appoitment->find($id);
 
         if (!$result) {
             return ResponseController::notFoundResponse();
         }
 
-        $this->user->delete($id);
+        $this->appoitment->delete($id,$user["id"]);
 
         return ResponseController::successfulRequest(null);
     }
@@ -229,25 +233,21 @@ class UserController {
      * @param array $input The associative table of the query fields 
      * @return bool
      */
-    private function validateUser(array $input)
+    private function validateAppoitment(array $input)
     {
-        if (!isset($input['email'])) {
+        if (!isset($input['datetime_appoitment'])) {
             return false;
         }
 
-        if (!isset($input['firstname'])) {
+        if (!isset($input['duration_in_hour'])) {
             return false;
         }
 
-        if (!isset($input['lastname'])) {
+        if (!isset($input['user_id_customer'])) {
             return false;
         }
 
-        if (!isset($input['phonenumber'])) {
-            return false;
-        }
-
-        if (!isset($input['address'])) {
+        if (!isset($input['user_id_educator'])) {
             return false;
         }
 

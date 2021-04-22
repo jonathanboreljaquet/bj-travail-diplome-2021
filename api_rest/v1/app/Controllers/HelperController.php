@@ -10,6 +10,9 @@
 
 namespace App\Controllers;
 
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class HelperController {
 
@@ -94,17 +97,75 @@ class HelperController {
 
     /**
      * 
+     * Method to generate a random password.
+     * 
+     * @return string The random password
+     */
+    public static function generateRandomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $password = array();
+        $alphaLength = strlen($alphabet) - 1; 
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $password[] = $alphabet[$n];
+        }
+        return implode($password);
+    }
+
+    /**
+     * 
      * Method to check if a document type has the right value (conditions_inscription,poster).
      * 
      * @param string $document_type document type to check
      * @return bool The document type
      */
-    public static function validateDocumentTypeFormat($document_type)
+    public static function validateDocumentTypeFormat(string $document_type)
     {
         if ($document_type == 'conditions_inscription' || $document_type == 'poster') {
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * 
+     * Method to send an email.
+     * 
+     * @param string $message Message to send
+     * @param string $emailRecipient Recipient's email address
+     * @return bool The document type
+     */
+    public static function sendMail(string $message,string $emailRecipient)
+    {
+        $password = getenv('SMTP_PASSWORD');
+        $mail = new PHPMailer(true);
+
+try {
+    //Server settings
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output                                           //Send using SMTP
+    $mail->Host       = 'smtp.example.com';                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = 'dev@boreljaquet.ch';                     //SMTP username
+    $mail->Password   = $password;                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+    $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+    //Recipients
+    $mail->setFrom('from@example.com', 'Mailer');
+    $mail->addAddress('jonathan.brljq@eduge.ch', 'Jonathan Borel-Jaquet'); 
+    $mail->addReplyTo('reply@example.com', 'Information');
+
+    //Content
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = 'Here is the subject';
+    $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+    $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+    $mail->send();
+    echo 'Message has been sent';
+} catch (Exception $e) {
+    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+}
     }
 }
