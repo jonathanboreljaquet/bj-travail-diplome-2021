@@ -50,6 +50,9 @@ switch ($uri[6]) {
             $userId = (int) $uri[7];
             $controller = new UserController($dbConnection, $requestMethod, $userId);
         }
+        if (isset($uri[7]) && $uri[7] == Constants::CONNEXION_ENDPOINT) {
+            $controller = new UserController($dbConnection, $requestMethod,null,true);
+        }
 
         break;
     case 'dogs':

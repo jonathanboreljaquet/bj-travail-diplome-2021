@@ -8,209 +8,43 @@
  */
 namespace App\Models;
 
-use App\Controllers\HelperController;
-use App\System\Constants;
-
 class User {
 
-    private $db = null;
+    public ?int $id;
+    public ?string $email;
+    public ?string $firstname;
+    public ?string $lastname;
+    public ?string $phonenumber;
+    public ?string $address;
+    public ?string $api_token;
+    public ?int $code_role;
+    public ?string $password_hash;
 
     /**
      * 
-     * Constructor of the User object.
+     * Constructor of the User model object.
      * 
-     * @param PDO $db The database connection
+     * @param int $id The user identifier
+     * @param string $email Email of the user
+     * @param string $firstname First name of the user
+     * @param string $lastname Last name of the user
+     * @param string $phonenumber The phone number of the user
+     * @param string $address The address of the user
+     * @param string $api_token The api_token of the user
+     * @param int $db The code_role of the user
+     * @param string $db The password_hash of the user
      */
-    public function __construct(\PDO $db)
+    public function __construct(int $id = null, string $email = null, string $firstname = null,
+     string $lastname = null, string $phonenumber = null, string $address = null, string $api_token = null, int $code_role = null, string $password_hash = null)
     {
-        $this->db = $db;
-    }
-
-    /**
-     * 
-     * Method to return all the users of the database in an associative array.
-     * 
-     * @return array The associative array containing all the result rows of the query 
-     */
-    public function findAll()
-    {
-        $statement = "
-        SELECT id, email, firstname, lastname, phonenumber, address, api_token, code_role
-        FROM user;";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->execute();
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }
-    }
-
-
-    /**
-     * 
-     * Method to return a user from the database in an associative array.
-     * 
-     * @param int $id The user identifier 
-     * @return array The associative array containing all the result rows of the query 
-     */
-    public function find(int $id)
-    {
-        $statement = "
-        SELECT email, firstname, lastname, phonenumber, address, api_token, code_role,code_role,password_hash
-        FROM user
-        WHERE id = :ID_USER;";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':ID_USER', $id, \PDO::PARAM_INT);
-            $statement->execute();
-            $result = $statement->fetch(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-    /**
-     * 
-     * Method to insert a user in the database.
-     * 
-     * @param array $input The associative table with the corresponding keys and values 
-     * @return int The number of rows affected by the insert
-     */
-    public function insert(array $input)
-    {
-        $statement = "
-        INSERT INTO user (email, firstname, lastname, phonenumber, address, api_token, code_role, password_hash) 
-        VALUES(:EMAIL, :FIRSTNAME, :LASTNAME, :PHONENUMBER, :ADDRESS, :API_TOKEN, :CODE_ROLE, :PASSWORD_HASH);";
-
-        $api_token = HelperController::generateApiToken();
-
-        $code_role = Constants::USER_CODE_ROLE;
-
-        $sendmail = false;
-
-        if (!isset($input['password'])) {
-            $password = HelperController::generateRandomPassword();
-            $sendmail =true;
-        }
-        else{
-            $password = $input['password'];
-        }
-        $password_hash = password_hash($password,PASSWORD_DEFAULT);
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':EMAIL', $input['email'], \PDO::PARAM_STR);
-            $statement->bindParam(':FIRSTNAME', $input['firstname'], \PDO::PARAM_STR);    
-            $statement->bindParam(':LASTNAME', $input['lastname'], \PDO::PARAM_STR);  
-            $statement->bindParam(':PHONENUMBER', $input['phonenumber'], \PDO::PARAM_STR);  
-            $statement->bindParam(':ADDRESS', $input['address'], \PDO::PARAM_STR);
-            $statement->bindParam(':API_TOKEN', $api_token, \PDO::PARAM_STR);  
-            $statement->bindParam(':CODE_ROLE', $code_role, \PDO::PARAM_INT);  
-            $statement->bindParam(':PASSWORD_HASH', $password_hash, \PDO::PARAM_STR); 
-            $statement->execute();
-            if ($sendmail) {
-                HelperController::sendMail("MAIL","jonathan.brljq@eduge.ch");
-            }
-            return $statement->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-    /**
-     * 
-     * Method to update a user in the database.
-     * 
-     * @param int $id The user identifier 
-     * @param array $input The associative table with the corresponding keys and values 
-     * @return int The number of rows affected by the update
-     */
-    public function update(int $id, array $input)
-    {
-        $statement = "
-        UPDATE user
-        SET email = :EMAIL, 
-        firstname = :FIRSTNAME, 
-        lastname = :LASTNAME, 
-        phonenumber = :PHONENUMBER, 
-        address = :ADDRESS, 
-        password_hash = :PASSWORD_HASH
-        WHERE id = :ID_USER;";
-
-        if (!isset($input['password_hash'])) {
-            $input['password_hash'] = null;
-        }
-        else{
-            $input['password_hash'] = password_hash($input['password_hash'],PASSWORD_DEFAULT);
-        }
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':EMAIL', $input['email'], \PDO::PARAM_STR);
-            $statement->bindParam(':FIRSTNAME', $input['firstname'], \PDO::PARAM_STR);    
-            $statement->bindParam(':LASTNAME', $input['lastname'], \PDO::PARAM_STR);  
-            $statement->bindParam(':PHONENUMBER', $input['phonenumber'], \PDO::PARAM_STR);  
-            $statement->bindParam(':ADDRESS', $input['address'], \PDO::PARAM_STR); 
-            $statement->bindParam(':PASSWORD_HASH', $input["password_hash"], \PDO::PARAM_STR);  
-            $statement->bindParam(':ID_USER', $id, \PDO::PARAM_INT);
-            $statement->execute();
-            return $statement->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-    /**
-     * 
-     * Method to delete a user in the database.
-     * 
-     * @param int $id The user identifier 
-     * @return int The number of rows affected by the update
-     */
-    public function delete(int $id)
-    {
-        $statement = "
-        DELETE FROM user
-        WHERE id = :ID_USER;";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':ID_USER', $id, \PDO::PARAM_INT);  
-            $statement->execute();
-            return $statement->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-    /**
-     * 
-     * Method to return a user from the database user from his api token.
-     * 
-     * @param string $api_token The user api token 
-     * @return array The associative array containing all the result rows of the query 
-     */
-    public function getUser(string $api_token)
-    {
-        $statement = "
-        SELECT id, email, firstname, lastname, phonenumber, address, api_token, code_role, password_hash
-        FROM user
-        WHERE api_token = :API_TOKEN
-        LIMIT 1";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':API_TOKEN', $api_token, \PDO::PARAM_STR);
-            $statement->execute();
-            $result = $statement->fetch(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
+        $this->id = $id;
+        $this->email = $email;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->phonenumber = $phonenumber;
+        $this->address = $address;
+        $this->api_token = $api_token;
+        $this->code_role = $code_role;
+        $this->password_hash = $password_hash;
     }
 }

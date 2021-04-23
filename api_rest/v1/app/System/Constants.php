@@ -13,4 +13,5 @@ class Constants
     const USER_CODE_ROLE = 1;
     const ADMIN_CODE_ROLE = 2;
     const PLANNING_ENDPOINT = "planning";
+    const CONNEXION_ENDPOINT = "connexion";
 }

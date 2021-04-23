@@ -67,7 +67,7 @@ class ResponseController {
      * @param array $result The associative array containing all the result rows
      * @return string The status and the body in JSON format of the response
      */
-    public static function successfulRequest($result){
+    public static function successfulRequest($result = null){
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = (!is_null($result)) ? json_encode($result) : null;
         return $response;
@@ -209,6 +209,20 @@ class ResponseController {
         $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
         $response['body'] = json_encode([
             'error' => 'Type de document invalide => (conditions_inscription,poster).'
+        ]);
+        return $response;
+    }
+
+    /**
+     * 
+     * Method to return the error message in case of invalid login.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public static function invalidLogin(){
+        $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
+        $response['body'] = json_encode([
+            'error' => 'Identifiants de connexion invalides.'
         ]);
         return $response;
     }

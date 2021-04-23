@@ -9,69 +9,23 @@
 
 namespace App\Controllers;
 
+use App\DataAccessObject\DAOUser;
 use App\Models\User;
-use App\Controllers\ResponseController;
-use App\Models\Dog;
 use App\System\Constants;
 
 class UserController {
 
-    private $db;
-    private $requestMethod;
-    private $userId;
-    private $user;
-    private $dog;
-
+    private DAOUser $DAOUser;
 
     /**
      * 
      * Constructor of the UserController object.
      * 
      * @param PDO $db The database connection
-     * @param string $requestMethod  The request method (GET,POST,PATCH,DELETE)
-     * @param int $userId  The user id
      */
-    public function __construct(\PDO $db, string $requestMethod, int $userId = null)
+    public function __construct(\PDO $db)
     {
-        $this->db = $db;
-        $this->requestMethod = $requestMethod;
-        $this->userId = $userId;
-        $this->user = new User($db);
-        $this->dog = new Dog($db);
-    }
-
-    /**
-     * 
-     * Method allowing to proceed to the request chosen during the creation of the object.
-     * 
-     */
-    public function processRequest()
-    {
-        switch ($this->requestMethod) {
-            case 'GET':
-                if ($this->userId) {
-                    $response = $this->getUser($this->userId);
-                } else {
-                    $response = $this->getAllUsers();
-                };
-                break;
-            case 'POST':
-                $response = $this->createUser();
-                break;
-            case 'PATCH':
-                $response = $this->updateUser($this->userId);
-                break;
-            case 'DELETE':
-                $response = $this->deleteUser($this->userId);
-                break;
-            default:
-                $response = ResponseController::notFoundResponse();
-                break;
-        }
-        header($response['status_code_header']);
-        if ($response['body']) {
-            echo $response['body'];
-        }
+        $this->DAOUser = new DAOUser($db);
     }
 
     /**
@@ -80,7 +34,7 @@ class UserController {
      * 
      * @return string The status and the body in json format of the response
      */
-    private function getAllUsers()
+    public function getAllUsers()
     {
         $headers = apache_request_headers();
 
@@ -88,26 +42,19 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->user->getUser($headers['Authorization']);
+        $api_token = $headers['Authorization'];
 
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+        $user = $this->DAOUser->getUserWithApiToken($api_token);
+
+        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
         
-        $allUsers = $this->user->findAll();
+        $allUsers = $this->DAOUser->findAll(Constants::USER_CODE_ROLE);
 
-        $usersWithDogs = array();
-
-        foreach ($allUsers as $user) {
-            $dogs = $this->dog->findWithUserId($user["id"]);
-            $user["dogs"] = $dogs;
-            array_push($usersWithDogs,$user);
-        }
-
-        return ResponseController::successfulRequest($usersWithDogs);  
+        return ResponseController::successfulRequest($allUsers);  
     }
 
-    
     /**
      * 
      * Method to return a user in JSON format.
@@ -115,7 +62,7 @@ class UserController {
      * @param int $id The user identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function getUser(int $id)
+    public function getUser(int $id)
     {
         $headers = apache_request_headers();
 
@@ -124,13 +71,13 @@ class UserController {
         }
 
         
-        $user = $this->user->getUser($headers['Authorization']);
+        $user = $this->DAOUser->getUserWithApiToken($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->user->find($id);
+        $result = $this->DAOUser->find($id);
 
         return ResponseController::successfulRequest($result);
     }
@@ -139,17 +86,38 @@ class UserController {
      * 
      * Method to create a user.
      * 
+     * @param array  $input The body of request
      * @return string The status and the body in JSON format of the response
      */
-    private function createUser()
+    public function createUser(array $input)
     {
-        parse_str(file_get_contents('php://input'), $input);
-
         if (!$this->validateUser($input)) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        $this->user->insert($input);
+        $email = $input["email"];
+        $firstname = $input["firstname"];
+        $lastname = $input["lastname"];
+        $phonenumber = $input["phonenumber"];
+        $address = $input["address"];
+        $api_token = HelperController::generateApiToken();
+        $code_role = Constants::USER_CODE_ROLE;
+
+        if (isset($input["password"])) {
+            $password_hash = password_hash($input["password"],PASSWORD_DEFAULT);
+        }
+        else{
+            $random_password = HelperController::generateRandomPassword();
+            $password_hash = password_hash($random_password,PASSWORD_DEFAULT);
+        }
+
+        $user = new User(null,$email,$firstname,$lastname,$phonenumber,$address,$api_token,$code_role,$password_hash);
+
+        $this->DAOUser->insert($user);
+
+        if (isset($random_password)) {
+            HelperController::sendMail($random_password,$email);
+        }
 
         return ResponseController::successfulCreatedRessource();
     }
@@ -158,10 +126,11 @@ class UserController {
      * 
      * Method to update a user.
      * 
+     * @param array  $input The body of request
      * @param int  $id The user identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function updateUser(int $id)
+    public function updateUser(array $input, int $id)
     {
         $headers = apache_request_headers();
 
@@ -169,23 +138,33 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->user->getUser($headers['Authorization']);
+        $user = $this->DAOUser->getUserWithApiToken($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $actualUser = $this->user->find($id);
+        $actualUser = $this->DAOUser->find($id);
 
         if (!$actualUser) {
             return ResponseController::notFoundResponse();
         }
 
-        parse_str(file_get_contents('php://input'), $input);
+        $arrayActualuser = (array)$actualUser;
 
-        $newUser = array_replace($actualUser,$input);
+        $arrayNewUser = array_replace($arrayActualuser,$input);
 
-        $this->user->update($id,$newUser);
+        $newUser = new User();
+        foreach ($arrayNewUser as $key => $value)
+        {
+            $newUser->$key = $value;
+        }
+
+        if (isset($input["password"])) {
+            $newUser->password_hash = password_hash($input["password"],PASSWORD_DEFAULT);
+        }
+
+        $this->DAOUser->update($newUser);
 
         return ResponseController::successfulRequest(null);
     }
@@ -197,7 +176,7 @@ class UserController {
      * @param int  $id The user identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function deleteUser(int $id)
+    public function deleteUser(int $id)
     {
         $headers = apache_request_headers();
 
@@ -205,21 +184,44 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->user->getUser($headers['Authorization']);
+        $user = $this->DAOUser->getUserWithApiToken($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->user->find($id);
+        $user = $this->DAOUser->find($id);
 
-        if (!$result) {
+        if (!$user) {
             return ResponseController::notFoundResponse();
         }
 
-        $this->user->delete($id);
+        $this->DAOUser->delete($user);
 
         return ResponseController::successfulRequest(null);
+    }
+
+    /**
+     * 
+     * Method to get the api token of a user by logging in.
+     * 
+     * @param array  $input The body of request
+     * @return string The status and the body in JSON format of the response
+     */
+    public function connection(array $input)
+    {
+        if (!isset($input["email"]) || !isset($input["password"])) {
+            return ResponseController::unprocessableEntityResponse();
+        }
+        $user = $this->DAOUser->getUserWithEmail($input["email"]);
+
+        if (!password_verify($input["password"],$user->password_hash)) {
+            return ResponseController::invalidLogin();
+        }
+        
+        $result = array();
+        $result["api_token"] = $user->api_token;
+        return ResponseController::successfulRequest($result);
     }
 
      /**
