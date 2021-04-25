@@ -17,7 +17,7 @@ $userStatement = "
 INSERT INTO `api-rest_douceur-de-chien`.`user`
     (id, email, firstname, lastname, phonenumber, address, api_token, code_role, password_hash)
 VALUES
-    (1, 'borel@eduge.ch', 'Jonathan', 'Borel-Jaquet', '0772345212', 'Route de Frontenex 99 1208 Genève','e8e08012c93cce830cb19ff8e2977504','2', null),
+    (1, 'borel@eduge.ch', 'Jonathan', 'Borel-Jaquet', '0772345212', 'Route de Frontenex 99 1208 Genève','e8e08012c93cce830cb19ff8e2977504','2', '$2y$10$8H2s458tYmy72XFrEw3DlOBvgn60NKo0itM/KVd6HVzd0gj4nmQPG'),
     (2, 'ackermangue@eduge.ch', 'Gawen', 'Ackermangue', '0781355282', 'Chemin des Charmilles 12 1202 Genève','16a58476139a21dac6d5a4cdb07441b1','2', null),
     (3, 'merguez@eduge.ch', 'David', 'Merguez', '0714248272', 'Chemin des Charmilles 11 1202 Genève','d51c9d05c1399ca18eace53a84ab00c6','2', null),
     (4, 'burger@eduge.ch', 'Flo', 'Burger', '0791924210', 'Route de Satigny 07 1228 Genève','".generateApiToken()."','1', null),

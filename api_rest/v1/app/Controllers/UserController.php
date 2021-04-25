@@ -160,10 +160,6 @@ class UserController {
             $newUser->$key = $value;
         }
 
-        if (isset($input["password"])) {
-            $newUser->password_hash = password_hash($input["password"],PASSWORD_DEFAULT);
-        }
-
         $this->DAOUser->update($newUser);
 
         return ResponseController::successfulRequest(null);
@@ -214,6 +210,10 @@ class UserController {
             return ResponseController::unprocessableEntityResponse();
         }
         $user = $this->DAOUser->getUserWithEmail($input["email"]);
+
+        if (!$user) {
+            return ResponseController::invalidLogin();
+        }
 
         if (!password_verify($input["password"],$user->password_hash)) {
             return ResponseController::invalidLogin();

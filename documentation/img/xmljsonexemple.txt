@@ -1,0 +1,54 @@
+{
+    "clients": [
+        {
+        "nom" : "Dubois",
+        "prenom" : "Sophie",
+        "age" : 24,
+        "chien" : {
+            "nom" : "Rex",
+            "race" : "Berger allemand"
+            }
+        },
+        {
+        "nom" : "Alexis",
+        "prenom" : "Pierre",
+        "age" : 36,
+        "chien" : {
+            "nom" : "Flopy",
+            "race" : "Teckel"
+            }
+        }
+    ]    
+}
+
+
+
+<clients>
+ 	<client>
+      <nom>Dubois</nom>
+      <prenom>Sophie</prenom>
+      <age>24</age>
+      <chien>
+        <nom>Rex</nom>
+        <race>Berger allemand</race>
+      </chien>
+    </client>
+    <client>
+      <nom>Alexis</nom>
+      <prenom>Pierre</prenom>
+      <age>36</age>
+      <chien>
+        <nom>Raya</nom>
+        <race>Labrador</race>
+      </chien>
+    </client>
+    <client>
+      <nom>Rodriguez</nom>
+      <prenom>Manu</prenom>
+      <age>45</age>
+      <chien>
+        <nom>Flopy</nom>
+        <race>Teckel</race>
+      </chien>
+    </client>
+</clients>

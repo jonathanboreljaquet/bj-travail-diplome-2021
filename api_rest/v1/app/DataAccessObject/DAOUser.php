@@ -191,8 +191,7 @@ class DAOUser {
         firstname = :FIRSTNAME, 
         lastname = :LASTNAME, 
         phonenumber = :PHONENUMBER, 
-        address = :ADDRESS, 
-        password_hash = :PASSWORD_HASH
+        address = :ADDRESS
         WHERE id = :ID_USER;";
 
         try {
@@ -202,7 +201,6 @@ class DAOUser {
             $statement->bindParam(':LASTNAME', $user->lastname, \PDO::PARAM_STR);  
             $statement->bindParam(':PHONENUMBER', $user->phonenumber, \PDO::PARAM_STR);  
             $statement->bindParam(':ADDRESS', $user->address, \PDO::PARAM_STR); 
-            $statement->bindParam(':PASSWORD_HASH', $user->password_hash, \PDO::PARAM_STR);  
             $statement->bindParam(':ID_USER', $user->id, \PDO::PARAM_INT);
             $statement->execute();
             return $statement->rowCount();
