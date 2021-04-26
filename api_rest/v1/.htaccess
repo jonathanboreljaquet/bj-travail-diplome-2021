@@ -2,3 +2,4 @@ RewriteEngine On
  
 RewriteRule ^public/users/([0-9a-zA-Z_-]*)$ public/users/index.php/$1 [NC,L]
 RewriteRule ^public/dogs/([0-9a-zA-Z_-]*)$ public/dogs/index.php/$1 [NC,L]
+RewriteRule ^public/dogs/downloadPicture/([0-9a-zA-Z_-]*)$ public/dogs/downloadPicture/index.php/$1 [NC,L]

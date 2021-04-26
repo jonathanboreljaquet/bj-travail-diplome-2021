@@ -23,15 +23,9 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 $controller = new DogController($dbConnection);
 
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$pathFragments = explode('/', $path);
-$id = end($pathFragments);
-
-parse_str(file_get_contents('php://input'), $input);
-
 switch ($requestMethod) {
     case 'POST':
-        $response = $controller->uploadDogPicture($input);
+        $response = $controller->uploadDogPicture();
         break;
     default:
         header("HTTP/1.1 404 Not Found");

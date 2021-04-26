@@ -254,5 +254,19 @@ class ResponseController {
         return $response;
     }
 
+    /**
+     * 
+     * Method to return the error message in case of upload failed.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public static function uploadFailed(){
+        $response['status_code_header'] = 'HTTP/1.1 404 Not found';
+        $response['body'] = json_encode([
+            'error' => 'Échec d\'upload.'
+        ]);
+        return $response;
+    }
+
     
 }

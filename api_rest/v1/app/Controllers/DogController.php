@@ -199,10 +199,9 @@ class DogController {
      * 
      * Method to upload a dog picture.
      * 
-     * @param array  $input The body of request
      * @return string The status and the body in JSON format of the response
      */
-    public function uploadDogPicture(array $input)
+    public function uploadDogPicture()
     {
         $headers = apache_request_headers();
 
@@ -215,16 +214,46 @@ class DogController {
         if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
+
+        if (!is_uploaded_file($_FILES["dog_picture"]["tmp_name"]) || !isset($_POST["dog_id"])) {
+            return ResponseController::unprocessableEntityResponse();
+        }
+
+        $actualDog = $this->DAODog->find($_POST["dog_id"]);
+
+        if (!$actualDog) {
+            return ResponseController::notFoundResponse();
+        }
+
+        $tmp_file = $_FILES["dog_picture"]["tmp_name"];
+        $img_name = HelperController::generateRandomString();
+        $ext = pathinfo($_FILES['dog_picture']['name'], PATHINFO_EXTENSION);
+        $upload_dir = "../../../storage/app/dogPicture/".$img_name.".jpg";
+
+        if (!move_uploaded_file($tmp_file,$upload_dir)) {
+            return ResponseController::uploadFailed();
+        }
+
+        if ($actualDog->picture_serial_number != null) {
+            unlink("../../../storage/app/dogPicture/".$actualDog->picture_serial_number.".jpg");
+        }
+        
+        $actualDog->picture_serial_number = $img_name;
+        $this->DAODog->update($actualDog);
+        
+        return ResponseController::successfulRequest();
+
+
     }
 
     /**
      * 
      * Method to download a dog picture.
      * 
-     * @param array  $input The body of request
+     * @param string  $serial_number The serial_number of the dog picture
      * @return string The status and the body in JSON format of the response
      */
-    public function downloadDogPicture()
+    public function downloadDogPicture(string $serial_number)
     {
         $headers = apache_request_headers();
 
@@ -232,9 +261,11 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
-        $rootDir = realpath($_SERVER["DOCUMENT_ROOT"]);
-        $file_content = file_get_contents($rootDir."\bj-travail-diplome-2021\api_rest\\v1\storage\app\dogPicture\dogPictureExemple.jpg");
+        if(!$this->DAODog->findWithSerialNumber($serial_number)){
+            return ResponseController::notFoundResponse();
+        }
+
+        $file_content = file_get_contents("../../../storage/app/dogPicture/".$serial_number.".jpg");
         return ResponseController::successfulRequestWithPictureData($file_content);
     }
 

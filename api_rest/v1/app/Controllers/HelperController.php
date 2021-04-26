@@ -97,11 +97,11 @@ class HelperController {
 
     /**
      * 
-     * Method to generate a random password.
+     * Method to generate a random string.
      * 
-     * @return string The random password
+     * @return string The random string
      */
-    public static function generateRandomPassword() {
+    public static function generateRandomString() {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
         $password = array();
         $alphaLength = strlen($alphabet) - 1; 

@@ -147,6 +147,43 @@ class DAODog {
 
     /**
      * 
+     * Method to return a dog from the database from his picture serial number.
+     * 
+     * @param string $serial_number The dog picture serial number  
+     * @return Dog[] A Dog object array
+     */
+    public function findWithSerialNumber(string $serial_number)
+    {
+        $statement = "
+        SELECT * FROM dog
+        WHERE picture_serial_number = :SERIAL_NUMBER;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':SERIAL_NUMBER', $serial_number, \PDO::PARAM_STR);
+            $statement->execute();
+            if ($statement->rowCount()==0) {
+                return false;
+            }
+
+            $result = $statement->fetch(\PDO::FETCH_ASSOC);
+            $dog = new Dog();
+            $dog->id = $result["id"];
+            $dog->name = $result["name"];
+            $dog->breed = $result["breed"];
+            $dog->sex = $result["sex"];
+            $dog->picture_serial_number = $result["picture_serial_number"];
+            $dog->chip_id = $result["chip_id"];
+            $dog->user_id = $result["user_id"];
+            return $dog;
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    /**
+     * 
      * Method to insert a dog in the database.
      * 
      * @param Dog $dog The dog model object

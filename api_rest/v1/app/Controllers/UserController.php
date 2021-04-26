@@ -116,7 +116,7 @@ class UserController {
             $user->password_hash = password_hash($input["password"],PASSWORD_DEFAULT);
         }
         else{
-            $random_password = HelperController::generateRandomPassword();
+            $random_password = HelperController::generateRandomString();
             $user->password_hash = password_hash($random_password,PASSWORD_DEFAULT);
         }
 
