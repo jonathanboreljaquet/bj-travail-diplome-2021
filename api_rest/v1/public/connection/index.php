@@ -2,14 +2,14 @@
 /**
  * index.php
  *
- * File being the front controller of the API and allowing to process user requests.
+ * File being the front controller of the API and allowing to process connection request.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
 use App\Controllers\UserController;
 
-require "../../../bootstrap.php";
+require "../../bootstrap.php";
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");

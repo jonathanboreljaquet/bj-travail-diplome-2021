@@ -117,7 +117,7 @@ class HelperController {
      * Method to check if a document type has the right value (conditions_inscription,poster).
      * 
      * @param string $document_type document type to check
-     * @return bool The document type
+     * @return bool 
      */
     public static function validateDocumentTypeFormat(string $document_type)
     {
@@ -130,11 +130,27 @@ class HelperController {
 
     /**
      * 
+     * Method to check if a email has the right format.
+     * 
+     * @param string $email email  to check
+     * @return bool
+     */
+    public static function validateEmailFormat(string $email)
+    {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 
      * Method to send an email.
      * 
      * @param string $message Message to send
      * @param string $emailRecipient Recipient's email address
-     * @return bool The document type
+     * @return void
      */
     public static function sendMail(string $message,string $emailRecipient)
     {

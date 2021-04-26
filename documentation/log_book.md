@@ -929,3 +929,90 @@ Création du nouveau modèle permettent de représenter les données de ma table
 
 Envoie d'un mail à M. Mathieu afin de lui montrer les modifications structurelles de mon API REST afin d'être sûr d'être sur la bonne voie. Une question à propos de l'emplacement des futurs endpoints spéciaux comme celui permettant la connexion a également été posé. 
 
+### Lundi 26 avril 2021
+
+Réponse de M. Mathieu du mail envoyé le vendredi 23 avril. Pour ce qui est de la structure, celle-ci a été dans l'ensemble validé. En effet, la structure est dorénavant mieux organisé et plus facilement lisible. Une remarque par rapport à la validation des champs lors du endpoint da création d'utilisateur m'a été soumise par M. Mathieu. La réponse étant un peu flou pour moi, j'ai renvoyé un mail afin d'éclaircir cette remarque.
+
+Modification des tests unitaires Postman des endpoints utilisateurs. Changement du format de test pour les verbs GET. Auparavant, les tests unitaires vérifiaient si les informations de retour correspondaient exactement à une certaine donnée :
+
+```javascript
+pm.test("The right user was obtained", () => {
+  const responseJson = pm.response.json();
+  pm.expect(responseJson.id).to.eql(1);
+  pm.expect(responseJson.email).to.eql("sophiedubois766@gmail.com");
+  pm.expect(responseJson.firstname).to.eql("Sophie");
+  pm.expect(responseJson.lastname).to.eql("Dubois");
+  pm.expect(responseJson.phonenumber).to.eql("0792349172");
+  pm.expect(responseJson.address).to.eql("Route de la fraise 15 1268 Genève");
+  pm.expect(responseJson.api_token).to.eql(null);
+  pm.expect(responseJson.code_role).to.eql(null);
+  pm.expect(responseJson.password_hash).to.eql(null);
+});
+```
+
+
+
+Dorénavant, ces tests vérifient si la structure de données ainsi que les différents type attendu sont bien présent. Exemple du test permettant la vérification de la structure de données du endpoint retournant toutes les informations des clients :
+
+```javascript
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+      "type": "array",
+      "items": [{
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "email" : {"type" : "string"},
+              "firstname" : {"type" : "string"},
+              "lastname" : {"type" : "string"},
+              "phonenumber" : {"type" : "string"},
+              "address" : {"type" : "string"},
+              "api_token" : {"type" : "null"},
+              "code_role" : {"type" : "null"},
+              "password_hash" : {"type" : "null"}
+          },
+          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash"]
+      }]
+  })
+});
+```
+
+
+
+Finalisation des endpoints utilisateurs, les endpoints développés jusqu'à là sont :
+
+* `POST api/v1/users` pour créer un nouveau client, si le champ "password" n'est pas définit, alors l'API génère un mot de passe aléatoire et l'envoie par mail au client. Endpoint accessible par n'importe quel type d'utilisateur.
+* `GET api/v1/users` pour retourner les informations de tout les clients. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/users/{idUser}` pour retourner les informations d'un utilisateur.  Endpoint accessible uniquement par les administrateurs.
+* `PATCH api/v1/users/{idUser}` pour modifier les informations d'un utilisateur. Endpoint accessible uniquement par les administrateurs.
+* `DELETE api/v1/users{idUser}` pour supprimer un utilisateur.  Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/uesrs/me` pour récupérer l'intégralité des informations de l'utilisateur authentifié (pour l'instant, uniquement avec les informations de son/ses chiens). Endpoint accessible par les utilisateurs authentifiés.
+
+Création des tests unitaire et des endpoints dog permettant un CRUD, les endpoints actuellement développés et testé sont :
+
+* `POST api/v1/dogs` pour créer un nouveau chien. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/dogs` pour retourner les informations de tout les chiens. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/dogs/{idDog}` pour retourner les informations d'un chien.  Endpoint accessible uniquement par les administrateurs.
+* `PATCH api/v1/dogs/{idDog}` pour modifier les informations d'un chien. Endpoint accessible uniquement par les administrateurs.
+* `DELETE api/v1/dogs{idDog}` pour supprimer un utilisateur.  Endpoint accessible uniquement par les administrateurs.
+
+Recherche et réflexion pour la réalisation des endpoints permettant l'upload et le download des photos de chien.
+
+Développement des points suivant dans le rapport :
+
+* Résumé
+* Abstract
+* La société Douceur de Chien
+* Rappel du cahier des charges
+* Organisation
+  * Gestion de projet
+  * Format de documentation
+* Développement
+  * API REST
+    * API
+    * Principes architecturaux REST
+      * HTTP Verbs and Requests
+      * Code de réponse HTTP
+      * Format de réponse
+
+### Mardi 27 avril 2021

@@ -25,9 +25,9 @@ class User {
      * Constructor of the User model object.
      * 
      * @param int $id The user identifier
-     * @param string $email Email of the user
-     * @param string $firstname First name of the user
-     * @param string $lastname Last name of the user
+     * @param string $email The email of the user
+     * @param string $firstname the first name of the user
+     * @param string $lastname the last name of the user
      * @param string $phonenumber The phone number of the user
      * @param string $address The address of the user
      * @param string $api_token The api_token of the user

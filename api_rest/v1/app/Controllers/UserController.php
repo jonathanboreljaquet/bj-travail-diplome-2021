@@ -9,13 +9,15 @@
 
 namespace App\Controllers;
 
+use App\DataAccessObject\DAODog;
 use App\DataAccessObject\DAOUser;
-use App\Models\User;
+use app\Models\User;
+use App\Controllers\ResponseController;
 use App\System\Constants;
-
 class UserController {
 
     private DAOUser $DAOUser;
+    private DAODog $DAODog;
 
     /**
      * 
@@ -26,6 +28,7 @@ class UserController {
     public function __construct(\PDO $db)
     {
         $this->DAOUser = new DAOUser($db);
+        $this->DAODog = new DAODog($db);
     }
 
     /**
@@ -44,7 +47,7 @@ class UserController {
 
         $api_token = $headers['Authorization'];
 
-        $user = $this->DAOUser->getUserWithApiToken($api_token);
+        $user = $this->DAOUser->findUserWithApiToken($api_token);
 
         if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -71,15 +74,15 @@ class UserController {
         }
 
         
-        $user = $this->DAOUser->getUserWithApiToken($headers['Authorization']);
+        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
         if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->DAOUser->find($id);
+        $user = $this->DAOUser->find($id);
 
-        return ResponseController::successfulRequest($result);
+        return ResponseController::successfulRequest($user);
     }
 
     /**
@@ -91,32 +94,36 @@ class UserController {
      */
     public function createUser(array $input)
     {
-        if (!$this->validateUser($input)) {
+        $user = new User();
+        $user->email = $input["email"] ?? null;
+        $user->firstname = $input["firstname"] ?? null;
+        $user->lastname = $input["lastname"] ?? null;
+        $user->phonenumber = $input["phonenumber"] ?? null;
+        $user->address = $input["address"] ?? null;
+        $user->api_token = HelperController::generateApiToken();
+        $user->code_role = Constants::USER_CODE_ROLE;
+        
+
+        if (!$this->validateUser($user)) {
             return ResponseController::unprocessableEntityResponse();
+        } 
+
+        if (!HelperController::validateEmailFormat($user->email)) {
+            return ResponseController::invalidEmailFormat();
         }
 
-        $email = $input["email"];
-        $firstname = $input["firstname"];
-        $lastname = $input["lastname"];
-        $phonenumber = $input["phonenumber"];
-        $address = $input["address"];
-        $api_token = HelperController::generateApiToken();
-        $code_role = Constants::USER_CODE_ROLE;
-
         if (isset($input["password"])) {
-            $password_hash = password_hash($input["password"],PASSWORD_DEFAULT);
+            $user->password_hash = password_hash($input["password"],PASSWORD_DEFAULT);
         }
         else{
             $random_password = HelperController::generateRandomPassword();
-            $password_hash = password_hash($random_password,PASSWORD_DEFAULT);
+            $user->password_hash = password_hash($random_password,PASSWORD_DEFAULT);
         }
-
-        $user = new User(null,$email,$firstname,$lastname,$phonenumber,$address,$api_token,$code_role,$password_hash);
 
         $this->DAOUser->insert($user);
 
         if (isset($random_password)) {
-            HelperController::sendMail($random_password,$email);
+            HelperController::sendMail($random_password,$user->mail);
         }
 
         return ResponseController::successfulCreatedRessource();
@@ -138,7 +145,7 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->DAOUser->getUserWithApiToken($headers['Authorization']);
+        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
         if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -150,17 +157,19 @@ class UserController {
             return ResponseController::notFoundResponse();
         }
 
-        $arrayActualuser = (array)$actualUser;
+        $modifiedUser = new User();
+        $modifiedUser->id = $actualUser->id;
+        $modifiedUser->email = $input["email"] ?? $actualUser->email;
+        $modifiedUser->firstname = $input["firstname"] ?? $actualUser->firstname;
+        $modifiedUser->lastname = $input["lastname"] ?? $actualUser->lastname;
+        $modifiedUser->phonenumber = $input["phonenumber"] ?? $actualUser->phonenumber;
+        $modifiedUser->address = $input["address"] ?? $actualUser->address;
 
-        $arrayNewUser = array_replace($arrayActualuser,$input);
-
-        $newUser = new User();
-        foreach ($arrayNewUser as $key => $value)
-        {
-            $newUser->$key = $value;
+        if (!HelperController::validateEmailFormat($modifiedUser->email)) {
+            return ResponseController::invalidEmailFormat();
         }
 
-        $this->DAOUser->update($newUser);
+        $this->DAOUser->update($modifiedUser);
 
         return ResponseController::successfulRequest(null);
     }
@@ -180,7 +189,7 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->DAOUser->getUserWithApiToken($headers['Authorization']);
+        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
         if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -209,7 +218,7 @@ class UserController {
         if (!isset($input["email"]) || !isset($input["password"])) {
             return ResponseController::unprocessableEntityResponse();
         }
-        $user = $this->DAOUser->getUserWithEmail($input["email"]);
+        $user = $this->DAOUser->findUserWithEmail($input["email"]);
 
         if (!$user) {
             return ResponseController::invalidLogin();
@@ -218,38 +227,64 @@ class UserController {
         if (!password_verify($input["password"],$user->password_hash)) {
             return ResponseController::invalidLogin();
         }
+
+        $user->api_token = HelperController::generateApiToken();
+
+        $this->DAOUser->updateApiToken($user);
         
         $result = array();
         $result["api_token"] = $user->api_token;
         return ResponseController::successfulRequest($result);
     }
 
+    /**
+     * 
+     * Method to return all information of the currently logged in user in JSON format.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public function getMyInformations()
+    {
+        $headers = apache_request_headers();
+
+        if (!isset($headers['Authorization'])) {
+            return ResponseController::notFoundAuthorizationHeader();
+        }
+        
+        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $dog = $this->DAODog->findWithUserId($user->id);
+        $user->dogs = $dog;
+        
+        
+        return ResponseController::successfulRequest($user);
+    }
+
      /**
      * 
-     * Method to check if the required fields have been defined.
+     * Method to check if the user required fields have been defined for the creation.
      * 
-     * @param array $input The associative table of the query fields 
+     * @param User $user The user model object
      * @return bool
      */
-    private function validateUser(array $input)
+    private function validateUser(User $user)
     {
-        if (!isset($input['email'])) {
+        if ($user->email == null) {
             return false;
         }
 
-        if (!isset($input['firstname'])) {
+        if ($user->firstname == null) {
             return false;
         }
 
-        if (!isset($input['lastname'])) {
+        if ($user->lastname == null) {
             return false;
         }
 
-        if (!isset($input['phonenumber'])) {
+        if ($user->phonenumber == null) {
             return false;
         }
 
-        if (!isset($input['address'])) {
+        if ($user->address == null) {
             return false;
         }
 

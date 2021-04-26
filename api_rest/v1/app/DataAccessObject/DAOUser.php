@@ -34,7 +34,7 @@ class DAOUser {
     public function findAll(int $code_role)
     {
         $statement = "
-        SELECT id, email, firstname, lastname, phonenumber, address, api_token, code_role
+        SELECT id, email, firstname, lastname, phonenumber, address
         FROM user
         WHERE code_role = :CODE_ROLE;";
 
@@ -53,8 +53,6 @@ class DAOUser {
                 $user->lastname = $result["lastname"];
                 $user->phonenumber = $result["phonenumber"];
                 $user->address = $result["address"];
-                $user->api_token = $result["api_token"];
-                $user->code_role = $result["code_role"];
                 array_push($userArray,$user);
             }
             return $userArray;
@@ -74,7 +72,7 @@ class DAOUser {
     public function find(int $id)
     {
         $statement = "
-        SELECT id,email, firstname, lastname, phonenumber, address, api_token, code_role,password_hash
+        SELECT id,email, firstname, lastname, phonenumber, address
         FROM user
         WHERE id = :ID_USER;";
 
@@ -94,9 +92,6 @@ class DAOUser {
             $user->lastname = $result["lastname"];
             $user->phonenumber = $result["phonenumber"];
             $user->address = $result["address"];
-            $user->api_token = $result["api_token"];
-            $user->code_role = $result["code_role"];
-            $user->password_hash = $result["password_hash"];
             return $user;
         } catch (\PDOException $e) {
             exit($e->getMessage());
@@ -181,7 +176,7 @@ class DAOUser {
      * Method to update a user in the database.
      * 
      * @param User $user The user model object
-     * @return int The number of rows affected by the insert
+     * @return int The number of rows affected by the udpate
      */
     public function update(User $user)
     {
@@ -202,6 +197,31 @@ class DAOUser {
             $statement->bindParam(':PHONENUMBER', $user->phonenumber, \PDO::PARAM_STR);  
             $statement->bindParam(':ADDRESS', $user->address, \PDO::PARAM_STR); 
             $statement->bindParam(':ID_USER', $user->id, \PDO::PARAM_INT);
+            $statement->execute();
+            return $statement->rowCount();
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    /**
+     * 
+     * Method to update a user api token in the database.
+     * 
+     * @param User $user The user model object
+     * @return int The number of rows affected by the update
+     */
+    public function updateApiToken(User $user)
+    {
+        $statement = "
+        UPDATE user
+        SET api_token = :API_TOKEN
+        WHERE id = :ID_USER;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':API_TOKEN', $user->api_token, \PDO::PARAM_STR);
+            $statement->bindParam(':ID_USER', $user->id, \PDO::PARAM_INT);    
             $statement->execute();
             return $statement->rowCount();
         } catch (\PDOException $e) {
@@ -248,7 +268,7 @@ class DAOUser {
      * Method to delete a user in the database.
      * 
      * @param User $user The user model object
-     * @return int The number of rows affected by the update
+     * @return int The number of rows affected by the delete
      */
     public function delete(User $user)
     {
@@ -273,7 +293,7 @@ class DAOUser {
      * @param string $api_token The user api token 
      * @return User A User model object containing all the result rows of the query 
      */
-    public function getUserWithApiToken(string $api_token)
+    public function findUserWithApiToken(string $api_token)
     {
         $statement = "
         SELECT id, email, firstname, lastname, phonenumber, address, api_token, code_role
@@ -312,7 +332,7 @@ class DAOUser {
      * @param string $email The user email 
      * @return User A User model object containing all the result rows of the query 
      */
-    public function getUserWithEmail(string $email)
+    public function findUserWithEmail(string $email)
     {
         $statement = "
         SELECT id, email, firstname, lastname, phonenumber, address, api_token, code_role, password_hash
