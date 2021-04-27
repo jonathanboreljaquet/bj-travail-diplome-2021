@@ -351,7 +351,7 @@ Développement des points suivants dans le documentation :
 
 Modification du Controller ResponseController
 
-* Modification des code 422 Unprocessable Entity en 400 Bad Request
+* Modification des codes 422 Unprocessable Entity en 400 Bad Request
 * Création de la méthode chronologicalDateProblem() Retourne le code 400 Bad Request ainsi que le message : *La date ou l'heure de début est plus récente que la date ou l'heure de fin.*
 
 Modification du Controller HelperController
@@ -1031,3 +1031,15 @@ Développement du modèle Document
 Développement du Data Access Object DAODocument en respectant la nouvelle approche objet.
 
 Recherche et réflexion pour la réalisation des endpoints document.
+
+Création des tests unitaire et des endpoints document permettant un CRUD, les endpoints actuellement développés et testé sont :
+
+* `POST api/v1/documents` pour créer un nouveau document. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/documents` pour retourner les informations de tout les documents. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/documents/{idDocument}` pour retourner les informations d'un document.  Endpoint accessible uniquement par les administrateurs.
+* `PATCH api/v1/documents/{idDocument}` pour modifier les informations d'un document. Endpoint accessible uniquement par les administrateurs.
+* `DELETE api/v1/documents{idDocument}` pour supprimer un document.  Endpoint accessible uniquement par les administrateurs.
+
+Recherche et réflexion pour la modification du endpoint de création de document de type conditions d'inscription afin que celui-ci génère un document PDF avec une signature en base64 ainsi que différentes autres données qui sont à définir.
+
+### Mercredi 28 avril 2021

@@ -6,7 +6,7 @@
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
-namespace App\Models;
+namespace App\DataAccessObject;
 
 use App\Models\Document;
 
@@ -27,9 +27,9 @@ class DAODocument {
 
     /**
      * 
-     * Method to return all the documents of the database in an array of dog objects.
+     * Method to return all the documents of the database in an array of document objects.
      * 
-     * @return Document[] A Dog object array
+     * @return Document[] A Document object array
      */
     public function findAll()
     {
@@ -44,7 +44,7 @@ class DAODocument {
             $documentArray = array();
             
             foreach ($results as $result) {
-                $document = new Dog();
+                $document = new Document();
                 $document->id = $result["id"];
                 $document->document_serial_number = $result["document_serial_number"];
                 $document->type = $result["type"];
@@ -61,7 +61,7 @@ class DAODocument {
 
     /**
      * 
-     * Method to return a document from the database in a dog model object.
+     * Method to return a document from the database in a document model object.
      * 
      * @param int $id The document identifier 
      * @return Document A Document model object containing all the result rows of the query 

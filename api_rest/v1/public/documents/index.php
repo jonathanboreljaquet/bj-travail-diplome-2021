@@ -2,13 +2,13 @@
 /**
  * index.php
  *
- * File being the front controller of the API and allowing to process user requests.
+ * File being the front controller of the API and allowing to process document requests.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
-use App\Controllers\UserController;
-use App\Models\User;
+use App\Controllers\DocumentController;
+use App\Models\Document;
 
 require "../../bootstrap.php";
 
@@ -22,7 +22,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-$controller = new UserController($dbConnection);
+$controller = new DocumentController($dbConnection);
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $pathFragments = explode('/', $path);
@@ -30,29 +30,25 @@ $id = intval(end($pathFragments));
 
 parse_str(file_get_contents('php://input'), $input);
 
-$user = new User();
-$user->id = $id ?? null;
-$user->email = $input["email"] ?? null;
-$user->firstname = $input["firstname"] ?? null;
-$user->lastname = $input["lastname"] ?? null;
-$user->phonenumber = $input["phonenumber"] ?? null;
-$user->address = $input["address"] ?? null;
-$user->api_token = $input["api_token"] ?? null;
-$user->code_role = $input["code_role"] ?? null;
-$user->password_hash = $input["password"] ?? null;
+$document = new Document();
+$document->id = $id ?? null;
+$document->document_serial_number = $input["document_serial_number"] ?? null;
+$document->type = $input["type"] ?? null;
+$document->user_id = $input["user_id"] ?? null;
+$document->signature_base64 = $input["signature_base64"] ?? null;
 
 switch ($requestMethod) {
     case 'GET':
         if (empty($id) || !is_numeric($id)) {
-            $response = $controller->getAllUsers();
+            $response = $controller->getAllDocuments();
         }
         else{
-            $response = $controller->getUser($id);
+            $response = $controller->getDocument($id);
         }
         break;
 
     case 'POST':
-        $response = $controller->createUser($user);
+        $response = $controller->createDocument($document);
         break;
 
     case 'PATCH':
@@ -60,7 +56,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->updateUser($user);
+        $response = $controller->updateDocument($document);
         break;
 
     case 'DELETE':
@@ -68,7 +64,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->deleteUser($id);
+        $response = $controller->deleteDocument($id);
         break;
         
     default:

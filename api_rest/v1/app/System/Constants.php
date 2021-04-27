@@ -12,6 +12,7 @@ class Constants
 {
     const USER_CODE_ROLE = 1;
     const ADMIN_CODE_ROLE = 2;
-    const PLANNING_ENDPOINT = "planning";
-    const CONNEXION_ENDPOINT = "connexion";
+    const DOCUMENT_TYPE_CONDTIONS_OF_REGISTRATION = "conditions_inscription";
+    const IMAGE_TYPE_JPEG = "image/jpeg";
+    const IMAGE_TYPE_PNG = "image/png";
 }

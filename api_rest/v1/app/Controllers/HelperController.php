@@ -13,6 +13,7 @@ namespace App\Controllers;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
+use Dompdf\Dompdf;
 
 class HelperController {
 
@@ -201,14 +202,43 @@ class HelperController {
      * 
      * Method to convert a png image to jpeg image.
      * 
-     * 
-     * @return bool
+     * @return void
      */
     public static function pngTojpegConverter(string $filename)
     {
         $image = imagecreatefrompng ($filename);
         imagejpeg($image, $filename);
         imagedestroy($image);
+    }
+
+    /**
+     * 
+     * Method to store a conditions of registration.
+     * 
+     * @return bool
+     */
+    public static function storeConditionsRegistration(string $filename)
+    {
+        $dompdf = new DOMPDF();
+        $test = "test";
+        $template = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/ressources/template/conditions_registration.php");
+        $dompdf->loadHtml('<html>
+
+        <head>
+        <title>My first PHP Page</title>
+        </head>
+        <body>
+        This is normal HTML code
+        
+        ' . $test . '
+        
+        Back into normal HTML
+        
+        </body>
+        </html>');
+        $dompdf->render();
+        $output = $dompdf->output();
+        file_put_contents($_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/conditions_registration/test.pdf", $output);
     }
 }
 

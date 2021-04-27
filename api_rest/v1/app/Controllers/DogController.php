@@ -30,8 +30,8 @@ class DogController {
      */
     public function __construct(\PDO $db)
     {
-        $this->DAOUser = new DAOUser($db);
         $this->DAODog = new DAODog($db);
+        $this->DAOUser = new DAOUser($db);       
     }
 
     /**
@@ -59,7 +59,7 @@ class DogController {
         return ResponseController::successfulRequest($allDogs);  
     }
 
-        /**
+    /**
      * 
      * Method to return a dog in JSON format.
      * 
@@ -89,7 +89,7 @@ class DogController {
      * 
      * Method to create a dog.
      * 
-     * @param Dog $user The dog model object
+     * @param Dog $dog The dog model object
      * @return string The status and the body in JSON format of the response
      */
     public function createDog(Dog $dog)
@@ -110,6 +110,12 @@ class DogController {
             return ResponseController::unprocessableEntityResponse();
         }
 
+        $user = $this->DAOUser->find($dog->user_id);
+
+        if (is_null($user)) {
+            return ResponseController::notFoundResponse();
+        }
+
         $this->DAODog->insert($dog);
 
         return ResponseController::successfulCreatedRessource();
@@ -119,7 +125,7 @@ class DogController {
      * 
      * Method to update a dog.
      * 
-     * @param Dog $user The dog model object
+     * @param Dog $dog The dog model object
      * @return string The status and the body in JSON format of the response
      */
     public function updateDog(Dog $dog)
@@ -158,7 +164,7 @@ class DogController {
      * Method to delete a dog.
      * 
      * @param int  $id The dog identifier
-     * @returactualDogn string The status and the body in JSON format of the response
+     * @return string The status and the body in JSON format of the response
      */
     public function deleteDog(int $id)
     {
@@ -181,7 +187,10 @@ class DogController {
         }
 
         if (!is_null($dog->picture_serial_number)) {
-            unlink($_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/dog_picture/".$dog->picture_serial_number.".jpeg");
+            $filename = $_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/dog_picture/".$dog->picture_serial_number.".jpeg";
+            if (file_exists($filename)) {
+                unlink($filename);
+            }
         }
 
         $this->DAODog->delete($dog);
@@ -215,24 +224,20 @@ class DogController {
 
         $dog = $this->DAODog->find($_POST["dog_id"]);
 
-        if (!$dog) {
+        if (is_null($dog)) {
             return ResponseController::notFoundResponse();
         }
 
-        $image_type = exif_imagetype($_FILES["dog_picture"]["tmp_name"]); 
-
-        switch ($image_type) {
-            case IMAGETYPE_PNG:
+        switch ($_FILES["dog_picture"]["type"]) {
+            case Constants::IMAGE_TYPE_PNG:
                 HelperController::pngTojpegConverter($_FILES["dog_picture"]["tmp_name"]);
                 break;   
-            case IMAGETYPE_JPEG:
+            case Constants::IMAGE_TYPE_JPEG:
                 break;    
             default:
                 return ResponseController::imageFileFormatProblem();
                 break;
         }
-
-        
 
         $tmp_file = $_FILES["dog_picture"]["tmp_name"];
         $img_name = HelperController::generateRandomString();
@@ -242,7 +247,7 @@ class DogController {
             return ResponseController::uploadFailed();
         }
 
-        if ($dog->picture_serial_number) {
+        if (!is_null($dog->picture_serial_number)) {
             unlink($_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/dog_picture/".$dog->picture_serial_number.".jpeg");
         }
         
@@ -275,7 +280,7 @@ class DogController {
      * 
      * Method to check if the dog required fields have been defined for the creation.
      * 
-     * @param Dog $dog The user model object
+     * @param Dog $dog The dog model object
      * @return bool
      */
     private function validateDog(Dog $dog)

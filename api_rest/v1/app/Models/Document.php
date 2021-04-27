@@ -14,6 +14,7 @@ class Document {
     public ?string $document_serial_number;
     public ?string $type;
     public ?int $user_id;
+    public ?string $signature_base64;
 
     /**
      * 
@@ -24,11 +25,12 @@ class Document {
      * @param string $type The type of the document
      * @param int $user_id The identifier of the owner of the document
      */
-    public function __construct(int $id = null, string $document_serial_number = null, string $type = null,int $user_id = null)
+    public function __construct(int $id = null, string $document_serial_number = null, string $type = null,int $user_id = null, string $signature_base64 = null)
     {
         $this->id = $id;
         $this->document_serial_number = $document_serial_number;
         $this->type = $type;
         $this->user_id = $user_id;
+        $this->signature_base64 = $signature_base64;
     }
 }

@@ -6,6 +6,7 @@
     },
     "require": {
         "phpmailer/phpmailer": "^6.3",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "dompdf/dompdf": "^1.0"
     }
 }
