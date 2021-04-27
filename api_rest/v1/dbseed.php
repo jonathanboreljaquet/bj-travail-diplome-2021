@@ -32,9 +32,9 @@ $dogStatement = "
 INSERT INTO `api-rest_douceur-de-chien`.`dog`
     (id, name, breed, sex, picture_serial_number, chip_id, user_id)
 VALUES
-    (1, 'Paco', 'Staffy', 'Mâle', 'Kadml23m256', '123456789112345',4),
-    (2, 'Hyron', 'Staffy', 'Mâle', 'l5sjlp32caz', '123451234512345',5),
-    (3, 'Jaya', 'Rhodesian Ridgeback', 'Femelle', 'Oyz2jxbz12l', '123123123123123',6)";
+    (1, 'Paco', 'Staffy', 'Mâle', null, '123456789112345',4),
+    (2, 'Hyron', 'Staffy', 'Mâle', null, '123451234512345',5),
+    (3, 'Jaya', 'Rhodesian Ridgeback', 'Femelle', 'u0NKD3uP', '123123123123123',6)";
 
 $documentStatement = "
 INSERT INTO `api-rest_douceur-de-chien`.`document`

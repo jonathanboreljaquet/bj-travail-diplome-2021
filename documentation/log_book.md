@@ -1016,3 +1016,18 @@ Développement des points suivant dans le rapport :
       * Format de réponse
 
 ### Mardi 27 avril 2021
+
+Rendez-vous GMeet hebdomadaire avec M. Mathieu. Premièrement, nous avons discuté de la structure de l'API REST. M. Mathieu m'a conseillé de ne pas inclure le body de la request dans mes contrôleurs. En effet, les contrôleurs devraient uniquement acquérir des données correspondants au modèle de celui-ci. Deuxièmement, j'ai posé une question par rapport à l'upload d'image de chien. En effet, je me demandais si c'était le client ou le serveur de l'API REST qui devait convertir l'image dans le bon format. 
+
+Suite à cette discussion, j'ai donc modifié toutes les fonctions de mon contrôleur UserController afin de réspecter le rôle principale de celui-ci. Dorénavant, ce sont les points d'entrées des endpoints qui récupèrent les données du body et créé le modèle avec ces celles-ci pour ensuite le donner aux contrôleurs. Pour ce qui est de l'upload d'image, nous avons convenu qu'il était plus favorable de faire la conversion du coté serveur car ce n'est pas le rôle du client.
+
+Création des tests unitaire et des endpoints dog permettant l'upload et le download des photos de chien, les endpoints actuellement développés et testé sont :
+
+* `POST api/v1/dogs/uploadPicture` pour attribuer une photo à un chien. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/dogs/downloadPicture/{serial_number}` pour récupérer une photo grâce à son numéro de série. Endpoint accessible par n'importe quel type d'utilisateur.
+
+Développement des tests unitaires des endpoints CRUD document 
+Développement du modèle Document
+Développement du Data Access Object DAODocument en respectant la nouvelle approche objet.
+
+Recherche et réflexion pour la réalisation des endpoints document.

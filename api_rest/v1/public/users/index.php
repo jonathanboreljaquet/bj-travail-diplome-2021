@@ -8,6 +8,7 @@
  */
 
 use App\Controllers\UserController;
+use App\Models\User;
 
 require "../../bootstrap.php";
 
@@ -25,9 +26,18 @@ $controller = new UserController($dbConnection);
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $pathFragments = explode('/', $path);
-$id = end($pathFragments);
+$id = intval(end($pathFragments));
 
 parse_str(file_get_contents('php://input'), $input);
+
+$user = new User();
+$user->id = $id ?? null;
+$user->email = $input["email"] ?? null;
+$user->firstname = $input["firstname"] ?? null;
+$user->lastname = $input["lastname"] ?? null;
+$user->phonenumber = $input["phonenumber"] ?? null;
+$user->address = $input["address"] ?? null;
+$user->password_hash = $input["password"] ?? null;
 
 switch ($requestMethod) {
     case 'GET':
@@ -40,7 +50,7 @@ switch ($requestMethod) {
         break;
 
     case 'POST':
-        $response = $controller->createUser($input);
+        $response = $controller->createUser($user);
         break;
 
     case 'PATCH':
@@ -48,7 +58,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->updateUser($input,$id);
+        $response = $controller->updateUser($user);
         break;
 
     case 'DELETE':

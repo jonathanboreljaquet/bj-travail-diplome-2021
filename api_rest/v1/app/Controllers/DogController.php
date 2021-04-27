@@ -12,6 +12,7 @@ namespace App\Controllers;
 use App\DataAccessObject\DAODog;
 use App\DataAccessObject\DAOUser;
 use App\Controllers\ResponseController;
+use App\Controllers\HelperController;
 use App\Models\Dog;
 use App\System\Constants;
 
@@ -47,9 +48,9 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
-        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
         
@@ -73,9 +74,9 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
-        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
@@ -88,10 +89,10 @@ class DogController {
      * 
      * Method to create a dog.
      * 
-     * @param array  $input The body of request
+     * @param Dog $user The dog model object
      * @return string The status and the body in JSON format of the response
      */
-    public function createDog(array $input)
+    public function createDog(Dog $dog)
     {
         $headers = apache_request_headers();
 
@@ -99,17 +100,9 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $dog = new Dog();
-        $dog->name = $input["name"] ?? null;
-        $dog->breed = $input["breed"] ?? null;
-        $dog->sex = $input["sex"] ?? null;
-        $dog->picture_serial_number = $input["picture_serial_number"] ?? null;
-        $dog->chip_id = $input["chip_id"] ?? null;
-        $dog->user_id = $input["user_id"] ?? null;
+        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
-        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
-
-        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
@@ -126,11 +119,10 @@ class DogController {
      * 
      * Method to update a dog.
      * 
-     * @param array  $input The body of request
-     * @param int  $id The dog identifier
+     * @param Dog $user The dog model object
      * @return string The status and the body in JSON format of the response
      */
-    public function updateDog(array $input, int $id)
+    public function updateDog(Dog $dog)
     {
         $headers = apache_request_headers();
 
@@ -138,27 +130,25 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
-        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $actualDog = $this->DAODog->find($id);
+        $actualDog = $this->DAODog->find($dog->id);
 
-        if (!$actualDog) {
+        if (is_null($actualDog)) {
             return ResponseController::notFoundResponse();
         }
 
-        $modifiedDog = new Dog();
-        $modifiedDog->id = $actualDog->id;
-        $modifiedDog->name = $input["name"] ?? $actualDog->name;
-        $modifiedDog->breed = $input["breed"] ?? $actualDog->breed;
-        $modifiedDog->sex = $input["sex"] ?? $actualDog->sex;
-        $modifiedDog->picture_serial_number = $input["picture_serial_number"] ?? $actualDog->picture_serial_number;
-        $modifiedDog->chip_id = $input["chip_id"] ?? $actualDog->chip_id;
+        $actualDog->name = $dog->name ?? $actualDog->name;
+        $actualDog->breed = $dog->breed ?? $actualDog->breed;
+        $actualDog->sex = $dog->sex ?? $actualDog->sex;
+        $actualDog->picture_serial_number = $dog->picture_serial_number ?? $actualDog->picture_serial_number;
+        $actualDog->chip_id = $dog->chip_id ?? $actualDog->chip_id;
 
-        $this->DAODog->update($modifiedDog);
+        $this->DAODog->update($actualDog);
 
         return ResponseController::successfulRequest(null);
     }
@@ -168,7 +158,7 @@ class DogController {
      * Method to delete a dog.
      * 
      * @param int  $id The dog identifier
-     * @return string The status and the body in JSON format of the response
+     * @returactualDogn string The status and the body in JSON format of the response
      */
     public function deleteDog(int $id)
     {
@@ -178,16 +168,20 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
-        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
         $dog = $this->DAODog->find($id);
 
-        if (!$dog) {
+        if (is_null($dog)) {
             return ResponseController::notFoundResponse();
+        }
+
+        if (!is_null($dog->picture_serial_number)) {
+            unlink($_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/dog_picture/".$dog->picture_serial_number.".jpeg");
         }
 
         $this->DAODog->delete($dog);
@@ -209,41 +203,54 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
-        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        if (!is_uploaded_file($_FILES["dog_picture"]["tmp_name"]) || !isset($_POST["dog_id"])) {
+        if (!isset($_FILES["dog_picture"]) || !is_uploaded_file($_FILES["dog_picture"]["tmp_name"]) || !isset($_POST["dog_id"])) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        $actualDog = $this->DAODog->find($_POST["dog_id"]);
+        $dog = $this->DAODog->find($_POST["dog_id"]);
 
-        if (!$actualDog) {
+        if (!$dog) {
             return ResponseController::notFoundResponse();
         }
 
+        $image_type = exif_imagetype($_FILES["dog_picture"]["tmp_name"]); 
+
+        switch ($image_type) {
+            case IMAGETYPE_PNG:
+                HelperController::pngTojpegConverter($_FILES["dog_picture"]["tmp_name"]);
+                break;   
+            case IMAGETYPE_JPEG:
+                break;    
+            default:
+                return ResponseController::imageFileFormatProblem();
+                break;
+        }
+
+        
+
         $tmp_file = $_FILES["dog_picture"]["tmp_name"];
         $img_name = HelperController::generateRandomString();
-        $ext = pathinfo($_FILES['dog_picture']['name'], PATHINFO_EXTENSION);
-        $upload_dir = "../../../storage/app/dogPicture/".$img_name.".jpg";
+        $upload_dir = $_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/dog_picture/".$img_name.".jpeg";
 
         if (!move_uploaded_file($tmp_file,$upload_dir)) {
             return ResponseController::uploadFailed();
         }
 
-        if ($actualDog->picture_serial_number != null) {
-            unlink("../../../storage/app/dogPicture/".$actualDog->picture_serial_number.".jpg");
+        if ($dog->picture_serial_number) {
+            unlink($_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/dog_picture/".$dog->picture_serial_number.".jpeg");
         }
         
-        $actualDog->picture_serial_number = $img_name;
-        $this->DAODog->update($actualDog);
+        $dog->picture_serial_number = $img_name;
+
+        $this->DAODog->update($dog);
         
         return ResponseController::successfulRequest();
-
-
     }
 
     /**
@@ -255,18 +262,13 @@ class DogController {
      */
     public function downloadDogPicture(string $serial_number)
     {
-        $headers = apache_request_headers();
-
-        if (!isset($headers['Authorization'])) {
-            return ResponseController::notFoundAuthorizationHeader();
-        }
-
         if(!$this->DAODog->findWithSerialNumber($serial_number)){
             return ResponseController::notFoundResponse();
         }
 
-        $file_content = file_get_contents("../../../storage/app/dogPicture/".$serial_number.".jpg");
-        return ResponseController::successfulRequestWithPictureData($file_content);
+        $image = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/dog_picture/".$serial_number.".jpeg");
+        
+        return ResponseController::successfulRequestWithBase64('data:image/jpeg;base64, '.base64_encode($image));
     }
 
      /**

@@ -10,141 +10,25 @@ namespace App\Models;
 
 class Document {
 
-    private $db = null;
+    public ?int $id;
+    public ?string $document_serial_number;
+    public ?string $type;
+    public ?int $user_id;
 
     /**
      * 
-     * Constructor of the Document object.
+     * Constructor of the Document model object.
      * 
-     * @param PDO $db The database connection
+     * @param int $id The document identifier
+     * @param string $document_serial_number The serial number of the document
+     * @param string $type The type of the document
+     * @param int $user_id The identifier of the owner of the document
      */
-    public function __construct(\PDO $db)
+    public function __construct(int $id = null, string $document_serial_number = null, string $type = null,int $user_id = null)
     {
-        $this->db = $db;
-    }
-
-    /**
-     * 
-     * Method to return all the documents of the database in an associative array.
-     * 
-     * @return array The associative array containing all the result rows of the query 
-     */
-    public function findAll()
-    {
-        $statement = "
-        SELECT id, document_serial_number, type, user_id
-        FROM document;";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->execute();
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }
-    }
-
-
-    /**
-     * 
-     * Method to return a document from the database in an associative array.
-     * 
-     * @param int $id The document identifier 
-     * @return array The associative array containing all the result rows of the query 
-     */
-    public function find(int $id)
-    {
-        $statement = "
-        SELECT id, document_serial_number, type, user_id
-        FROM document
-        WHERE id = :ID_DOCUMENT;";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':ID_DOCUMENT', $id, \PDO::PARAM_INT);
-            $statement->execute();
-            $result = $statement->fetch(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-    /**
-     * 
-     * Method to insert a document in the database.
-     * 
-     * @param array $input The associative table with the corresponding keys and values 
-     * @return int The number of rows affected by the insert
-     */
-    public function insert(array $input)
-    {
-        $statement = "
-        INSERT INTO document (document_serial_number, type,user_id) 
-        VALUES(:DOCUMENT_SERIAL_NUMBER, :TYPE, :USER_ID);";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':DOCUMENT_SERIAL_NUMBER', $input['document_serial_number'], \PDO::PARAM_STR);
-            $statement->bindParam(':TYPE', $input['type'], \PDO::PARAM_STR);    
-            $statement->bindParam(':USER_ID', $input['user_id'], \PDO::PARAM_STR);  
-            $statement->execute();
-            return $statement->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-    /**
-     * 
-     * Method to update a document in the database.
-     * 
-     * @param int $id The document identifier 
-     * @param array $input The associative table with the corresponding keys and values 
-     * @return int The number of rows affected by the update
-     */
-    public function update(int $id, array $input)
-    {
-        $statement = "
-        UPDATE document
-        SET document_serial_number = :DOCUMENT_SERIAL_NUMBER, 
-        type = :TYPE,
-        user_id = :USER_ID
-        WHERE id = :ID_DOCUMENT;";
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':DOCUMENT_SERIAL_NUMBER', $input['document_serial_number'], \PDO::PARAM_STR);
-            $statement->bindParam(':TYPE', $input['type'], \PDO::PARAM_STR);    
-            $statement->bindParam(':USER_ID', $input['user_id'], \PDO::PARAM_STR);  
-            $statement->bindParam(':ID_DOCUMENT', $id, \PDO::PARAM_INT);
-            $statement->execute();
-            return $statement->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-    /**
-     * 
-     * Method to delete a document in the database.
-     * 
-     * @param int $id The document identifier 
-     * @return int The number of rows affected by the update
-     */
-    public function delete(int $id)
-    {
-        $statement = "
-        DELETE FROM document
-        WHERE id = :ID_DOCUMENT;";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':ID_DOCUMENT', $id, \PDO::PARAM_INT);
-            $statement->execute();
-            return $statement->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
+        $this->id = $id;
+        $this->document_serial_number = $document_serial_number;
+        $this->type = $type;
+        $this->user_id = $user_id;
     }
 }

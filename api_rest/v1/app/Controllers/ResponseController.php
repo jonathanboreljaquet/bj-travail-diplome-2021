@@ -80,7 +80,7 @@ class ResponseController {
      * @param array $result The associative array containing all the result rows
      * @return string The status and the body in JSON format of the response
      */
-    public static function successfulRequestWithPictureData($result){
+    public static function successfulRequestWithBase64($result){
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = $result;
         return $response;
@@ -264,6 +264,20 @@ class ResponseController {
         $response['status_code_header'] = 'HTTP/1.1 404 Not found';
         $response['body'] = json_encode([
             'error' => 'Échec d\'upload.'
+        ]);
+        return $response;
+    }
+
+    /**
+     * 
+     * Method to return the error message in case of invalid image file format.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public static function imageFileFormatProblem(){
+        $response['status_code_header'] = 'HTTP/1.1 404 Bad Request';
+        $response['body'] = json_encode([
+            'error' => 'Format d\'image par pris en charge.'
         ]);
         return $response;
     }

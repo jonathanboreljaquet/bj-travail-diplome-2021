@@ -23,11 +23,9 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 $controller = new UserController($dbConnection);
 
-parse_str(file_get_contents('php://input'), $input);
-
 switch ($requestMethod) {
     case 'GET':
-        $response = $controller->getMyInformations($input);
+        $response = $controller->getMyInformations();
         break;
     default:
         header("HTTP/1.1 404 Not Found");

@@ -8,6 +8,7 @@
  */
 
 use App\Controllers\DogController;
+use App\Models\Dog;
 
 require "../../bootstrap.php";
 
@@ -25,9 +26,18 @@ $controller = new DogController($dbConnection);
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $pathFragments = explode('/', $path);
-$id = end($pathFragments);
+$id = intval(end($pathFragments));
 
 parse_str(file_get_contents('php://input'), $input);
+
+$dog = new Dog();
+$dog->id = $id ?? null;
+$dog->name = $input["name"] ?? null;
+$dog->breed = $input["breed"] ?? null;
+$dog->sex = $input["sex"] ?? null;
+$dog->picture_serial_number = $input["picture_serial_number"] ?? null;
+$dog->chip_id = $input["chip_id"] ?? null;
+$dog->user_id = $input["user_id"] ?? null;
 
 switch ($requestMethod) {
     case 'GET':
@@ -40,7 +50,7 @@ switch ($requestMethod) {
         break;
 
     case 'POST':
-        $response = $controller->createDog($input);
+        $response = $controller->createDog($dog);
         break;
 
     case 'PATCH':
@@ -48,7 +58,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->updateDog($input,$id);
+        $response = $controller->updateDog($dog);
         break;
 
     case 'DELETE':

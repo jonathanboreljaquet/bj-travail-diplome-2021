@@ -13,8 +13,6 @@ use App\Models\Dog;
 
 class DAODog {
 
-
-
     private $db = null;
 
     /**
@@ -85,19 +83,22 @@ class DAODog {
             $statement->bindParam(':ID_DOG', $id, \PDO::PARAM_INT);
             $statement->execute();
             
-            if ($statement->rowCount()==0) {
-                return false;
+            $dog = new Dog();
+
+            if ($statement->rowCount()==1) {
+                $result = $statement->fetch(\PDO::FETCH_ASSOC);
+                $dog->id = $result["id"];
+                $dog->name = $result["name"];
+                $dog->breed = $result["breed"];
+                $dog->sex = $result["sex"];
+                $dog->picture_serial_number = $result["picture_serial_number"];
+                $dog->chip_id = $result["chip_id"];
+                $dog->user_id = $result["user_id"];
+            }
+            else{
+                $dog = null;
             }
 
-            $result = $statement->fetch(\PDO::FETCH_ASSOC);
-            $dog = new Dog();
-            $dog->id = $result["id"];
-            $dog->name = $result["name"];
-            $dog->breed = $result["breed"];
-            $dog->sex = $result["sex"];
-            $dog->picture_serial_number = $result["picture_serial_number"];
-            $dog->chip_id = $result["chip_id"];
-            $dog->user_id = $result["user_id"];
             return $dog;
         } catch (\PDOException $e) {
             exit($e->getMessage());
@@ -150,31 +151,36 @@ class DAODog {
      * Method to return a dog from the database from his picture serial number.
      * 
      * @param string $serial_number The dog picture serial number  
-     * @return Dog[] A Dog object array
+     * @return Dog A Dog model object containing all the result rows of the query 
      */
     public function findWithSerialNumber(string $serial_number)
     {
         $statement = "
-        SELECT * FROM dog
+        SELECT id, name, breed, sex, picture_serial_number, chip_id, user_id 
+        FROM dog
         WHERE picture_serial_number = :SERIAL_NUMBER;";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':SERIAL_NUMBER', $serial_number, \PDO::PARAM_STR);
             $statement->execute();
-            if ($statement->rowCount()==0) {
-                return false;
+
+            $dog = new Dog();
+
+            if ($statement->rowCount()==1) {
+                $result = $statement->fetch(\PDO::FETCH_ASSOC);
+                $dog->id = $result["id"];
+                $dog->name = $result["name"];
+                $dog->breed = $result["breed"];
+                $dog->sex = $result["sex"];
+                $dog->picture_serial_number = $result["picture_serial_number"];
+                $dog->chip_id = $result["chip_id"];
+                $dog->user_id = $result["user_id"];
+            }
+            else{
+                $dog = null;
             }
 
-            $result = $statement->fetch(\PDO::FETCH_ASSOC);
-            $dog = new Dog();
-            $dog->id = $result["id"];
-            $dog->name = $result["name"];
-            $dog->breed = $result["breed"];
-            $dog->sex = $result["sex"];
-            $dog->picture_serial_number = $result["picture_serial_number"];
-            $dog->chip_id = $result["chip_id"];
-            $dog->user_id = $result["user_id"];
             return $dog;
 
         } catch (\PDOException $e) {

@@ -47,9 +47,9 @@ class UserController {
 
         $api_token = $headers['Authorization'];
 
-        $user = $this->DAOUser->findUserWithApiToken($api_token);
+        $userAuth = $this->DAOUser->findUserWithApiToken($api_token);
 
-        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
         
@@ -74,13 +74,17 @@ class UserController {
         }
 
         
-        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
-        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
         $user = $this->DAOUser->find($id);
+
+        if (is_null($user)) {
+            return ResponseController::notFoundResponse();
+        }
 
         return ResponseController::successfulRequest($user);
     }
@@ -89,21 +93,14 @@ class UserController {
      * 
      * Method to create a user.
      * 
-     * @param array  $input The body of request
+     * @param User $user The user model object
      * @return string The status and the body in JSON format of the response
      */
-    public function createUser(array $input)
-    {
-        $user = new User();
-        $user->email = $input["email"] ?? null;
-        $user->firstname = $input["firstname"] ?? null;
-        $user->lastname = $input["lastname"] ?? null;
-        $user->phonenumber = $input["phonenumber"] ?? null;
-        $user->address = $input["address"] ?? null;
+    public function createUser(User $user)
+    {     
         $user->api_token = HelperController::generateApiToken();
         $user->code_role = Constants::USER_CODE_ROLE;
         
-
         if (!$this->validateUser($user)) {
             return ResponseController::unprocessableEntityResponse();
         } 
@@ -112,8 +109,8 @@ class UserController {
             return ResponseController::invalidEmailFormat();
         }
 
-        if (isset($input["password"])) {
-            $user->password_hash = password_hash($input["password"],PASSWORD_DEFAULT);
+        if ($user->password_hash != null) {
+            $user->password_hash = password_hash($user->password_hash,PASSWORD_DEFAULT);
         }
         else{
             $random_password = HelperController::generateRandomString();
@@ -123,7 +120,7 @@ class UserController {
         $this->DAOUser->insert($user);
 
         if (isset($random_password)) {
-            HelperController::sendMail($random_password,$user->mail);
+            HelperController::sendMail($random_password,$user->email);
         }
 
         return ResponseController::successfulCreatedRessource();
@@ -133,11 +130,10 @@ class UserController {
      * 
      * Method to update a user.
      * 
-     * @param array  $input The body of request
-     * @param int  $id The user identifier
+     * @param User $user The user model object
      * @return string The status and the body in JSON format of the response
      */
-    public function updateUser(array $input, int $id)
+    public function updateUser(User $user)
     {
         $headers = apache_request_headers();
 
@@ -145,31 +141,29 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
-        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $actualUser = $this->DAOUser->find($id);
+        $actualUser = $this->DAOUser->find($user->id);
 
-        if (!$actualUser) {
+        if (is_null($actualUser)) {
             return ResponseController::notFoundResponse();
         }
 
-        $modifiedUser = new User();
-        $modifiedUser->id = $actualUser->id;
-        $modifiedUser->email = $input["email"] ?? $actualUser->email;
-        $modifiedUser->firstname = $input["firstname"] ?? $actualUser->firstname;
-        $modifiedUser->lastname = $input["lastname"] ?? $actualUser->lastname;
-        $modifiedUser->phonenumber = $input["phonenumber"] ?? $actualUser->phonenumber;
-        $modifiedUser->address = $input["address"] ?? $actualUser->address;
+        $actualUser->email = $user->email ?? $actualUser->email;
+        $actualUser->firstname = $user->firstname ?? $actualUser->firstname;
+        $actualUser->lastname = $user->lastname ?? $actualUser->lastname;
+        $actualUser->phonenumber = $user->phonenumber ?? $actualUser->phonenumber;
+        $actualUser->address = $user->address ?? $actualUser->address;
 
-        if (!HelperController::validateEmailFormat($modifiedUser->email)) {
+        if (!HelperController::validateEmailFormat($actualUser->email)) {
             return ResponseController::invalidEmailFormat();
         }
 
-        $this->DAOUser->update($modifiedUser);
+        $this->DAOUser->update($actualUser);
 
         return ResponseController::successfulRequest(null);
     }
@@ -189,15 +183,15 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 
-        if (!$user || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
         $user = $this->DAOUser->find($id);
 
-        if (!$user) {
+        if (is_null($user)) {
             return ResponseController::notFoundResponse();
         }
 
@@ -210,30 +204,31 @@ class UserController {
      * 
      * Method to get the api token of a user by logging in.
      * 
-     * @param array  $input The body of request
+     * @param User $user The user model object
      * @return string The status and the body in JSON format of the response
      */
-    public function connection(array $input)
+    public function connection(User $user)
     {
-        if (!isset($input["email"]) || !isset($input["password"])) {
+        if (is_null($user->email) || is_null($user->password_hash)) {
             return ResponseController::unprocessableEntityResponse();
         }
-        $user = $this->DAOUser->findUserWithEmail($input["email"]);
 
-        if (!$user) {
+        $userAuth = $this->DAOUser->findUserWithEmail($user->email);
+
+        if (is_null($userAuth)) {
             return ResponseController::invalidLogin();
         }
 
-        if (!password_verify($input["password"],$user->password_hash)) {
+        if (!password_verify($user->password_hash,$userAuth->password_hash)) {
             return ResponseController::invalidLogin();
         }
 
-        $user->api_token = HelperController::generateApiToken();
+        $userAuth->api_token = HelperController::generateApiToken();
 
-        $this->DAOUser->updateApiToken($user);
+        $this->DAOUser->update($userAuth);
         
         $result = array();
-        $result["api_token"] = $user->api_token;
+        $result["api_token"] = $userAuth->api_token;
         return ResponseController::successfulRequest($result);
     }
 

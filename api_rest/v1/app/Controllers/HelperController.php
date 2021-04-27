@@ -146,6 +146,22 @@ class HelperController {
 
     /**
      * 
+     * Method to check if extension of the dog picture has the right format.
+     * 
+     * @param string $ext Extension file to check
+     * @return bool
+     */
+    public static function validateDogPictureExtension(string $ext)
+    {
+        if (exif_imagetype($ext) != IMAGETYPE_PNG && exif_imagetype($ext) != IMAGETYPE_JPEG) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 
      * Method to send an email.
      * 
      * @param string $message Message to send
@@ -180,4 +196,19 @@ class HelperController {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
     }
+
+    /**
+     * 
+     * Method to convert a png image to jpeg image.
+     * 
+     * 
+     * @return bool
+     */
+    public static function pngTojpegConverter(string $filename)
+    {
+        $image = imagecreatefrompng ($filename);
+        imagejpeg($image, $filename);
+        imagedestroy($image);
+    }
 }
+

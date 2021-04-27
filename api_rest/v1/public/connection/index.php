@@ -8,6 +8,7 @@
  */
 
 use App\Controllers\UserController;
+use App\Models\User;
 
 require "../../bootstrap.php";
 
@@ -25,9 +26,13 @@ $controller = new UserController($dbConnection);
 
 parse_str(file_get_contents('php://input'), $input);
 
+$user = new User();
+$user->email = $input["email"] ?? null;
+$user->password_hash = $input["password"] ?? null;
+
 switch ($requestMethod) {
     case 'POST':
-        $response = $controller->connection($input);
+        $response = $controller->connection($user);
         break;
     default:
         header("HTTP/1.1 404 Not Found");
