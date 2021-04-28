@@ -42,7 +42,8 @@ INSERT INTO `api-rest_douceur-de-chien`.`document`
 VALUES
     (1, 'ly5uy43256', 'conditions_inscription', 4),
     (2, 'p1yay43ko6', 'conditions_inscription', 5),
-    (3, 'u1rfa432op', 'conditions_inscription', 6)";
+    (3, 'u1rfa432op', 'conditions_inscription', 6),
+    (4, 'mASE47FP', 'conditions_inscription', 4)";
 
 $appoitmentStatement = "
 INSERT INTO `api-rest_douceur-de-chien`.`appoitment`

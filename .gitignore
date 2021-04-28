@@ -1,4 +1,6 @@
 api_rest/v1/.env
 api_rest/v1/vendor/*
 api_rest/v1/storage/app/conditions_registration/*
+!api_rest/v1/storage/app/conditions_registration/u0NKD3uP.jpeg
 api_rest/v1/storage/app/dog_picture*
+!api_rest/v1/storage/app/conditions_registration/mASE47FP.pdf
