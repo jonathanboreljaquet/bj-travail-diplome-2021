@@ -75,12 +75,12 @@ class ResponseController {
 
     /**
      * 
-     * Method to return the GET success message for download picture.
+     * Method to return the GET success message for data that does not need to be json encoded.
      * 
      * @param array $result The associative array containing all the result rows
      * @return string The status and the body in JSON format of the response
      */
-    public static function successfulRequestWithBase64($result){
+    public static function successfulRequestWithoutJson($result){
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = $result;
         return $response;

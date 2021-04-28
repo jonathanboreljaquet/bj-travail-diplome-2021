@@ -2,18 +2,18 @@
 /**
  * index.php
  *
- * File being the front controller of the API and allowing to process upload dog picture.
+ * File being the front controller of the API and allowing to process download document.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
-use App\Controllers\DogController;
+use App\Controllers\DocumentController;
 
 require "../../../bootstrap.php";
 
 header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+header("Content-Type: application/pdf");
+header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
@@ -23,7 +23,7 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $pathFragments = explode('/', $path);
 $serial_number = end($pathFragments);
 
-$controller = new DogController($dbConnection);
+$controller = new DocumentController($dbConnection);
 
 switch ($requestMethod) {
     case 'GET':
@@ -31,7 +31,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->downloadDogPicture($serial_number);
+        $response = $controller->downloadDocument($serial_number);
         break;
     default:
         header("HTTP/1.1 404 Not Found");

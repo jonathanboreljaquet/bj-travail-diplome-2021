@@ -273,7 +273,7 @@ class DogController {
 
         $image = file_get_contents(HelperController::getDefaultDirectory()."storage/app/dog_picture/".$serial_number.".jpeg");
         
-        return ResponseController::successfulRequestWithBase64('data:image/jpeg;base64, '.base64_encode($image));
+        return ResponseController::successfulRequestWithoutJson('data:image/jpeg;base64, '.base64_encode($image));
     }
 
      /**

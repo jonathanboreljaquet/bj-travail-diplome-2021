@@ -9,15 +9,18 @@
 
 namespace App\Controllers;
 
-use App\DataAccessObject\DAODog;
 use App\DataAccessObject\DAOUser;
+use App\DataAccessObject\DAODog;
+use App\DataAccessObject\DAODocument;
 use app\Models\User;
 use App\Controllers\ResponseController;
 use App\System\Constants;
+
 class UserController {
 
     private DAOUser $DAOUser;
     private DAODog $DAODog;
+    private DAODocument $DAODocument;
 
     /**
      * 
@@ -29,6 +32,7 @@ class UserController {
     {
         $this->DAOUser = new DAOUser($db);
         $this->DAODog = new DAODog($db);
+        $this->DAODocument = new DAODocument($db);
     }
 
     /**
@@ -246,12 +250,18 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
         
-        $user = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
-        $dog = $this->DAODog->findWithUserId($user->id);
-        $user->dogs = $dog;
+        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+
+        if (is_null($userAuth)) {
+            return ResponseController::notFoundResponse();
+        }
+        $dogs = $this->DAODog->findWithUserId($userAuth->id);
+        $documents = $this->DAODocument->findWithUserId($userAuth->id);
+        $userAuth->dogs = $dogs;
+        $userAuth->documents = $documents;
         
         
-        return ResponseController::successfulRequest($user);
+        return ResponseController::successfulRequest($userAuth);
     }
 
      /**

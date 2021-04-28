@@ -99,6 +99,86 @@ class DAODocument {
 
     /**
      * 
+     * Method to return all documents from the database with the user id in an array of documents objects.
+     * 
+     * @param int $userId The user identifier 
+     * @return Document[] A Document object array
+     */
+    public function findWithUserId(int $userId)
+    {
+        $statement = "
+        SELECT id, document_serial_number, type, user_id 
+        FROM document
+        WHERE user_id = :ID_USER;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_USER', $userId, \PDO::PARAM_INT);
+            $statement->execute();
+            $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
+            $documentArray = array();
+            
+            foreach ($results as $result) {
+                $document = new Document();
+                $document->id = $result["id"];
+                $document->document_serial_number = $result["document_serial_number"];
+                $document->type = $result["type"];
+                $document->user_id = $result["user_id"];
+                array_push($documentArray,$document);
+            }
+
+            return $documentArray;
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    /**
+     * 
+     * Method to return a document from the database with the user id and serial number in a document model object.
+     * 
+     * @param int $userId The user identifier 
+     * @param string $serial_number The serial number of the document 
+     * @return Document A Document model object containing all the result rows of the query 
+     */
+    public function findWithUserIdAndSerialNumber(int $userId,string $serial_number)
+    {
+        $statement = "
+        SELECT id, document_serial_number, type, user_id 
+        FROM document
+        WHERE user_id = :ID_USER
+        AND document_serial_number= :SERIAL_NUMBER;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_USER', $userId, \PDO::PARAM_INT);
+            $statement->bindParam(':SERIAL_NUMBER', $serial_number, \PDO::PARAM_STR);
+            $statement->execute();
+            
+            $document = new Document();
+
+            if ($statement->rowCount()==1) {
+                $result = $statement->fetch(\PDO::FETCH_ASSOC);
+                $document->id = $result["id"];
+                $document->document_serial_number = $result["document_serial_number"];
+                $document->type = $result["type"];
+                $document->user_id = $result["user_id"];
+            }
+            else{
+                $document = null;
+            }
+
+            return $document;
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    /**
+     * 
      * Method to insert a document in the database.
      * 
      * @param Document $document The document model object

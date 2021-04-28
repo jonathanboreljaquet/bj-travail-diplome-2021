@@ -225,6 +225,38 @@ class DocumentController {
         return ResponseController::successfulRequest(null);
     }
 
+    /**
+     * 
+     * Method to download a document.
+     * 
+     * @param int  $serial_number The document identifier
+     * @return string The status and the body in JSON format of the response
+     */
+    public function downloadDocument(string $serial_number)
+    {
+        $headers = apache_request_headers();
+
+        if (!isset($headers['Authorization'])) {
+            return ResponseController::notFoundAuthorizationHeader();
+        }
+
+        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+
+        if (is_null($userAuth)) {
+            return ResponseController::notFoundResponse();
+        }
+
+        $document = $this->DAODocument->findWithUserIdAndSerialNumber($userAuth->id, $serial_number);
+
+        if (is_null($document)) {
+            return ResponseController::notFoundResponse();
+        }
+
+        $document_data = file_get_contents(HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$serial_number.".pdf");
+
+        return ResponseController::successfulRequestWithoutJson($document_data);
+    }
+
      /**
      * 
      * Method to check if the document required fields have been defined for the creation.

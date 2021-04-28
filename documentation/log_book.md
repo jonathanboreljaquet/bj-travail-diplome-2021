@@ -1069,7 +1069,7 @@ Pour pouvoir soumettre une requête de création de document de type conditions 
    2. Son type : Ex: conditions_inscription
    3. L'identifiant du propriétaire du document : Ex: 4
 
-Méthode permettant la création de document de type conditions d'inscription utilisant la librairie offrant la possibilité de convertir du HTML et CSS en PDF [DOMPDF](https://github.com/dompdf/dompdf):
+Méthode permettant la création de document de type conditions d'inscription utilisant la librairie offrant la possibilité de convertir du HTML et CSS en PDF [DOMPDF](https://github.com/dompdf/dompdf) :
 
 ```PHP
 public static function storeConditionsRegistration(string $filename,int $package_number,string $date, string $signature_base64,string $userfirstname, string $userlastname)
@@ -1086,9 +1086,9 @@ public static function storeConditionsRegistration(string $filename,int $package
     }
 ```
 
-La méthode `storeConditionsRegistration` va enclencher une temporisation de sortie avec la méthode `ob_get_clean`permettant à toutes les instructions suivantes d'être mise en tampon. La méthode `ob_get_clean()` va lire le contenu du tampon et ensuite va l'effacer. Ce traitement permet le traitement de mes différentes variables dans le template HTML `conditions_registration.php`. Une fois le contenue HTML chargé avec les données, la librairie DOMPDF va me permettre de convertir ce document HTML en PDF pour pouvoir le stocker.
+La méthode `storeConditionsRegistration` va enclencher une temporisation de sortie avec la méthode `ob_get_clean`permettant à toutes les instructions suivantes d'être mise en tampon. La méthode `ob_get_clean()` va lire le contenu du tampon et ensuite l'effacer. Ce tampon permet le traitement de mes différentes variables dans le template HTML `conditions_registration.php`. Une fois le contenue HTML chargé avec les bonnes données, la librairie DOMPDF va me permettre de convertir ce document HTML en PDF afin de le stocker.
 
-Template HTML `conditions_registration.php` contenant les différentes variables.
+Traitement sur le template HTML `conditions_registration.php` avec les différentes variables passées en paramètres :
 
 ```PHP
 switch($package_number){
@@ -1107,5 +1107,6 @@ Lu et approuvé par <?= "$userfirstname $userlastname" ?>
 <figcaption><?= $date ?></figcaption>
 ```
 
-
-
+Création du endpoint download document permettant de télécharger un document PDF sur le serveur :
+`GET api/v1/documents/downloadDocument/{serial_number}`
+Le endpoint permet de télécharger le document en contrôlant que l'utilisateur souhaitant effectuer cette action en est bien le propriétaire.
