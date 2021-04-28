@@ -35,6 +35,7 @@ $document->id = $id ?? null;
 $document->document_serial_number = $input["document_serial_number"] ?? null;
 $document->type = $input["type"] ?? null;
 $document->user_id = $input["user_id"] ?? null;
+$document->package_number = $input["package_number"] ?? null;
 $document->signature_base64 = $input["signature_base64"] ?? null;
 
 switch ($requestMethod) {

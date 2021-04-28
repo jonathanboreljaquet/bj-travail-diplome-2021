@@ -282,5 +282,19 @@ class ResponseController {
         return $response;
     }
 
+    /**
+     * 
+     * Method to return the error message in case of invalid package number of conditions of registration document.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public static function packageNumberFormatProblem(){
+        $response['status_code_header'] = 'HTTP/1.1 404 Bad Request';
+        $response['body'] = json_encode([
+            'error' => 'Numéro de Forfait invalide => (1 jusqu\'à 5).'
+        ]);
+        return $response;
+    }
+
     
 }

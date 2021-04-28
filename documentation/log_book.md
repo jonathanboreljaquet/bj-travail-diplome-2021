@@ -1043,3 +1043,69 @@ Création des tests unitaire et des endpoints document permettant un CRUD, les e
 Recherche et réflexion pour la modification du endpoint de création de document de type conditions d'inscription afin que celui-ci génère un document PDF avec une signature en base64 ainsi que différentes autres données qui sont à définir.
 
 ### Mercredi 28 avril 2021
+
+Ajout de la fonctionnalité de création de document de type conditions d'inscription. En effet, Le endpoints `POST api/v1/documents` permet maintenant de créer un document PDF de type conditions d'inscription. 
+
+**Cheminement du endpoint :** 
+
+Pour pouvoir soumettre une requête de création de document de type conditions d'inscription, les données dans le body devront respecter certains critères :
+
+| KEY              | VALUE                         | CONDITION                                                    |
+| ---------------- | ----------------------------- | ------------------------------------------------------------ |
+| type             | conditions_inscription        | Pour l'instant, cette valeur doit correspondre soit à "conditions_inscription" soit à "poster" sinon le système retourne une erreur. |
+| user_id          | 4                             | Cette valeur doit correspondre à un utilisateur existant sinon le système retourne une erreur. |
+| package_number   | 3                             | Cette valeur doit correspondre à un numéro de forfait existant. Actuellement il existe 5 forfaits, donc la valeur doit être en 1 et 5 sinon le système retourne une erreur. |
+| signature_base64 | data:image/png;base64,iVBO... | Actuellement, le système vérifie uniquement que cette clef à bien été définit, sinon le système retourne une erreur. |
+
+1. Le système vérifie si l'api token dans le header `Authorization` a bien été définit et identifie le type d'utilisateur avec celle-ci, il contrôle ensuite si celui-ci est bien un administrateur.
+2. Le système contrôle que les clefs dans le body existe.
+3. Le système vérifie si la clef type à bien comme valeur un type de document valide comme expliqué plus haut.
+4. Le système contrôle que la valeur de la clef user_id correspond bien à un utilisateur existant.
+5. Si le type de document est "conditions_inscription" alors le système va vérifier que les clef package_number et signature_base64 existent.
+6. Le système vérifie si la clef package_number à bien comme valeur un numéro de forfait existant comme expliqué plus haut.
+7. Si toutes ces étapes se sont passé sans embuche alors le système va convertir les différentes données nécessaire en document PDF.
+8. Le système va insérer dans la base de données les données du document nécessaire à sa recherche telle que :
+   1. Son numéro de série : Ex: u1rfa432op
+   2. Son type : Ex: conditions_inscription
+   3. L'identifiant du propriétaire du document : Ex: 4
+
+Méthode permettant la création de document de type conditions d'inscription utilisant la librairie offrant la possibilité de convertir du HTML et CSS en PDF [DOMPDF](https://github.com/dompdf/dompdf):
+
+```PHP
+public static function storeConditionsRegistration(string $filename,int $package_number,string $date, string $signature_base64,string $userfirstname, string $userlastname)
+    {
+        $dompdf = new DOMPDF();        
+        ob_start();
+        include HelperController::getDefaultDirectory()."resources/template/conditions_registration.php";
+        $contents = ob_get_clean();
+
+        $dompdf->loadHtml($contents);
+        $dompdf->render();
+        $output = $dompdf->output();
+        file_put_contents(HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$filename.".pdf", $output);
+    }
+```
+
+La méthode `storeConditionsRegistration` va enclencher une temporisation de sortie avec la méthode `ob_get_clean`permettant à toutes les instructions suivantes d'être mise en tampon. La méthode `ob_get_clean()` va lire le contenu du tampon et ensuite va l'effacer. Ce traitement permet le traitement de mes différentes variables dans le template HTML `conditions_registration.php`. Une fois le contenue HTML chargé avec les données, la librairie DOMPDF va me permettre de convertir ce document HTML en PDF pour pouvoir le stocker.
+
+Template HTML `conditions_registration.php` contenant les différentes variables.
+
+```PHP
+switch($package_number){
+      case 1:
+		echo "<li>Bilan d'évaluation : 70 euro / 80 CHF</li>";
+		break;
+      case 2:
+         echo "<li>Bilan + 1 séance d'éducation : 125 euro / 140 CHF</li>";
+    ...
+  }  
+    ...
+Lu et approuvé par <?= "$userfirstname $userlastname" ?>
+    ...
+<img src="<?= $signature_base64 ?>">
+    ...
+<figcaption><?= $date ?></figcaption>
+```
+
+
+

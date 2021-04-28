@@ -187,7 +187,7 @@ class DogController {
         }
 
         if (!is_null($dog->picture_serial_number)) {
-            $filename = $_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/dog_picture/".$dog->picture_serial_number.".jpeg";
+            $filename = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$dog->picture_serial_number.".jpeg";
             if (file_exists($filename)) {
                 unlink($filename);
             }
@@ -241,14 +241,14 @@ class DogController {
 
         $tmp_file = $_FILES["dog_picture"]["tmp_name"];
         $img_name = HelperController::generateRandomString();
-        $upload_dir = $_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/dog_picture/".$img_name.".jpeg";
+        $upload_dir = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$img_name.".jpeg";
 
         if (!move_uploaded_file($tmp_file,$upload_dir)) {
             return ResponseController::uploadFailed();
         }
 
         if (!is_null($dog->picture_serial_number)) {
-            unlink($_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/dog_picture/".$dog->picture_serial_number.".jpeg");
+            unlink(HelperController::getDefaultDirectory()."storage/app/dog_picture/".$dog->picture_serial_number.".jpeg");
         }
         
         $dog->picture_serial_number = $img_name;
@@ -271,7 +271,7 @@ class DogController {
             return ResponseController::notFoundResponse();
         }
 
-        $image = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/dog_picture/".$serial_number.".jpeg");
+        $image = file_get_contents(HelperController::getDefaultDirectory()."storage/app/dog_picture/".$serial_number.".jpeg");
         
         return ResponseController::successfulRequestWithBase64('data:image/jpeg;base64, '.base64_encode($image));
     }

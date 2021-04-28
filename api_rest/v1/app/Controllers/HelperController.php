@@ -14,6 +14,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Dompdf\Dompdf;
+use App\System\cDX;
 
 class HelperController {
 
@@ -147,14 +148,14 @@ class HelperController {
 
     /**
      * 
-     * Method to check if extension of the dog picture has the right format.
+     * Method to check if a package number of conditions of registration document has the right format.
      * 
-     * @param string $ext Extension file to check
+     * @param int $package_number Package number to check
      * @return bool
      */
-    public static function validateDogPictureExtension(string $ext)
+    public static function validatePackageNumber(int $package_number)
     {
-        if (exif_imagetype($ext) != IMAGETYPE_PNG && exif_imagetype($ext) != IMAGETYPE_JPEG) {
+        if ($package_number < 1 || $package_number > 5) {
             return false;
         }
 
@@ -215,30 +216,37 @@ class HelperController {
      * 
      * Method to store a conditions of registration.
      * 
-     * @return bool
+     * @param string $filename The filename of conditions of registration
+     * @param string $package_number The package number of conditions of registration
+     * @param string $date The date of creation of conditions of registration
+     * @param string $signature_base64 The signature image in base64 of conditions of registration
+     * @param string $userfirstname The user firstname of owner of conditions of registration
+     * @param string $userlastname The user lastname of owner of conditions of registration
+     * 
+     * @return void
      */
-    public static function storeConditionsRegistration(string $filename)
+    public static function storeConditionsRegistration(string $filename,int $package_number,string $date, string $signature_base64,string $userfirstname, string $userlastname)
     {
-        $dompdf = new DOMPDF();
-        $test = "test";
-        $template = file_get_contents($_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/ressources/template/conditions_registration.php");
-        $dompdf->loadHtml('<html>
+        $dompdf = new DOMPDF();        
+        ob_start();
+        include HelperController::getDefaultDirectory()."resources/template/conditions_registration.php";
+        $contents = ob_get_clean();
 
-        <head>
-        <title>My first PHP Page</title>
-        </head>
-        <body>
-        This is normal HTML code
-        
-        ' . $test . '
-        
-        Back into normal HTML
-        
-        </body>
-        </html>');
+        $dompdf->loadHtml($contents);
         $dompdf->render();
         $output = $dompdf->output();
-        file_put_contents($_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/storage/app/conditions_registration/test.pdf", $output);
+        file_put_contents(HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$filename.".pdf", $output);
+    }
+
+    
+    /**
+     * 
+     * Method to return the default directory of the API.
+     * 
+     * @return string The default directory
+     */
+    public static function getDefaultDirectory(){
+        return $_SERVER["DOCUMENT_ROOT"]."/bj-travail-diplome-2021/api_rest/v1/";
     }
 }
 

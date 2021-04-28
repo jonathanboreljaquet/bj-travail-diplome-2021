@@ -42,7 +42,6 @@ class DocumentController {
      */
     public function getAllDocuments()
     {
-        HelperController::storeConditionsRegistration("321321");
         $headers = apache_request_headers();
 
         if (!isset($headers['Authorization'])) {
@@ -115,14 +114,32 @@ class DocumentController {
             return ResponseController::invalidDocumentTypeFormat();
         }
 
-        if ($document->type == Constants::DOCUMENT_TYPE_CONDTIONS_OF_REGISTRATION) {
-            //Upload function
-        }
-
         $user = $this->DAOUser->find($document->user_id);
 
         if (is_null($user)) {
             return ResponseController::notFoundResponse();
+        }
+
+        if ($document->type == Constants::DOCUMENT_TYPE_CONDTIONS_OF_REGISTRATION) {
+
+            if (!$this->validateDocumentConditionsRegistration($document)) {
+                return ResponseController::unprocessableEntityResponse();
+            }
+
+            if (!HelperController::validatePackageNumber($document->package_number)) {
+                return ResponseController::packageNumberFormatProblem();
+            }
+
+            $filename = HelperController::generateRandomString();
+            $package_number = $document->package_number;
+            $date = date('d/m/Y');
+            $document->document_serial_number = $filename;
+            $signature_base64 = $document->signature_base64;
+            $userfirstname = $user->firstname;
+            $userlastname = $user->lastname;
+
+            HelperController::storeConditionsRegistration($filename,$package_number,$date,$signature_base64,$userfirstname,$userlastname);
+
         }
 
         $this->DAODocument->insert($document);
@@ -196,6 +213,13 @@ class DocumentController {
             return ResponseController::notFoundResponse();
         }
 
+        if ($document->type = Constants::DOCUMENT_TYPE_CONDTIONS_OF_REGISTRATION) {
+            $filename = HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$document->document_serial_number.".pdf";
+            if (file_exists($filename)) {
+                unlink($filename);
+            }
+        }
+       
         $this->DAODocument->delete($document);
 
         return ResponseController::successfulRequest(null);
@@ -210,15 +234,31 @@ class DocumentController {
      */
     private function validateDocument(Document $document)
     {
-        if ($document->document_serial_number == null) {
-            return false;
-        }
-
         if ($document->type == null) {
             return false;
         }
 
         if ($document->user_id == null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 
+     * Method to check if the conditions registration document required fields have been defined for the creation.
+     * 
+     * @param Document $document The document model object
+     * @return bool
+     */
+    private function validateDocumentConditionsRegistration(Document $document)
+    {
+        if ($document->package_number == null) {
+            return false;
+        }
+
+        if ($document->signature_base64 == null) {
             return false;
         }
 
