@@ -6,13 +6,13 @@
 
 #### Objectif du POC
 
-Pour la réalisation de ce POC, monsieur Mathieu et moi-même avons convenu de réaliser uniquement la partie planning de mon API REST.
+Pour la réalisation de ce POC, Monsieur Mathieu et moi-même avons convenu de réaliser uniquement la partie planning de mon API REST.
 
-C'est à dires, les tables suivantes :
+C'est-à-dire, les tables suivantes :
 
 ![dbdiagram_poc](.\logbook\dbdiagram_poc.png)
 
-L'objectif est de permettre à l'éducateur canin de créer ses différents créneaux horaires. Ces créneaux horaires (time_slot) pourront être régulier pour une certaine distance(weekly_schedule) ou unique pour un jour(schedule_override), de plus, l'éducateur canin pourra spécifier des distances de vacances(absence) qui devront rendre indisponible tous les créneaux horaires les incluant. Le tout en gérant les différents problèmes de chevauchement que la création de planning pourra entraîner.
+L'objectif est de permettre à l'éducateur canin de créer ses différents créneaux horaires. Ces créneaux horaires (time_slot) pourront être réguliers pour une certaine distance (weekly_schedule) ou unique pour un jour (schedule_override). De plus, l'éducateur canin pourra spécifier des distances de vacances (absences) qui devront rendre indisponibles tous les créneaux horaires les incluant, le tout en gérant les différents problèmes de chevauchement que la création de planning pourra entraîner.
 
 Exemple de données de planning allant du 30 mars 2021 jusqu'au 30 avril 2021 :
 
@@ -36,9 +36,9 @@ Croquis d'une représentation graphique du planning
 
 ![dbdiagram_poc](.\logbook\graph_calendar.png)
 
-L'objectif du POC sera de réaliser les différents endpoints de l'api afin de permettre à l'éducateur canin de réaliser son planning afin de rendre possible la prise de prendre rendez-vous avec celui-ci 
+L'objectif du POC sera de réaliser les différents endpoints de l'API afin de permettre à l'éducateur canin de réaliser son planning et de rendre possible la prise de rendez-vous avec celui-ci.
 
-**Création de l'arborescence de l'api REST**
+**Création de l'arborescence de l'API REST**
 
 ```
 api-rest_douceur-de-chien
@@ -93,7 +93,7 @@ Fichier permettant le chargement des librairies et des variables d'environnement
 
 **composer.json**
 
-Fichier permettant la mémorisation et la génération des différentes libraires a utilisées.
+Fichier permettant la mémorisation et la génération des différentes librairies à utiliser.
 
 **dbseed.php**
 
@@ -103,7 +103,7 @@ Fichier permettant d'insérer des données de tests dans la base de données.
 
 **PHP dotenv**
 
-Ajout de la libraire [PHP dotenv](https://github.com/vlucas/phpdotenv) permettant la génération et l'utilisation de variables d'environnements.
+Ajout de la librairie [PHP dotenv](https://github.com/vlucas/phpdotenv) permettant la génération et l'utilisation de variables d'environnements.
 Création du fichier .env contenant les variables d'environnement de connexion à la base de données :
 
 * DB_HOST
@@ -115,7 +115,7 @@ Création du fichier .env contenant les variables d'environnement de connexion �
 **System DatabaseConnector**
 
 Création de la class DatabaseConnector permettant la connexion à la base de données.
-Pour cette première version, la class récupère les variables d'environnements de connexion et créé un objet PDO avec celles-ci dans son constructeur. Une méthode getConnection() permet de récupérer cette connexion PDO.
+Pour cette première version, la class récupère les variables d'environnements de connexion et créér un objet PDO avec celles-ci dans son constructeur. Une méthode getConnection() permet de récupérer cette connexion PDO.
 
 **Model User**
 
@@ -125,7 +125,7 @@ Le modèle récupère en paramètre la connexion à la PDO.
 Méthodes développées :
 
 * findAll()
-  * Récupère toutes les informations de tout les clients hormis le mot de passe et son sel dans un tableau associatif.
+  * Récupère toutes les informations de tous les clients hormis le mot de passe et son sel dans un tableau associatif.
 * find($id)
   * Similaire à findAll() mais uniquement pour un utilisateur.
 * getRole
@@ -138,39 +138,39 @@ Création du premier Controller UserController.
 Méthodes développées :
 
 * processRequest()
-  * Permet de traiter la requête correspondant à la méthode spécifié dans le constructeur de l'objet.
+  * Permet de traiter la requête correspondant à la méthode spécifiée dans le constructeur de l'objet.
     * GET
       * Sans l'attribut "userId" set, la méthode va appeler getAllUsers.
       * Avec l'attribut "userId" set, la méthode va appeler getUser($id).
 * getAllUsers()
-  * Récupère tout les utilisateurs en format JSON si la demande vient d'un utilisateur avec le rôle 2 (Éducateur canin).
+  * Récupère tous les utilisateurs en format JSON si la demande vient d'un utilisateur avec le rôle 2 (Éducateur canin).
 * getUser($id)
   * Récupère l'utilisateur en format JSON correspondant à l'identifiant passé en paramètre. 
 
 **bootstrap.php**
 
-Création du fichier de bootage de l'api, celui-ci permet pour l'instant de :
+Création du fichier de bootage de l'API. Celui-ci permet pour l'instant de :
 
-* Charger les différentes librairie ajoutées avec Composer grâce au fichier autoload.php généré par celui-ci
-* Charger les variables d'environnements PHP dotenv
+* Charger les différentes librairies ajoutées avec Composer grâce au fichier autoload.php généré par celui-ci.
+* Charger les variables d'environnements PHP dotenv.
 * Créer la connexion avec la base de données.
 
 **index.php**
 
-Point d'entrée des HTTP request de l'api.
+Point d'entrée des HTTP request de l'API.
 
 * Charge le fichier bootstrap.php
 * Ajoute les headers :
   * Access-Control-Allow-Origin: *
-    * Permet à n'importe quelle ressource d'accéder aux ressource de l'api.
+    * Permet à n'importe quelle ressource d'accéder aux ressources de l'API.
   * Content-Type: application/json; charset=UTF-8
-    * Le type et l'encodage des réponses de l'API
+    * Le type et l'encodage des réponses de l'API.
   * Access-Control-Allow-Methods: GET,POST,PATCH,DELETE
-    * Permet les méthodes de request de type : GET, POST, PATCH et DELETE
+    * Permet les méthodes de request de type : GET, POST, PATCH et DELETE.
   * Access-Control-Max-Age: 3600
     * La durée maximum de la mise en cache des résultats de request. 
   * Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With
-    * Indique quels en-têtes HTTP peuvent être utilisés lors de la request.
+    * Indique quelles en-tête HTTP peuvent être utilisées lors de la request.
 * Traite la request pour envoyer la bonne réponse.
   * GET
     * index.php/users => getAllUsers()
@@ -239,9 +239,9 @@ Ajout de fonction dans le Controller WeeklyScheduleController :
     * Format de date valide pour l'attribut date_valid_from et date_valid_to si défini
     * Problème de chevauchement aves les autres dates de la base de données **( /!\ Vérifie pour l'instant uniquement les problèmes de chevauchements avec les deux attributs date_valid_from et date_valid_to définis /!\ )**
 * validateWeeklySchedule($input)
-  * Contrôle si l'attribut date_valid_from est bien défini
+  * Contrôle si l'attribut date_valid_from est bien défini.
 * validateDateFormat($date)
-  * Contrôle si une date est dans le bon format (DD-MM-YYYY)
+  * Contrôle si une date est dans le bon format (DD-MM-YYYY).
 
 Ajout et modification de fonction dans le Controller ResponseController :
 
@@ -273,7 +273,7 @@ Méthodes développées :
 * delete(int $id)
   * Fonctionnement similaire aux précédents Models.
 * findExistence(string $date)
-  * Récupère les dates non-supprimées identiques à celle passée en paramètre afin de vérifier si l'utilisateur ne créé pas deux fois la même date.
+  * Récupère les dates non-supprimées identiques à celles passées en paramètre afin de vérifier si l'utilisateur ne créé pas deux fois la même date.
 
 Création du Model Absence.
 
@@ -283,7 +283,7 @@ Méthodes développées :
 
 Création des Controllers ScheduleOverrideController et AbsenceController qui ont un fonctionnement similaire aux précédents Controllers. 
 
-Création d'un Controller HelperController permettant de contenir les fonctions d'aide de l'api.
+Création d'un Controller HelperController permettant de contenir les fonctions d'aide de l'API.
 
 * Déplacement de la fonction validateDateFormat($date) dans celui-ci.
 
@@ -324,15 +324,15 @@ Ajout et modification de méthode dans le ResponseController
 Rendez-vous GMeet avec M.Mathieu afin de répondre aux différentes questions :
 
 * Lors de la création d'un TimeSlot, faut-il que la clef étrangère en attribut corresponde bien à un WeeklySchedule ou ScheduleOverride existant ?
-  * Résumé de la réponse : Oui, il faut vérifier. Si l'id n'existe pas, il faut retourner un code d'erreur 404 Not Found. Il faut également modifier tout les codes 422 en 400 ou 404 car le code 422 utilise l'extension HTTP WebDAV et de ce fait ne respecte pas le principe architecturaux REST.
+  * Résumé de la réponse : Oui, il faut vérifier. Si l'id n'existe pas, il faut retourner un code d'erreur 404 Not Found. Il faut également modifier tous les codes 422 en 400 ou 404 car le code 422 utilise l'extension HTTP WebDAV et de ce fait ne respecte pas les principes architecturaux REST.
 * Comment vérifier l'overlap avec un WeeklySchedule existant permanant (lorsque date_valid_from est set mais que date_valid_to est null) ?
-  * Résumé de la réponse : Pour commencer, il faut vérifier que la date_valid_from est bien plus petit ou égal à la date_valid_to. Ensuite, il faut tester si le nouveau date_valid_from est plus grand ou égal aux date_valid_from existants et que le date_valid_to est égal à null ou que le nouveau date_valid_from est plus petit ou égal aux date_valid_to existants. 
-* Comment doit se comporter l'api lorsqu'un time slot n'est pas supprimé mais que le WeeklySchedule ou le ScheduleOverride est supprimé ?
+  * Résumé de la réponse : pour commencer, il faut vérifier que la date_valid_from est bien plus petit ou égal à la date_valid_to. Ensuite, il faut tester si le nouveau date_valid_from est plus grand ou égal aux date_valid_from existants et que le date_valid_to est égal à null ou que le nouveau date_valid_from est plus petit ou égal aux date_valid_to existants. 
+* Comment doit se comporter l'API lorsqu'un time slot n'est pas supprimé mais que le WeeklySchedule ou le ScheduleOverride est supprimé ?
   * Résumé de la réponse : Lorsque un TimeSlot est avec un WeeklySchedule ou un ScheduleOverride supprimé, alors le time slot n'est pas pris en compte.
 * Comment tester de la bonne manière l'overlap des TimeSlots ?
-  * Résumé de la réponse : Changement du champ code_day : varchar ("lu","ma","mer",ect...) => int (1,2,3,ect...). Utilisation de la méthode SQL [DAYOFWEEK](https://sql.sh/fonctions/date-heure/dayofweek)  
+  * Résumé de la réponse : changement du champ code_day : varchar ("lu","ma","mer",ect...) => int (1,2,3,ect...). Utilisation de la méthode SQL [DAYOFWEEK](https://sql.sh/fonctions/date-heure/dayofweek)  
 
-Développement des points suivants dans le documentation :
+Développement des points suivants dans la documentation :
 
 * Introduction
 * Rappel du cahier des charges
@@ -357,7 +357,7 @@ Modification du Controller ResponseController
 Modification du Controller HelperController
 
 * Création de la méthode validateChornologicalTime($firsttime, $secondtime)
-  * Permet de vérifier si la premier date n'est pas plus récente que la deuxième. 
+  * Permet de vérifier si la première date n'est pas plus récente que la deuxième. 
 
 Modification du Controller TimeSlotController
 
@@ -373,15 +373,15 @@ Ajout du contrôle chronologique des dates passées dans le body des entpoints d
 * AbsenceController
 * WeeklyScheduleController
 
-Modification de la méthode findAll(bool $idDeleted) du Model TimSlot. Dorénavant , la méthode ne prend plus en compte les time slots liés avec un weekly_schedule ou un schedule override supprimé.
+Modification de la méthode findAll (bool $idDeleted) du Model TimSlot. Dorénavant, la méthode ne prend plus en compte les time slots liés avec un weekly_schedule ou un schedule override supprimé.
 
-Modification de la méthode findOverlap(array $input) du Model WeeklySchedule. Dorénavant, la méthode vérifie toutes les conditions de chevauchement lors d'un insert. Toutefois, la requête SQL génère un warning.
+Modification de la méthode findOverlap (array $input) du Model WeeklySchedule. Dorénavant, la méthode vérifie toutes les conditions de chevauchement lors d'un insert. Toutefois, la requête SQL génère un warning.
 
-Modification de tout les endpoints afin de respecter les principes architecturaux REST. Dorénavant, tout les endpoints finissent par "s".
+Modification de tous les endpoints afin de respecter les principes architecturaux REST. Dorénavant, tous les endpoints finissent par "s".
 
 ### Mercredi 14 avril 2021
 
-Recherche et approfondissement de la requête destinée au dernier endpoint de la partie planning de l'API REST. Pour l'instant, la requête arrive à sortir toutes les dates avec les time slots. Il reste encore à retirer les dates de vacance.
+Recherche et approfondissement de la requête destinée au dernier endpoint de la partie planning de l'API REST. Pour l'instant, la requête arrive à sortir toutes les dates avec les time slots. Il reste encore à retirer les dates de vacances.
 
 Requête à ce jour développé :
 
@@ -446,7 +446,7 @@ Création du rapport de stage en LaTeX initialement rédigé sur Google Docs.
 
 * Utilisation du paquet LaTeX [rest-api](https://www.ctan.org/pkg/rest-api) permettant d'afficher les endpoints d'une API REST
 
-Envoie d'un mail à M. Mathieu afin de répondre aux points suivants :
+Envoie d'un e-mail à M. Mathieu afin de répondre aux points suivants :
 
 * Est-ce que mon rapport de stage répond bien aux attentes ?
 * Est-ce qu'une requête qui fonctionne, mais qui génère des avertissements du côté SQL est acceptable ou non ?
@@ -497,7 +497,7 @@ ORDER BY DATE;
 
 Création de la méthode getPlanningTimeSlots() dans le Controller TimeSlotController.
 
-Modification de la requête de vérification de chevauchement de calendrier hebdomadaire qui générait une avertissement coté SQL afin que cela ne soit plus le cas.
+Modification de la requête de vérification de chevauchement de calendrier hebdomadaire qui générait un avertissement coté SQL afin que cela ne soit plus le cas.
 
 Finalisation de la documentation technique.
 
@@ -505,11 +505,11 @@ Finalisation de la documentation technique.
 
 ### Vendredi 20 novembre 2020
 
-Rencontre physique avec le client afin de répondre à différentes questions pour la réalisation de la version 1 du cahier des charges.
+Rencontre physique avec le client du travail de diplôme afin de répondre à différentes questions pour la réalisation de la version 1 du cahier des charges.
 
-**Question posé :**
+**Question posée :**
 
-Comment procéder de la meilleure des façons pour la création et le prise en charge d'un nouveau client ?
+Comment procéder de la meilleure des façons pour la création et la prise en charge d'un nouveau client ?
 
 Quelles sont les données personnelles du client ?
 
@@ -517,7 +517,7 @@ Quelles sont les données personnelles du chien ?
 
 Comment rechercher les clients dans l'application ?
 
-À quel moment les différents mails doivent-ils être envoyé ? 
+À quel moment les différents e-mails doivent-ils être envoyés ? 
 
 Quelles sont les informations du client que l'éducateur canin doit avoir la possibilité de consulter ?
 
@@ -529,14 +529,14 @@ Quelles sont les informations que le client doit avoir la possibilité de consul
 
 **Étape 1 : Procédure d'ajout d'un nouveau client par téléphone**
 
-1. Le client appel l'éducateur canin avec son téléphone car il a besoin de ces services.
+1. Le client appelle l'éducateur canin avec son téléphone car il a besoin de ses services.
 2. L'éducateur canin va se rendre sur l'application mobile et se connecter avec ses identifiants.
 3. Il va se rendre sur l'interface de création d'une nouvelle fiche client.
-4. Il va y renter les informations personnelles du client transmises par téléphone :
+4. Il va y rentrer les informations personnelles du client transmises par téléphone :
    - Nom du client
    - Prénom du client
    - Téléphone du client
-   - Adresse mail du client
+   - Adresse e-mail du client
    - Adresse du domicile du client
    - Date de naissance du chien
    - Race du chien
@@ -545,50 +545,50 @@ Quelles sont les informations que le client doit avoir la possibilité de consul
 5. Il aura accès à son calendrier personnel afin de visualiser à quelle date il peut se rendre au domicile du client.
 6. Le client ainsi que l'éducateur se mettront d'accord sur la date du rendez-vous.
 7. L'éducateur canin sélectionnera cette date dans le calendrier.
-8. Une fois la fiche client avec la date du premier rendez-vous remplis, un mail sera envoyé au client afin qu'il puisse créer son compte dans l'application afin d'avoir accès à différentes fonctionnalités.
+8. Une fois la fiche client avec la date du premier rendez-vous remplie, un e-mail sera envoyé au client afin qu'il puisse créer son compte dans l'application et avoir accès à différentes fonctionnalités.
 
 **Étape 2 : Rencontre physique avec le client**
 
-1. L'éducateur canin se rend au domicile du client à la date spécifié lors de l'appel téléphonique. 
+1. L'éducateur canin se rend au domicile du client à la date spécifiée lors de l'appel téléphonique. 
 2. Il va se rendre sur l'application mobile et se connecter avec ses identifiants.
 3. Il va rechercher le client grâce à son nom et accéder à sa fiche client précédemment créée lors de l'appel téléphonique.
 4. Il va montrer les données personnelles du client et lui demander une vérification de celle-ci.
 5. Si elles sont fausses, modification de celle-ci.
 6. Si elles sont correctes, l'éducateur canin devra prendre une photo du chien ainsi que de rentrer manuellement ou avec un lecteur RFID communiquant en Bluetooth avec l'application, les 15 chiffres du code de la puce sous-cutanée du chien.
-7. Il pourra ensuite sauvegarder cette version final de la fiche client.
+7. Il pourra ensuite sauvegarder cette version finale de la fiche client.
 
 **Scénario de rendez-vous avec le client**
 
 1. L'éducateur canin peut à tout moment lors d'un rendez-vous, accéder à la fiche du client afin de pouvoir y rentrer différentes données :
-   1. Note du cours sous format texte (accessible uniquement par l'éducateur).
+   1. Note du cour sous format texte (accessible uniquement par l'éducateur).
    2. Note du cours sous format graphique (accessible uniquement par l'éducateur).
-   3. Note récapitulatif du cours (accessible par l'éducateur ainsi que le client).
+   3. Note récapitulative du cours (accessible par l'éducateur ainsi que le client).
    4. Si le rendez-vous est le premier, alors le client doit depuis l'application de l'éducateur :
       1. Choisir le forfait qu'il désire.
       2. Ajouter sa signature depuis l'application.
-      3. Visualiser la version final des conditions d'inscriptions. 
-      4. Validée s'il est d'accord en cochant une case "Lu et approuvé".
-      5. Les conditions d'inscription sous format PDF ainsi qu'une génération automatique d'une facture sous format PDF sera ajouté au dossier partagé du client.
+      3. Visualiser la version finale des conditions d'inscription. 
+      4. Valider s'il est d'accord en cochant une case "Lu et approuvé".
+      5. Les conditions d'inscription sous format PDF ainsi qu'une génération automatique d'une facture sous format PDF seront ajoutées au dossier partagé du client.
 
 
 
 **Fonctionnalité disponible pour l'éducateur canin**
 
 - Connexion à l'application.
-- Accès au calendrier de ces rendez-vous.
+- Accès au calendrier de ses rendez-vous.
 - Affichage de tous les clients avec photo du chien/nom et prénom du client.
 - Recherche spécifique d'un client par nom ou depuis un scan de puce sous-cutanée canine.
 - Accès aux informations personnelles d'une fiche client depuis la recherche spécifique ou le calendrier de rendez-vous.
   - Nom du client
   - Prénom du client
   - Etc...
-  - Document PDF du client (condition d'inscriptions, fiche de cours, etc...)
+  - Document PDF du client (conditions d'inscriptions, fiche de cours, etc...)
 - Création préliminaire d'une fiche client (*Étape 1 : Procédure d'ajout d'un nouveau client par téléphone*)
 - Accès ou création de contenue séance d'une fiche client depuis la recherche spécifique ou le calendrier de rendez-vous.
   - Rendez-vous 1
     - Note du cours sous format texte
     - Note du cours sous format graphique
-    - Note récapitulatif du cours
+    - Note récapitulative du cours
     - (si premier cours, alors ajout conditions d'inscription, facture, etc...)
   - Rendez-vous 2
     - ...
@@ -597,9 +597,9 @@ Quelles sont les informations que le client doit avoir la possibilité de consul
 
 - Inscription à l'application depuis le mail envoyé lors de la fin de *procédure d'ajout d'un nouveau client par téléphone*
 - Connexion à l'application
-- Accès au calendrier de ces rendez-vous
-- Accès à ces informations personnelles (avec contrat signé)
-- Accès à ces différents contenues séances (note récapitulatif du cours ainsi que affiche PDF du cours)
+- Accès au calendrier de ses rendez-vous
+- Accès à ses informations personnelles (avec contrat signé)
+- Accès à ses différents contenues séances (note récapitulative du cours ainsi que affiche PDF du cours)
 
 ### Lundi 23 novembre 2020
 
@@ -609,7 +609,7 @@ Création des différentes tâches du planning prévisionnel sans attribution de
 
 Modification du modèle de données :
 
-- Ajout d'une champ api_token dans la table user permettant l'authentification à l'API Rest d'un utilisateur.
+- Ajout d'un champ api_token dans la table user permettant l'authentification à l'API Rest d'un utilisateur.
 
 ### Mardi 24 novembre 2020
 
@@ -619,30 +619,30 @@ Ajout du planning prévisionnel au cahier des charges.
 
 ### Mercredi 16 décembre 2020
 
-Modification du cahier des charges suite à des discussions avec les professeurs M.Bonvin et M.Garchery, les différents points traités sont les suivants :
+Modification du cahier des charges suite à des discussions avec les professeurs MM Bonvin et Garchery. Les différents points traités sont les suivants :
 
 - L'application mobile devient une PWA (Progressive web app)
-- Suppression de la fonctionnalité de lecture de donnée RFID par Bluetooth
+- Suppression de la fonctionnalité de lecture de données RFID par Bluetooth
 
 ### Samedi 9 janvier 2021
 
 Rencontre physique avec le client afin de répondre au maximum aux exigences de celui-ci.
 
-**Question posé :**
+**Question posée :**
 
 Calendrier natif ou intégrer à l'application ?
 
 Qui peut modifier les informations personnelles d'un client ?
 
-Quand faut-il envoyer le mail lors de l'ajout de document ?
+Quand faut-il envoyer le e-mail lors de l'ajout de document ?
 
 **Résumé de la discussion**
 
 Le client désire centraliser tous ses rendez-vous professionnels avec un calendrier intégré à l'application afin de ne pas mélanger les rendez-vous pro et les rendez-vous privés.
 
-Les informations personnelles des clients pourront être modifiées uniquement par l'administrateur(éducateur canin).
+Les informations personnelles des clients pourront être modifiées uniquement par l'administrateur (éducateur canin).
 
-Un mail devra être envoyé lors de la création/ajout de document. Celui-ci contiendra en pièce-jointe le/les documents en question.
+Un e-mail devra être envoyé lors de la création/ajout de document. Celui-ci contiendra en pièce-jointe le/les documents en question.
 
 ### Lundi 19 avril 2021
 
@@ -653,31 +653,31 @@ Importation du travail effectué dans le POC simulant le travail de stage de l'a
 Rendez-vous physique en C109 avec M. Mathieu afin de poser différentes questions par rapport au déroulement du travail de diplôme. Les questions posées étaient :
 
 * Sous quel format devons-nous rédiger la documentation technique du travail de diplôme ?
-  * Réponse : Nous sommes plutôt libre du format (MarkDown, Word, Latex, autres). Nous avons discuté de la documentation technique et avons convenu de la réaliser en MarkDown la documentation réellement technique dans le dépôt distant GIT,  et dans un second document LaTeX ou Word, la documentation théorique.
+  * Réponse : Nous sommes plutôt libres du format (MarkDown, Word, Latex, autres). Nous avons discuté de la documentation technique et avons convenu de la réaliser en MarkDown la documentation réellement technique dans le dépôt distant GIT et, dans un second document LaTeX ou Word, la documentation théorique.
 * Est-il possible d'organiser des rendez-vous réguliers entre nous et M. Mathieu ?
-  * Réponse : Cela n'a pas encore été validé, mais les jours de rencontres se dérouleront soit les mardi matin, soit les vendredi.
+  * Réponse : Cela n'a pas encore été validé, mais les jours de rencontres se dérouleront soit les mardis matins, soit les vendredis.
 * Faut-il que je réalise des tests unitaires pour mon API REST ?
   * Réponse : Oui, réaliser des tests pour mon API REST est une bonne idée. Nous avons appris l'existence de la solution de test d'automatisation [Katalon](https://www.katalon.com/) permettant l'exécution de test automatique sur les futures vues de nos applications. M. Mathieu m'a également conseillé de tester mon API REST avec l'outil [Postman](https://www.postman.com/).
-* Faut-il que permette à mon API REST d'être utilisé par plusieurs éducateur canin ?
+* Faut-il permettre à mon API REST d'être utilisé par plusieurs éducateurs canins ?
   * Réponse : Oui, c'est une bonne idée qui permettrait de rendre l'application plus complète.
 
 Ajout d'une vérification du format du code day lors de la création ou la modification d'un time slot.
 
 * Création de la méthode `validateCodeDayFormat(string $code_day)`dans le HelperController permettant de vérifier si le code day est entre 1 inclus et 7 inclus.
 * Création de la méthode de réponse `invalidCodeDayFormat() `dans le ResponseController 
-  * La méthode renvoi le code erreur 400 Bad Request avec le message :  Format de jour invalide => (1 jusqu\'à 7, dimanche = 1).
+  * La méthode renvoie le code erreur 400 Bad Request avec le message :  Format de jour invalide => (1 jusqu\'à 7, dimanche = 1).
 
-Modification de la base de données afin de permettre la création, l'utilisation et la gestion de planning pour plusieurs éducateur canin. Les 4 tables permettant ces fonctionnalités détiennent dorénavant un champs `id_educator` :
+Modification de la base de données afin de permettre la création, l'utilisation et la gestion de planning pour plusieurs éducateurs canins. Les 4 tables permettant ces fonctionnalités détiennent dorénavant un champs `id_educator` :
 
 ![mcd_planning_modified](.\logbook\mcd_planning_modified.PNG)
 
-Modification de tout les modèles et contrôleurs concernés.
+Modification de tous les modèles et contrôleurs concernés.
 
-* Les méthodes concernés des modèles contiennent maintenant en paramètre => `int $idEducator` afin de permettre aux différentes requêtes SQL de traiter uniquement les données pour un éducateur canin.
+* Les méthodes concernées des modèles contiennent maintenant en paramètre => `int $idEducator` afin de permettre aux différentes requêtes SQL de traiter uniquement les données pour un éducateur canin.
 
-Envoie de mail à M. Mathieu afin de poser la question suivante : Faut-il réaliser un Trello pour notre travail de diplôme malgré le fait qu'on soit seul à le réaliser ? 
+Envoie de e-mail à M. Mathieu afin de poser la question suivante: faut-il réaliser un Trello pour notre travail de diplôme malgré le fait qu'on soit seul à le réaliser ? 
 
-Modification du script dbseed.php. Dorénavant, en plus de la création des 10 utilisateurs de test, le script permet d'insérer dans la base des données des données de test pour 3 éducateurs canins détenant 3 exemples de planning différents.
+Modification du script dbseed.php. Dorénavant, en plus de la création des 10 utilisateurs de test, le script permet d'insérer dans la base de données des données de test pour 3 éducateurs canins détenant 3 exemples de plannings différents.
 
 Premier éducateur canin :
 
@@ -691,7 +691,7 @@ Troisième éducateur canin :
 
 ![dateTestPlanningThirdUser](.\logbook\dateTestPlanningThirdUser.png)
 
-Documentation et recherche de la fonctionnalité de test proposé par Postman afin de tester mon API REST.
+Documentation et recherche de la fonctionnalité de test proposée par Postman afin de tester mon API REST.
 
 ### Mardi 20 avril 2021
 
@@ -714,9 +714,9 @@ Tests des endpoints du modèle TimeSlot :
 
 ![unitsTestsTimeSlot](.\logbook\unitsTestsTimeSlot.PNG)
 
-Pour tester la plupart des scénarios d'utilisations de mon API REST, j'ai rajouté dans le script dbseed.php d'autres données permettant de vérifier la maximum de scénarios d'utilisations possibles.
+Pour tester la plupart des scénarios d'utilisations de mon API REST, j'ai rajouté dans le script dbseed.php d'autres données permettant de vérifier le maximum de scénarios d'utilisations possibles.
 
-Dorénavant, avant le développement des futurs endpoints de l'API REST, je réaliserais leurs différents tests en essayant de couvrir le maximum de scénarios d'utilisations.   
+Dorénavant, avant le développement des futurs endpoints de l'API REST, je réaliserai leurs différents tests en essayant de couvrir le maximum de scénarios d'utilisations.   
 
 Suite à la discussion avec M. Mathieu, je compte réaliser la documentation de mon travail de diplôme en 2 parties : 
 
@@ -735,7 +735,7 @@ Création des tests unitaires du endpoint permettant la récupération du planni
 ![unitsTestsTimeSlot](.\logbook\unitsTestsPlanning.PNG)
 
 Modification des commentaires des modèles de planning (Absence, ScheduleOverride, WeeklySchedule et TimeSlot) qui ne contenait pas le commentaire de paramètre `$idEducator` . 
-Modification de toute les méthode `findAll(bool $deleted,int $idEducator)` des modèles de planning afin de réaliser un bindparam sur le paramètre `$deleted`. 
+Modification de toutes les méthodes `findAll(bool $deleted,int $idEducator)` des modèles de planning afin de réaliser un bindparam sur le paramètre `$deleted`. 
 
 Avant :
 
@@ -757,7 +757,7 @@ AND id_educator = :ID_EDUCATOR;
 
 Suppression du champs `password_salt` dans la table `user` de la base de données afin de suivre l'avertissement de PHP 7.
 *Avertissement : L'option Salt a été désapprouvée à partir de PHP 7.0.0. Il est maintenant préférable d'utiliser simplement le sel qui est généré par défaut.* [source](https://www.php.net/manual/fr/function.password-hash.php)
-En effet, PHP recommande de ne plus utiliser de salt personnel mais d'utiliser la méthode PHP `password_hash`. La méthode prend en paramètre différents algorithme de hachage, je compte utiliser la constante PHP `PASSWORD_DEFAULT` qui utilise l'algorithme bcrypt. Constante évoluant avec son temps afin de trouver des algorithmes de plus en plus robuste, PHP nous conseille également de stocker le résultat dans une colonne de la base de données qui peut contenir au moins 60 caractères. J'ai donc modifier la taille de type VARCHAR du champs `password_hash` initialement 45 en 60.
+En effet, PHP recommande de ne plus utiliser de salt personnel mais d'utiliser la méthode PHP `password_hash`. La méthode prend en paramètres différents algorithme de hachage, je compte utiliser la constante PHP `PASSWORD_DEFAULT` qui utilise l'algorithme bcrypt. Constante évoluant avec son temps afin de trouver des algorithmes de plus en plus robustes, PHP nous conseille également de stocker le résultat dans une colonne de la base de données qui peut contenir au moins 60 caractères. J'ai donc modifieé la taille de type VARCHAR du champs `password_hash` initialement 45 en 60.
 
 Création d'un champs `user_id_educator` dans la table `appoitment` lié à l'id de la table `user` de la base de données afin de permettre aux clients de l'application de prendre rendez-vous avec l'éducateur canin de leurs choix car l'application doit maintenant le permettre.
 
@@ -783,7 +783,7 @@ Création des tests unitaires des endpoints du modèle User :
 
 Développement du modèle User et du contrôleur UserController permettant un CRUD nécessitant les droits administrateurs.
 
-Blocage pour la conceptualisation des endpoints qui devront permettre de récupérer uniquement les informations de l'utilisateur grâce à son api token (Données de rendez-vous, informations personnelles, documents, informations du/des chiens). En effet, la structure de l'API REST développée jusqu'à là est difficilement adaptable.  
+Blocage pour la conceptualisation des endpoints qui devront permettre de récupérer uniquement les informations de l'utilisateur grâce à son api token (Données de rendez-vous, informations personnelles, documents, informations du/des chiens). En effet, la structure de l'API REST développée jusque là est difficilement adaptable.  
 
 ### Jeudi 22 avril 2021
 
