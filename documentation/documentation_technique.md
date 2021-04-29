@@ -1,4 +1,4 @@
-J# Travail de diplôme - Documentation technique
+# Travail de diplôme - Documentation technique
 
 ## API REST
 
@@ -24,35 +24,35 @@ api/v1
 Le dossier Models contient les modèles de l'API REST, chaque modèles est une représentation objet de sa table de base de données correspondante. La création de ces modèles me permettent d'utiliser les données de ma base de données de manière objet.
 Exemple de la classe `Dog` représentant la table `dog` de la base de donnée :
 
-![dateTestPlanningSecondUser](diagram\umletino\dogModel.png)
+![dateTestPlanningSecondUser](./diagram/umletino/dogModel.png)
 
-![dateTestPlanningSecondUser](diagram\dogTable.png)
+![dateTestPlanningSecondUser](./diagram/dogTable.png)
 
 #### app/DataAccessObject
 
 Le dossier DataAccessObject contient les data access object (DAO) de l'API REST, ces DAO contiennent toutes les méthodes permettant un CRUD sur sa table de base de données correspondante. Les méthodes des DAO fonctionnent de manière à créer ou récupérer des modèles afin de respecter un maximum la structure objet de l'API REST.
 Exemple de la classe `DAODog` :
 
-![dateTestPlanningSecondUser](diagram\umletino\dogDAO.png)
+![dateTestPlanningSecondUser](./diagram/umletino/dogDAO.png)
 
 #### app/Controllers
 
 Le dossier Controllers contient les contrôleurs de l'API REST, comme leur noms l'indique, le but des contrôleurs est de contrôler les différents cas d'utilisation et autorisations d'accès en utilisant, s'il le faut, les DAO afin de communiquer avec la base de données et en retournant les différents codes HTTP et messages en format JSON. 
 Exemple de la classe `DogController` :
 
-![dateTestPlanningSecondUser](diagram\umletino\dogController.png)
+![dateTestPlanningSecondUser](./diagram/umletino/dogController.png)
 
 Dans ce dossier réside également les contrôleurs `ResponseController` et `HelperController`. Le `ResponseController` permet de retourner toutes les différentes réponses HTTP. Le `HelperController` permet l'utilisation de méthode dite d'aide et qui n'aurait pas leur place dans un contrôleur basique.
 Classes `ResponseController` et `HelperController` :
 
-![dateTestPlanningSecondUser](diagram\umletino\ResponseHelperController.png)
+![dateTestPlanningSecondUser](./diagram/umletino/ResponseHelperController.png)
 
 #### app/System
 
 Le dossier System contient la classe `DatabaseConnector` qui permet la connexion à la base de données en récupérant les variables d'environnements *PHP dotenv* et la classe `Constants` permettant de stocker les différentes constantes de l'API REST.
 Classes `DatabaseConnector` et `Constants` :
 
-![dateTestPlanningSecondUser](diagram\umletino\databaseConnectorConstants.png)
+![dateTestPlanningSecondUser](./diagram/umletino/databaseConnectorConstants.png)
 
 #### public
 
@@ -72,7 +72,7 @@ Fichier de bootage de l'API REST inclus dans tout les fichiers d'entrées, celui
 
 ### Structure
 
-![dateTestPlanningSecondUser](diagram\drawio\system.png)
+![dateTestPlanningSecondUser](./diagram./drawio./system.png)
 
 ### Tests unitaires
 
@@ -80,7 +80,7 @@ Afin de tester l'API REST j'ai utilisé l'outil Postman qui m'a permis d'exécut
 
 **Format de code**
 
-![dateTestPlanningSecondUser](diagram\drawio\unitTestCodeFormat.png)
+![dateTestPlanningSecondUser](./diagram/drawio/unitTestCodeFormat.png)
 
 **Définition**
 
@@ -206,11 +206,11 @@ Body de la requête :
 
 ##### Use case
 
-![dateTestPlanningSecondUser](diagram\UseCaseInscription.png)
+![dateTestPlanningSecondUser](./diagram/UseCaseInscription.png)
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](diagram\drawio\flowchartPostUser.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostUser.png)
 
 ##### Tests unitaires
 
@@ -306,7 +306,7 @@ Cet endpoint permet de récupérer tous les clients de l'application. L'endpoint
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](diagram\drawio\flowchartGetAllUser.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllUser.png)
 
 ##### Tests unitaires
 
@@ -370,7 +370,7 @@ Cet endpoint permet de récupérer un client spécifique de l'application. L'end
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](diagram\drawio\flowchartGetOneUser.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneUser.png)
 
 ##### Tests unitaires
 
@@ -450,7 +450,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](diagram\drawio\flowchartUpdateOneUser.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneUser.png)
 
 ##### Tests unitaires
 
@@ -513,7 +513,7 @@ Cet endpoint permet la suppression définitif d'un utilisateur.
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](diagram\drawio\flowchartDeleteOneUser.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneUser.png)
 
 ##### Tests unitaires
 
