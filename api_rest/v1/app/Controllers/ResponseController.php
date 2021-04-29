@@ -266,7 +266,7 @@ class ResponseController {
      * @return string The status and the body in JSON format of the response
      */
     public static function uploadFailed(){
-        $response['status_code_header'] = 'HTTP/1.1 404 Not found';
+        $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
         $response['body'] = json_encode([
             'error' => 'Échec d\'upload.'
         ]);
@@ -280,7 +280,7 @@ class ResponseController {
      * @return string The status and the body in JSON format of the response
      */
     public static function imageFileFormatProblem(){
-        $response['status_code_header'] = 'HTTP/1.1 404 Bad Request';
+        $response['status_code_header'] = 'HTTP/1.1 415 Unsupported Media Type';
         $response['body'] = json_encode([
             'error' => 'Format d\'image par pris en charge.'
         ]);

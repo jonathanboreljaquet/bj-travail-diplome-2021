@@ -82,6 +82,10 @@ class DogController {
 
         $dog = $this->DAODog->find($id);
 
+        if (is_null($dog)) {
+            return ResponseController::notFoundResponse();
+        }
+
         return ResponseController::successfulRequest($dog);
     }
 
@@ -243,12 +247,15 @@ class DogController {
         $img_name = HelperController::generateRandomString();
         $upload_dir = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$img_name.".jpeg";
 
+        if (!is_null($dog->picture_serial_number)) {
+            $filename = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$dog->picture_serial_number.".jpeg";
+            if (file_exists($filename)) {
+                unlink($filename);
+            }
+        }
+        
         if (!move_uploaded_file($tmp_file,$upload_dir)) {
             return ResponseController::uploadFailed();
-        }
-
-        if (!is_null($dog->picture_serial_number)) {
-            unlink(HelperController::getDefaultDirectory()."storage/app/dog_picture/".$dog->picture_serial_number.".jpeg");
         }
         
         $dog->picture_serial_number = $img_name;

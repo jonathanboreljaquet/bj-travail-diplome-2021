@@ -757,7 +757,7 @@ AND id_educator = :ID_EDUCATOR;
 
 Suppression du champs `password_salt` dans la table `user` de la base de données afin de suivre l'avertissement de PHP 7.
 *Avertissement : L'option Salt a été désapprouvée à partir de PHP 7.0.0. Il est maintenant préférable d'utiliser simplement le sel qui est généré par défaut.* [source](https://www.php.net/manual/fr/function.password-hash.php)
-En effet, PHP recommande de ne plus utiliser de salt personnel mais d'utiliser la méthode PHP `password_hash`. La méthode prend en paramètres différents algorithme de hachage, je compte utiliser la constante PHP `PASSWORD_DEFAULT` qui utilise l'algorithme bcrypt. Constante évoluant avec son temps afin de trouver des algorithmes de plus en plus robustes, PHP nous conseille également de stocker le résultat dans une colonne de la base de données qui peut contenir au moins 60 caractères. J'ai donc modifieé la taille de type VARCHAR du champs `password_hash` initialement 45 en 60.
+En effet, PHP recommande de ne plus utiliser de salt personnel mais d'utiliser la méthode PHP `password_hash`. La méthode prend en paramètres différents algorithmes de hachage, je compte utiliser la constante PHP `PASSWORD_DEFAULT` qui utilise l'algorithme bcrypt. Constante évoluant avec son temps afin de trouver des algorithmes de plus en plus robustes, PHP nous conseille également de stocker le résultat dans une colonne de la base de données qui peut contenir au moins 60 caractères. J'ai donc modifié la taille de type VARCHAR du champs `password_hash` initialement 45 en 60.
 
 Création d'un champs `user_id_educator` dans la table `appoitment` lié à l'id de la table `user` de la base de données afin de permettre aux clients de l'application de prendre rendez-vous avec l'éducateur canin de leurs choix car l'application doit maintenant le permettre.
 
@@ -787,20 +787,20 @@ Blocage pour la conceptualisation des endpoints qui devront permettre de récup�
 
 ### Jeudi 22 avril 2021
 
-Modification de toutes les méthodes update des différents contrôleurs déjà développés de l'API, de la méthode de vérification de format de date et des différents tests unitaires. En effet, les endpoints d'update de l'API demandait obligatoirement la présence des tout les champs dans le body afin de ne pas créer d'incohérence ou de problème. Dorénavant, les endpoints d'update peuvent maintenant modifier 1 ou plusieurs champs en utilisant la méthode PHP `array_replace($array1, $array2)`.
+Modification de toutes les méthodes update des différents contrôleurs déjà développés de l'API, de la méthode de vérification de format de date et des différents tests unitaires. En effet, les endpoints d'update de l'API demandait obligatoirement la présence de tous les champs dans le body afin de ne pas créer d'incohérence ou de problème. Dorénavant, les endpoints d'update peuvent maintenant modifier 1 ou plusieurs champs en utilisant la méthode PHP `array_replace($array1, $array2)`.
 
 1. Récupère la ressource grâce à son identifiant dans la base
-2. Remplace la ressource actuel avec la nouvelle avec la méthode `array_replace`
+2. Remplace la ressource actuelle avec la nouvelle méthode `array_replace`
 3. Update le résultat dans la base de données
 
-Modification du script dbseed.php. Dorénavant, le script insère 3 chiens appartenant à un 1 utilisateur différents.
+Modification du script dbseed.php. Dorénavant, le script insère 3 chiens appartenant à un 1 utilisateur différent.
 Création des tests unitaires des endpoints du modèle Dog :
 
 ![unitsTestsTimeSlot](.\logbook\unitsTestsDog.PNG)
 
-Modification de toutes les méthodes `find($id)` de l'API REST afin que celle-ci retourne uniquement un résultat objet et non un objet avec un tableau d'un élément. 
+Modification de toutes les méthodes `find($id)` de l'API REST afin que celles-ci retournent uniquement un résultat objet et non un objet avec un tableau d'un élément. 
 
-Modification du script dbseed.php. Dorénavant, le script insère 3 documents appartenant à un 1 utilisateur différents.
+Modification du script dbseed.php. Dorénavant, le script insère 3 documents appartenant à un 1 utilisateur différent.
 Création des tests unitaires des endpoints du modèle Document :
 
 ![unitsTestsTimeSlot](.\logbook\unitsTestsDocument.PNG)
@@ -814,13 +814,13 @@ Création des tests unitaires des endpoints du modèle Appoitment :
 
 Développement du modèle Appoitment et du contrôleur AppoitmentController permettant un CRUD nécessitant les droits administrateurs.
 
-Maintenant que tout les endpoints de base de la partie clientèle ont été développés. Réflexion par rapport aux endpoints qui devront être modifiés afin de répondre aux réels besoins de application. En effet, je vais dorénavant procéder à une réflexion cas par cas des endpoints qui devront être utilisables par les clients et non uniquement par les administrateurs (éducateurs canins).
+Maintenant que tous les endpoints de base de la partie clientèle ont été développés, j'ai réalisé une réflexion par rapport aux endpoints qui devront être modifiés afin de répondre aux réels besoins de l'application. En effet, je vais dorénavant procéder à une réflexion cas par cas des endpoints qui devront être utilisables par les clients et non uniquement par les administrateurs (éducateurs canins).
 
 **Cas d'utilisation de l'API numéro 1 : Inscription et connexion de l'utilisateur autonome**
 
 ![unitsTestsTimeSlot](.\diagram\UseCaseInscription.png)
 
-Modification du endpoint [POST] api/v1/users afin qu'il soit accessible pour les utilisateurs non-authentifiés. Lors de la création de fiche client via l'appel téléphonique, l'éducateur canin ne spécifiera pas le mot de passe de l'utilisateur, de ce fait, le endpoint devra permettre de générer un mot de passe automatique et de l'envoyer par mail au client afin qu'il puisse récupérer son api token grâce à ces identifiants.
+Modification du endpoint [POST] api/v1/users afin qu'il soit accessible pour les utilisateurs non-authentifiés. Lors de la création de fiche client via l'appel téléphonique, l'éducateur canin ne spécifiera pas le mot de passe de l'utilisateur. De ce fait, le endpoint devra permettre de générer un mot de passe automatique et de l'envoyer par e-mail au client afin qu'il puisse récupérer son api token grâce à ces identifiants.
 
 Création et utilisation de la méthode permettant de générer un mot de passe aléatoire :
 
@@ -839,7 +839,7 @@ public static function generateRandomPassword() {
 
 ### Vendredi 23 avril 2021
 
-Importation de la libraire PHPMailer avec la commande `composer require phpmailer/phpmailer` et création de la méthode permettant l'envoie de mail simpliste avec le protocole SMTP.
+Importation de la librairie PHPMailer avec la commande `composer require phpmailer/phpmailer` et création de la méthode permettant l'envoie de e-mail simpliste avec le protocole SMTP.
 
 ```PHP
 public static function sendMail(string $message,string $emailRecipient)
@@ -872,7 +872,7 @@ public static function sendMail(string $message,string $emailRecipient)
     }
 ```
 
-Discussion avec M. Mathieu de la structure de l'API REST qui était un point bloquant et qui commençait à créer beaucoup de problème de pérennité pour le projet. Je vais dorénavant réfléchir et réaliser une nouvelle structure plus simpliste et compréhensible. 
+Discussion avec M. Mathieu de la structure de l'API REST qui était un point bloquant et qui commençait à créer beaucoup de problèmes de pérennité pour le projet. Je vais dorénavant réfléchir et réaliser une nouvelle structure plus simpliste et compréhensible. 
 
 ```
 v1
@@ -895,13 +895,13 @@ Dans cette nouvelle version, mes modèles dans le dossier Models vont devenir de
 `Models/User` => `DataAccessObject/DAOUser`
 `Models/Dog` => `DataAccessObject/DAODog`
 `Models/Document` => `DataAccessObject/Document`
-ect...
+etc...
 
-Mes contrôleurs réaliseront les mêmes fonctionnalités qu'auparavant à quelques point prêt :
+Mes contrôleurs réaliseront les mêmes fonctionnalités qu'auparavant à quelques points prêt :
 
-1. Récupération des données transmissent par les différents endpoint
+1. Récupération des données transmises par les différents endpoints
 2. Création du/des modèles correspondants
-3. Vérification des données et retourner les erreurs quand cela est nécessaire.
+3. Vérification des données et retour des erreurs quand cela est nécessaire
 4. Utilisation du DAO correspondant afin de procéder au traitement final avec la base de données
 
 Création des nouveaux modèles qui seront une représentation objet des tables de la base de données. 
@@ -924,13 +924,13 @@ $absence->id_educator = $id_educator;
 Création du nouveau fichier d'entrée pour les endpoints utilisateurs respectant la nouvelle structure discutée avec M. Mathieu.
 Modification de l'ancien contrôleur afin qu'il réponde aux nouvelles demandes du nouveau fichier d'entrée.
 Création du Data Access Object DAOUser qui était anciennement mon modèle.
-Création du nouveau modèle permettent de représenter les données de ma table user de manière objet.
+Création du nouveau modèle permettant de représenter les données de ma table user de manière objet.
 
-Envoie d'un mail à M. Mathieu afin de lui montrer les modifications structurelles de mon API REST afin d'être sûr d'être sur la bonne voie. Une question à propos de l'emplacement des futurs endpoints spéciaux comme celui permettant la connexion a également été posé. 
+Envoie d'un e-mail à M. Mathieu afin de lui montrer les modifications structurelles de mon API REST afin d'être sûr d'être sur la bonne voie. Une question à propos de l'emplacement des futurs endpoints spéciaux comme celui permettant la connexion a également été posée. 
 
 ### Lundi 26 avril 2021
 
-Réponse de M. Mathieu du mail envoyé le vendredi 23 avril. Pour ce qui est de la structure, celle-ci a été dans l'ensemble validé. En effet, la structure est dorénavant mieux organisé et plus facilement lisible. Une remarque par rapport à la validation des champs lors du endpoint da création d'utilisateur m'a été soumise par M. Mathieu. La réponse étant un peu flou pour moi, j'ai renvoyé un mail afin d'éclaircir cette remarque.
+Réponse de M. Mathieu du e-mail envoyé le vendredi 23 avril. Pour ce qui est de la structure, celle-ci a été dans l'ensemble validée. En effet, la structure est dorénavant mieux organisée et plus facilement lisible. Une remarque par rapport à la validation des champs lors du endpoint de la création d'utilisateur m'a été soumise par M. Mathieu. La réponse étant un peu floue pour moi, j'ai renvoyé un e-mail afin d'éclaircir cette remarque.
 
 Modification des tests unitaires Postman des endpoints utilisateurs. Changement du format de test pour les verbs GET. Auparavant, les tests unitaires vérifiaient si les informations de retour correspondaient exactement à une certaine donnée :
 
@@ -951,7 +951,7 @@ pm.test("The right user was obtained", () => {
 
 
 
-Dorénavant, ces tests vérifient si la structure de données ainsi que les différents type attendu sont bien présent. Exemple du test permettant la vérification de la structure de données du endpoint retournant toutes les informations des clients :
+Dorénavant, ces tests vérifient si la structure de données ainsi que les différents types attendus sont bien présents. Exemple du test permettant la vérification de la structure de données du endpoint retournant toutes les informations des clients :
 
 ```javascript
 pm.test("The data structure of the response is correct", () => {
@@ -978,26 +978,26 @@ pm.test("The data structure of the response is correct", () => {
 
 
 
-Finalisation des endpoints utilisateurs, les endpoints développés jusqu'à là sont :
+Finalisation des endpoints utilisateurs, les endpoints développés jusque là sont :
 
-* `POST api/v1/users` pour créer un nouveau client, si le champ "password" n'est pas définit, alors l'API génère un mot de passe aléatoire et l'envoie par mail au client. Endpoint accessible par n'importe quel type d'utilisateur.
-* `GET api/v1/users` pour retourner les informations de tout les clients. Endpoint accessible uniquement par les administrateurs.
+* `POST api/v1/users` pour créer un nouveau client, si le champ "password" n'est pas défini, alors l'API génère un mot de passe aléatoire et l'envoie par e-mail au client. Endpoint accessible par n'importe quel type d'utilisateur.
+* `GET api/v1/users` pour retourner les informations de tous les clients. Endpoint accessible uniquement par les administrateurs.
 * `GET api/v1/users/{idUser}` pour retourner les informations d'un utilisateur.  Endpoint accessible uniquement par les administrateurs.
 * `PATCH api/v1/users/{idUser}` pour modifier les informations d'un utilisateur. Endpoint accessible uniquement par les administrateurs.
 * `DELETE api/v1/users{idUser}` pour supprimer un utilisateur.  Endpoint accessible uniquement par les administrateurs.
 * `GET api/v1/uesrs/me` pour récupérer l'intégralité des informations de l'utilisateur authentifié (pour l'instant, uniquement avec les informations de son/ses chiens). Endpoint accessible par les utilisateurs authentifiés.
 
-Création des tests unitaire et des endpoints dog permettant un CRUD, les endpoints actuellement développés et testé sont :
+Création des tests unitaires et des endpoints dog permettant un CRUD, les endpoints actuellement développés et testés sont :
 
 * `POST api/v1/dogs` pour créer un nouveau chien. Endpoint accessible uniquement par les administrateurs.
-* `GET api/v1/dogs` pour retourner les informations de tout les chiens. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/dogs` pour retourner les informations de tous les chiens. Endpoint accessible uniquement par les administrateurs.
 * `GET api/v1/dogs/{idDog}` pour retourner les informations d'un chien.  Endpoint accessible uniquement par les administrateurs.
 * `PATCH api/v1/dogs/{idDog}` pour modifier les informations d'un chien. Endpoint accessible uniquement par les administrateurs.
 * `DELETE api/v1/dogs{idDog}` pour supprimer un utilisateur.  Endpoint accessible uniquement par les administrateurs.
 
-Recherche et réflexion pour la réalisation des endpoints permettant l'upload et le download des photos de chien.
+Recherche et réflexion pour la réalisation des endpoints permettant l'upload et le download des photos de chiens.
 
-Développement des points suivant dans le rapport :
+Développement des points suivants dans le rapport :
 
 * Résumé
 * Abstract
@@ -1016,11 +1016,11 @@ Développement des points suivant dans le rapport :
 
 ### Mardi 27 avril 2021
 
-Rendez-vous GMeet hebdomadaire avec M. Mathieu. Premièrement, nous avons discuté de la structure de l'API REST. M. Mathieu m'a conseillé de ne pas inclure le body de la request dans mes contrôleurs. En effet, les contrôleurs devraient uniquement acquérir des données correspondants au modèle de celui-ci. Deuxièmement, j'ai posé une question par rapport à l'upload d'image de chien. En effet, je me demandais si c'était le client ou le serveur de l'API REST qui devait convertir l'image dans le bon format. 
+Rendez-vous GMeet hebdomadaire avec M. Mathieu. Premièrement, nous avons discuté de la structure de l'API REST. M. Mathieu m'a conseillé de ne pas inclure le body de la request dans mes contrôleurs. En effet, les contrôleurs devraient uniquement acquérir des données correspondantes au modèle de celui-ci. Deuxièmement, j'ai posé une question par rapport à l'upload de photos de chiens. En effet, je me demandais si c'était le client ou le serveur de l'API REST qui devait convertir l'image dans le bon format. 
 
-Suite à cette discussion, j'ai donc modifié toutes les fonctions de mon contrôleur UserController afin de réspecter le rôle principale de celui-ci. Dorénavant, ce sont les points d'entrées des endpoints qui récupèrent les données du body et créé le modèle avec ces celles-ci pour ensuite le donner aux contrôleurs. Pour ce qui est de l'upload d'image, nous avons convenu qu'il était plus favorable de faire la conversion du coté serveur car ce n'est pas le rôle du client.
+Suite à cette discussion, j'ai donc modifié toutes les fonctions de mon contrôleur UserController afin de respecter le rôle principal de celui-ci. Dorénavant, ce sont les points d'entrées des endpoints qui récupèrent les données du body et créé le modèle avec celles-ci pour ensuite le donner aux contrôleurs. Pour ce qui est de l'upload d'image, nous avons convenu qu'il était plus favorable de faire la conversion du coté serveur car ce n'est pas le rôle du client.
 
-Création des tests unitaire et des endpoints dog permettant l'upload et le download des photos de chien, les endpoints actuellement développés et testé sont :
+Création des tests unitaires et des endpoints dog permettant l'upload et le download des photos de chiens, les endpoints actuellement développés et testés sont:
 
 * `POST api/v1/dogs/uploadPicture` pour attribuer une photo à un chien. Endpoint accessible uniquement par les administrateurs.
 * `GET api/v1/dogs/downloadPicture/{serial_number}` pour récupérer une photo grâce à son numéro de série. Endpoint accessible par n'importe quel type d'utilisateur.
@@ -1031,10 +1031,10 @@ Développement du Data Access Object DAODocument en respectant la nouvelle appro
 
 Recherche et réflexion pour la réalisation des endpoints document.
 
-Création des tests unitaire et des endpoints document permettant un CRUD, les endpoints actuellement développés et testé sont :
+Création des tests unitaires et des endpoints document permettant un CRUD, les endpoints actuellement développés et testés sont :
 
 * `POST api/v1/documents` pour créer un nouveau document. Endpoint accessible uniquement par les administrateurs.
-* `GET api/v1/documents` pour retourner les informations de tout les documents. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/documents` pour retourner les informations de touts les documents. Endpoint accessible uniquement par les administrateurs.
 * `GET api/v1/documents/{idDocument}` pour retourner les informations d'un document.  Endpoint accessible uniquement par les administrateurs.
 * `PATCH api/v1/documents/{idDocument}` pour modifier les informations d'un document. Endpoint accessible uniquement par les administrateurs.
 * `DELETE api/v1/documents{idDocument}` pour supprimer un document.  Endpoint accessible uniquement par les administrateurs.
@@ -1043,7 +1043,7 @@ Recherche et réflexion pour la modification du endpoint de création de documen
 
 ### Mercredi 28 avril 2021
 
-Ajout de la fonctionnalité de création de document de type conditions d'inscription. En effet, Le endpoints `POST api/v1/documents` permet maintenant de créer un document PDF de type conditions d'inscription. 
+Ajout de la fonctionnalité de création de document de type conditions d'inscription. En effet, Le endpoint `POST api/v1/documents` permet maintenant de créer un document PDF de type conditions d'inscription. 
 
 **Cheminement du endpoint :** 
 
@@ -1053,17 +1053,17 @@ Pour pouvoir soumettre une requête de création de document de type conditions 
 | ---------------- | ----------------------------- | ------------------------------------------------------------ |
 | type             | conditions_inscription        | Pour l'instant, cette valeur doit correspondre soit à "conditions_inscription" soit à "poster" sinon le système retourne une erreur. |
 | user_id          | 4                             | Cette valeur doit correspondre à un utilisateur existant sinon le système retourne une erreur. |
-| package_number   | 3                             | Cette valeur doit correspondre à un numéro de forfait existant. Actuellement il existe 5 forfaits, donc la valeur doit être en 1 et 5 sinon le système retourne une erreur. |
-| signature_base64 | data:image/png;base64,iVBO... | Actuellement, le système vérifie uniquement que cette clef à bien été définit, sinon le système retourne une erreur. |
+| package_number   | 3                             | Cette valeur doit correspondre à un numéro de forfait existant. Actuellement il existe 5 forfaits, donc la valeur doit être entre 1 et 5 sinon le système retourne une erreur. |
+| signature_base64 | data:image/png;base64,iVBO... | Actuellement, le système vérifie uniquement que cette clef à bien été définie, sinon le système retourne une erreur. |
 
-1. Le système vérifie si l'api token dans le header `Authorization` a bien été définit et identifie le type d'utilisateur avec celle-ci, il contrôle ensuite si celui-ci est bien un administrateur.
-2. Le système contrôle que les clefs dans le body existe.
+1. Le système vérifie si l'api token dans le header `Authorization` a bien été défini et identifie le type d'utilisateur avec celle-ci, il contrôle ensuite si celui-ci est bien un administrateur.
+2. Le système contrôle que les clefs dans le body existent.
 3. Le système vérifie si la clef type à bien comme valeur un type de document valide comme expliqué plus haut.
 4. Le système contrôle que la valeur de la clef user_id correspond bien à un utilisateur existant.
 5. Si le type de document est "conditions_inscription" alors le système va vérifier que les clef package_number et signature_base64 existent.
-6. Le système vérifie si la clef package_number à bien comme valeur un numéro de forfait existant comme expliqué plus haut.
-7. Si toutes ces étapes se sont passé sans embuche alors le système va convertir les différentes données nécessaire en document PDF.
-8. Le système va insérer dans la base de données les données du document nécessaire à sa recherche telle que :
+6. Le système vérifie si la clef package_number a bien comme valeur un numéro de forfait existant comme expliqué plus haut.
+7. Si toutes ces étapes se sont passées sans embuche, alors le système va convertir les différentes données nécessaires en document PDF.
+8. Le système va insérer dans la base de données les données du document nécessaire à sa recherche telles que :
    1. Son numéro de série : Ex: u1rfa432op
    2. Son type : Ex: conditions_inscription
    3. L'identifiant du propriétaire du document : Ex: 4
@@ -1085,7 +1085,7 @@ public static function storeConditionsRegistration(string $filename,int $package
     }
 ```
 
-La méthode `storeConditionsRegistration` va enclencher une temporisation de sortie avec la méthode `ob_get_clean`permettant à toutes les instructions suivantes d'être mise en tampon. La méthode `ob_get_clean()` va lire le contenu du tampon et ensuite l'effacer. Ce tampon permet le traitement de mes différentes variables dans le template HTML `conditions_registration.php`. Une fois le contenue HTML chargé avec les bonnes données, la librairie DOMPDF va me permettre de convertir ce document HTML en PDF afin de le stocker.
+La méthode `storeConditionsRegistration` va enclencher une temporisation de sortie avec la méthode `ob_get_clean`permettant à toutes les instructions suivantes d'être mises en tampon. La méthode `ob_get_clean()` va lire le contenu du tampon et ensuite l'effacer. Ce tampon permet le traitement de mes différentes variables dans le template HTML `conditions_registration.php`. Une fois le contenu HTML chargé avec les bonnes données, la librairie DOMPDF va me permettre de convertir ce document HTML en PDF afin de le stocker.
 
 Traitement sur le template HTML `conditions_registration.php` avec les différentes variables passées en paramètres :
 
@@ -1109,3 +1109,41 @@ Lu et approuvé par <?= "$userfirstname $userlastname" ?>
 Création du endpoint download document permettant de télécharger un document PDF sur le serveur :
 `GET api/v1/documents/downloadDocument/{serial_number}`
 Le endpoint permet de télécharger le document en contrôlant que l'utilisateur souhaitant effectuer cette action en est bien le propriétaire.
+
+### Jeudi 29 avril 2021
+
+Réalisation du début de la documentation technique afin de documenter les premières fonctionnalités de l'API REST. Pour l'instant, les points développés sont :
+
+* API REST
+  * Arborescence
+    * Description de tous les dossiers et fichiers importants au bon fonctionnement de l'API REST
+  * Structure
+    * Explication de la communication de mes différentes classes
+  * Tests unitaires
+    * Explication de comment j'ai réalisé les tests unitaires de mon API REST et de comment je les ai identifiés
+  * Endpoints
+    * Description de chaque endpoints de l'API REST. Chaque endpoint contient :
+      * L'objectif de son existence
+      * L'utilisation concrète de celui-ci avec ces données de body lorsque l'endpoint est de type POST 
+      * Un use case lorsqu'un endpoint est difficilement compréhensible
+      * Flow chart représentant le déroulement de traitement de l'endpoint
+      * Les tests unitaires développés pour l'endpoint
+
+**Exemple de flow chart**
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneDog.png)
+
+**Exemple du test unitaire [DOG_CO1] Create one dog with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
