@@ -13,7 +13,7 @@ use App\Models\Dog;
 
 class DAODog {
 
-    private $db = null;
+    private \PDO $db;
 
     /**
      * 

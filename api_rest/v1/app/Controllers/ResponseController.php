@@ -67,7 +67,8 @@ class ResponseController {
      * @param array $result The associative array containing all the result rows
      * @return string The status and the body in JSON format of the response
      */
-    public static function successfulRequest($result = null){
+    public static function successfulRequest($result = null)
+    {
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = (!is_null($result)) ? json_encode($result) : null;
         return $response;
@@ -80,7 +81,8 @@ class ResponseController {
      * @param array $result The associative array containing all the result rows
      * @return string The status and the body in JSON format of the response
      */
-    public static function successfulRequestWithoutJson($result){
+    public static function successfulRequestWithoutJson($result)
+    {
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = $result;
         return $response;
@@ -122,7 +124,8 @@ class ResponseController {
      * 
      * @return string The status and the body in JSON format of the response
      */
-    public static function successfulCreatedRessource(){
+    public static function successfulCreatedRessource()
+    {
         $response['status_code_header'] = 'HTTP/1.1 201 Created';
         $response['body'] = null;
         return $response;
@@ -134,7 +137,8 @@ class ResponseController {
      * 
      * @return string The status and the body in JSON format of the response
      */
-    public static function invalidDateFormat(){
+    public static function invalidDateFormat()
+    {
         $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
         $response['body'] = json_encode([
             'error' => 'Format de date invalide => (YYYY-MM-DD).'
@@ -148,7 +152,8 @@ class ResponseController {
      * 
      * @return string The status and the body in JSON format of the response
      */
-    public static function invalidTimeFormat(){
+    public static function invalidTimeFormat()
+    {
         $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
         $response['body'] = json_encode([
             'error' => 'Format de temps invalide => (HH:MM:SS).'

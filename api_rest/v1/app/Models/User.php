@@ -31,8 +31,8 @@ class User {
      * @param string $phonenumber The phone number of the user
      * @param string $address The address of the user
      * @param string $api_token The api_token of the user
-     * @param int $db The code_role of the user
-     * @param string $db The password_hash of the user
+     * @param int $code_role The code_role of the user
+     * @param string $password_hash The password_hash of the user
      */
     public function __construct(int $id = null, string $email = null, string $firstname = null,
      string $lastname = null, string $phonenumber = null, string $address = null, string $api_token = null, int $code_role = null, string $password_hash = null)

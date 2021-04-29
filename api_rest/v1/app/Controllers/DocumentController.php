@@ -252,6 +252,8 @@ class DocumentController {
             return ResponseController::notFoundResponse();
         }
 
+        header("Content-Type: application/pdf");
+
         $document_data = file_get_contents(HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$serial_number.".pdf");
 
         return ResponseController::successfulRequestWithoutJson($document_data);

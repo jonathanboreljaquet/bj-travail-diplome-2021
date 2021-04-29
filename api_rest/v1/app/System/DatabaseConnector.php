@@ -10,7 +10,7 @@ namespace App\System;
 
 class DatabaseConnector {
 
-    private $dbConnection = null;
+    private \PDO $dbConnection;
 
     /**
      * 

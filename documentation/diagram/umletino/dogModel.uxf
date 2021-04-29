@@ -1,0 +1,14 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>210</x><y>110</y><w>320</w><h>210</h></coordinates><panel_attributes>Dog
+--
++id: int
++name: string
++breed: string
++sex: string
++picture_serial_number: string
++chip_id: string
++user_id: int
+--
+__construct(id: int, name: string, breed: string, sex: string,
+picture_serial_number: string, chip_id: string user_id: int )
+
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>

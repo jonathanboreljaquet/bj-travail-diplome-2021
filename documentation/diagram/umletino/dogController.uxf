@@ -1,0 +1,16 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>280</x><y>160</y><w>300</w><h>200</h></coordinates><panel_attributes>DogController
+--
+-DAODog: DAODog
+-DAOUser: DAOUser
+--
+__construct(db: PDO)
++getAllDogs(): string
++getDog(id: int): string
++createDog(dog: Dog): string
++updateDog(dog: Dog): string
++deleteDog(id: int): string
++uploadDogPicture(): string
++downloadDogPicture(serial_number: string): string
+-validateDog(dog: Dog): bool
+
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>

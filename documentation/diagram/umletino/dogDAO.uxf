@@ -1,0 +1,13 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>280</x><y>160</y><w>300</w><h>180</h></coordinates><panel_attributes>DAODog
+--
+-db: PDO
+--
+__construct(db: PDO)
++findAll(): Dog[]
++find(id: int): Dog
++findWithUserId(userId: int): Dog
++findWithSerialNumber(serial_number: string): Dog
++insert(dog: Dog): int
++update(dog: Dog): int
++delete(dog: Dog): int
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>

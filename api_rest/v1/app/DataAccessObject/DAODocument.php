@@ -12,7 +12,7 @@ use App\Models\Document;
 
 class DAODocument {
 
-    private $db = null;
+    private \PDO $db;
 
     /**
      * 

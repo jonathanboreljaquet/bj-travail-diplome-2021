@@ -76,7 +76,6 @@ class UserController {
         if (!isset($headers['Authorization'])) {
             return ResponseController::notFoundAuthorizationHeader();
         }
-
         
         $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
 

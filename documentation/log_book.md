@@ -889,7 +889,6 @@ v1
 	└───document
 	│	└───index.php
 	└───ect..
-
 ```
 
 Dans cette nouvelle version, mes modèles dans le dossier Models vont devenir des Data Access Object (DAO).

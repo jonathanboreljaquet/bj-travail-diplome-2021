@@ -1,0 +1,14 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>250</x><y>120</y><w>160</w><h>90</h></coordinates><panel_attributes>DatabaseConnector
+--
+-dbConnection: PDO
+--
+__construct()
++getConnection(): PDO
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>430</x><y>120</y><w>360</w><h>110</h></coordinates><panel_attributes>Constants
+--
+USER_CODE_ROLE: int
+ADMIN_CODE_ROLE: int
+DOCUMENT_TYPE_CONDTIONS_OF_REGISTRATION. string
+IMAGE_TYPE_JPEG: string
+IMAGE_TYPE_PNG: string</panel_attributes><additional_attributes></additional_attributes></element></diagram>

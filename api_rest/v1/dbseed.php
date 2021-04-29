@@ -110,7 +110,7 @@ VALUES
 
 try {
     $dbConnection->exec($userStatement);
-    echo "Table user success ";
+    echo "Table user success";
 } catch (PDOException $e) {
     exit($e->getMessage());
 }

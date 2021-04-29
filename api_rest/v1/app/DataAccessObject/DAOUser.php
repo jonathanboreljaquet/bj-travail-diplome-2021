@@ -12,7 +12,7 @@ use App\Models\User;
 
 class DAOUser {
 
-    private $db = null;
+    private \PDO $db;
 
     /**
      * 
