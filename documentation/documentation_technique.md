@@ -26,7 +26,7 @@ Exemple de la classe `Dog` représentant la table `dog` de la base de donnée :
 
 ![dateTestPlanningSecondUser](./diagram/umletino/dogModel.png)
 
-![dateTestPlanningSecondUser](./diagram/dogTable.png)
+![dateTestPlanningSecondUser](./diagram/dogTable.PNG)
 
 #### app/DataAccessObject
 
@@ -72,7 +72,7 @@ Fichier de bootage de l'API REST inclus dans tout les fichiers d'entrées, celui
 
 ### Structure
 
-![dateTestPlanningSecondUser](./diagram./drawio./system.png)
+![dateTestPlanningSecondUser](./diagram/drawio/system.png)
 
 ### Tests unitaires
 
