@@ -1150,15 +1150,15 @@ pm.test("Right message for access without permission", function () {
 
 ### Vendredi 30 avril 2021
 
-Modification du du code, de la base de données, de la documentation et des tests unitaires afin de changer toutes les occurrences de `serial_number` en `serial_id` . En effet, serial number n'avait pas vraiment de sens car celui-ci désignait un string aléatoire et non un nombre aléatoire.
+Modification du code, de la base de données, de la documentation et des tests unitaires afin de changer toutes les occurrences de `serial_number` en `serial_id` . En effet, serial number n'avait pas vraiment de sens, car celui-ci désignait un string aléatoire et non un nombre aléatoire.
 Exemple de `serial_id` : u0NKD3uP
 
-Rendez-vous physique hebdomadaire avec M. Mathieu. Aujourd'hui nous avons discuté de l'évaluation intermédiaire à rendre le jour même à 16h10. M. Mathieu m'as surtout demandé de réaliser le squelette de mon rapport et de ma documentation technique. M. Mathieu en a profité pour également me faire des remarques sur le code et la documentation de mon API REST. Les remarques qui ont été faites :
+Rendez-vous physique hebdomadaire avec M. Mathieu. Aujourd'hui, nous avons discuté de l'évaluation intermédiaire à rendre le jour même à 16h10. M. Mathieu m'a surtout demandé de réaliser le squelette de mon rapport et de ma documentation technique. M. Mathieu en a profité pour également me faire des remarques sur le code et la documentation de mon API REST. Les remarques qui ont été faites :
 
 * Création du squelette du rapport et de la documentation technique
 * Les méthodes de recherche de mes DAO avec comme début de nom : `FindWith`. M. Mathieu m'a conseillé de les modifier en `FindBy`
-* Le code des tests unitaires Postman réalisés pour mon API REST se trouvaient dans ma documentation technique. M. Mathieu m'a conseillé de les mettre dans une document annexe et d'uniquement les référencier dans la document technique.
+*  Le code des tests unitaires Postman réalisés pour mon API REST se trouvaient dans ma documentation technique. M. Mathieu m'a conseillé de les mettre dans un document annexe et d'uniquement les référencer dans le document technique.
 
-Ajout des endpoints document dans la documentation technique. 
+Documentation des endpoints document dans la documentation technique.
 
  

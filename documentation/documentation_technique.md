@@ -652,7 +652,7 @@ Créer un document pour un utilisateur dans la base de données ainsi que de le 
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter un document à un utilisateur. Celui-ci peut être de différentes type. Si le document est de type `conditions_inscription` le système génère les conditions d'inscription avec la signature et le numéro de forfait passé en body de la requête. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet d'ajouter un document à un utilisateur. Si le document est de type `conditions_inscription` le système génère les conditions d'inscription avec la signature et le numéro de forfait passé en body de la requête. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
 | Clef             | Définition                                              |                Obligatoire                | Format                                                 |
@@ -765,6 +765,25 @@ Cet endpoint permet la suppression définitive d'un document avec son document s
 * **[DOC-DO1] Delete one document with a user api token**
 * **[DOC-DO2] Delete one non-existent document**
 * **[DOC-DO3] Delete one document without problems**
+
+####  GET api/v1/dogs/documents/downloadDocument/{serial_id}
+
+##### Objectif
+
+Récupérer un document stocké dans le serveur.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer le document d'un client. L'endpoint est accessible par l'utilisateur propriétaire authentifié.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDownloadDocument.png)
+
+##### Tests unitaires
+
+* **[DOC-DD2] Download document without problems**
+* **[DOC-DD1] Download non-existent or non-owner document**
 
 ## PWA
 
