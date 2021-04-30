@@ -10,153 +10,28 @@ namespace App\Models;
 
 class Absence {
 
-    private $db = null;
+    public ?int $id;
+    public ?string $date_absence_from;
+    public ?string $date_absence_to;
+    public ?string $description;
+    public ?int $id_educator;
 
     /**
      * 
-     * Constructor of the Absence object.
+     * Constructor of the Absence model object.
      * 
-     * @param PDO $db The database connection
+     * @param int $id The Absence identifier
+     * @param string $date_absence_from The start date of the absences
+     * @param string $date_absence_to The end date of the absences
+     * @param string $description The description of the absences
+     * @param int $id_educator The educator identifier
      */
-    public function __construct(\PDO $db)
+    public function __construct(int $id = null, string $date_absence_from = null, string $date_absence_to = null,string $description = null,int $id_educator = null)
     {
-        $this->db = $db;
-    }
-
-
-    /**
-     * 
-     * Method to return all the absences of the database in an associative array.
-     * 
-     * @param bool $deleted Bool to define whether to search for existing or deleted absences
-     * @param int $idEducator The educator identifier
-     * @return array The associative array containing all the result rows of the query 
-     */
-    public function findAll(bool $deleted,int $idEducator)
-    {
-        $statement ="
-        SELECT id, date_absence_from, date_absence_to, description
-        FROM absence
-        WHERE is_deleted= :DELETED
-        AND id_educator = :ID_EDUCATOR";
-        
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
-            $statement->bindParam(':DELETED', $deleted, \PDO::PARAM_BOOL);
-            $statement->execute();
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }
-    }
-
-    /**
-     * 
-     * Method to return a absence from the database in an associative array.
-     * 
-     * @param int $id The absence identifier 
-     * @param int $idEducator The educator identifier
-     * @return array The associative array containing all the result rows of the query 
-     */
-    public function find(int $id,int $idEducator)
-    {
-        $statement = "
-        SELECT id, date_absence_from, date_absence_to, description
-        FROM absence
-        WHERE id = :ID_ABSENCE
-        AND is_deleted = 0
-        AND id_educator = :ID_EDUCATOR;";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':ID_ABSENCE', $id, \PDO::PARAM_INT);
-            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
-            $statement->execute();
-            $result = $statement->fetch(\PDO::FETCH_ASSOC);
-            return $result;
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-     /**
-     * 
-     * Method to insert a absence in the database.
-     * 
-     * @param array $input The associative table with the corresponding keys and values 
-     * @param int $idEducator The educator identifier
-     * @return int The number of rows affected by the insert
-     */
-    public function insert(array $input,int $idEducator)
-    {
-        $statement = "
-        INSERT INTO absence (date_absence_from, date_absence_to, description,id_educator ,is_deleted) 
-        VALUES(STR_TO_DATE(:DATE_ABSENCE_FROM, \"%Y-%m-%d\"), STR_TO_DATE(:DATE_ABSENCE_TO, \"%Y-%m-%d\"), :DESCRIPTION,:ID_EDUCATOR ,0);";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':DATE_ABSENCE_FROM', $input['date_absence_from'], \PDO::PARAM_STR);
-            $statement->bindParam(':DATE_ABSENCE_TO', $input['date_absence_to'], \PDO::PARAM_STR);  
-            $statement->bindParam(':DESCRIPTION', $input['description'], \PDO::PARAM_STR);  
-            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);  
-            $statement->execute();
-            return $statement->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-    /**
-     * 
-     * Method to update a absence in the database.
-     * 
-     * @param int $id The absence identifier 
-     * @param array $input The associative table with the corresponding keys and values 
-     * @return int The number of rows affected by the update
-     */
-    public function update(int $id, array $input)
-    {
-        $statement = "
-        UPDATE absence
-        SET date_absence_from = STR_TO_DATE(:DATE_ABSENCE_FROM, \"%Y-%m-%d\"), date_absence_to = STR_TO_DATE(:DATE_ABSENCE_TO, \"%Y-%m-%d\"), description = :DESCRIPTION
-        WHERE id = :ID_ABSENCE;";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':DATE_ABSENCE_FROM', $input['date_absence_from'], \PDO::PARAM_STR);
-            $statement->bindParam(':DATE_ABSENCE_TO', $input['date_absence_to'], \PDO::PARAM_STR);  
-            $statement->bindParam(':DESCRIPTION', $input['description'], \PDO::PARAM_STR);  
-            $statement->bindParam(':ID_ABSENCE', $id, \PDO::PARAM_INT);
-            $statement->execute();
-            return $statement->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
-    }
-
-    /**
-     * 
-     * Method to delete a absence in the database.
-     * 
-     * @param int $id The absence identifier 
-     * @return int The number of rows affected by the update
-     */
-    public function delete(int $id)
-    {
-        $statement = "
-        UPDATE absence
-        SET is_deleted = 1
-        WHERE id = :ID_ABSENCE;";
-
-        try {
-            $statement = $this->db->prepare($statement);
-            $statement->bindParam(':ID_ABSENCE', $id, \PDO::PARAM_INT);  
-            $statement->execute();
-            return $statement->rowCount();
-        } catch (\PDOException $e) {
-            exit($e->getMessage());
-        }    
+        $this->id = $id;
+        $this->date_absence_from = $date_absence_from;
+        $this->date_absence_to = $date_absence_to;
+        $this->description = $description;
+        $this->id_educator = $id_educator;
     }
 }

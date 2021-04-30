@@ -21,7 +21,6 @@ class DocumentController {
     private DAODocument $DAODocument;
     private DAOUser $DAOUser;
 
-
     /**
      * 
      * Constructor of the DocumentController object.
