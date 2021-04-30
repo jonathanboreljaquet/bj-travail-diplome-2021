@@ -5,8 +5,8 @@
 __construct(db: PDO)
 +findAll(): Dog[]
 +find(id: int): Dog
-+findWithUserId(userId: int): Dog
-+findWithSerialNumber(serial_number: string): Dog
++findByUserId(userId: int): Dog
++findBySerialId(serial_id: string): Dog
 +insert(dog: Dog): int
 +update(dog: Dog): int
 +delete(dog: Dog): int

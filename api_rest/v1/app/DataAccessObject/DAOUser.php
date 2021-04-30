@@ -203,7 +203,7 @@ class DAOUser {
      * @param string $api_token The user api token 
      * @return User A User model object containing all the result rows of the query 
      */
-    public function findUserWithApiToken(string $api_token)
+    public function findByApiToken(string $api_token)
     {
         $statement = "
         SELECT id, email, firstname, lastname, phonenumber, address, api_token, code_role,password_hash
@@ -245,7 +245,7 @@ class DAOUser {
      * @param string $email The user email 
      * @return User A User model object containing all the result rows of the query 
      */
-    public function findUserWithEmail(string $email)
+    public function findUserByEmail(string $email)
     {
         $statement = "
         SELECT id, email, firstname, lastname, phonenumber, address, api_token, code_role, password_hash

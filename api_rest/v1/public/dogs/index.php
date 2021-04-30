@@ -35,7 +35,7 @@ $dog->id = $id ?? null;
 $dog->name = $input["name"] ?? null;
 $dog->breed = $input["breed"] ?? null;
 $dog->sex = $input["sex"] ?? null;
-$dog->picture_serial_number = $input["picture_serial_number"] ?? null;
+$dog->picture_serial_id = $input["picture_serial_id"] ?? null;
 $dog->chip_id = $input["chip_id"] ?? null;
 $dog->user_id = $input["user_id"] ?? null;
 

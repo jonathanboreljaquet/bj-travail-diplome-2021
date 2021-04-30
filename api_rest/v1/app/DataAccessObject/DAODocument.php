@@ -34,7 +34,7 @@ class DAODocument {
     public function findAll()
     {
         $statement = "
-        SELECT id, document_serial_number, type, user_id
+        SELECT id, document_serial_id, type, user_id
         FROM document;";
 
         try {
@@ -46,7 +46,7 @@ class DAODocument {
             foreach ($results as $result) {
                 $document = new Document();
                 $document->id = $result["id"];
-                $document->document_serial_number = $result["document_serial_number"];
+                $document->document_serial_id = $result["document_serial_id"];
                 $document->type = $result["type"];
                 $document->user_id = $result["user_id"];
                 array_push($documentArray,$document);
@@ -69,7 +69,7 @@ class DAODocument {
     public function find(int $id)
     {
         $statement = "
-        SELECT id, document_serial_number, type, user_id
+        SELECT id, document_serial_id, type, user_id
         FROM document
         WHERE id = :ID_DOCUMENT;";
 
@@ -83,7 +83,7 @@ class DAODocument {
             if ($statement->rowCount()==1) {
                 $result = $statement->fetch(\PDO::FETCH_ASSOC);
                 $document->id = $result["id"];
-                $document->document_serial_number = $result["document_serial_number"];
+                $document->document_serial_id = $result["document_serial_id"];
                 $document->type = $result["type"];
                 $document->user_id = $result["user_id"];
             }
@@ -104,10 +104,10 @@ class DAODocument {
      * @param int $userId The user identifier 
      * @return Document[] A Document object array
      */
-    public function findWithUserId(int $userId)
+    public function findByUserId(int $userId)
     {
         $statement = "
-        SELECT id, document_serial_number, type, user_id 
+        SELECT id, document_serial_id, type, user_id 
         FROM document
         WHERE user_id = :ID_USER;";
 
@@ -122,7 +122,7 @@ class DAODocument {
             foreach ($results as $result) {
                 $document = new Document();
                 $document->id = $result["id"];
-                $document->document_serial_number = $result["document_serial_number"];
+                $document->document_serial_id = $result["document_serial_id"];
                 $document->type = $result["type"];
                 $document->user_id = $result["user_id"];
                 array_push($documentArray,$document);
@@ -137,24 +137,24 @@ class DAODocument {
 
     /**
      * 
-     * Method to return a document from the database with the user id and serial number in a document model object.
+     * Method to return a document from the database with the user id and serial id in a document model object.
      * 
      * @param int $userId The user identifier 
-     * @param string $serial_number The serial number of the document 
+     * @param string $serial_id The serial id of the document 
      * @return Document A Document model object containing all the result rows of the query 
      */
-    public function findWithUserIdAndSerialNumber(int $userId,string $serial_number)
+    public function findByUserIdAndSerialId(int $userId,string $serial_id)
     {
         $statement = "
-        SELECT id, document_serial_number, type, user_id 
+        SELECT id, document_serial_id, type, user_id 
         FROM document
         WHERE user_id = :ID_USER
-        AND document_serial_number= :SERIAL_NUMBER;";
+        AND document_serial_id= :SERIAL_ID;";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_USER', $userId, \PDO::PARAM_INT);
-            $statement->bindParam(':SERIAL_NUMBER', $serial_number, \PDO::PARAM_STR);
+            $statement->bindParam(':SERIAL_ID', $serial_id, \PDO::PARAM_STR);
             $statement->execute();
             
             $document = new Document();
@@ -162,7 +162,7 @@ class DAODocument {
             if ($statement->rowCount()==1) {
                 $result = $statement->fetch(\PDO::FETCH_ASSOC);
                 $document->id = $result["id"];
-                $document->document_serial_number = $result["document_serial_number"];
+                $document->document_serial_id = $result["document_serial_id"];
                 $document->type = $result["type"];
                 $document->user_id = $result["user_id"];
             }
@@ -187,12 +187,12 @@ class DAODocument {
     public function insert(Document $document)
     {
         $statement = "
-        INSERT INTO document (document_serial_number, type,user_id) 
-        VALUES(:DOCUMENT_SERIAL_NUMBER, :TYPE, :USER_ID);";
+        INSERT INTO document (document_serial_id, type,user_id) 
+        VALUES(:DOCUMENT_SERIAL_ID, :TYPE, :USER_ID);";
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->bindParam(':DOCUMENT_SERIAL_NUMBER', $document->document_serial_number, \PDO::PARAM_STR);
+            $statement->bindParam(':DOCUMENT_SERIAL_ID', $document->document_serial_id, \PDO::PARAM_STR);
             $statement->bindParam(':TYPE', $document->type, \PDO::PARAM_STR);    
             $statement->bindParam(':USER_ID', $document->user_id, \PDO::PARAM_STR);  
             $statement->execute();
@@ -213,13 +213,13 @@ class DAODocument {
     {
         $statement = "
         UPDATE document
-        SET document_serial_number = :DOCUMENT_SERIAL_NUMBER, 
+        SET document_serial_id = :DOCUMENT_SERIAL_ID, 
         type = :TYPE,
         user_id = :USER_ID
         WHERE id = :ID_DOCUMENT;";
         try {
             $statement = $this->db->prepare($statement);
-            $statement->bindParam(':DOCUMENT_SERIAL_NUMBER', $document->document_serial_number, \PDO::PARAM_STR);
+            $statement->bindParam(':DOCUMENT_SERIAL_ID', $document->document_serial_id, \PDO::PARAM_STR);
             $statement->bindParam(':TYPE', $document->type, \PDO::PARAM_STR);    
             $statement->bindParam(':USER_ID', $document->user_id, \PDO::PARAM_STR);  
             $statement->bindParam(':ID_DOCUMENT', $document->id, \PDO::PARAM_INT);

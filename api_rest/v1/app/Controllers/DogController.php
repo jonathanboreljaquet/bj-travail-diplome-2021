@@ -48,7 +48,7 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -74,7 +74,7 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -104,7 +104,7 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -140,7 +140,7 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -155,7 +155,7 @@ class DogController {
         $actualDog->name = $dog->name ?? $actualDog->name;
         $actualDog->breed = $dog->breed ?? $actualDog->breed;
         $actualDog->sex = $dog->sex ?? $actualDog->sex;
-        $actualDog->picture_serial_number = $dog->picture_serial_number ?? $actualDog->picture_serial_number;
+        $actualDog->picture_serial_id = $dog->picture_serial_id ?? $actualDog->picture_serial_id;
         $actualDog->chip_id = $dog->chip_id ?? $actualDog->chip_id;
 
         $this->DAODog->update($actualDog);
@@ -178,7 +178,7 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -190,8 +190,8 @@ class DogController {
             return ResponseController::notFoundResponse();
         }
 
-        if (!is_null($dog->picture_serial_number)) {
-            $filename = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$dog->picture_serial_number.".jpeg";
+        if (!is_null($dog->picture_serial_id)) {
+            $filename = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$dog->picture_serial_id.".jpeg";
             if (file_exists($filename)) {
                 unlink($filename);
             }
@@ -216,7 +216,7 @@ class DogController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -247,8 +247,8 @@ class DogController {
         $img_name = HelperController::generateRandomString();
         $upload_dir = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$img_name.".jpeg";
 
-        if (!is_null($dog->picture_serial_number)) {
-            $filename = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$dog->picture_serial_number.".jpeg";
+        if (!is_null($dog->picture_serial_id)) {
+            $filename = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$dog->picture_serial_id.".jpeg";
             if (file_exists($filename)) {
                 unlink($filename);
             }
@@ -258,7 +258,7 @@ class DogController {
             return ResponseController::uploadFailed();
         }
         
-        $dog->picture_serial_number = $img_name;
+        $dog->picture_serial_id = $img_name;
 
         $this->DAODog->update($dog);
         
@@ -269,16 +269,16 @@ class DogController {
      * 
      * Method to download a dog picture.
      * 
-     * @param string  $serial_number The serial_number of the dog picture
+     * @param string  $serial_id The serial_id of the dog picture
      * @return string The status and the body in JSON format of the response
      */
-    public function downloadDogPicture(string $serial_number)
+    public function downloadDogPicture(string $serial_id)
     {
-        if(!$this->DAODog->findWithSerialNumber($serial_number)){
+        if(!$this->DAODog->findBySerialId($serial_id)){
             return ResponseController::notFoundResponse();
         }
 
-        $image = file_get_contents(HelperController::getDefaultDirectory()."storage/app/dog_picture/".$serial_number.".jpeg");
+        $image = file_get_contents(HelperController::getDefaultDirectory()."storage/app/dog_picture/".$serial_id.".jpeg");
         
         return ResponseController::successfulRequestWithoutJson('data:image/jpeg;base64, '.base64_encode($image));
     }

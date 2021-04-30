@@ -32,7 +32,7 @@ parse_str(file_get_contents('php://input'), $input);
 
 $document = new Document();
 $document->id = $id ?? null;
-$document->document_serial_number = $input["document_serial_number"] ?? null;
+$document->document_serial_id = $input["document_serial_id"] ?? null;
 $document->type = $input["type"] ?? null;
 $document->user_id = $input["user_id"] ?? null;
 $document->package_number = $input["package_number"] ?? null;
@@ -49,6 +49,10 @@ switch ($requestMethod) {
         break;
 
     case 'POST':
+        $document->type = $_POST["type"] ?? null;
+        $document->user_id = $_POST["user_id"] ?? null;
+        $document->package_number = $_POST["package_number"] ?? null;
+        $document->signature_base64 = $_POST["signature_base64"] ?? null;
         $response = $controller->createDocument($document);
         break;
 

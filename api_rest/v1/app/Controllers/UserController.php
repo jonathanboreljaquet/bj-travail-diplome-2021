@@ -51,7 +51,7 @@ class UserController {
 
         $api_token = $headers['Authorization'];
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($api_token);
+        $userAuth = $this->DAOUser->findByApiToken($api_token);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -77,7 +77,7 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
         
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -144,7 +144,7 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -186,7 +186,7 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -216,7 +216,7 @@ class UserController {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        $userAuth = $this->DAOUser->findUserWithEmail($user->email);
+        $userAuth = $this->DAOUser->findUserByEmail($user->email);
 
         if (is_null($userAuth)) {
             return ResponseController::invalidLogin();
@@ -249,13 +249,13 @@ class UserController {
             return ResponseController::notFoundAuthorizationHeader();
         }
         
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth)) {
             return ResponseController::notFoundResponse();
         }
-        $dogs = $this->DAODog->findWithUserId($userAuth->id);
-        $documents = $this->DAODocument->findWithUserId($userAuth->id);
+        $dogs = $this->DAODog->findByUserId($userAuth->id);
+        $documents = $this->DAODocument->findByUserId($userAuth->id);
         $userAuth->dogs = $dogs;
         $userAuth->documents = $documents;
         

@@ -10,7 +10,7 @@ __construct(db: PDO)
 +updateDog(dog: Dog): string
 +deleteDog(id: int): string
 +uploadDogPicture(): string
-+downloadDogPicture(serial_number: string): string
++downloadDogPicture(serial_id: string): string
 -validateDog(dog: Dog): bool
 
 </panel_attributes><additional_attributes></additional_attributes></element></diagram>

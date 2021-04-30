@@ -1,0 +1,1004 @@
+**[USE_CO1] Create one user without email**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without email", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[USE_CO2] Create one user without firstname**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without firstname", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[USE_CO3] Create one user without lastname**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without lastname", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[USE-CO4] Create one user without phonenumber**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without phone number", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[USE-CO5] Create one user without address**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without address", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[USE-CO6] Create one user with invalid email format**
+
+```javascript
+pm.test("Right code for invalid email format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for for invalid email format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format d'adresse email invalide.");
+});
+```
+
+**[USE-CO7] Create one user without problems**
+
+```javascript
+pm.test("Right code for successful created ressource", function () {
+    pm.response.to.have.status(201);
+});
+```
+
+**[USE-GA1] Get all users with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[USE-GA2] Get right users with admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+      "type": "array",
+      "items": [{
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "email" : {"type" : "string"},
+              "firstname" : {"type" : "string"},
+              "lastname" : {"type" : "string"},
+              "phonenumber" : {"type" : "string"},
+              "address" : {"type" : "string"},
+              "api_token" : {"type" : "null"},
+              "code_role" : {"type" : "null"},
+              "password_hash" : {"type" : "null"}
+          },
+          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash"]
+      }]
+  })
+});
+```
+
+**[USE-GO1] Get one user with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[USE-GO2] Get one non-existent user**
+
+```javascript
+pm.test("User not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[USE-GO3] Get right user wtih admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "email" : {"type" : "string"},
+              "firstname" : {"type" : "string"},
+              "lastname" : {"type" : "string"},
+              "phonenumber" : {"type" : "string"},
+              "address" : {"type" : "string"},
+              "api_token" : {"type" : "string"},
+              "code_role" : {"type" : "integer"},
+              "password_hash" : {"type" : ["string","null"]}
+          },
+          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash"]
+  })
+});
+```
+
+**[USE-UO1] Update one user with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[USE-UO2] Update one non-existent user**
+
+```javascript
+pm.test("User not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[USE-UO3] Update one user with invalid email format**
+
+```javascript
+pm.test("Right code for invalid email format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for for invalid email format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format d'adresse email invalide.");
+});
+```
+
+**[USE-UO4] Update one user without problems**
+
+```javascript
+pm.test("Right code for successful updated ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[USE-DO1] Delete one user with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[USE-DO2] Delete one non-existent user**
+
+```javascript
+pm.test("User not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[USE-DO3] Delete one user without problems**
+
+```javascript
+pm.test("Right code for successful deleted ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[USE-GUA1] Get all user information of the current logged in non-existent user**
+
+```javascript
+pm.test("User not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[USE-GUA2] Get all user information of the current logged in user**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "email" : {"type" : "string"},
+              "firstname" : {"type" : "string"},
+              "lastname" : {"type" : "string"},
+              "phonenumber" : {"type" : "string"},
+              "address" : {"type" : "string"},
+              "api_token" : {"type" : "string"},
+              "code_role" : {"type" : "integer"},
+              "password_hash" : {"type" : "null"},
+              "dogs" : {
+                  "type" : "array",
+                  "properties" : {
+                      "id" : {"type" : "integer"},
+                      "name" : {"type" : "string"},
+                      "breed" : {"type" : "string"},
+                      "sex" : {"type" : "string"},
+                      "picture_seral_number" : {"type" : "string"},
+                      "chip_id" : {"type" : "integer"},
+                      "user_id" : {"type" : "integer"},
+                  },
+                  "required": ["id","name","breed","sex","picture_seral_number","chip_id","user_id"]
+              },
+              "documents" : {
+                  "type" : "array",
+                  "properties" : {
+                      "id" : {"type" : "integer"},
+                      "document_serial_id" : {"type" : "string"},
+                      "type" : {"type" : "string"},
+                      "user_id" : {"type" : "string"},
+                      "package_number" : {"type" : "null"},
+                      "signature_base64" : {"type" : "null"},
+                  },
+                  "required": ["id","document_serial_id","type","user_id"]
+              }
+          },
+          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash","dogs"]
+  })
+});
+```
+
+**[USE-C1] Connect user without email**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without email", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[USE-C2] Connect user with an unrecognized email**
+
+```javascript
+pm.test("Right code for invalid login", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid login", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Identifiants de connexion invalides.");
+});
+```
+
+**[USE-C3] Connect user with wrong password**
+
+```javascript
+pm.test("Right code for invalid login", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid login", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Identifiants de connexion invalides.");
+});
+```
+
+**[USE-C4] Successful connection**
+
+```javascript
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+          "type": "object",
+          "properties": {
+              "api_token" : {"type" : "string"}
+          },
+          "required": ["api_token"]
+  })
+});
+```
+
+**[DOG-CO1] Create one dog with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[DOG-CO2] Create one dog without name**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without name", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[DOG-CO3] Create one dog without breed**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without breed", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[DOG-CO4] Create one dog without sex**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without sex", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[DOG-CO5] Create one dog without user_id**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without user_id", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[DOG-CO6] Create one dog for non-existent user**
+
+```javascript
+pm.test("User not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[DOG-CO7] Create one dog without problems**
+
+```javascript
+pm.test("Right code for successful created ressource", function () {
+    pm.response.to.have.status(201);
+});
+```
+
+**[DOG-GA1] Get all dogs with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[DOG-GA2] Get right dogs with admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+      "type": "array",
+      "items": [{
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "name" : {"type" : "string"},
+              "breed" : {"type" : "string"},
+              "sex" : {"type" : "string"},
+              "picture_serial_id" : {"type" : ["string","null"]},
+              "chip_id" : {"type" : "string"},
+              "user_id" : {"type" : "integer"}
+          },
+          "required": ["id","name","breed","sex","picture_serial_id","chip_id","user_id"]
+      }]
+  })
+});
+```
+
+**[DOG-GO1] Get one dog with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[DOG-GO2] Get one non-existent dog**
+
+```javascript
+pm.test("Dog not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[DOG-GO3] Get right dog with admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "name" : {"type" : "string"},
+              "breed" : {"type" : "string"},
+              "sex" : {"type" : "string"},
+              "picture_serial_id" : {"type" : ["string","null"]},
+              "chip_id" : {"type" : ["string","null"]},
+              "user_id" : {"type" : "integer"}
+          },
+          "required": ["id","name","breed","sex","picture_serial_id","chip_id","user_id"]
+  })
+});
+```
+
+**[DOG-UO1] Update one dog with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[DOG-UO2] Update one non-existent dog**
+
+```javascript
+pm.test("Dog not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[DOG-UO3] Update one dog without problems**
+
+```javascript
+pm.test("Right code for successful updated ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[DOG-DO1] Delete one dog with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[DOG-DO2] Delete one non-existent dog**
+
+```javascript
+pm.test("Dog not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[DOG-DO3] Delete one dog without problems**
+
+```javascript
+pm.test("Right code for successful deleted ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[DOG-UDP1] Upload dog picture with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[DOG-UDP2] Upload dog picture without dog_picture**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without dog_picture", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[DOG-UDP3] Upload dog picture without dog_id**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without dog_id", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[DOG-UDP4] Upload dog picture for non-existant dog**
+
+```javascript
+pm.test("Dog not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[DOG-UDP5] Upload dog picture with invalid image type format**
+
+```javascript
+pm.test("Right code for invalid image file format", function () {
+    pm.response.to.have.status(415);
+});
+pm.test("Right message for invalid image file format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format d'image par pris en charge.");
+});
+```
+
+**[DOG-UDP6] Upload dog picture without problems**
+
+```javascript
+pm.test("Right code for successful uploaded ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[DOG-DDP1] Download non-existant dog picture**
+
+```javascript
+pm.test("Dog not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[DOG-DDP2] Download dog picture without problems**
+
+```javascript
+pm.test("The server returns some information", () => {
+    pm.expect(pm.response.body);
+});
+```
+
+**[DOC-CO1] Create one document with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[DOC-CO2] Create one document without type**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without type", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[DOC-CO3] Create one document without user_id**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without user_id", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[DOC-CO4] Create one document with invalid document type format**
+
+```javascript
+pm.test("Right code for invalid document type format", function () {
+    pm.response.to.have.status(415);
+});
+pm.test("Right message for invalid document type format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Type de document invalide => (conditions_inscription,poster).");
+});
+```
+
+**[DOC-CO5] Create one document for non-existent user**
+
+```javascript
+pm.test("User not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[DOC-CO6] Create one conditions of registration with invalid paramater**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without type", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[DOC-CO7] Create one conditions of registration with invalid package number**
+
+```javascript
+pm.test("User not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Numéro de Forfait invalide => (1 jusqu'à 5).");
+});
+```
+
+**[DOC-CO8] Create one conditions of registration without problems**
+
+```javascript
+pm.test("Right code for successful created ressource", function () {
+    pm.response.to.have.status(201);
+});
+```
+
+**[DOC-CO9] Create one PDF with invalid document format**
+
+```javascript
+pm.test("Right code for invalid document type format", function () {
+    pm.response.to.have.status(415);
+});
+pm.test("Right message for invalid document type format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de document pas pris en charge => Format disponible PDF.");
+});
+```
+
+**[DOC-CO10] Create one poster without problems**
+
+```javascript
+pm.test("Right code for successful created ressource", function () {
+    pm.response.to.have.status(201);
+});
+```
+
+**[DOC-GA1] Get all documents with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[DOC-GA2] Get right documents with admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+      "type": "array",
+      "items": [{
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "document_serial_id" : {"type" : "string"},
+              "type" : {"type" : "string"},
+              "user_id" : {"type" : "integer"}
+          },
+          "required": ["id","document_serial_id","type","user_id"]
+      }]
+  })
+});
+```
+
+**[DOC-GO1] Get one document with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[DOC-GO2] Get one non-existent document**
+
+```javascript
+pm.test("Document not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[DOC-GO3] Get right document with admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "document_serial_id" : {"type" : "string"},
+              "type" : {"type" : "string"},
+              "user_id" : {"type" : "integer"}
+          },
+          "required": ["id","document_serial_id","type","user_id"]
+  })
+});
+```
+
+**[DOC-UO1] Update one document with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[DOC-UO2] Update one non-existent document**
+
+```javascript
+pm.test("Document not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[DOC-CO3] Update one document with invalid document type format**
+
+```javascript
+pm.test("Right code for invalid document type format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid document type format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Type de document invalide => (conditions_inscription,poster).");
+});
+```
+
+**[DOC-UO4] Update one document without problems**
+
+```javascript
+pm.test("Right code for successful updated ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[DOC-DO1] Delete one document with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[DOC-DO2] Delete one non-existent document**
+
+```javascript
+pm.test("Document not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[DOC-DO3] Delete one document without problems**
+
+```javascript
+pm.test("Right code for successful deleted ressource", function () {
+    pm.response.to.have.status(200);
+});
+```

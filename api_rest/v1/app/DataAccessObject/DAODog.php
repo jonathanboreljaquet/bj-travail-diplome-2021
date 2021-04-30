@@ -35,7 +35,7 @@ class DAODog {
     public function findAll()
     {
         $statement = "
-        SELECT id, name, breed, sex, picture_serial_number, chip_id, user_id
+        SELECT id, name, breed, sex, picture_serial_id, chip_id, user_id
         FROM dog;";
 
         try {
@@ -50,7 +50,7 @@ class DAODog {
                 $dog->name = $result["name"];
                 $dog->breed = $result["breed"];
                 $dog->sex = $result["sex"];
-                $dog->picture_serial_number = $result["picture_serial_number"];
+                $dog->picture_serial_id = $result["picture_serial_id"];
                 $dog->chip_id = $result["chip_id"];
                 $dog->user_id = $result["user_id"];
                 array_push($dogArray,$dog);
@@ -74,7 +74,7 @@ class DAODog {
     public function find(int $id)
     {
         $statement = "
-        SELECT id, name, breed, sex, picture_serial_number, chip_id, user_id
+        SELECT id, name, breed, sex, picture_serial_id, chip_id, user_id
         FROM dog
         WHERE id = :ID_DOG;";
 
@@ -91,7 +91,7 @@ class DAODog {
                 $dog->name = $result["name"];
                 $dog->breed = $result["breed"];
                 $dog->sex = $result["sex"];
-                $dog->picture_serial_number = $result["picture_serial_number"];
+                $dog->picture_serial_id = $result["picture_serial_id"];
                 $dog->chip_id = $result["chip_id"];
                 $dog->user_id = $result["user_id"];
             }
@@ -112,10 +112,10 @@ class DAODog {
      * @param int $userId The user identifier 
      * @return Dog[] A Dog object array
      */
-    public function findWithUserId(int $userId)
+    public function findByUserId(int $userId)
     {
         $statement = "
-        SELECT id, name, breed, sex, picture_serial_number, chip_id, user_id
+        SELECT id, name, breed, sex, picture_serial_id, chip_id, user_id
         FROM dog
         WHERE user_id = :ID_USER;";
 
@@ -133,7 +133,7 @@ class DAODog {
                 $dog->name = $result["name"];
                 $dog->breed = $result["breed"];
                 $dog->sex = $result["sex"];
-                $dog->picture_serial_number = $result["picture_serial_number"];
+                $dog->picture_serial_id = $result["picture_serial_id"];
                 $dog->chip_id = $result["chip_id"];
                 $dog->user_id = $result["user_id"];
                 array_push($dogArray,$dog);
@@ -148,21 +148,21 @@ class DAODog {
 
     /**
      * 
-     * Method to return a dog from the database from his picture serial number.
+     * Method to return a dog from the database from his picture serial id.
      * 
-     * @param string $serial_number The dog picture serial number  
+     * @param string $serial_id The dog picture serial id  
      * @return Dog A Dog model object containing all the result rows of the query 
      */
-    public function findWithSerialNumber(string $serial_number)
+    public function findBySerialId(string $serial_id)
     {
         $statement = "
-        SELECT id, name, breed, sex, picture_serial_number, chip_id, user_id 
+        SELECT id, name, breed, sex, picture_serial_id, chip_id, user_id 
         FROM dog
-        WHERE picture_serial_number = :SERIAL_NUMBER;";
+        WHERE picture_serial_id = :SERIAL_ID;";
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->bindParam(':SERIAL_NUMBER', $serial_number, \PDO::PARAM_STR);
+            $statement->bindParam(':SERIAL_ID', $serial_id, \PDO::PARAM_STR);
             $statement->execute();
 
             $dog = new Dog();
@@ -173,7 +173,7 @@ class DAODog {
                 $dog->name = $result["name"];
                 $dog->breed = $result["breed"];
                 $dog->sex = $result["sex"];
-                $dog->picture_serial_number = $result["picture_serial_number"];
+                $dog->picture_serial_id = $result["picture_serial_id"];
                 $dog->chip_id = $result["chip_id"];
                 $dog->user_id = $result["user_id"];
             }
@@ -198,15 +198,15 @@ class DAODog {
     public function insert(Dog $dog)
     {
         $statement = "
-        INSERT INTO dog (name, breed, sex, picture_serial_number, chip_id, user_id) 
-        VALUES(:NAME, :BREED, :SEX, :PICTURE_SERIAL_NUMBER, :CHIP_ID, :USER_ID);";
+        INSERT INTO dog (name, breed, sex, picture_serial_id, chip_id, user_id) 
+        VALUES(:NAME, :BREED, :SEX, :PICTURE_SERIAL_ID, :CHIP_ID, :USER_ID);";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':NAME', $dog->name, \PDO::PARAM_STR);
             $statement->bindParam(':BREED', $dog->breed, \PDO::PARAM_STR);    
             $statement->bindParam(':SEX', $dog->sex, \PDO::PARAM_STR);  
-            $statement->bindParam(':PICTURE_SERIAL_NUMBER', $dog->picture_serial_number, \PDO::PARAM_STR);  
+            $statement->bindParam(':PICTURE_SERIAL_ID', $dog->picture_serial_id, \PDO::PARAM_STR);  
             $statement->bindParam(':CHIP_ID', $dog->chip_id, \PDO::PARAM_STR);
             $statement->bindParam(':USER_ID', $dog->user_id, \PDO::PARAM_STR);  
             $statement->execute();
@@ -230,7 +230,7 @@ class DAODog {
         SET name = :NAME, 
         breed = :BREED,
         sex = :SEX, 
-        picture_serial_number = :PICTURE_SERIAL_NUMBER, 
+        picture_serial_id = :PICTURE_SERIAL_ID, 
         chip_id = :CHIP_ID
         WHERE id = :ID_DOG;";
         try {
@@ -238,7 +238,7 @@ class DAODog {
             $statement->bindParam(':NAME', $dog->name, \PDO::PARAM_STR);
             $statement->bindParam(':BREED', $dog->breed, \PDO::PARAM_STR);    
             $statement->bindParam(':SEX', $dog->sex, \PDO::PARAM_STR);  
-            $statement->bindParam(':PICTURE_SERIAL_NUMBER', $dog->picture_serial_number, \PDO::PARAM_STR);  
+            $statement->bindParam(':PICTURE_SERIAL_ID', $dog->picture_serial_id, \PDO::PARAM_STR);  
             $statement->bindParam(':CHIP_ID', $dog->chip_id, \PDO::PARAM_STR);
             $statement->bindParam(':ID_DOG', $dog->id, \PDO::PARAM_INT);
             $statement->execute();

@@ -1,4 +1,5 @@
 # Travail de diplôme - Documentation technique
+
 - [Travail de diplôme - Documentation technique](#travail-de-diplôme---documentation-technique)
   - [API REST](#api-rest)
     - [Arborescence](#arborescence)
@@ -10,7 +11,12 @@
       - [storage](#storage)
       - [bootstrap.php](#bootstrapphp)
     - [Structure](#structure)
+    - [Base de données](#base-de-données)
+    - [Headers](#headers)
     - [Tests unitaires](#tests-unitaires)
+    - [Librairies](#librairies)
+      - [PHPMailer](#phpmailer)
+      - [Dompdf](#dompdf)
     - [Endpoints](#endpoints)
       - [POST api/v1/users](#post-apiv1users)
         - [Objectif](#objectif)
@@ -78,11 +84,22 @@
         - [Utilisation concrète](#utilisation-concrète-12)
         - [Flow chart](#flow-chart-12)
         - [Tests unitaires](#tests-unitaires-13)
-      - [GET api/v1/dogs/downloadPicture/{serial_number}](#get-apiv1dogsdownloadpictureserial_number)
+      - [GET api/v1/dogs/downloadPicture/{serial_id}](#get-apiv1dogsdownloadpictureserial_id)
         - [Objectif](#objectif-13)
         - [Utilisation concrète](#utilisation-concrète-13)
         - [Flow chart](#flow-chart-13)
         - [Tests unitaires](#tests-unitaires-14)
+      - [POST api/v1/documents](#post-apiv1documents)
+        - [Objectif](#objectif-14)
+        - [Utilisation concrète](#utilisation-concrète-14)
+        - [Flow chart](#flow-chart-14)
+        - [Tests unitaires](#tests-unitaires-15)
+  - [PWA](#pwa)
+    - [Arborescence](#arborescence-1)
+    - [Librairies](#librairies-1)
+      - [Bootstrap](#bootstrap)
+      - [Responsive-Scketchpad](#responsive-scketchpad)
+      - [FullCalendar](#fullcalendar)
 
 ## API REST
 
@@ -158,11 +175,13 @@ Fichier de bootage de l'API REST inclus dans tous les fichiers d'entrées, celui
 
 ![dateTestPlanningSecondUser](./diagram/drawio/system.png)
 
+### Base de données
+
 ### Headers
 
 ### Tests unitaires
 
-Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécuter des scripts de test pour chaque endpoint de mon API REST. Ces tests sont réalisables en JavaScript en utilisant la bibliothèque `pm`. Tous les tests unitaires de mon API REST sont identifiables grâce à un code qui leur est propre.
+Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécuter des scripts de test pour chaque endpoint de mon API REST. Ces tests sont réalisables en JavaScript en utilisant la bibliothèque `pm`. Tous les tests unitaires de mon API REST sont identifiables grâce à un code qui leur est propre.  cf. annexe `unit_tests.md`
 
 **Format de code**
 
@@ -263,6 +282,11 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
         <td>DD</td>
     </tr>
 </table>
+### Librairies
+
+#### PHPMailer
+
+#### Dompdf
 
 ### Endpoints
 
@@ -300,85 +324,13 @@ Body de la requête :
 
 ##### Tests unitaires
 
-**[USE_CO1] Create one user without email**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without email", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[USE_CO2] Create one user without firstname**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without firstname", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[USE_CO3] Create one user without lastname**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without lastname", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[USE_CO4] Create one user without phonenumber**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without phone number", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[USE_CO5] Create one user without address**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without address", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[USE_CO6] Create one user with invalid email format**
-
-```javascript
-pm.test("Right code for invalid email format", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for for invalid email format", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Format d'adresse email invalide.");
-});
-```
-
-**[USE_CO7] Create one user without problems**
-
-```javascript
-pm.test("Right code for successful created ressource", function () {
-    pm.response.to.have.status(201);
-});
-```
+* **[USE_CO1] Create one user without email**
+* **[USE_CO2] Create one user without firstname**
+* **[USE_CO3] Create one user without lastname**
+* **[USE_CO4] Create one user without phonenumber**
+* **[USE_CO5] Create one user without address**
+* **[USE_CO6] Create one user with invalid email format**
+* **[USE_CO7] Create one user without problems**
 
 ####  GET api/v1/users
 
@@ -396,51 +348,10 @@ Cet endpoint permet de récupérer tous les clients de l'application. L'endpoint
 
 ##### Tests unitaires
 
-**[USE-GA1] Get all users with a user api token**
+* **[USE-GA1] Get all users with a user api token**
 
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
+* **[USE-GA2] Get right users with admin api token**
 
-**[USE-GA2] Get right users with admin api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is right", function () {
-    pm.response.to.have.status(200);
-});
-pm.test("The data structure of the response is correct", () => {
-  pm.response.to.have.jsonSchema({
-      "type": "array",
-      "items": [{
-          "type": "object",
-          "properties": {
-              "id" : {"type" : "integer"},
-              "email" : {"type" : "string"},
-              "firstname" : {"type" : "string"},
-              "lastname" : {"type" : "string"},
-              "phonenumber" : {"type" : "string"},
-              "address" : {"type" : "string"},
-              "api_token" : {"type" : "null"},
-              "code_role" : {"type" : "null"},
-              "password_hash" : {"type" : "null"}
-          },
-          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash"]
-      }]
-  })
-});
-```
 
 #### GET api/v1/users/{idUser}
 
@@ -458,60 +369,11 @@ Cet endpoint permet de récupérer un client spécifique de l'application. L'end
 
 ##### Tests unitaires
 
-**[USE-GO1] Get one user with a user api token**
+* **[USE-GO1] Get one user with a user api token**
 
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
+* **[USE_GO2] Get one non-existent user**
 
-**[USE_GO2] Get one non-existent user**
-
-```javascript
-pm.test("User not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[USE-GO3] Get right user wtih admin api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is right", function () {
-    pm.response.to.have.status(200);
-});
-pm.test("The data structure of the response is correct", () => {
-  pm.response.to.have.jsonSchema({
-          "type": "object",
-          "properties": {
-              "id" : {"type" : "integer"},
-              "email" : {"type" : "string"},
-              "firstname" : {"type" : "string"},
-              "lastname" : {"type" : "string"},
-              "phonenumber" : {"type" : "string"},
-              "address" : {"type" : "string"},
-              "api_token" : {"type" : "string"},
-              "code_role" : {"type" : "integer"},
-              "password_hash" : {"type" : ["string","null"]}
-          },
-          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash"]
-  })
-});
-```
+* **[USE-GO3] Get right user wtih admin api token**
 
 ####  PATCH api/v1/users/{idUser}
 
@@ -538,52 +400,10 @@ Body de la requête :
 
 ##### Tests unitaires
 
-**[USE_UO1] Update one user with a user api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
-
-**[USE_UO2] Update one non-existent user**
-
-```javascript
-pm.test("User not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[USE_UO3] Update one user with invalid email format**
-
-```javascript
-pm.test("Right code for invalid email format", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for for invalid email format", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Format d'adresse email invalide.");
-});
-```
-
-**[USE_UO4] Update one user without problems**
-
-```javascript
-pm.test("Right code for successful updated ressource", function () {
-    pm.response.to.have.status(200);
-});
-```
+* **[USE_UO1] Update one user with a user api token**
+* **[USE_UO2] Update one non-existent user**
+* **[USE_UO3] Update one user with invalid email format**
+* **[USE_UO4] Update one user without problems**
 
 ####  DELETE api/v1/users/{idUser}
 
@@ -601,40 +421,9 @@ Cet endpoint permet la suppression définitive d'un utilisateur. L'endpoint est 
 
 ##### Tests unitaires
 
-**[USE-DO1] Delete one user with a user api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
-
-**[USE_DO2] Delete one non-existent user**
-
-```javascript
-pm.test("User not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[USE-DO3] Delete one user without problems**
-
-```javascript
-pm.test("Right code for successful deleted ressource", function () {
-    pm.response.to.have.status(200);
-});
-```
+* **[USE-DO1] Delete one user with a user api token**
+* **[USE_DO2] Delete one non-existent user**
+* **[USE-DO3] Delete one user without problems**
 
 ####  GET api/v1/users/me
 
@@ -652,68 +441,9 @@ Cet endpoint permet de récupérer toutes les données de l'utilisateur authenti
 
 ##### Tests unitaires
 
-**[USE-GUA1] Get all user information of the current logged in non-existent user**
+* **[USE-GUA1] Get all user information of the current logged in non-existent user**
+* **[USE-GUA2] Get all user information of the current logged in user**
 
-```javascript
-pm.test("User not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[USE-GUA2] Get all user information of the current logged in user**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-
-pm.test("The data structure of the response is correct", () => {
-  pm.response.to.have.jsonSchema({
-          "type": "object",
-          "properties": {
-              "id" : {"type" : "integer"},
-              "email" : {"type" : "string"},
-              "firstname" : {"type" : "string"},
-              "lastname" : {"type" : "string"},
-              "phonenumber" : {"type" : "string"},
-              "address" : {"type" : "string"},
-              "api_token" : {"type" : "string"},
-              "code_role" : {"type" : "integer"},
-              "password_hash" : {"type" : "null"},
-              "dogs" : {
-                  "type" : "array",
-                  "properties" : {
-                      "id" : {"type" : "integer"},
-                      "name" : {"type" : "string"},
-                      "breed" : {"type" : "string"},
-                      "sex" : {"type" : "string"},
-                      "picture_seral_number" : {"type" : "string"},
-                      "chip_id" : {"type" : "integer"},
-                      "user_id" : {"type" : "integer"},
-                  },
-                  "required": ["id","name","breed","sex","picture_seral_number","chip_id","user_id"]
-              },
-              "documents" : {
-                  "type" : "array",
-                  "properties" : {
-                      "id" : {"type" : "integer"},
-                      "document_serial_number" : {"type" : "string"},
-                      "type" : {"type" : "string"},
-                      "user_id" : {"type" : "string"},
-                      "package_number" : {"type" : "null"},
-                      "signature_base64" : {"type" : "null"},
-                  },
-                  "required": ["id","document_serial_number","type","user_id"]
-              }
-          },
-          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash","dogs"]
-  })
-});
-```
 
 ####  POST api/v1/connection
 
@@ -736,55 +466,10 @@ Cet endpoint permet la récupération de l'api token afin de permettre à l'util
 
 ##### Tests unitaires
 
-**[USE-C1] Connect user without email**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without email", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[USE-C2] Connect user with an unrecognized email**
-
-```javascript
-pm.test("Right code for invalid login", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for invalid login", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Identifiants de connexion invalides.");
-});
-```
-
-**[USE-C3] Connect user with wrong password**
-
-```javascript
-pm.test("Right code for invalid login", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for invalid login", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Identifiants de connexion invalides.");
-});
-```
-
-**[USE-C4] Successful connection**
-
-```javascript
-pm.test("The data structure of the response is correct", () => {
-  pm.response.to.have.jsonSchema({
-          "type": "object",
-          "properties": {
-              "api_token" : {"type" : "string"}
-          },
-          "required": ["api_token"]
-  })
-});
-```
+* **[USE-C1] Connect user without email**
+* **[USE-C2] Connect user with an unrecognized email**
+* **[USE-C3] Connect user with wrong password**
+* **[USE-C4] Successful connection**
 
 ####  POST api/v1/dogs
 
@@ -797,14 +482,14 @@ Créer un chien pour un utilisateur dans la base de données.
 Cet endpoint permet d'ajouter un chien à un utilisateur. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
-| Clef                  | Définition                                           | Obligatoire | Format |
-| --------------------- | ---------------------------------------------------- | :---------: | ------ |
-| name                  | Le nom du chien                                      |      X      |        |
-| breed                 | La race du chien                                     |      X      |        |
-| sex                   | Le sexe du chien                                     |      X      |        |
-| picture_serial_number | Le numéro de série de la photo du chien              |             |        |
-| chip_id               | Le numéro de puce sous-cutanée du chien              |             |        |
-| user_id               | L'identifiant de l'utilisateur propriétaire du chien |      X      |        |
+| Clef              | Définition                                           | Obligatoire | Format |
+| ----------------- | ---------------------------------------------------- | :---------: | ------ |
+| name              | Le nom du chien                                      |      X      |        |
+| breed             | La race du chien                                     |      X      |        |
+| sex               | Le sexe du chien                                     |      X      |        |
+| picture_serial_id | Le numéro de série de la photo du chien              |             |        |
+| chip_id           | Le numéro de puce sous-cutanée du chien              |             |        |
+| user_id           | L'identifiant de l'utilisateur propriétaire du chien |      X      |        |
 
 ##### Flow chart
 
@@ -812,88 +497,13 @@ Body de la requête :
 
 ##### Tests unitaires
 
-**[DOG_CO1] Create one dog with a user api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
-
-**[DOG_CO2] Create one dog without name**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without name", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[DOG_CO3] Create one dog without breed**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without breed", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[DOG_CO4] Create one dog without sex**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without sex", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[DOG_CO5] Create one dog without user_id**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without user_id", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[DOG_CO6] Create one dog for non-existent user**
-
-```javascript
-pm.test("User not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[DOG_CO7] Create one dog without problems**
-
-```javascript
-pm.test("Right code for successful created ressource", function () {
-    pm.response.to.have.status(201);
-});
-```
+* **[DOG_CO1] Create one dog with a user api token**
+* **[DOG_CO2] Create one dog without name**
+* **[DOG_CO3] Create one dog without breed**
+* **[DOG_CO4] Create one dog without sex**
+* **[DOG_CO5] Create one dog without user_id**
+* **[DOG_CO6] Create one dog for non-existent user**
+* **[DOG_CO7] Create one dog without problems**
 
 ####  GET api/v1/dogs
 
@@ -911,49 +521,9 @@ Cet endpoint permet de récupérer tous les chiens existants de l'application. L
 
 ##### Tests unitaires
 
-**[DOG-GA1] Get all dogs with a user api token**
+* **[DOG-GA1] Get all dogs with a user api token**
+* **[DOG-GA2] Get right dogs with admin api token**
 
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
-
-**[DOG-GA2] Get right dogs with admin api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is right", function () {
-    pm.response.to.have.status(200);
-});
-pm.test("The data structure of the response is correct", () => {
-  pm.response.to.have.jsonSchema({
-      "type": "array",
-      "items": [{
-          "type": "object",
-          "properties": {
-              "id" : {"type" : "integer"},
-              "name" : {"type" : "string"},
-              "breed" : {"type" : "string"},
-              "sex" : {"type" : "string"},
-              "picture_serial_number" : {"type" : ["string","null"]},
-              "chip_id" : {"type" : "string"},
-              "user_id" : {"type" : "integer"}
-          },
-          "required": ["id","name","breed","sex","picture_serial_number","chip_id","user_id"]
-      }]
-  })
-});
-```
 
 #### GET api/v1/dogs/{idDog}
 
@@ -971,58 +541,9 @@ Cet endpoint permet de récupérer un chien spécifique de l'application. L'endp
 
 ##### Tests unitaires
 
-**[DOG-GO1] Get one dog with a user api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
-
-**[DOG_GO2] Get one non-existent dog**
-
-```javascript
-pm.test("Dog not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[DOG-GO3] Get right dog with admin api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is right", function () {
-    pm.response.to.have.status(200);
-});
-pm.test("The data structure of the response is correct", () => {
-  pm.response.to.have.jsonSchema({
-          "type": "object",
-          "properties": {
-              "id" : {"type" : "integer"},
-              "name" : {"type" : "string"},
-              "breed" : {"type" : "string"},
-              "sex" : {"type" : "string"},
-              "picture_serial_number" : {"type" : ["string","null"]},
-              "chip_id" : {"type" : ["string","null"]},
-              "user_id" : {"type" : "integer"}
-          },
-          "required": ["id","name","breed","sex","picture_serial_number","chip_id","user_id"]
-  })
-});
-```
+* **[DOG-GO1] Get one dog with a user api token**
+* **[DOG_GO2] Get one non-existent dog**
+* **[DOG-GO3] Get right dog with admin api token**
 
 ####  PATCH api/v1/dogs/{idDog}
 
@@ -1035,13 +556,13 @@ Modifier un chien dans la base de données.
 Cet endpoint permet la modification des informations d'un chien. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
-| Clef                  | Définition                              | Obligatoire | Format |
-| --------------------- | --------------------------------------- | :---------: | ------ |
-| name                  | Le nom du chien                         |             |        |
-| breed                 | La race du chien                        |             |        |
-| sex                   | Le sexe du chien                        |             |        |
-| picture_serial_number | Le numéro de série de la photo du chien |             |        |
-| chip_id               | Le numéro de puce sous-cutanée du chien |             |        |
+| Clef              | Définition                              | Obligatoire | Format |
+| ----------------- | --------------------------------------- | :---------: | ------ |
+| name              | Le nom du chien                         |             |        |
+| breed             | La race du chien                        |             |        |
+| sex               | Le sexe du chien                        |             |        |
+| picture_serial_id | Le numéro de série de la photo du chien |             |        |
+| chip_id           | Le numéro de puce sous-cutanée du chien |             |        |
 
 ##### Flow chart
 
@@ -1049,40 +570,9 @@ Body de la requête :
 
 ##### Tests unitaires
 
-**[DOG_UO1] Update one dog with a user api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
-
-**[DOG_UO2] Update one non-existent dog**
-
-```javascript
-pm.test("Dog not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[DOG_UO3] Update one dog without problems**
-
-```javascript
-pm.test("Right code for successful updated ressource", function () {
-    pm.response.to.have.status(200);
-});
-```
+* **[DOG_UO1] Update one dog with a user api token**
+* **[DOG_UO2] Update one non-existent dog**
+* **[DOG_UO3] Update one dog without problems**
 
 ####  DELETE api/v1/dogs/{idDog}
 
@@ -1100,40 +590,9 @@ Cet endpoint permet la suppression définitive d'un chien. L'endpoint est access
 
 ##### Tests unitaires
 
-**[DOG-DO1] Delete one dog with a user api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
-
-**[DOG_DO2] Delete one non-existent dog**
-
-```javascript
-pm.test("Dog not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[DOG-DO3] Delete one dog without problems**
-
-```javascript
-pm.test("Right code for successful deleted ressource", function () {
-    pm.response.to.have.status(200);
-});
-```
+* **[DOG-DO1] Delete one dog with a user api token**
+* **[DOG-DO2] Delete one non-existent dog**
+* **[DOG-DO3] Delete one dog without problems**
 
 ####  POST api/v1/dogs/uploadPicture
 
@@ -1157,79 +616,14 @@ Body de la requête :
 
 ##### Tests unitaires
 
-**[DOG-UDP1] Upload dog picture with a user api token**
+* **[DOG-UDP1] Upload dog picture with a user api token**
+* **[DOG_UDP2] Upload dog picture without dog_picture**
+* **[DOG_UDP3] Upload dog picture without dog_id**
+* **[DOG_UDP4] Upload dog picture for non-existant dog**
+* **[DOG_UDP5] Upload dog picture with invalid image type format**
+* **[DOG-UDP6] Upload dog picture without problems**
 
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
-
-**[DOG_UDP2] Upload dog picture without dog_picture**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without dog_picture", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[DOG_UDP3] Upload dog picture without dog_id**
-
-```javascript
-pm.test("Right code for invalid attributes", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for request without dog_id", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Attributs invalides.");
-});
-```
-
-**[DOG_UDP4] Upload dog picture for non-existant dog**
-
-```javascript
-pm.test("Dog not found", function () {
-    pm.response.to.have.status(404);
-});
-
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[DOG_UDP5] Upload dog picture with invalid image type format**
-
-```javascript
-pm.test("Right code for invalid image file format", function () {
-    pm.response.to.have.status(415);
-});
-pm.test("Right message for invalid image file format", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Format d'image par pris en charge.");
-});
-```
-
-**[DOG-UDP6] Upload dog picture without problems**
-
-```javascript
-pm.test("Right code for successful uploaded ressource", function () {
-    pm.response.to.have.status(200);
-});
-```
-
-####  GET api/v1/dogs/downloadPicture/{serial_number}
+####  GET api/v1/dogs/downloadPicture/{serial_id}
 
 ##### Objectif
 
@@ -1237,7 +631,7 @@ Récupérer l'image d'un chien stockée dans le serveur.
 
 ##### Utilisation concrète
 
-Cet endpoint permet de récupérer la photo d'un chien en base64 grâce à son identificateur.
+Cet endpoint permet de récupérer la photo d'un chien en base64 grâce à son identifiant de série.
 
 ##### Flow chart
 
@@ -1245,22 +639,146 @@ Cet endpoint permet de récupérer la photo d'un chien en base64 grâce à son i
 
 ##### Tests unitaires
 
-**[DOG-DDP1] Download non-existant dog picture**
+* **[DOG-DDP1] Download non-existant dog picture**
+* **[DOG-DDP2] Download dog picture without problems**
 
-```javascript
-pm.test("Dog not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
 
-**[DOG-DDP2] Download dog picture without problems**
 
-```javascript
-pm.test("The server returns some information", () => {
-    pm.expect(pm.response.body);
-});
-```
+####  POST api/v1/documents
+
+##### Objectif
+
+Créer un document pour un utilisateur dans la base de données ainsi que de le stocker sur le serveur.
+
+##### Utilisation concrète
+
+Cet endpoint permet d'ajouter un document à un utilisateur. Celui-ci peut être de différentes type. Si le document est de type `conditions_inscription` le système génère les conditions d'inscription avec la signature et le numéro de forfait passé en body de la requête. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef             | Définition                                              |                Obligatoire                | Format                                                 |
+| ---------------- | ------------------------------------------------------- | :---------------------------------------: | ------------------------------------------------------ |
+| type             | Le type de document à créer                             |                     X                     | le type doit être "conditions_inscription" ou "poster" |
+| user_id          | L'identifiant de l'utilisateur propriétaire du document |                     X                     |                                                        |
+| package_number   | Le numéro de forfait des conditions d'inscription       | X si le type est "conditions_inscription" | Le numéro de forfait doit être de 1 à 5                |
+| signature_base64 | La signature des conditions d'inscription               | X si le type est "conditions_inscription" |                                                        |
+| document         | Le document PDF à upload                                |         X si le type est "poster"         | Le fichier doit être de type PDF                       |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartCreateDocument.png)
+
+##### Tests unitaires
+
+* **[DOC-CO1] Create one document with a user api token**
+* **[DOC-CO2] Create one document without type**
+* **[DOC-CO3] Create one document without user_id**
+* **[DOC-CO4] Create one document with invalid document type format**
+* **[DOC-CO5] Create one document for non-existent user**
+* **[DOC-CO6] Create one conditions of registration with invalid paramater**
+* **[DOC-CO7] Create one conditions of registration with invalid package number**
+* **[DOC-CO8] Create one conditions of registration without problems**
+* **[DOC-CO9] Create one PDF with invalid document format**
+* **[DOC-CO10] Create one PDF without problems**
+
+####  GET api/v1/documents
+
+##### Objectif
+
+Récupère tous les documents de la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer tous les documents existants de tous les clients. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllDocument.png)
+
+##### Tests unitaires
+
+* **[DOC-GA1] Get all documents with a user api token**
+* **[DOC-GA2] Get right documents with admin api token**
+
+####  GET api/v1/documents/{idDocument}
+
+##### Objectif
+
+Récupère un document de la base de données grâce à son identifiant.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer un document spécifique de l'application. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneDocument.png)
+
+##### Tests unitaires
+
+* **[DOC-GO1] Get one document with a user api token**
+* **[DOC-GO2] Get one non-existent document**
+* **[DOC-GO3] Get right document with admin api token**
+
+####  PATCH api/v1/documents/{idDocument}
+
+##### Objectif
+
+Modifier un document dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet la modification des informations d'un document. Néanmoins, cet endpoint n'a pas vraiment de but concret car modifier un document existant ne devrait pas être possible. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef               | Définition                         | Obligatoire | Format                                                 |
+| ------------------ | ---------------------------------- | :---------: | ------------------------------------------------------ |
+| type               | Le type de document à créer        |             | le type doit être "conditions_inscription" ou "poster" |
+| document_serial_id | L'identifiant de série du document |             |                                                        |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneDog.png)
+
+##### Tests unitaires
+
+* **[DOC-UO1] Update one document with a user api token**
+* **[DOC-UO2] Update one non-existent document**
+* **[DOC-CO3] Update one document with invalid document type format**
+* **[DOC-UO4] Update one document without problems**
+
+####  DELETE api/v1/documents/{idDocument}
+
+##### Objectif
+
+Supprimer un document dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet la suppression définitive d'un document avec son document sur le serveur s'il existe. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneDocument.png)
+
+##### Tests unitaires
+
+* **[DOC-DO1] Delete one document with a user api token**
+* **[DOC-DO2] Delete one non-existent document**
+* **[DOC-DO3] Delete one document without problems**
+
+## PWA
+
+### Arborescence
+
+### Structure
+
+#### Méthodes
+
+### Librairies
+
+#### Bootstrap
+
+#### Responsive-Scketchpad
+
+#### FullCalendar
+

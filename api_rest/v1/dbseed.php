@@ -30,24 +30,24 @@ VALUES
 $dogStatement = "
 
 INSERT INTO `api-rest_douceur-de-chien`.`dog`
-    (id, name, breed, sex, picture_serial_number, chip_id, user_id)
+    (id, name, breed, sex, picture_serial_id, chip_id, user_id)
 VALUES
     (1, 'Paco', 'Staffy', 'Mâle', null, '123456789112345',4),
     (2, 'Hyron', 'Staffy', 'Mâle', null, '123451234512345',5),
-    (3, 'Jaya', 'Rhodesian Ridgeback', 'Femelle', 'u0NKD3uP', '123123123123123',6)";
+    (3, 'Jaya', 'Rhodesian Ridgeback', 'Femelle', 'fYPxlcOc', '123123123123123',6)";
 
 $documentStatement = "
 INSERT INTO `api-rest_douceur-de-chien`.`document`
-    (id, document_serial_number, type, user_id)
+    (id, document_serial_id, type, user_id)
 VALUES
     (1, 'ly5uy43256', 'conditions_inscription', 4),
     (2, 'p1yay43ko6', 'conditions_inscription', 5),
-    (3, 'u1rfa432op', 'conditions_inscription', 6),
+    (3, 'V9CUouI8.pdf', 'poster', 6),
     (4, 'mASE47FP', 'conditions_inscription', 4)";
 
 $appoitmentStatement = "
 INSERT INTO `api-rest_douceur-de-chien`.`appoitment`
-    (id, datetime_appoitment, duration_in_hour, note_text, note_graphical_serial_number,summary,datetime_deletion,user_id_customer,user_id_educator,user_id_deletion)
+    (id, datetime_appoitment, duration_in_hour, note_text, note_graphical_serial_id,summary,datetime_deletion,user_id_customer,user_id_educator,user_id_deletion)
 VALUES
     (1, '2020-04-02 09:00:00',2, null, null, null, null, 4, 1, null),
     (2, '2020-05-12 10:00:00',3 ,null, null, null, null, 5, 2, null),

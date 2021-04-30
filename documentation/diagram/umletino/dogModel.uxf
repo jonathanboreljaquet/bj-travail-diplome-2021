@@ -4,11 +4,11 @@
 +name: string
 +breed: string
 +sex: string
-+picture_serial_number: string
++picture_serial_id: string
 +chip_id: string
 +user_id: int
 --
 __construct(id: int, name: string, breed: string, sex: string,
-picture_serial_number: string, chip_id: string user_id: int )
+picture_serial_id: string, chip_id: string user_id: int )
 
 </panel_attributes><additional_attributes></additional_attributes></element></diagram>

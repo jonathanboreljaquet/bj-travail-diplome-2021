@@ -21,17 +21,17 @@ $requestMethod = $_SERVER["REQUEST_METHOD"];
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $pathFragments = explode('/', $path);
-$serial_number = end($pathFragments);
+$serial_id = end($pathFragments);
 
 $controller = new DocumentController($dbConnection);
 
 switch ($requestMethod) {
     case 'GET':
-        if (empty($serial_number)) {
+        if (empty($serial_id)) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->downloadDocument($serial_number);
+        $response = $controller->downloadDocument($serial_id);
         break;
     default:
         header("HTTP/1.1 404 Not Found");

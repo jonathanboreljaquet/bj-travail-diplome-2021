@@ -224,7 +224,7 @@ class ResponseController {
      * @return string The status and the body in JSON format of the response
      */
     public static function invalidDocumentTypeFormat(){
-        $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
+        $response['status_code_header'] = 'HTTP/1.1 415 Unsupported Media Type';
         $response['body'] = json_encode([
             'error' => 'Type de document invalide => (conditions_inscription,poster).'
         ]);
@@ -289,12 +289,26 @@ class ResponseController {
 
     /**
      * 
+     * Method to return the error message in case of invalid image file format.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public static function documentTypeNotPdfProblem(){
+        $response['status_code_header'] = 'HTTP/1.1 415 Unsupported Media Type';
+        $response['body'] = json_encode([
+            'error' => 'Format de document pas pris en charge => Format disponible PDF.'
+        ]);
+        return $response;
+    }
+
+    /**
+     * 
      * Method to return the error message in case of invalid package number of conditions of registration document.
      * 
      * @return string The status and the body in JSON format of the response
      */
     public static function packageNumberFormatProblem(){
-        $response['status_code_header'] = 'HTTP/1.1 404 Bad Request';
+        $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
         $response['body'] = json_encode([
             'error' => 'Numéro de Forfait invalide => (1 jusqu\'à 5).'
         ]);

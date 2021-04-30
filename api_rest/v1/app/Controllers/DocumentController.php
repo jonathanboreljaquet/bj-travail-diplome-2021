@@ -48,7 +48,7 @@ class DocumentController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -74,15 +74,19 @@ class DocumentController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->DAODocument->find($id);
+        $document = $this->DAODocument->find($id);
 
-        return ResponseController::successfulRequest($result);
+        if (is_null($document)) {
+            return ResponseController::notFoundResponse();
+        }
+
+        return ResponseController::successfulRequest($document);
     }
 
     /**
@@ -100,7 +104,7 @@ class DocumentController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -120,27 +124,54 @@ class DocumentController {
             return ResponseController::notFoundResponse();
         }
 
-        if ($document->type == Constants::DOCUMENT_TYPE_CONDTIONS_OF_REGISTRATION) {
+        $filename = HelperController::generateRandomString();
 
-            if (!$this->validateDocumentConditionsRegistration($document)) {
-                return ResponseController::unprocessableEntityResponse();
-            }
+        switch ($document->type) {
+            case Constants::DOCUMENT_TYPE_CONDTIONS_OF_REGISTRATION:
 
-            if (!HelperController::validatePackageNumber($document->package_number)) {
-                return ResponseController::packageNumberFormatProblem();
-            }
+                if (!$this->validateDocumentConditionsRegistration($document)) {
+                    return ResponseController::unprocessableEntityResponse();
+                }
+    
+                if (!HelperController::validatePackageNumber($document->package_number)) {
+                    return ResponseController::packageNumberFormatProblem();
+                }
+    
+                $package_number = $document->package_number;
+                $date = date('d/m/Y');
+                $document->document_serial_id = $filename;
+                $signature_base64 = $document->signature_base64;
+                $userfirstname = $user->firstname;
+                $userlastname = $user->lastname;
+    
+                HelperController::storeConditionsRegistration($filename,$package_number,$date,$signature_base64,$userfirstname,$userlastname);
+                
+                break;
 
-            $filename = HelperController::generateRandomString();
-            $package_number = $document->package_number;
-            $date = date('d/m/Y');
-            $document->document_serial_number = $filename;
-            $signature_base64 = $document->signature_base64;
-            $userfirstname = $user->firstname;
-            $userlastname = $user->lastname;
+            case Constants::DOCUMENT_TYPE_POSTER:
+               
+                if (!isset($_FILES["document"])) {
+                    return ResponseController::unprocessableEntityResponse();
+                }
 
-            HelperController::storeConditionsRegistration($filename,$package_number,$date,$signature_base64,$userfirstname,$userlastname);
+                if ($_FILES["document"]["type"] != Constants::TYPE_DOCUMENT_PDF) {
+                    return ResponseController::documentTypeNotPdfProblem();
+                }
 
+                $tmp_file = $_FILES["document"]["tmp_name"];
+                $upload_dir = HelperController::getDefaultDirectory()."storage/app/pdf/".$filename.".pdf";
+
+                if (!move_uploaded_file($tmp_file,$upload_dir)) {
+                    return ResponseController::uploadFailed();
+                }
+
+                break;
+            default:
+                return ResponseController::invalidDocumentTypeFormat();
+                break;
         }
+
+        $document->document_serial_id = $filename;
 
         $this->DAODocument->insert($document);
 
@@ -162,7 +193,7 @@ class DocumentController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (!$userAuth ||  $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -174,7 +205,7 @@ class DocumentController {
             return ResponseController::notFoundResponse();
         }
 
-        $actualDocument->document_serial_number = $document->document_serial_number ?? $actualDocument->document_serial_number;
+        $actualDocument->document_serial_id = $document->document_serial_id ?? $actualDocument->document_serial_id;
         $actualDocument->type = $document->type ?? $actualDocument->type;
 
         if (!HelperController::validateDocumentTypeFormat($actualDocument->type)) {
@@ -201,7 +232,7 @@ class DocumentController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (!$userAuth ||  $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
@@ -213,13 +244,28 @@ class DocumentController {
             return ResponseController::notFoundResponse();
         }
 
-        if ($document->type = Constants::DOCUMENT_TYPE_CONDTIONS_OF_REGISTRATION) {
-            $filename = HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$document->document_serial_number.".pdf";
-            if (file_exists($filename)) {
-                unlink($filename);
-            }
-        }
-       
+        switch ($document->type) {
+            case Constants::DOCUMENT_TYPE_CONDTIONS_OF_REGISTRATION:
+                $filename = HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$document->document_serial_id.".pdf";
+                
+                if (file_exists($filename)) {
+                    unlink($filename);
+                }
+                break;
+            
+            case Constants::DOCUMENT_TYPE_POSTER:
+               
+                $filename = HelperController::getDefaultDirectory()."storage/app/pdf/".$document->document_serial_id.".pdf";
+                
+                if (file_exists($filename)) {
+                    unlink($filename);
+                }
+                break;
+
+            default:
+                break;
+        }  
+
         $this->DAODocument->delete($document);
 
         return ResponseController::successfulRequest(null);
@@ -229,10 +275,10 @@ class DocumentController {
      * 
      * Method to download a document.
      * 
-     * @param int  $serial_number The document identifier
+     * @param int  $serial_id The document identifier
      * @return string The status and the body in JSON format of the response
      */
-    public function downloadDocument(string $serial_number)
+    public function downloadDocument(string $serial_id)
     {
         $headers = apache_request_headers();
 
@@ -240,13 +286,13 @@ class DocumentController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $userAuth = $this->DAOUser->findUserWithApiToken($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth)) {
             return ResponseController::notFoundResponse();
         }
 
-        $document = $this->DAODocument->findWithUserIdAndSerialNumber($userAuth->id, $serial_number);
+        $document = $this->DAODocument->findByUserIdAndSerialId($userAuth->id, $serial_id);
 
         if (is_null($document)) {
             return ResponseController::notFoundResponse();
@@ -254,7 +300,20 @@ class DocumentController {
 
         header("Content-Type: application/pdf");
 
-        $document_data = file_get_contents(HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$serial_number.".pdf");
+        switch ($document->type) {
+            case Constants::DOCUMENT_TYPE_CONDTIONS_OF_REGISTRATION:
+                
+                $document_data = file_get_contents(HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$serial_id.".pdf");
+                break;
+            
+            case Constants::DOCUMENT_TYPE_POSTER:
+                
+                $document_data = file_get_contents(HelperController::getDefaultDirectory()."storage/app/pdf/".$serial_id.".pdf");
+                break;
+
+            default:
+                break;
+        }
 
         return ResponseController::successfulRequestWithoutJson($document_data);
     }
