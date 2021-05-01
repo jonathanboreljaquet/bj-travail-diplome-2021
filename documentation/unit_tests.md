@@ -1002,3 +1002,306 @@ pm.test("Right code for successful deleted ressource", function () {
     pm.response.to.have.status(200);
 });
 ```
+
+**[ABS-CO1] Create one absence with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[ABS-CO2] Create one absence without date_from**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without date_from", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[ABS-CO3] Create one absence without date_to**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without date_to", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[ABS-CO4] Create one absence with invalid date_from format (dateAndTimeTestData.csv)**
+
+```javascript
+pm.test("Right code for invalid date_from format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date_from format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+**[ABS-CO5] Create one absence with invalid date_to format (dateAndTimeTestData.csv)**
+
+```javascript
+pm.test("Right code for invalid date_to format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date_to format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+**[ABS-CO6] Create one absence with chronological date problem**
+
+```javascript
+pm.test("Right code for chronological problem", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for chronological problem", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("La date ou l'heure de début est plus récente que la date ou l'heure de fin.");
+});
+```
+
+**[ABS-CO7] Create one absence without problems**
+
+```javascript
+pm.test("Right code for successful created ressource", function () {
+    pm.response.to.have.status(201);
+});
+```
+
+**[ABS-GA1] Get all absences with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[ABS-GA2] Get right absences with admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+      "type": "array",
+      "items": [{
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "date_absence_from" : {"type" : "string"},
+              "date_absence_to" : {"type" : "string"},
+              "description" : {"type" : ["string","null"]},
+              "id_educator" : {"type" : "integer"}
+          },
+          "required": ["id","date_absence_from","date_absence_to","description","id_educator"]
+      }]
+  })
+});
+```
+
+**[ABS-GO1] Get one absence with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[ABS-GO2] Get one non-existent absence**
+
+```javascript
+pm.test("Absence not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[ABS-GO3] Get right absence with admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "date_absence_from" : {"type" : "string"},
+              "date_absence_to" : {"type" : "string"},
+              "description" : {"type" : ["string","null"]},
+              "id_educator" : {"type" : "integer"}
+          },
+          "required": ["id","date_absence_from","date_absence_to","description","id_educator"]
+  })
+});
+```
+
+**[ABS-UO1] Update one absence with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[ABS-UO2] Update one non-existent absence**
+
+```javascript
+pm.test("Absence not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[ABS-UO3] Update one absence with invalid date_from format (dateAndTimeTestData.csv)**
+
+```javascript
+pm.test("Right code for invalid date_from format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date_from format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+**[ABS-UO4] Update one absence with invalid date_to format (dateAndTimeTestData.csv)**
+
+```javascript
+pm.test("Right code for invalid date_to format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date_to format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+**[ABS-UO5] Update one absence with chronological date problem**
+
+```javascript
+pm.test("Right code for chronological problem", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for chronological problem", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("La date ou l'heure de début est plus récente que la date ou l'heure de fin.");
+});
+```
+
+**[ABS-UO6] Update one absence without problems**
+
+```javascript
+pm.test("Right code for successful updated ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[ABS-DO1] Delete one absence with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[ABS-DO2] Delete one non-existent absence**
+
+```javascript
+pm.test("Absence not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[ABS-DO3] Delete one absence without problems**
+
+```javascript
+pm.test("Right code for successful deleted ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+
+
+**Contenu du fichier dateAndTimeTestData.csv**
+
+| date        | time      |
+| ----------- | --------- |
+| 12345       | 12345     |
+| texte       | texte     |
+| 122-02-2021 | 011:30:50 |
+| 12-024-2021 | 11:302:50 |
+| 12-02-20212 | 11:30:506 |
+| 33-02-2021  | 25:02:23  |
+| 12-13-2021  | 11:61:23  |
+| 12.02.2021  | 11:45:68  |
+| 12.02.2021  | 11-30-50  |
+| N12.02.2021 | 11.30.50  |
+| 12.02.2021N | N11:61:23 |
+| 12/07/2000  | 11:61:23N |
+

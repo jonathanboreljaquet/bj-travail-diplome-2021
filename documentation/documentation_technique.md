@@ -642,8 +642,6 @@ Cet endpoint permet de récupérer la photo d'un chien en base64 grâce à son i
 * **[DOG-DDP1] Download non-existant dog picture**
 * **[DOG-DDP2] Download dog picture without problems**
 
-
-
 ####  POST api/v1/documents
 
 ##### Objectif
@@ -784,6 +782,126 @@ Cet endpoint permet de récupérer le document d'un client. L'endpoint est acces
 
 * **[DOC-DD2] Download document without problems**
 * **[DOC-DD1] Download non-existent or non-owner document**
+
+####  POST api/v1/absences
+
+##### Objectif
+
+Créer un donnée de vacance pour l'éducateur canin authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet d'ajouter une donnée de vacance, cette donnée aura une date de début,une date de fin ainsi qu'une description. Les vacances permettront de spécifier une distance temporelle ou l'éducateur canin l'ayant créé ne travaillera pas. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef              | Définition                      | Obligatoire | Format                                                       |
+| ----------------- | ------------------------------- | :---------: | ------------------------------------------------------------ |
+| date_absence_from | La date de début des vacances   |      X      | La date doit respecter le format de date (YYYY-MM-DD)        |
+| date_absence_to   | La date de fin des vacances     |      X      | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début des vacances |
+| description       | La description/nom des vacances |             |                                                              |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostAbsence.png)
+
+##### Tests unitaires
+
+* **[ABS-CO1] Create one absence with a user api token**
+* **[ABS-CO2] Create one absence without date_from**
+* **[ABS-CO3] Create one absence without date_to**
+* **[ABS-CO4] Create one absence with invalid date_from format (dateAndTimeTestData.csv)**
+* **[ABS-CO5] Create one absence with invalid date_to format (dateAndTimeTestData.csv)**
+* **[ABS-CO6] Create one absence with chronological date problem**
+* **[ABS-CO7] Create one absence without problems**
+
+####  GET api/v1/absences
+
+##### Objectif
+
+Récupère tous les données de vacances de l'utilisateur authentifié de la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer toutes les vacances existantes de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllAbsence.png)
+
+##### Tests unitaires
+
+* **[ABS-GA1] Get all absences with a user api token**
+* **[ABS-GA2] Get right absences with admin api token**
+
+####  GET api/v1/absences/{idAbsence}
+
+##### Objectif
+
+Récupère une donnée d'absence de l'utilisateur authentifié de la base de données grâce à son identifiant.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer une vacance spécifique de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneAbsence.png)
+
+##### Tests unitaires
+
+* **[ABS-GO1] Get one absence with a user api token**
+* **[ABS-GO2] Get one non-existent absence**
+* **[ABS-GO3] Get right absence with admin api token**
+
+####  PATCH api/v1/absences/{idAbsence}
+
+##### Objectif
+
+Modifier une donnée de vacance de l'utilisateur authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet la modification des informations d'une vacance de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef              | Définition                      | Obligatoire | Format                                                       |
+| ----------------- | ------------------------------- | :---------: | ------------------------------------------------------------ |
+| date_absence_from | La date de début des vacances   |             | La date doit respecter le format de date (YYYY-MM-DD)        |
+| date_absence_to   | La date de fin des vacances     |             | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début des vacances |
+| description       | La description/nom des vacances |             |                                                              |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneAbsence.png)
+
+##### Tests unitaires
+
+* **[ABS-UO1] Update one absence with a user api token**
+* **[ABS-UO2] Update one non-existent absence**
+* **[ABS-UO3] Update one absence with invalid date_from format (dateAndTimeTestData.csv)**
+* **[ABS-UO4] Update one absence with invalid date_to format (dateAndTimeTestData.csv)**
+* **[ABS-UO5] Update one absence with chronological date problem**
+* **[ABS-UO6] Update one absence without problems**
+
+####  DELETE api/v1/absences/{idAbsence}
+
+##### Objectif
+
+Supprimer une donnée de vacance de manière non définitive de l'utilisateur authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet la suppression non définitive d'une vacance de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneAbsence.png)
+
+##### Tests unitaires
+
+* **[ABS-DO1] Delete one absence with a user api token**
+* **[ABS-DO2] Delete one non-existent absence**
+* **[ABS-DO3] Delete one absence without problems**
 
 ## PWA
 

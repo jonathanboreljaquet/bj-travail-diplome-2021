@@ -20,7 +20,7 @@ class HelperController {
 
      /**
      * 
-     * Method to check if a date has the right format (DD-MM-YYYY).
+     * Method to check if a date has the right format (YYYY-MM-DD).
      * 
      * @param string $date Date to check
      * @return bool
