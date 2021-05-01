@@ -787,7 +787,7 @@ Cet endpoint permet de récupérer le document d'un client. L'endpoint est acces
 
 ##### Objectif
 
-Créer un donnée de vacance pour l'éducateur canin authentifié dans la base de données.
+Créer une donnée de vacance pour l'éducateur canin authentifié dans la base de données.
 
 ##### Utilisation concrète
 
@@ -902,6 +902,127 @@ Cet endpoint permet la suppression non définitive d'une vacance de l'éducateur
 * **[ABS-DO1] Delete one absence with a user api token**
 * **[ABS-DO2] Delete one non-existent absence**
 * **[ABS-DO3] Delete one absence without problems**
+
+####  POST api/v1/weeklySchedules
+
+##### Objectif
+
+Créer un calendrier hebdomadaire pour l'éducateur canin authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet d'ajouter un calendrier hebdomadaire, ce calendrier hebdomadaire doit avoir une date de début mais peut avoir une date de fin. C'est à dire qu'un calendrier hebdomadaire sans date de fin est un calendrier hebdomadaire permanant, de ce fait, il peux y avoir qu'un seul calendrier permanant existant. Les calendriers hebdomadaires permettront de de créer des créneaux horaires hebdomadaires sur une certaine durée. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef            | Définition                                  | Obligatoire | Format                                                       |
+| --------------- | ------------------------------------------- | :---------: | ------------------------------------------------------------ |
+| date_valid_from | La date de début du calendrier hebdomadaire |      X      | La date doit respecter le format de date (YYYY-MM-DD)        |
+| date_valid_to   | La date de fin du calendrier hebdomadaire   |             | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début des vacances |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostWeeklySchedule.png)
+
+##### Tests unitaires
+
+* **[WEE-CO1] Create one weekly schedule with a user api token**
+* **[WEE-CO2] Create one weekly schedule without date_from**
+* **[WEE-CO3] Create one weekly schedule with invalid date_from format (dateAndTimeTestData.csv)**
+* **[WEE-CO4] Create one weekly schedule with invalid date_to format (dateAndTimeTestData.csv)**
+* **[WEE-CO5] Create one weekly schedule with chronological date problem**
+* **[WEE-CO6] Create one weekly schedule permanant when one already exists**
+* **[WEE-CO7] Create one weekly schedule with overlap problem**
+* **[WEE-CO8] Create one weekly schedule without problems**
+
+####  GET api/v1/weeklySchedules
+
+##### Objectif
+
+Récupère tous les calendriers hebdomadaires de l'utilisateur authentifié de la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer tous les calendriers hebdomadaires existantes de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllWeeklySchedule.png)
+
+##### Tests unitaires
+
+* **[WEE-GA1] Get all weekly schedules with a user api token**
+* **[WEE-GA2] Get right weekly schedules with admin api token**
+
+####  GET api/v1/weeklySchedules/{idWeeklySchedule}
+
+##### Objectif
+
+Récupère un calendrier hebdomadaire de l'utilisateur authentifié de la base de données grâce à son identifiant.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer un calendrier hebdomadaire spécifique de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneWeeklySchedule.png)
+
+##### Tests unitaires
+
+* **[WEE-GO1] Get one weekly schedule with a user api token**
+* **[WEE-GO2] Get one non-existent weekly schedule**
+* **[WEE-GO3] Get right weekly schedule with admin api token**
+
+####  PATCH api/v1/weeklySchedules/{idWeeklySchedule}
+
+##### Objectif
+
+Modifier un calendrier hebdomadaire de l'utilisateur authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet la modification des informations d'un calendrier hebdomadaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef            | Définition                                  | Obligatoire | Format                                                       |
+| --------------- | ------------------------------------------- | :---------: | ------------------------------------------------------------ |
+| date_valid_from | La date de début du calendrier hebdomadaire |             | La date doit respecter le format de date (YYYY-MM-DD)        |
+| date_valid_to   | La date de fin du calendrier hebdomadaire   |             | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début des vacances |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneWeeklySchedule.png)
+
+##### Tests unitaires
+
+* **[WEE-UO1] Update one weekly schedule with a user api token**
+* **[WEE-UO2] Update one non-existent weekly schedule**
+* **[WEE-UO3] Update one weekly schedule with invalid date_from format (dateAndTimeTestData.csv)**
+* **[WEE-UO4] Update one weekly schedule with invalid date_to format (dateAndTimeTestData.csv)**
+* **[WEE-UO5] Update one weekly schedule with chronological date problem**
+* **[WEE-UO6] Update one weekly schedule permanant when one already exists**
+* **[WEE-UO7] Update one weekly schedule with overlap problem**
+* **[WEE-UO8] Update one weekly schedule without problems**
+
+####  DELETE api/v1/weeklySchedules/{idWeeklySchedule}
+
+##### Objectif
+
+Supprimer un calendrier hebdomadaire de manière non définitive de l'utilisateur authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet la suppression non définitive d'un calendrier hebdomadaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneWeeklySchedule.png)
+
+##### Tests unitaires
+
+* **[WEE-DO1] Delete one weekly schedule with a user api token**
+* **[WEE-DO2] Delete one non-existent weekly schedule**
+* **[WEE-DO3] Delete one weekly schedule without problems**
 
 ## PWA
 

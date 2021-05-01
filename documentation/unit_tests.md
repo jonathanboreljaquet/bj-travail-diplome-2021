@@ -1286,7 +1286,327 @@ pm.test("Right code for successful deleted ressource", function () {
 });
 ```
 
+**[WEE-CO1] Create one weekly schedule with a user api token**
 
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[WEE-CO2] Create one weekly schedule without date_from**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without date_from", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[WEE-CO3] Create one weekly schedule with invalid date_from format (dateAndTimeTestData.csv)**
+
+```javascript
+pm.test("Right code for invalid date_from format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date_from format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+**[WEE-CO4] Create one weekly schedule with invalid date_to format (dateAndTimeTestData.csv)**
+
+```javascript
+pm.test("Right code for invalid date_to format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date_to format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+**[WEE-CO5] Create one weekly schedule with chronological date problem**
+
+```javascript
+pm.test("Right code for chronological problem", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for chronological problem", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("La date ou l'heure de début est plus récente que la date ou l'heure de fin.");
+});
+```
+
+**[WEE-CO6] Create one weekly schedule permanant when one already exists**
+
+```javascript
+pm.test("Right code for weekly schedule already exists problem", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for weekly schedule already exists problem", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Un calendrier permanent a déjà été créé.");
+});
+```
+
+**[WEE-CO7] Create one weekly schedule with overlap problem**
+
+```javascript
+pm.test("Right code for overlap problem", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for overlap problem", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Les dates chevauchent d'autres dates déjà existantes.");
+}); 
+```
+
+**[WEE-CO8] Create one weekly schedule without problems**
+
+```javascript
+pm.test("Right code for successful created ressource", function () {
+    pm.response.to.have.status(201);
+});
+```
+
+**[WEE-GA1] Get all weekly schedules with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+})
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[WEE-GA2] Get right weekly schedules with admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+      "type": "array",
+      "items": [{
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "date_valid_from" : {"type" : "string"},
+              "date_valid_to" : {"type" : ["string","null"]},
+              "id_educator" : {"type" : "integer"}
+          },
+          "required": ["id","date_valid_from","date_valid_to","id_educator"]
+      }]
+  })
+});
+```
+
+**[WEE-GO1] Get one weekly schedule with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[WEE-GO2] Get one non-existent weekly schedule**
+
+```javascript
+pm.test("Weekly schedule not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[WEE-GO3] Get right weekly schedule with admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "date_valid_from" : {"type" : "string"},
+              "date_valid_to" : {"type" : ["string","null"]},
+              "id_educator" : {"type" : "integer"}
+          },
+          "required": ["id","date_valid_from","date_valid_to","id_educator"]
+  })
+});
+```
+
+
+
+
+
+
+
+**[WEE-UO1] Update one weekly schedule with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[WEE-UO2] Update one non-existent weekly schedule**
+
+```javascript
+pm.test("Weekly schedule not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[WEE-UO3] Update one weekly schedule with invalid date_from format (dateAndTimeTestData.csv)**
+
+```javascript
+pm.test("Right code for invalid date_from format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date_from format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+**[WEE-UO4] Update one weekly schedule with invalid date_to format (dateAndTimeTestData.csv)**
+
+```javascript
+pm.test("Right code for invalid date_to format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date_to format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+**[WEE-UO5] Update one weekly schedule with chronological date problem**
+
+```javascript
+pm.test("Right code for chronological problem", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for chronological problem", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("La date ou l'heure de début est plus récente que la date ou l'heure de fin.");
+});
+```
+
+**[WEE-UO6] Update one weekly schedule permanant when one already exists**
+
+```javascript
+pm.test("Right code for weekly schedule already exists problem", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for weekly schedule already exists problem", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Un calendrier permanent a déjà été créé.");
+});
+```
+
+**[WEE-UO7] Update one weekly schedule with overlap problem**
+
+```javascript
+pm.test("Right code for overlap problem", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for overlap problem", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Les dates chevauchent d'autres dates déjà existantes.");
+});
+```
+
+**[WEE-UO8] Update one weekly schedule without problems**
+
+```javascript
+pm.test("Right code for successful updated ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[WEE-DO1] Delete one weekly schedule with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[WEE-DO2] Delete one non-existent weekly schedule**
+
+```javascript
+pm.test("Weekly schedule not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[WEE-DO3] Delete one weekly schedule without problems**
+
+```javascript
+pm.test("Right code for successful deleted ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
 
 **Contenu du fichier dateAndTimeTestData.csv**
 
