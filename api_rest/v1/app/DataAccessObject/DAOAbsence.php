@@ -25,7 +25,6 @@ class DAOAbsence {
         $this->db = $db;
     }
 
-
     /**
      * 
      * Method to return all the absences of the database in an array of absence objects.

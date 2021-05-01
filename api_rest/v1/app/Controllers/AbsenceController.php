@@ -159,11 +159,11 @@ class AbsenceController {
         $actualAbsence->date_absence_to = $absence->date_absence_to ?? $actualAbsence->date_absence_to;
         $actualAbsence->description = $absence->description ?? $actualAbsence->description;
 
-        if (!HelperController::validateDateFormat($absence->date_absence_from) || !HelperController::validateDateFormat($absence->date_absence_to) ) {
+        if (!HelperController::validateDateFormat($actualAbsence->date_absence_from) || !HelperController::validateDateFormat($actualAbsence->date_absence_to) ) {
             return ResponseController::invalidDateFormat();
         }
 
-        if (!HelperController::validateChornologicalTime($absence->date_absence_from,$absence->date_absence_to)) {
+        if (!HelperController::validateChornologicalTime($actualAbsence->date_absence_from,$actualAbsence->date_absence_to)) {
             return ResponseController::chronologicalDateProblem();
         }
 
