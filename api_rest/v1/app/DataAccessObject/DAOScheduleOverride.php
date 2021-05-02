@@ -25,7 +25,6 @@ class DAOScheduleOverride {
         $this->db = $db;
     }
 
-
     /**
      * 
      * Method to return all the schedule override of the database in an array of scheduleoverride objects.
@@ -66,7 +65,7 @@ class DAOScheduleOverride {
 
     /**
      * 
-     * Method to return an schedule override from the database in a scheduleoverride model object.
+     * Method to return a schedule override from the database in a scheduleoverride model object.
      * 
      * @param int $id The scheduleoverride identifier 
      * @param int $idEducator The educator identifier

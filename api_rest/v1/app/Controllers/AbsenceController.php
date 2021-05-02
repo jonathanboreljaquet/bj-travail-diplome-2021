@@ -179,7 +179,7 @@ class AbsenceController {
      * @param int  $id The absence identifier
      * @return string The status and the body in JSON format of the response
      */
-    public function deleteAbsence($id)
+    public function deleteAbsence($id) 
     {
         $headers = apache_request_headers();
 

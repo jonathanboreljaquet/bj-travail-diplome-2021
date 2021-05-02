@@ -69,6 +69,8 @@ class ResponseController {
      */
     public static function successfulRequest($result = null)
     {
+        $response = array();
+        
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $response['body'] = (!is_null($result)) ? json_encode($result) : null;
         return $response;

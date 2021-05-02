@@ -53,9 +53,9 @@ class WeeklyScheduleController {
             return ResponseController::unauthorizedUser();
         }
         
-        $allWeeklySchedule = $this->DAOWeeklySchedule->findAll(false,$userAuth->id);
+        $allWeeklySchedules = $this->DAOWeeklySchedule->findAll(false,$userAuth->id);
 
-        return ResponseController::successfulRequest($allWeeklySchedule);   
+        return ResponseController::successfulRequest($allWeeklySchedules);   
     }
 
     /**

@@ -53,9 +53,9 @@ class ScheduleOverrideController {
             return ResponseController::unauthorizedUser();
         }
         
-        $allScheduleOverride = $this->DAOScheduleOverride->findAll(false,$userAuth->id);
+        $allScheduleOverrides = $this->DAOScheduleOverride->findAll(false,$userAuth->id);
 
-        return ResponseController::successfulRequest($allScheduleOverride);  
+        return ResponseController::successfulRequest($allScheduleOverrides);  
     }
 
     /**
