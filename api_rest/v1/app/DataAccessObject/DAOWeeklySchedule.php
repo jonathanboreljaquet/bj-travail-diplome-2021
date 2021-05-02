@@ -8,7 +8,6 @@
  */
 namespace App\DataAccessObject;
 
-use App\Controllers\WeeklyScheduleController;
 use App\Models\WeeklySchedule;
 
 class DAOWeeklySchedule {

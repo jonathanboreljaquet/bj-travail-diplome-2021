@@ -2,13 +2,13 @@
 /**
  * index.php
  *
- * File being the front controller of the API and allowing to process weekly schedule requests.
+ * File being the front controller of the API and allowing to process schedule override requests.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
-use App\Controllers\WeeklyScheduleController;
-use App\Models\WeeklySchedule;
+use App\Controllers\ScheduleOverrideController;
+use App\Models\ScheduleOverride;
 
 require "../../bootstrap.php";
 
@@ -22,7 +22,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-$controller = new WeeklyScheduleController($dbConnection);
+$controller = new ScheduleOverrideController($dbConnection);
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $pathFragments = explode('/', $path);
@@ -30,23 +30,22 @@ $id = intval(end($pathFragments));
 
 parse_str(file_get_contents('php://input'), $input);
 
-$weeklySchedule = new WeeklySchedule();
-$weeklySchedule->id = $id ?? null;
-$weeklySchedule->date_valid_from = $input["date_valid_from"] ?? null;
-$weeklySchedule->date_valid_to = $input["date_valid_to"] ?? null;
+$scheduleOverride = new ScheduleOverride();
+$scheduleOverride->id = $id ?? null;
+$scheduleOverride->date_schedule_override = $input["date_schedule_override"] ?? null;
 
 switch ($requestMethod) {
     case 'GET':
         if (empty($id) || !is_numeric($id)) {
-            $response = $controller->getAllWeeklySchedules();
+            $response = $controller->getAllScheduleOverrides();
         }
         else{
-            $response = $controller->getWeeklySchedule($id);
+            $response = $controller->getScheduleOverride($id);
         }
         break;
 
     case 'POST':
-        $response = $controller->createWeeklySchedule($weeklySchedule);
+        $response = $controller->createScheduleOverride($scheduleOverride);
         break;
 
     case 'PATCH':
@@ -54,7 +53,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->updateWeeklySchedule($weeklySchedule);
+        $response = $controller->updateScheduleOverride($scheduleOverride);
         break;
 
     case 'DELETE':
@@ -62,7 +61,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->deleteWeeklySchedule($id);
+        $response = $controller->deleteScheduleOverride($id);
         break;
         
     default:

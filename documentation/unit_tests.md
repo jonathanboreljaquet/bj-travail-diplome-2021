@@ -1608,6 +1608,249 @@ pm.test("Right code for successful deleted ressource", function () {
 });
 ```
 
+**[SCH-CO1] Create one schedule override with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[SCH-CO2] Create one schedule override without date**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without date", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[SCH-CO3] Create one schedule override with invalid date format (dateAndTimeTestData.csv)**
+
+```javascript
+pm.test("Right code for invalid date format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+**[SCH-CO4] Create one schedule override with overlap problem**
+
+```javascript
+pm.test("Right code for overlap problem", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for overlap problem", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Les dates chevauchent d'autres dates déjà existantes.");
+});
+```
+
+**[SCH-CO5] Create one schedule override without problems**
+
+```javascript
+pm.test("Right code for successful created ressource", function () {
+    pm.response.to.have.status(201);
+});
+```
+
+**[SCH-GA1] Get all schedule overrides with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[SCH-GA2] Get right schedule overrides with admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+      "type": "array",
+      "items": [{
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "date_schedule_override" : {"type" : "string"},
+              "id_educator" : {"type" : "integer"}
+          },
+          "required": ["id","date_schedule_override","id_educator"]
+      }]
+  })
+});
+```
+
+**[SCH-GO1] Get one schedule override with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[SCH-GO2] Get one non-existent schedule override**
+
+```javascript
+pm.test("Weekly schedule not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[SCH-GO3] Get right schedule override with admin api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "date_schedule_override" : {"type" : "string"},
+              "id_educator" : {"type" : "integer"}
+          },
+          "required": ["id","date_schedule_override","id_educator"]
+  })
+});
+```
+
+**[SCH-UO1] Update one schedule override with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[SCH-UO2] Update one non-existent schedule override**
+
+```javascript
+pm.test("Weekly schedule not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[SCH-UO3] Update one schedule override with invalid date format (dateAndTimeTestData.csv)**
+
+```javascript
+pm.test("Right code for invalid date format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+**[SCH-UO4] Update one schedule override with overlap problem**
+
+```javascript
+pm.test("Right code for overlap problem", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for overlap problem", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Les dates chevauchent d'autres dates déjà existantes.");
+});
+```
+
+**[SCH-UO5] Update one schedule override without problems**
+
+```javascript
+pm.test("Right code for successful modified ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[SCH-DO1] Delete one schedule override with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[SCH-DO2] Delete one non-existent schedule override**
+
+```javascript
+pm.test("Weekly schedule not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[SCH-DO3] Delete one schedule override without problems**
+
+```javascript
+pm.test("Right code for successful deleted ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
 **Contenu du fichier dateAndTimeTestData.csv**
 
 | date        | time      |

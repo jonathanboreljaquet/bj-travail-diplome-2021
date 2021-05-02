@@ -907,11 +907,11 @@ Cet endpoint permet la suppression non définitive d'une vacance de l'éducateur
 
 ##### Objectif
 
-Créer un calendrier hebdomadaire pour l'éducateur canin authentifié dans la base de données.
+Créer un calendrier hebdomadaire pour l'utilisateur authentifié dans la base de données.
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter un calendrier hebdomadaire, ce calendrier hebdomadaire doit avoir une date de début mais peut avoir une date de fin. C'est à dire qu'un calendrier hebdomadaire sans date de fin est un calendrier hebdomadaire permanant, de ce fait, il peux y avoir qu'un seul calendrier permanant existant. Les calendriers hebdomadaires permettront de de créer des créneaux horaires hebdomadaires sur une certaine durée. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet d'ajouter un calendrier hebdomadaire de l'éducateur canin authentifié, ce calendrier hebdomadaire doit avoir une date de début mais peut avoir une date de fin. C'est à dire qu'un calendrier hebdomadaire sans date de fin est un calendrier hebdomadaire permanant, de ce fait, il peux y avoir qu'un seul calendrier permanant existant. Les calendriers hebdomadaires permettront de de créer des créneaux horaires hebdomadaires sur une certaine durée. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
 | Clef            | Définition                                  | Obligatoire | Format                                                       |
@@ -942,7 +942,7 @@ Récupère tous les calendriers hebdomadaires de l'utilisateur authentifié de l
 
 ##### Utilisation concrète
 
-Cet endpoint permet de récupérer tous les calendriers hebdomadaires existantes de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet de récupérer tous les calendriers hebdomadaires existants de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
 ##### Flow chart
 
@@ -1023,6 +1023,119 @@ Cet endpoint permet la suppression non définitive d'un calendrier hebdomadaire 
 * **[WEE-DO1] Delete one weekly schedule with a user api token**
 * **[WEE-DO2] Delete one non-existent weekly schedule**
 * **[WEE-DO3] Delete one weekly schedule without problems**
+
+####  POST api/v1/scheduleOverrides
+
+##### Objectif
+
+Créer une exception d'horaire de l'utilisateur authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet d'ajouter une exception d'horaire de l'éducateur canin authentifié, cette exception horaire est une date unique. Les exceptions horaires permettront de de créer des créneaux horaires hebdomadaires sur un jour unique particulier. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef                   | Définition                       | Obligatoire | Format                                                |
+| ---------------------- | -------------------------------- | :---------: | ----------------------------------------------------- |
+| date_schedule_override | La date de l'exception d'horaire |      X      | La date doit respecter le format de date (YYYY-MM-DD) |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostScheduleOverride.png)
+
+##### Tests unitaires
+
+* **[SCH-CO1] Create one schedule override with a user api token**
+* **[SCH-CO2] Create one schedule override without date**
+* **[SCH-CO3] Create one schedule override with invalid date format (dateAndTimeTestData.csv)**
+* **[SCH-CO4] Create one schedule override with overlap problem**
+* **[SCH-CO5] Create one schedule override without problems**
+
+####  GET api/v1/scheduleOverrides
+
+##### Objectif
+
+Récupère toutes les exceptions d'horaires de l'utilisateur authentifié de la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer toutes les exceptions d'horaires existantes de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllScheduleOverride.png)
+
+##### Tests unitaires
+
+* **[SCH-GA1] Get all schedule overrides with a user api token**
+* **[SCH-GA2] Get right schedule overrides with admin api token**
+
+####  GET api/v1/scheduleOverrides/{idScheduleOverride}
+
+##### Objectif
+
+Récupère une exception d'horaire de l'utilisateur authentifié de la base de données grâce à son identifiant.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer une exception d'horaire spécifique de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneScheduleOverride.png)
+
+##### Tests unitaires
+
+* **[SCH-GO1] Get one schedule override with a user api token**
+* **[SCH-GO2] Get one non-existent schedule override**
+* **[SCH-GO3] Get right schedule override with admin api token**
+
+####  PATCH api/v1/scheduleOverrides/{idScheduleOverride}
+
+##### Objectif
+
+Modifier une exception d'horaire de l'utilisateur authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet la modification des informations d'une exception d'horaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef                   | Définition                       | Obligatoire | Format                                                |
+| ---------------------- | -------------------------------- | :---------: | ----------------------------------------------------- |
+| date_schedule_override | La date de l'exception d'horaire |             | La date doit respecter le format de date (YYYY-MM-DD) |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneScheduleOverride.png)
+
+##### Tests unitaires
+
+* **[SCH-UO1] Update one schedule override with a user api token**
+* **[SCH-UO2] Update one non-existent schedule override**
+* **[SCH-UO3] Update one schedule override with invalid date format (dateAndTimeTestData.csv)**
+* **[SCH-UO4] Update one schedule override with overlap problem**
+* **[SCH-UO5] Update one schedule override without problems**
+
+####  DELETE api/v1/scheduleOverrides/{idScheduleOverride}
+
+##### Objectif
+
+Supprimer une exception d'horaire de manière non définitive de l'utilisateur authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet la suppression non définitive d'une exception d'horaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneScheduleOverride.png)
+
+##### Tests unitaires
+
+* **[SCH-DO1] Delete one schedule override with a user api token**
+* **[SCH-DO2] Delete one non-existent schedule override**
+* **[SCH-DO3] Delete one schedule override without problems**
 
 ## PWA
 

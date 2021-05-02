@@ -7,3 +7,4 @@ RewriteRule ^public/dogs/downloadPicture/([0-9a-zA-Z_-]*)$ public/dogs/downloadP
 RewriteRule ^public/documents/downloadDocument/([0-9a-zA-Z_-]*)$ public/documents/downloadDocument/index.php/$1 [NC,L]
 RewriteRule ^public/absences/([0-9a-zA-Z_-]*)$ public/absences/index.php/$1 [NC,L]
 RewriteRule ^public/weeklySchedules/([0-9a-zA-Z_-]*)$ public/weeklySchedules/index.php/$1 [NC,L]
+RewriteRule ^public/scheduleOverrides/([0-9a-zA-Z_-]*)$ public/scheduleOverrides/index.php/$1 [NC,L]
