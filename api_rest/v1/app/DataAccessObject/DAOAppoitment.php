@@ -1,20 +1,22 @@
 <?php
 /**
- * Appoitment.php
+ * DAOAppoitment.php
  *
- * Appoitment model.
+ * Data access object of the appoitment table.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
-namespace App\Models;
+namespace App\DataAccessObject;
 
-class Appoitment {
+use App\Models\Appoitment;
+
+class DAOAppoitment {
 
     private $db = null;
 
     /**
      * 
-     * Constructor of the Appoitment object.
+     * Constructor of the DAOAppoitment object.
      * 
      * @param PDO $db The database connection
      */
@@ -25,28 +27,42 @@ class Appoitment {
 
     /**
      * 
-     * Method to return all the appoitments of the database in an associative array.
+     * Method to return all the appoitments of the database in an array of appoitment objects.
      * 
-     * @return array The associative array containing all the result rows of the query 
+     * @return Appoitment[] A Appoitment object array
      */
     public function findAll()
     {
         $statement = "
         SELECT id, datetime_appoitment,duration_in_hour, note_text, 
-        note_graphical_serial_number, summary, datetime_deletion,
+        note_graphical_serial_id, summary, datetime_deletion,
         user_id_customer,user_id_educator,user_id_deletion
         FROM appoitment;";
-
+ 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
-            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
-            return $result;
+            $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $appoitmentArray = array();    
+
+            foreach ($results as $result) {
+                $appoitment = new Appoitment();
+                $appoitment->id = $result["id"];
+                $appoitment->datetime_appoitment = $result["datetime_appoitment"];
+                $appoitment->duration_in_hour = $result["duration_in_hour"];
+                $appoitment->note_text = $result["note_text"];
+                $appoitment->note_graphical_serial_id = $result["note_graphical_serial_id"];
+                $appoitment->summary = $result["summary"];
+                $appoitment->user_id_customer = $result["user_id_customer"];
+                $appoitment->user_id_educator = $result["user_id_educator"];
+                array_push($appoitmentArray,$appoitment);
+            }
+
+            return $appoitmentArray;
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }
     }
-
 
     /**
      * 

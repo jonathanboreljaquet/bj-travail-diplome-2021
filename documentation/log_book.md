@@ -839,7 +839,7 @@ public static function generateRandomPassword() {
 
 ### Vendredi 23 avril 2021
 
-Importation de la librairie PHPMailer avec la commande `composer require phpmailer/phpmailer` et création de la méthode permettant l'envoie de e-mail simpliste avec le protocole SMTP.
+Importation de la librairie PHPMailer avec la commande `composer require phpmailer/phpmailer` et création de la méthode permettant l'envoie de e-mail de la manière la plus épurée avec le protocole SMTP.
 
 ```PHP
 public static function sendMail(string $message,string $emailRecipient)
@@ -872,7 +872,7 @@ public static function sendMail(string $message,string $emailRecipient)
     }
 ```
 
-Discussion avec M. Mathieu de la structure de l'API REST qui était un point bloquant et qui commençait à créer beaucoup de problèmes de pérennité pour le projet. Je vais dorénavant réfléchir et réaliser une nouvelle structure plus simpliste et compréhensible. 
+Discussion avec M. Mathieu de la structure de l'API REST qui était un point bloquant et qui commençait à créer beaucoup de problèmes de pérennité pour le projet. Je vais dorénavant réfléchir et réaliser une nouvelle structure plus compréhensible. 
 
 ```
 v1
@@ -1161,4 +1161,39 @@ Rendez-vous physique hebdomadaire avec M. Mathieu. Aujourd'hui, nous avons discu
 
 Documentation des endpoints document dans la documentation technique.
 
- 
+### Lundi 03 mai 2021
+
+Rendu de l'évaluation intermédiaire numéro 1. Dans l'ensemble, M. Mathieu est plutôt satisfait du travail fournit. Toutefois, il me conseille de travailler de manière plus légère pour ne pas me démotiver afin d'être constant jusqu'à la fin du travail de diplôme. En effet, afin de rattraper le problème de structure de l'API REST qui est apparue à la fin de la première semaine, j'ai travaillé sur mon projet à mes heures perdus.
+
+Entre ce week-end et aujourd'hui, j'ai travaillé sur la modification des endpoints Absence,WeeklySchedule, ScheduleOverride en respectant la nouvelle structure objet de l'API REST ainsi que leurs documentations techniques.  Les endpoints documentés et retravaillés sont : 
+
+* `POST api/v1/absences` pour créer une nouvelle vacance. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/absences` pour retourner les informations de toutes les vacances. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/absences/{idAbsence}` pour retourner les informations d'une vacance.  Endpoint accessible uniquement par les administrateurs.
+* `PATCH api/v1/absences/{idAbsence}` pour modifier les informations d'une vacance. Endpoint accessible uniquement par les administrateurs.
+* `DELETE api/v1/absences/{idAbsence}` pour supprimer une vacance.  Endpoint accessible uniquement par les administrateurs.
+
+
+
+* `POST api/v1/weeklySchedules` pour créer un nouveau calendrier hebdomadaire. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/weeklySchedules` pour retourner les informations de tout les calendriers hebdomadaires. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/weeklySchedules/{idWeeklySchedules}` pour retourner les informations d'un calendrier hebdomadaire.  Endpoint accessible uniquement par les administrateurs.
+* `PATCH api/v1/weeklySchedules/{idWeeklySchedules}` pour modifier les informations d'un calendrier hebdomadaire. Endpoint accessible uniquement par les administrateurs.
+* `DELETE api/v1/weeklySchedules/{idWeeklySchedules}` pour supprimer un calendrier hebdomadaire.  Endpoint accessible uniquement par les administrateurs.
+
+
+
+* `POST api/v1/scheduleOverrides` pour créer une nouvelle exception d'horaire. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/scheduleOverrides` pour retourner les informations de toutes les exceptions d'horaire. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/scheduleOverrides/{idScheduleOverride}` pour retourner les informations d'une exception d'horaire.  Endpoint accessible uniquement par les administrateurs.
+* `PATCH api/v1/scheduleOverrides/{idScheduleOverride}` pour modifier les informations d'une exception d'horaire. Endpoint accessible uniquement par les administrateurs.
+* `DELETE api/v1/scheduleOverrides/{idScheduleOverride}` pour supprimer une exception d'horaire.  Endpoint accessible uniquement par les administrateurs.
+
+
+
+* `POST api/v1/timeSlots` pour créer une nouveau créneau horaire. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/timeSlots` pour retourner les informations de tout les créneaux horaires. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/timeSlots/{idTimeSlot}` pour retourner les informations d'un créneau horaire.  Endpoint accessible uniquement par les administrateurs.
+* `PATCH api/v1/timeSlots/{idTimeSlot}` pour modifier les informations d'un créneau horaire. Endpoint accessible uniquement par les administrateurs.
+* `DELETE api/v1/timeSlots/{idTimeSlot}` pour supprimer un créneau horaire.  Endpoint accessible uniquement par les administrateurs.
+
