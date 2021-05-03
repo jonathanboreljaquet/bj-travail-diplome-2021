@@ -12,6 +12,7 @@ namespace App\Controllers;
 use App\DataAccessObject\DAOUser;
 use App\DataAccessObject\DAODog;
 use App\DataAccessObject\DAODocument;
+use App\DataAccessObject\DAOAppoitment;
 use app\Models\User;
 use App\Controllers\ResponseController;
 use App\System\Constants;
@@ -21,6 +22,7 @@ class UserController {
     private DAOUser $DAOUser;
     private DAODog $DAODog;
     private DAODocument $DAODocument;
+    private DAOAppoitment $DAOAppoitment;
 
     /**
      * 
@@ -33,6 +35,7 @@ class UserController {
         $this->DAOUser = new DAOUser($db);
         $this->DAODog = new DAODog($db);
         $this->DAODocument = new DAODocument($db);
+        $this->DAOAppoitment = new DAOAppoitment($db);
     }
 
     /**
@@ -256,8 +259,10 @@ class UserController {
         }
         $dogs = $this->DAODog->findByUserId($userAuth->id);
         $documents = $this->DAODocument->findByUserId($userAuth->id);
+        $appoitments = $this->DAOAppoitment->findByUserId($userAuth->id);
         $userAuth->dogs = $dogs;
         $userAuth->documents = $documents;
+        $userAuth->appoitments = $appoitments;
         
         
         return ResponseController::successfulRequest($userAuth);

@@ -292,7 +292,7 @@ pm.test("The data structure of the response is correct", () => {
               "address" : {"type" : "string"},
               "api_token" : {"type" : "string"},
               "code_role" : {"type" : "integer"},
-              "password_hash" : {"type" : "null"},
+              "password_hash" : {"type" : ["string","null"]},
               "dogs" : {
                   "type" : "array",
                   "properties" : {
@@ -300,11 +300,11 @@ pm.test("The data structure of the response is correct", () => {
                       "name" : {"type" : "string"},
                       "breed" : {"type" : "string"},
                       "sex" : {"type" : "string"},
-                      "picture_seral_number" : {"type" : "string"},
-                      "chip_id" : {"type" : "integer"},
+                      "picture_serial_id" : {"type" : ["string","null"]},
+                      "chip_id" : {"type" : ["string","null"]},
                       "user_id" : {"type" : "integer"},
                   },
-                  "required": ["id","name","breed","sex","picture_seral_number","chip_id","user_id"]
+                  "required": ["id","name","breed","sex","picture_serial_id","chip_id","user_id"]
               },
               "documents" : {
                   "type" : "array",
@@ -317,6 +317,20 @@ pm.test("The data structure of the response is correct", () => {
                       "signature_base64" : {"type" : "null"},
                   },
                   "required": ["id","document_serial_id","type","user_id"]
+              },
+              "documents" : {
+                  "type" : "array",
+                  "properties" : {
+                      "id" : {"type" : "integer"},
+                      "datetime_appoitment" : {"type" : "string"},
+                      "duration_in_hour" : {"type" : "string"},
+                      "note_text" : {"type" : ["string","null"]},
+                      "note_graphical_serial_id" : {"type" : ["string","null"]},
+                      "summary" : {"type" : ["string","null"]},
+                      "user_id_customer" : {"type" : "integer"},
+                      "user_id_educator" : {"type" : "integer"}
+                  },
+                  "required": ["id","datetime_appoitment","duration_in_hour","note_text","note_graphical_serial_id","summary","user_id_customer","user_id_educator"]
               }
           },
           "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash","dogs"]

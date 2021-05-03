@@ -29,18 +29,25 @@ class DAOAppoitment {
      * 
      * Method to return all the appoitments of the database in an array of appoitment objects.
      * 
+     * @param int $userCustomerId The customer identifier 
+     * @param int $userEducatorId The educator identifier 
      * @return Appoitment[] A Appoitment object array
      */
-    public function findAll()
+    public function findAll(int $userCustomerId = null, int $userEducatorId = null)
     {
         $statement = "
         SELECT id, datetime_appoitment,duration_in_hour, note_text, 
         note_graphical_serial_id, summary, datetime_deletion,
         user_id_customer,user_id_educator,user_id_deletion
-        FROM appoitment;";
+        FROM appoitment
+		WHERE (user_id_customer = :ID_USER_CUSTOMER OR user_id_educator = :ID_USER_EDUCATOR)
+		AND datetime_deletion IS NULL
+		AND user_id_deletion IS NULL;";
  
         try {
             $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_USER_CUSTOMER', $userCustomerId, \PDO::PARAM_INT);
+            $statement->bindParam(':ID_USER_EDUCATOR', $userEducatorId, \PDO::PARAM_INT);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
             $appoitmentArray = array();    
@@ -86,6 +93,48 @@ class DAOAppoitment {
             $statement->execute();
             $result = $statement->fetch(\PDO::FETCH_ASSOC);
             return $result;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    /**
+     * 
+     * Method to return all appoitment from the database with the user id in an array of appoitment objects.
+     * 
+     * @param int $userId The user identifier 
+     * @return Appoitment[] A Appoitment object array
+     */
+    public function findByUserId(int $userId)
+    {
+        $statement = "
+        SELECT id, datetime_appoitment,duration_in_hour, note_text, 
+        note_graphical_serial_id, summary, datetime_deletion,
+        user_id_customer,user_id_educator,user_id_deletion
+        FROM appoitment
+        WHERE user_id_customer = :ID_USER;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_USER', $userId, \PDO::PARAM_INT);
+            $statement->execute();
+            $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $appoitmentArray = array();    
+
+            foreach ($results as $result) {
+                $appoitment = new Appoitment();
+                $appoitment->id = $result["id"];
+                $appoitment->datetime_appoitment = $result["datetime_appoitment"];
+                $appoitment->duration_in_hour = $result["duration_in_hour"];
+                $appoitment->note_text = $result["note_text"];
+                $appoitment->note_graphical_serial_id = $result["note_graphical_serial_id"];
+                $appoitment->summary = $result["summary"];
+                $appoitment->user_id_customer = $result["user_id_customer"];
+                $appoitment->user_id_educator = $result["user_id_educator"];
+                array_push($appoitmentArray,$appoitment);
+            }
+
+            return $appoitmentArray;
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }    
