@@ -336,7 +336,7 @@ Body de la requête :
 
 ##### Objectif
 
-Récupère tous les utilisateurs avec le `code_role` 1 (client) de la base de données.
+Récupérer tous les utilisateurs avec le `code_role` 1 (client) de la base de données.
 
 ##### Utilisation concrète
 
@@ -357,7 +357,7 @@ Cet endpoint permet de récupérer tous les clients de l'application. L'endpoint
 
 ##### Objectif
 
-Récupère un utilisateur de la base de données grâce à son identifiant.
+Récupérer un utilisateur de la base de données grâce à son identifiant.
 
 ##### Utilisation concrète
 
@@ -509,7 +509,7 @@ Body de la requête :
 
 ##### Objectif
 
-Récupère tous les chiens de la base de données.
+Récupérer tous les chiens de la base de données.
 
 ##### Utilisation concrète
 
@@ -529,7 +529,7 @@ Cet endpoint permet de récupérer tous les chiens existants de l'application. L
 
 ##### Objectif
 
-Récupère un chien de la base de données grâce à son identifiant.
+Récupérer un chien de la base de données grâce à son identifiant.
 
 ##### Utilisation concrète
 
@@ -682,7 +682,7 @@ Body de la requête :
 
 ##### Objectif
 
-Récupère tous les documents de la base de données.
+Récupérer tous les documents de la base de données.
 
 ##### Utilisation concrète
 
@@ -701,7 +701,7 @@ Cet endpoint permet de récupérer tous les documents existants de tous les clie
 
 ##### Objectif
 
-Récupère un document de la base de données grâce à son identifiant.
+Récupérer un document de la base de données grâce à son identifiant.
 
 ##### Utilisation concrète
 
@@ -818,7 +818,7 @@ Body de la requête :
 
 ##### Objectif
 
-Récupère tous les données de vacances de l'utilisateur authentifié de la base de données.
+Récupérer tous les données de vacances de l'utilisateur authentifié de la base de données.
 
 ##### Utilisation concrète
 
@@ -837,7 +837,7 @@ Cet endpoint permet de récupérer toutes les vacances existantes de l'éducateu
 
 ##### Objectif
 
-Récupère une donnée d'absence de l'utilisateur authentifié de la base de données grâce à son identifiant.
+Récupérer une donnée d'absence de l'utilisateur authentifié de la base de données grâce à son identifiant.
 
 ##### Utilisation concrète
 
@@ -938,7 +938,7 @@ Body de la requête :
 
 ##### Objectif
 
-Récupère tous les calendriers hebdomadaires de l'utilisateur authentifié de la base de données.
+Récupérer tous les calendriers hebdomadaires de l'utilisateur authentifié de la base de données.
 
 ##### Utilisation concrète
 
@@ -957,7 +957,7 @@ Cet endpoint permet de récupérer tous les calendriers hebdomadaires existants 
 
 ##### Objectif
 
-Récupère un calendrier hebdomadaire de l'utilisateur authentifié de la base de données grâce à son identifiant.
+Récupérer un calendrier hebdomadaire de l'utilisateur authentifié de la base de données grâce à son identifiant.
 
 ##### Utilisation concrète
 
@@ -1055,7 +1055,7 @@ Body de la requête :
 
 ##### Objectif
 
-Récupère toutes les exceptions d'horaires de l'utilisateur authentifié de la base de données.
+Récupérer toutes les exceptions d'horaires de l'utilisateur authentifié de la base de données.
 
 ##### Utilisation concrète
 
@@ -1074,7 +1074,7 @@ Cet endpoint permet de récupérer toutes les exceptions d'horaires existantes d
 
 ##### Objectif
 
-Récupère une exception d'horaire de l'utilisateur authentifié de la base de données grâce à son identifiant.
+Récupérer une exception d'horaire de l'utilisateur authentifié de la base de données grâce à son identifiant.
 
 ##### Utilisation concrète
 
@@ -1148,28 +1148,127 @@ Créer un créneau horaire pour l'utilisateur authentifié dans la base de donn�
 Cet endpoint permet d'ajouter créneau horaire pour un calendrier hebdomadaire ou pour une exception d'horaire de l'éducateur canin authentifié, ce créneau horaire doit avoir une heure de début, une heure de fin et un code correspondant à la journée de la semaine désiré. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
-| Clef                 | Définition                                    | Obligatoire | Format                                                       |
-| -------------------- | --------------------------------------------- | :---------: | ------------------------------------------------------------ |
-| code_day             | Le code du jour de la semaine                 |      X      | Le code doit être entre 1 et 7 (1 = Dimanche, 2 = Lundi, 3 = Mardi, 4 = Mercredi, 5 = Jeudi, 6 = Vendredi, 7 = Samedi) |
-| time_start           | L'heure de début du créneau horaire           |      X      | L'heure doit respecter le format d'heure (HH-MM-SS)          |
-| time_end             | L'heure de fin du créneau horaire             |      X      | L'heure doit respecter le format d'heure (HH-MM-SS) et ne pas être située avant l'heure de début du créneau horaire |
-| id_schedule_override | L'exception d'horaire du créneau horaire      |             |                                                              |
-| id_weekly_schedule   | Le calendrier hebdomadaire du créneau horaire |             |                                                              |
+| Clef                 | Définition                                    |            Obligatoire             | Format                                                       |
+| -------------------- | --------------------------------------------- | :--------------------------------: | ------------------------------------------------------------ |
+| code_day             | Le code du jour de la semaine                 |                 X                  | Le code doit être entre 1 et 7 (1 = Dimanche, 2 = Lundi, 3 = Mardi, 4 = Mercredi, 5 = Jeudi, 6 = Vendredi, 7 = Samedi) |
+| time_start           | L'heure de début du créneau horaire           |                 X                  | L'heure doit respecter le format d'heure (HH-MM-SS)          |
+| time_end             | L'heure de fin du créneau horaire             |                 X                  | L'heure doit respecter le format d'heure (HH-MM-SS) et ne pas être située avant l'heure de début du créneau horaire |
+| id_schedule_override | L'exception d'horaire du créneau horaire      |  X si id_weekly_schedule est null  |                                                              |
+| id_weekly_schedule   | Le calendrier hebdomadaire du créneau horaire | X si id_schedule_override est null |                                                              |
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostWeeklySchedule.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostTimeSlot.png)
 
 ##### Tests unitaires
 
-* **[WEE-CO1] Create one weekly schedule with a user api token**
-* **[WEE-CO2] Create one weekly schedule without date_from**
-* **[WEE-CO3] Create one weekly schedule with invalid date_from format (dateAndTimeTestData.csv)**
-* **[WEE-CO4] Create one weekly schedule with invalid date_to format (dateAndTimeTestData.csv)**
-* **[WEE-CO5] Create one weekly schedule with chronological date problem**
-* **[WEE-CO6] Create one weekly schedule permanant when one already exists**
-* **[WEE-CO7] Create one weekly schedule with overlap problem**
-* **[WEE-CO8] Create one weekly schedule without problems**
+* **[TIM-CO1] Create one time slot with a user api token**
+* **[TIM-CO2] Create one time slot without code day**
+* **[TIM-CO3] Create one time slot without time start**
+* **[TIM-CO4] Create one time slot without time end**
+* **[TIM-CO5] Create one time slot without the id weekly schedule and the id schedule override**
+* **[TIM-CO6] Create one time slot with the id weekly schedule and the id schedule override**
+* **[TIM-CO7] Create one time slot for non-existent weekly schedule**
+* **[TIM-CO8] Create one time slot for non-existent schedule override**
+* **[TIM-CO9] Create one time slot with invalid code_day format**
+* **[TIM-CO10] Create one time slot with invalid time_start format (dateAndTimeTestData.csv)**
+* **[TIM-CO11] Create one time slot with invalid time_end format (dateAndTimeTestData.csv)**
+* **[TIM-CO12] Create one time slot with chronological time problem**
+* **[TIM-CO13] Create one time slot with time slot overlap in the same weekly schedule problem**
+* **[TIM-CO14] Create one time slot with time slot overlap in the same schedule override problem**
+* **[TIM-CO15] Create one time slot without problems**
+
+####  GET api/v1/timeSlots
+
+##### Objectif
+
+Récupérer tout les créneaux horaires de l'utilisateur authentifié de la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer tout les créneaux horaires existants de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllTimeSlot.png)
+
+##### Tests unitaires
+
+* **[TIM-GA1] Get all time slots with a user api token**
+* **[TIM-GA2] Get right time slots with admin api token**
+
+####  GET api/v1/timeSlots/{idTimeSlot}
+
+##### Objectif
+
+Récupérer un créneau horaire de l'utilisateur authentifié de la base de données grâce à son identifiant.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer un créneau horaire spécifique de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneTimeSlot.png)
+
+##### Tests unitaires
+
+* **[TIM-GO1] Get one time slot with a user api token**
+* **[TIM-GO2] Get one non-existent time slot**
+* **[TIM-GO3] Get right time slot with admin api token**
+
+####  PATCH api/v1/timeSlots/{idTimeSlot}
+
+##### Objectif
+
+Modifier un créneau horaire de l'utilisateur authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet la modification des informations d'un créneau horaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef       | Définition                          | Obligatoire | Format                                                       |
+| ---------- | ----------------------------------- | :---------: | ------------------------------------------------------------ |
+| code_day   | Le code du jour de la semaine       |             | Le code doit être entre 1 et 7 (1 = Dimanche, 2 = Lundi, 3 = Mardi, 4 = Mercredi, 5 = Jeudi, 6 = Vendredi, 7 = Samedi) |
+| time_start | L'heure de début du créneau horaire |             | L'heure doit respecter le format d'heure (HH-MM-SS)          |
+| time_end   | L'heure de fin du créneau horaire   |             | L'heure doit respecter le format d'heure (HH-MM-SS) et ne pas être située avant l'heure de début du créneau horaire |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneTimeSlot.png)
+
+##### Tests unitaires
+
+* **[TIM-UO1] Update one time slot with a user api token**
+* **[TIM-UO2] Update one non-existent time slot**
+* **[TIM-UO3] Update one time slot with invalid code_day format**
+* **[TIM-UO4] Update one time slot with invalid time_start format (dateAndTimeTestData.csv)**
+* **[TIM-UO5] Update one time slot with invalid time_end format (dateAndTimeTestData.csv)**
+* **[TIM-UO6] Update one time slot with chronological time problem**
+* **[TIM-UO7] Update one time slot with time slot overlap in the same weekly schedule problem**
+* **[TIM-UO8] Update one time slot with time slot overlap in the same schedule override problem**
+* **[TIM-UO9] Update one time slot without problems**
+
+####  DELETE api/v1/timeSlots/{idTimeSlot}
+
+##### Objectif
+
+Supprimer une exception d'horaire de manière non définitive de l'utilisateur authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet la suppression non définitive d'une exception d'horaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneTimeSlot.png)
+
+##### Tests unitaires
+
+* **[TIM-DO1] Delete one time slot with a user api token**
+* **[TIM-DO2] Delete one non-existent time slot**
+* **[TIM-DO3] Delete one time slot without problems**
 
 ## PWA
 
