@@ -1137,6 +1137,40 @@ Cet endpoint permet la suppression non définitive d'une exception d'horaire de 
 * **[SCH-DO2] Delete one non-existent schedule override**
 * **[SCH-DO3] Delete one schedule override without problems**
 
+####  POST api/v1/timeSlots
+
+##### Objectif
+
+Créer un créneau horaire pour l'utilisateur authentifié dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet d'ajouter créneau horaire pour un calendrier hebdomadaire ou pour une exception d'horaire de l'éducateur canin authentifié, ce créneau horaire doit avoir une heure de début, une heure de fin et un code correspondant à la journée de la semaine désiré. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef                 | Définition                                    | Obligatoire | Format                                                       |
+| -------------------- | --------------------------------------------- | :---------: | ------------------------------------------------------------ |
+| code_day             | Le code du jour de la semaine                 |      X      | Le code doit être entre 1 et 7 (1 = Dimanche, 2 = Lundi, 3 = Mardi, 4 = Mercredi, 5 = Jeudi, 6 = Vendredi, 7 = Samedi) |
+| time_start           | L'heure de début du créneau horaire           |      X      | L'heure doit respecter le format d'heure (HH-MM-SS)          |
+| time_end             | L'heure de fin du créneau horaire             |      X      | L'heure doit respecter le format d'heure (HH-MM-SS) et ne pas être située avant l'heure de début du créneau horaire |
+| id_schedule_override | L'exception d'horaire du créneau horaire      |             |                                                              |
+| id_weekly_schedule   | Le calendrier hebdomadaire du créneau horaire |             |                                                              |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostWeeklySchedule.png)
+
+##### Tests unitaires
+
+* **[WEE-CO1] Create one weekly schedule with a user api token**
+* **[WEE-CO2] Create one weekly schedule without date_from**
+* **[WEE-CO3] Create one weekly schedule with invalid date_from format (dateAndTimeTestData.csv)**
+* **[WEE-CO4] Create one weekly schedule with invalid date_to format (dateAndTimeTestData.csv)**
+* **[WEE-CO5] Create one weekly schedule with chronological date problem**
+* **[WEE-CO6] Create one weekly schedule permanant when one already exists**
+* **[WEE-CO7] Create one weekly schedule with overlap problem**
+* **[WEE-CO8] Create one weekly schedule without problems**
+
 ## PWA
 
 ### Arborescence

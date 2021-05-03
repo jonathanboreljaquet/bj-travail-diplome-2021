@@ -58,7 +58,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->updateWeeklySchedule($weeklySchedule);
+        $response = $controller->updateTimeSlot($timeSlot);
         break;
 
     case 'DELETE':
@@ -66,7 +66,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->deleteWeeklySchedule($id);
+        $response = $controller->deleteTimeSlot($id);
         break;
         
     default:

@@ -134,12 +134,7 @@ class TimeSlotController {
             return ResponseController::chronologicalDateProblem();
         }
 
-        if ($this->DAOTimeSlot->findOverlapInWeeklySchedule($timeSlot))
-        {
-            return ResponseController::timeOverlapProblem();
-        }
-
-        if ($this->DAOTimeSlot->findOverlapInScheduleOverride($timeSlot))
+        if ($this->DAOTimeSlot->findOverlapInWeeklySchedule($timeSlot) || $this->DAOTimeSlot->findOverlapInScheduleOverride($timeSlot))
         {
             return ResponseController::timeOverlapProblem();
         }
@@ -153,10 +148,10 @@ class TimeSlotController {
      * 
      * Method to update a time slot.
      * 
-     * @param int  $id The time slot identifier
+     * @param TimeSlot $timeSlot The timeSlot model object
      * @return string The status and the body in JSON format of the response
      */
-    private function updateTimeSlot(int $id)
+    public function updateTimeSlot(TimeSlot $timeSlot)
     {
         $headers = apache_request_headers();
 
@@ -164,40 +159,40 @@ class TimeSlotController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->user->getUser($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $actualTimeSlot = $this->timeSlot->find($id, $user["id"]);
+        $actualTimeSlot = $this->DAOTimeSlot->find($timeSlot->id,$userAuth->id);
 
-        if (!$actualTimeSlot) {
+        if (is_null($actualTimeSlot)) {
             return ResponseController::notFoundResponse();
         }
 
-        parse_str(file_get_contents('php://input'), $input);
+        $actualTimeSlot->code_day = $timeSlot->code_day ?? $actualTimeSlot->code_day;
+        $actualTimeSlot->time_start = $timeSlot->time_start ?? $actualTimeSlot->time_start;
+        $actualTimeSlot->time_end = $timeSlot->time_end ?? $actualTimeSlot->time_end;
 
-        $newTimeSlot = array_replace($actualTimeSlot,$input);
-
-        if (!HelperController::validateTimeFormat($newTimeSlot["time_start"]) || !HelperController::validateTimeFormat($newTimeSlot["time_end"]) ) {
+        if (!HelperController::validateTimeFormat($actualTimeSlot->time_start) || !HelperController::validateTimeFormat($actualTimeSlot->time_end) ) {
             return ResponseController::invalidTimeFormat();
         }
 
-        if (!HelperController::validateCodeDayFormat($newTimeSlot["code_day"])) {
+        if (!HelperController::validateCodeDayFormat($actualTimeSlot->code_day)) {
             return ResponseController::invalidCodeDayFormat();
         }
 
-        if (!HelperController::validateChornologicalTime($newTimeSlot["time_start"],$newTimeSlot["time_end"])) {
+        if (!HelperController::validateChornologicalTime($actualTimeSlot->time_start,$actualTimeSlot->time_end)) {
             return ResponseController::chronologicalDateProblem();
         }
 
-        if ($this->timeSlot->findOverlapInWeeklySchedule($newTimeSlot, $user["id"]))
+        if ($this->DAOTimeSlot->findOverlapInWeeklySchedule($actualTimeSlot) || $this->DAOTimeSlot->findOverlapInScheduleOverride($actualTimeSlot))
         {
             return ResponseController::timeOverlapProblem();
         }
 
-        $this->timeSlot->update($id,$newTimeSlot);
+        $this->DAOTimeSlot->update($actualTimeSlot);
 
         return ResponseController::successfulRequest(null);
     }
@@ -209,7 +204,7 @@ class TimeSlotController {
      * @param int  $id The time slot identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function deleteTimeSlot(int $id)
+    public function deleteTimeSlot(int $id)
     {
         $headers = apache_request_headers();
 
@@ -217,19 +212,19 @@ class TimeSlotController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->user->getUser($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->timeSlot->find($id, $user["id"]);
+        $timeSlot = $this->DAOTimeSlot->find($id,$userAuth->id);
 
-        if (!$result) {
+        if (is_null($timeSlot)) {
             return ResponseController::notFoundResponse();
         }
 
-        $this->timeSlot->delete($id);
+        $this->DAOTimeSlot->delete($timeSlot);
 
         return ResponseController::successfulRequest(null);
     }
@@ -238,25 +233,21 @@ class TimeSlotController {
      * 
      * Method to return all available valid time slots with their corresponding dates in JSON format.
      * 
+     * @param int  $idUser The user identifier
      * @return string The status and the body in json format of the response
      */
-    private function getPlanningTimeSlots()
+    public function getPlanningTimeSlots(int $idUser)
     {
-        $headers = apache_request_headers();
 
-        if (!isset($headers['Authorization'])) {
-            return ResponseController::notFoundAuthorizationHeader();
+        $user = $this->DAOUser->find($idUser);
+
+        if (is_null($user) || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+            return ResponseController::notFoundResponse();
         }
 
-        $user = $this->user->getUser($headers['Authorization']);
-
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
-            return ResponseController::unauthorizedUser();
-        }
-       
-        $result = $this->timeSlot->findPlanningTimeSlots($user["id"]);        
+        $planning = $this->DAOTimeSlot->findPlanningTimeSlots($user->id);        
         
-        return ResponseController::successfulRequest($result);  
+        return ResponseController::successfulRequest($planning);  
     }
 
     /**

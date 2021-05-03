@@ -313,7 +313,7 @@ class DAOTimeSlot {
     {
         $this->generateViews();
         $statement = "
-        SELECT time_start,time_end, IF(dates.date IS NOT NULL, dates.date, so.date_schedule_override) AS date
+        SELECT IF(dates.date IS NOT NULL, dates.date, so.date_schedule_override) AS date,time_start,time_end 
 
         FROM time_slot AS ts
         LEFT JOIN weekly_schedule AS ws
