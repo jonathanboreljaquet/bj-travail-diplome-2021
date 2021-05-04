@@ -73,16 +73,17 @@ class DAOAppoitment {
 
     /**
      * 
-     * Method to return a appoitment from the database in an associative array.
+     * Method to return a appoitment slot from the database in a appoitment model object.
      * 
      * @param int $id The appoitment identifier 
-     * @return array The associative array containing all the result rows of the query 
+     * @param int $idEducator The educator identifier
+     * @return Appoitment A Appoitment model object containing all the result rows of the query 
      */
     public function find(int $id)
     {
         $statement = "
         SELECT id, datetime_appoitment,duration_in_hour, note_text, 
-        note_graphical_serial_number, summary, datetime_deletion,
+        note_graphical_serial_id, summary, datetime_deletion,
         user_id_customer,user_id_educator,user_id_deletion
         FROM appoitment
         WHERE id = :ID_APPOITMENT;";
@@ -91,8 +92,24 @@ class DAOAppoitment {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_APPOITMENT', $id, \PDO::PARAM_INT);
             $statement->execute();
-            $result = $statement->fetch(\PDO::FETCH_ASSOC);
-            return $result;
+            $appoitment = new Appoitment();
+
+            if ($statement->rowCount()==1) {
+                $result = $statement->fetch(\PDO::FETCH_ASSOC);
+                $appoitment->id = $result["id"];
+                $appoitment->datetime_appoitment = $result["datetime_appoitment"];
+                $appoitment->duration_in_hour = $result["duration_in_hour"];
+                $appoitment->note_text = $result["note_text"];
+                $appoitment->note_graphical_serial_id = $result["note_graphical_serial_id"];
+                $appoitment->summary = $result["summary"];
+                $appoitment->user_id_customer = $result["user_id_customer"];
+                $appoitment->user_id_educator = $result["user_id_educator"];
+            }
+            else{
+                $appoitment = null;
+            }
+
+            return $appoitment;
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }    
@@ -105,14 +122,15 @@ class DAOAppoitment {
      * @param int $userId The user identifier 
      * @return Appoitment[] A Appoitment object array
      */
-    public function findByUserId(int $userId)
+    public function findByUserIdForCustomer(int $userId)
     {
         $statement = "
-        SELECT id, datetime_appoitment,duration_in_hour, note_text, 
-        note_graphical_serial_id, summary, datetime_deletion,
+        SELECT id, datetime_appoitment,duration_in_hour, summary, datetime_deletion,
         user_id_customer,user_id_educator,user_id_deletion
         FROM appoitment
-        WHERE user_id_customer = :ID_USER;";
+        WHERE user_id_customer = :ID_USER
+        AND datetime_deletion IS NULL
+        AND user_id_deletion IS NULL;";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -126,8 +144,6 @@ class DAOAppoitment {
                 $appoitment->id = $result["id"];
                 $appoitment->datetime_appoitment = $result["datetime_appoitment"];
                 $appoitment->duration_in_hour = $result["duration_in_hour"];
-                $appoitment->note_text = $result["note_text"];
-                $appoitment->note_graphical_serial_id = $result["note_graphical_serial_id"];
                 $appoitment->summary = $result["summary"];
                 $appoitment->user_id_customer = $result["user_id_customer"];
                 $appoitment->user_id_educator = $result["user_id_educator"];
@@ -144,42 +160,24 @@ class DAOAppoitment {
      * 
      * Method to insert a appoitment in the database.
      * 
-     * @param array $input The associative table with the corresponding keys and values 
+     * @param Appoitment $appoitment The absence model object
      * @return int The number of rows affected by the insert
      */
-    public function insert(array $input)
+    public function insert(Appoitment $appoitment)
     {
         $statement = "
-        INSERT INTO appoitment (datetime_appoitment,duration_in_hour, note_text, 
-        note_graphical_serial_number, summary,
+        INSERT INTO appoitment (datetime_appoitment,duration_in_hour,
         user_id_customer,user_id_educator) 
 
-        VALUES(:DATETIME_APPOITMENT, :DURATION_IN_HOUR, :NOTE_TEXT, 
-        :NOTE_GRAPHICAL_SERIAL_NUMBER, :SUMMARY,
+        VALUES(:DATETIME_APPOITMENT, :DURATION_IN_HOUR,
         :USER_ID_CUSTOMER,:USER_ID_EDUCATOR);";
-
-        
-        if (!isset($input['note_text'])) {
-            $input['note_text'] = null;
-        }
-
-        if (!isset($input['note_graphical_serial_number'])) {
-            $input['note_graphical_serial_number'] = null;
-        }
-
-        if (!isset($input['summary'])) {
-            $input['summary'] = null;
-        }
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->bindParam(':DATETIME_APPOITMENT', $input['datetime_appoitment'], \PDO::PARAM_STR);
-            $statement->bindParam(':DURATION_IN_HOUR', $input['duration_in_hour'], \PDO::PARAM_STR);    
-            $statement->bindParam(':NOTE_TEXT', $input['note_text'], \PDO::PARAM_STR);  
-            $statement->bindParam(':NOTE_GRAPHICAL_SERIAL_NUMBER', $input['note_graphical_serial_number'], \PDO::PARAM_STR);  
-            $statement->bindParam(':SUMMARY', $input['summary'], \PDO::PARAM_STR);
-            $statement->bindParam(':USER_ID_CUSTOMER', $input['user_id_customer'], \PDO::PARAM_STR); 
-            $statement->bindParam(':USER_ID_EDUCATOR', $input['user_id_educator'], \PDO::PARAM_STR);    
+            $statement->bindParam(':DATETIME_APPOITMENT', $appoitment->datetime_appoitment, \PDO::PARAM_STR);
+            $statement->bindParam(':DURATION_IN_HOUR', $appoitment->duration_in_hour, \PDO::PARAM_INT);    
+            $statement->bindParam(':USER_ID_CUSTOMER', $appoitment->user_id_customer, \PDO::PARAM_INT); 
+            $statement->bindParam(':USER_ID_EDUCATOR', $appoitment->user_id_educator, \PDO::PARAM_INT);    
             $statement->execute();
             return $statement->rowCount();
         } catch (\PDOException $e) {
@@ -191,28 +189,23 @@ class DAOAppoitment {
      * 
      * Method to update a appoitment in the database.
      * 
-     * @param int $id The appoitment identifier 
-     * @param array $input The associative table with the corresponding keys and values 
+     * @param Appoitment $appoitment The absence model object
      * @return int The number of rows affected by the update
      */
-    public function update(int $id, array $input)
+    public function update(Appoitment $appoitment)
     {
         $statement = "
         UPDATE appoitment
-        SET datetime_appoitment = :DATETIME_APPOITMENT, 
-        duration_in_hour = :DURATION_IN_HOUR,
-        note_text = :NOTE_TEXT, 
-        note_graphical_serial_number = :NOTE_GRAPHICAL_SERIAL_NUMBER, 
+        SET note_text = :NOTE_TEXT, 
+        note_graphical_serial_id = :NOTE_GRAPHICAL_SERIAL_ID,
         summary = :SUMMARY
         WHERE id = :ID_APPOITMENT;";
         try {
             $statement = $this->db->prepare($statement);
-            $statement->bindParam(':DATETIME_APPOITMENT', $input['datetime_appoitment'], \PDO::PARAM_STR);
-            $statement->bindParam(':DURATION_IN_HOUR', $input['duration_in_hour'], \PDO::PARAM_STR);    
-            $statement->bindParam(':NOTE_TEXT', $input['note_text'], \PDO::PARAM_STR);  
-            $statement->bindParam(':NOTE_GRAPHICAL_SERIAL_NUMBER', $input['note_graphical_serial_number'], \PDO::PARAM_STR);  
-            $statement->bindParam(':SUMMARY', $input['summary'], \PDO::PARAM_STR); 
-            $statement->bindParam(':ID_APPOITMENT', $id, \PDO::PARAM_INT);
+            $statement->bindParam(':NOTE_TEXT', $appoitment->note_text, \PDO::PARAM_STR);
+            $statement->bindParam(':NOTE_GRAPHICAL_SERIAL_ID', $appoitment->note_graphical_serial_id, \PDO::PARAM_STR);    
+            $statement->bindParam(':SUMMARY', $appoitment->summary, \PDO::PARAM_STR);  
+            $statement->bindParam(':ID_APPOITMENT', $appoitment->id, \PDO::PARAM_INT);  
             $statement->execute();
             return $statement->rowCount();
         } catch (\PDOException $e) {
@@ -224,11 +217,11 @@ class DAOAppoitment {
      * 
      * Method to delete a appoitment in the database.
      * 
+     * @param int $userId The user who deletes the appointment
      * @param int $id The appoitment identifier 
-     * @param int $idUser The identifier of the user who is deleting the appointment
-     * @return int The number of rows affected by the update
+     * @return int The number of rows affected by the delete
      */
-    public function delete(int $id,$idUser)
+    public function delete(int $id,int $idUser)
     {
         $statement = "
         UPDATE appoitment
@@ -238,8 +231,8 @@ class DAOAppoitment {
 
         try {
             $statement = $this->db->prepare($statement);
-            $statement->bindParam(':ID_APPOITMENT', $id, \PDO::PARAM_INT);
             $statement->bindParam(':ID_USER', $idUser, \PDO::PARAM_INT);
+            $statement->bindParam(':ID_APPOITMENT', $id, \PDO::PARAM_INT);
             $statement->execute();
             return $statement->rowCount();
         } catch (\PDOException $e) {

@@ -309,10 +309,10 @@ class DAOTimeSlot {
      * @param int $idEducator The educator identifier
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findPlanningTimeSlots($idEducator)
+    public function findPlanningForEducator(int $idEducator)
     {
         $this->generateViews();
-        $statement = "
+        $statement = "   
         SELECT IF(dates.date IS NOT NULL, dates.date, so.date_schedule_override) AS date,time_start,time_end 
 
         FROM time_slot AS ts
@@ -329,14 +329,89 @@ class DAOTimeSlot {
 
         WHERE ts.is_deleted = 0 AND (so.is_deleted = 0 OR ws.is_deleted = 0)
         AND ts.id_educator = :ID_EDUCATOR
+
         AND (SELECT COUNT(*) 
         FROM absence AS ab
-        WHERE IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override) BETWEEN ab.date_absence_from AND ab.date_absence_to LIMIT 1) = 0
+        WHERE ab.id_educator = :ID_EDUCATOR 
+        AND IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override) BETWEEN ab.date_absence_from AND ab.date_absence_to LIMIT 1) = 0
+
+        AND (SELECT COUNT(*)
+        FROM appoitment AS ap
+        WHERE ap.user_id_educator = :ID_EDUCATOR
+        AND DATE(ap.datetime_appoitment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
+        AND TIME(ap.datetime_appoitment) = ts.time_start
+        AND TIME(ADDTIME(ap.datetime_appoitment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
 
         ORDER BY date,time_start;";
 
         try {
             $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);  
+            $statement->execute();
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            return $result;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
+    /**
+     * 
+     * Method to check if appointment data is valid in an educator's planning. 
+     * 
+     * @param string $date The date of the appoitment
+     * @param string $time_start The start time of the appoitment
+     * @param string $time_end The end time of the appoitment
+     * @param int $idEducator The educator identifier
+     * @return array The associative array containing all the result rows of the query 
+     */
+    public function findAppoitmentSlotsForEducator(string $date,string $time_start, string $time_end,int $idEducator)
+    {
+        $this->generateViews();
+        $statement = "        
+        SELECT IF(dates.date IS NOT NULL, dates.date, so.date_schedule_override) AS date,time_start,time_end 
+
+        FROM time_slot AS ts
+        LEFT JOIN weekly_schedule AS ws
+        ON ws.id = ts.id_weekly_schedule
+
+        LEFT JOIN schedule_override AS so
+        ON so.id = ts.id_schedule_override
+
+        LEFT JOIN dates
+        ON DAYOFWEEK(dates.date) = ts.code_day 
+        AND dates.date BETWEEN ws.date_valid_from 
+        AND IF(ws.date_valid_to IS NULL, DATE_ADD(NOW(), INTERVAL 365 DAY), ws.date_valid_to) 
+
+        WHERE ts.is_deleted = 0 AND (so.is_deleted = 0 OR ws.is_deleted = 0)
+        AND ts.id_educator = :ID_EDUCATOR
+
+
+        AND (SELECT COUNT(*) 
+        FROM absence AS ab
+        WHERE ab.id_educator = :ID_EDUCATOR
+        AND IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override) BETWEEN ab.date_absence_from AND ab.date_absence_to LIMIT 1) = 0
+
+        AND (SELECT COUNT(*)
+        FROM appoitment AS ap
+        WHERE ap.user_id_educator = :ID_EDUCATOR
+        AND appoitment.user_id_deletion IS NULL
+        AND appoitment.datetime_deletion IS NULL
+        AND DATE(ap.datetime_appoitment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
+        AND TIME(ap.datetime_appoitment) = ts.time_start
+        AND TIME(ADDTIME(ap.datetime_appoitment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
+
+        HAVING DATE = :DATE
+        AND time_start = :TIME_START
+        AND time_end = :TIME_END
+ 
+        ORDER BY date,time_start;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':DATE', $date, \PDO::PARAM_STR);  
+            $statement->bindParam(':TIME_START', $time_start, \PDO::PARAM_STR);  
+            $statement->bindParam(':TIME_END', $time_end, \PDO::PARAM_STR);  
             $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);  
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);

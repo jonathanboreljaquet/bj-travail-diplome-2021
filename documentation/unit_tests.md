@@ -324,8 +324,8 @@ pm.test("The data structure of the response is correct", () => {
                       "id" : {"type" : "integer"},
                       "datetime_appoitment" : {"type" : "string"},
                       "duration_in_hour" : {"type" : "string"},
-                      "note_text" : {"type" : ["string","null"]},
-                      "note_graphical_serial_id" : {"type" : ["string","null"]},
+                      "note_text" : {"type" : "null"},
+                      "note_graphical_serial_id" : {"type" : "null"},
                       "summary" : {"type" : ["string","null"]},
                       "user_id_customer" : {"type" : "integer"},
                       "user_id_educator" : {"type" : "integer"}

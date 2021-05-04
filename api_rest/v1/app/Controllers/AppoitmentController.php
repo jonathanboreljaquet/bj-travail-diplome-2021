@@ -10,15 +10,18 @@
 namespace App\Controllers;
 
 use App\DataAccessObject\DAOAppoitment;
+use App\DataAccessObject\DAOTimeSlot;
 use App\DataAccessObject\DAOUser;
 use App\Controllers\ResponseController;
 use App\Controllers\HelperController;
 use App\Models\Appoitment;
 use App\System\Constants;
+use DateTime;
 
 class AppoitmentController {
 
     private DAOAppoitment $DAOAppoitment;
+    private DAOTimeSlot $DAOTimeSlot;
     private DAOUser $DAOUser;
 
 
@@ -31,6 +34,7 @@ class AppoitmentController {
     public function __construct(\PDO $db)
     {
         $this->DAOAppoitment = new DAOAppoitment($db);
+        $this->DAOTimeSlot = new DAOTimeSlot($db);
         $this->DAOUser = new DAOUser($db);
     }
 
@@ -64,14 +68,14 @@ class AppoitmentController {
         return ResponseController::successfulRequest($allAppoitments);   
     }
 
-        /**
+    /**
      * 
      * Method to return a appoitment in JSON format.
      * 
      * @param int $id The appoitment identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function getAppoitment(int $id)
+    public function getAppoitment(int $id)
     {
         $headers = apache_request_headers();
 
@@ -79,25 +83,29 @@ class AppoitmentController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        
-        $user = $this->user->getUser($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->appoitment->find($id);
+        $appoitment = $this->DAOAppoitment->find($id);
 
-        return ResponseController::successfulRequest($result);
+        if (is_null($appoitment)) {
+            return ResponseController::notFoundResponse();
+        }
+
+        return ResponseController::successfulRequest($appoitment);
     }
 
     /**
      * 
      * Method to create a appoitment.
      * 
+     * @param Appoitment $appoitment The appoitment model object
      * @return string The status and the body in JSON format of the response
      */
-    private function createAppoitment()
+    public function createAppoitment(Appoitment $appoitment)
     {
         $headers = apache_request_headers();
 
@@ -105,19 +113,39 @@ class AppoitmentController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->user->getUser($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth)) {
             return ResponseController::unauthorizedUser();
         }
 
-        parse_str(file_get_contents('php://input'), $input);
-
-        if (!$this->validateAppoitment($input)) {
+        if (!$this->validateAppoitment($appoitment)) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        $this->appoitment->insert($input);
+        $userCustomer = $this->DAOUser->find($appoitment->user_id_customer);
+        $userEducator = $this->DAOUser->find($appoitment->user_id_educator);
+
+        if (is_null($userCustomer) || is_null($userEducator) || $userCustomer->code_role != Constants::USER_CODE_ROLE || $userEducator->code_role != Constants::ADMIN_CODE_ROLE) {
+            return ResponseController::notFoundResponse();
+        }
+
+        if (!HelperController::validateDateTimeFormat($appoitment->datetime_appoitment)) {
+            return ResponseController::invalidDateTimeFormat();
+        }
+
+        $elements = explode(" ",$appoitment->datetime_appoitment);
+        $date = $elements[0];
+        $time_start = $elements[1];
+        $datetime = new DateTime($time_start);
+        $datetime->modify('+'.$appoitment->duration_in_hour.' hours');
+        $time_end = $datetime->format("H:i:s");
+        
+        if (!$this->DAOTimeSlot->findAppoitmentSlotsForEducator($date,$time_start,$time_end,$appoitment->user_id_educator)) {
+            return ResponseController::invalidAppointment();
+        }
+        
+        $this->DAOAppoitment->insert($appoitment);
 
         return ResponseController::successfulCreatedRessource();
     }
@@ -129,7 +157,7 @@ class AppoitmentController {
      * @param int  $id The appoitment identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function updateAppoitment(int $id)
+    public function updateAppoitment(Appoitment $appoitment)
     {
         $headers = apache_request_headers();
 
@@ -137,24 +165,22 @@ class AppoitmentController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->user->getUser($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
 
-        $actualAppoitment = $this->appoitment->find($id);
+        $actualAppoitment = $this->DAOAppoitment->find($appoitment->id);
 
-
-        if (!$actualAppoitment) {
+        if (is_null($actualAppoitment)) {
             return ResponseController::notFoundResponse();
         }
 
-        parse_str(file_get_contents('php://input'), $input);
+        $actualAppoitment->note_text = $appoitment->note_text ?? $actualAppoitment->note_text;
+        $actualAppoitment->summary = $appoitment->summary ?? $actualAppoitment->summary;
 
-        $newAppoitment = array_replace($actualAppoitment,$input);
-
-        $this->appoitment->update($id,$newAppoitment);
+        $this->DAOAppoitment->update($actualAppoitment);
 
         return ResponseController::successfulRequest(null);
     }
@@ -166,7 +192,7 @@ class AppoitmentController {
      * @param int  $id The appoitment identifier
      * @return string The status and the body in JSON format of the response
      */
-    private function deleteAppoitment(int $id)
+    public function deleteAppoitment(int $id)
     {
         $headers = apache_request_headers();
 
@@ -174,45 +200,101 @@ class AppoitmentController {
             return ResponseController::notFoundAuthorizationHeader();
         }
 
-        $user = $this->user->getUser($headers['Authorization']);
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
-        if (!$user || intval($user["code_role"]) != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($userAuth)) {
             return ResponseController::unauthorizedUser();
         }
 
-        $result = $this->appoitment->find($id);
+        $appoitment = $this->DAOAppoitment->find($id);
 
-        if (!$result) {
+        if (is_null($appoitment)) {
             return ResponseController::notFoundResponse();
         }
 
-        $this->appoitment->delete($id,$user["id"]);
+        if ($userAuth->id == $appoitment->user_id_educator xor $userAuth->id !=$appoitment->user_id_customer ) {
+            return ResponseController::unauthorizedUser();
+        }
+
+        $this->DAOAppoitment->delete($appoitment->id,$userAuth->id);
 
         return ResponseController::successfulRequest(null);
     }
 
+    /**
+     * 
+     * Method to upload a graphical note.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public function uploadNoteGraphical()
+    {
+        $headers = apache_request_headers();
+
+        if (!isset($headers['Authorization'])) {
+            return ResponseController::notFoundAuthorizationHeader();
+        }
+
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
+
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
+            return ResponseController::unauthorizedUser();
+        }
+
+        if (!isset($_FILES["note_graphical"]) || !is_uploaded_file($_FILES["note_graphical"]["tmp_name"]) || !isset($_POST["appoitment_id"])) {
+            return ResponseController::unprocessableEntityResponse();
+        }
+
+        $appoitment = $this->DAOAppoitment->find($_POST["appoitment_id"]);
+
+        if (is_null($appoitment)) {
+            return ResponseController::notFoundResponse();
+        }
+
+        $tmp_file = $_FILES["note_graphical"]["tmp_name"];
+        $img_name = HelperController::generateRandomString();
+        $upload_dir = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$img_name.".png";
+
+        if (!is_null($appoitment->picture_serial_id)) {
+            $filename = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$appoitment->picture_serial_id.".jpeg";
+            if (file_exists($filename)) {
+                unlink($filename);
+            }
+        }
+        
+        if (!move_uploaded_file($tmp_file,$upload_dir)) {
+            return ResponseController::uploadFailed();
+        }
+        
+        $appoitment->note_graphical_serial_id = $img_name;
+
+        $this->DAOAppoitment->update($appoitment);
+        
+        return ResponseController::successfulRequest();
+    }
+
      /**
      * 
-     * Method to check if the required fields have been defined.
+     * Method to check if the appoitment required fields have been defined for the creation.
      * 
-     * @param array $input The associative table of the query fields 
+     * @param Appoitment $appoitment The appoitment model object
      * @return bool
      */
-    private function validateAppoitment(array $input)
+    private function validateAppoitment(Appoitment $appoitment)
     {
-        if (!isset($input['datetime_appoitment'])) {
+        if ($appoitment->datetime_appoitment == null) {
             return false;
         }
 
-        if (!isset($input['duration_in_hour'])) {
+        if ($appoitment->duration_in_hour == null) {
             return false;
         }
 
-        if (!isset($input['user_id_customer'])) {
+        if ($appoitment->user_id_customer == null) {
             return false;
         }
 
-        if (!isset($input['user_id_educator'])) {
+        if ($appoitment->user_id_educator == null) {
             return false;
         }
 

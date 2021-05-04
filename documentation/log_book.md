@@ -1197,3 +1197,21 @@ Entre ce week-end et aujourd'hui, j'ai travaillé sur la modification des endpoi
 * `PATCH api/v1/timeSlots/{idTimeSlot}` pour modifier les informations d'un créneau horaire. Endpoint accessible uniquement par les administrateurs.
 * `DELETE api/v1/timeSlots/{idTimeSlot}` pour supprimer un créneau horaire.  Endpoint accessible uniquement par les administrateurs.
 
+### Mardi 04 mai 2021
+
+Réflexion par rapport aux endpoints de la gestion des rendez-vous. En effet, la création de rendez-vous devra être également possible par des utilisateurs non administrateur (client). Un rendez-vous contient différentes informations. Les premières informations qui sont très importantes sont les données temporel d'un rendez-vous. Ces données pourront être créé autant par un administrateur que par un client. Tandis que la modification d'un rendez-vous pour lui ajouter un résumé ou des notes textuels ou des notes graphiques devra être possible que par l'éducateur canin. J'en déduis donc que le création d'un rendez-vous donc le endpoint `POST api/v1/appoitments` sera accessible par un éducateur canin ou un client tandis que l'endpoint `PATCH api/v1/appoitments` lui, sera accessible uniquement par un administrateur. 
+
+Rendez-vous GMeet hebdomadaire avec M. Mathieu, nous avons discuté du résultat de l'évaluation intermédiaire numéro 1. M. Mathieu m'a dit que j'étais dans l'ensemble sur la bonne lancé. Nous avons également discuté du frontend de mon application car j'approche de la fin de mon API REST. M. Mathieu m'a demandé de dessiner mes vues sur papier afin d'en discuter vendredi. Pour finir, M. Mathieu m'a également conseillé d'utilisé la fonction proposé par PHP `checkdate` pour valider mes différentes données de date.
+
+Développement des endpoints suivants :
+
+* `POST api/v1/appoitments` pour créer un nouveau rendez-vous entre un éducateur canin et un client. Endpoint accessible uniquement par les administrateurs et les utilisateurs authentifiés.
+* `GET api/v1/appoitments` pour retourner les informations de tout les rendez-vous de l'utilisateur authentifié ou de l'éducateur canin authentifié. Endpoint accessible uniquement par les administrateurs et les utilisateurs authentifiés.
+* `GET api/v1/appoitments/{idAppoitment}` pour retourner les informations d'un rendez-vous spécifique.  Endpoint accessible uniquement par les administrateurs.
+* `PATCH api/v1/appoitments/{idAppoitment}` pour modifier les informations d'un rendez-vous, dans ce cas là, l'endpoint permet uniquement la modification des notes textuelles et résumé du rendez-vous. Endpoint accessible uniquement par les administrateurs.
+* `DELETE api/v1/appoitments/{idAppoitment}` pour supprimer un rendez-vous de manière non définitif.   Endpoint accessible uniquement par les administrateurs et les utilisateurs authentifiés.
+* `GET api/v1/users/educators` pour récupérer tout les éducateurs canin de l'application.  Endpoint accessible par n'importe quel type d'utilisateur.
+
+Il reste encore à rajouter l'endpoint d'upload de note graphique, l'endpoint de récupération de planning et à documenter tout les endpoints Appoitment et l'API REST aura une très bonne base. Je vais pouvoir donc commencer à me concentrer sur le frontend de mon application.
+
+### Mercredi 05 mai 2021

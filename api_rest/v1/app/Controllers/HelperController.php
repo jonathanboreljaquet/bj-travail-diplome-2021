@@ -31,6 +31,32 @@ class HelperController {
             return false;
         }
 
+        $elements = explode("-",$date);
+
+        if (!checkdate($elements[1],$elements[2],$elements[0])) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 
+     * Method to check if a date has the right format (YYYY-MM-DD).
+     * 
+     * @param string $date Date to check
+     * @return bool
+     */
+    public static function validateDateTimeFormat(string $datetime, string $format = 'Y-m-d H:i:s')
+    {
+        if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (0[1-9]|1[0-9]|2[0-4]):(0[0-9]|[1-5][0-9]):(0[0-9]|[1-5][0-9])$/",$datetime)) {
+            return false;
+        }
+
+        $date = \DateTime::createFromFormat($format, $datetime);
+        if ($date && $date->format($format) != $datetime) {
+            return false;
+        }
         return true;
     }
 

@@ -163,6 +163,21 @@ class ResponseController {
         return $response;
     }
 
+     /**
+     * 
+     * Method to return the error message in case of invalid datetime format.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public static function invalidDateTimeFormat()
+    {
+        $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
+        $response['body'] = json_encode([
+            'error' => 'Format de date invalide => (YYYY-MM-DD HH:MM:SS).'
+        ]);
+        return $response;
+    }
+
     /**
      * 
      * Method to return the error message in case of date overlap problem.
@@ -313,6 +328,20 @@ class ResponseController {
         $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
         $response['body'] = json_encode([
             'error' => 'Numéro de Forfait invalide => (1 jusqu\'à 5).'
+        ]);
+        return $response;
+    }
+
+    /**
+     * 
+     * Method to return the error message in case of invalid appointment informations.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public static function invalidAppointment(){
+        $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
+        $response['body'] = json_encode([
+            'error' => 'Impossible de prendre ce rendez-vous.'
         ]);
         return $response;
     }

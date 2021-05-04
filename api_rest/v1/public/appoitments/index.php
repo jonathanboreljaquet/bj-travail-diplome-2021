@@ -31,6 +31,14 @@ $id = intval(end($pathFragments));
 parse_str(file_get_contents('php://input'), $input);
 
 $appoitment = new Appoitment();
+$appoitment->id = $id ?? null;
+$appoitment->datetime_appoitment = $input["datetime_appoitment"] ?? null;
+$appoitment->duration_in_hour = $input["duration_in_hour"] ?? null;
+$appoitment->note_text = $input["note_text"] ?? null;
+$appoitment->note_graphical_serial_id = $input["note_graphical_serial_id"] ?? null;
+$appoitment->summary = $input["summary"] ?? null;
+$appoitment->user_id_customer = $input["user_id_customer"] ?? null;
+$appoitment->user_id_educator = $input["user_id_educator"] ?? null;
 
 
 switch ($requestMethod) {
@@ -39,12 +47,12 @@ switch ($requestMethod) {
             $response = $controller->getAllAppoitments();
         }
         else{
-            $response = $controller->getWeeklySchedule($id);
+            $response = $controller->getAppoitment($id);
         }
         break;
 
     case 'POST':
-        $response = $controller->createWeeklySchedule($weeklySchedule);
+        $response = $controller->createAppoitment($appoitment);
         break;
 
     case 'PATCH':
@@ -52,7 +60,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->updateWeeklySchedule($weeklySchedule);
+        $response = $controller->updateAppoitment($appoitment);
         break;
 
     case 'DELETE':
@@ -60,7 +68,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->deleteWeeklySchedule($id);
+        $response = $controller->deleteAppoitment($id);
         break;
         
     default:

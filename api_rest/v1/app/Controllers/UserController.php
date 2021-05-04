@@ -44,7 +44,7 @@ class UserController {
      * 
      * @return string The status and the body in json format of the response
      */
-    public function getAllUsers()
+    public function getAllCustomerUsers()
     {
         $headers = apache_request_headers();
 
@@ -60,9 +60,22 @@ class UserController {
             return ResponseController::unauthorizedUser();
         }
         
-        $allUsers = $this->DAOUser->findAll(Constants::USER_CODE_ROLE);
+        $allCustomerUsers = $this->DAOUser->findAll(Constants::USER_CODE_ROLE);
 
-        return ResponseController::successfulRequest($allUsers);  
+        return ResponseController::successfulRequest($allCustomerUsers);  
+    }
+
+    /**
+     * 
+     * Method to return all users in JSON format.
+     * 
+     * @return string The status and the body in json format of the response
+     */
+    public function getAllEducatorUsers()
+    { 
+        $allEducatorUsers = $this->DAOUser->findAll(Constants::ADMIN_CODE_ROLE);
+
+        return ResponseController::successfulRequest($allEducatorUsers);  
     }
 
     /**
@@ -259,7 +272,7 @@ class UserController {
         }
         $dogs = $this->DAODog->findByUserId($userAuth->id);
         $documents = $this->DAODocument->findByUserId($userAuth->id);
-        $appoitments = $this->DAOAppoitment->findByUserId($userAuth->id);
+        $appoitments = $this->DAOAppoitment->findByUserIdForCustomer($userAuth->id);
         $userAuth->dogs = $dogs;
         $userAuth->documents = $documents;
         $userAuth->appoitments = $appoitments;

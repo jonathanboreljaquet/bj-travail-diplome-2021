@@ -44,7 +44,7 @@ $user->password_hash = $input["password"] ?? null;
 switch ($requestMethod) {
     case 'GET':
         if (empty($id) || !is_numeric($id)) {
-            $response = $controller->getAllUsers();
+            $response = $controller->getAllCustomerUsers();
         }
         else{
             $response = $controller->getUser($id);

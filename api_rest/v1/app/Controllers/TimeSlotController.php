@@ -245,7 +245,7 @@ class TimeSlotController {
             return ResponseController::notFoundResponse();
         }
 
-        $planning = $this->DAOTimeSlot->findPlanningTimeSlots($user->id);        
+        $planning = $this->DAOTimeSlot->findPlanningForEducator($user->id);        
         
         return ResponseController::successfulRequest($planning);  
     }
