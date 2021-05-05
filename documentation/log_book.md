@@ -1224,7 +1224,11 @@ Réalisation des derniers endpoints de l'API REST :
 
 Réalisation de le documentation technique des endpoints développés hier et aujourd'hui.
 
-Début de recherche d'une librairie javascript permettant l'affichage des différentes dates de mon application. Cette libraire doit permettre un affichage responsive de calendrier afin de respecter les conditions d'une PWA. [Source intéressante](https://www.jqueryscript.net/blog/best-event-calendar-plugins.html) 
+Modification du endpoint `DELETE api/v1/users/{idUser}` et des clefs étrangères des tables `dog` `document` `appoitment` afin qu'une suppression en cascade soit faite lors de la suppression d'un utilisateur. Dorénavant, lors de la suppression d'un utilisateur, ses chiens et leurs photos, ses documents et leur fichiers PDF, ses rendez-vous et leurs notes graphiques sont également supprimés. 
 
-Début de la réalisation du poster. Le rendu du poster est prévu pour le 14 mai 2021.
+Mise en production de l'API REST sur l'hébergement WEB infomaniak. Problème d'accès aux ressource vu que le point d'accès du site est le dossier `public`. A ma connaissance, Laravel permet de générer des liens symbolique vers le dossier `storage`, il faut que maintenant que je trouve l'alternative en PHP. 
+
+Recherche d'une librairie javascript permettant l'affichage des différentes dates de mon application. Cette libraire doit permettre un affichage responsive de calendrier afin de respecter les conditions d'une PWA. [Source intéressante](https://www.jqueryscript.net/blog/best-event-calendar-plugins.html) 
+
+Début de la réalisation du poster pour son rendu prévu le 14 mai 2021.
 

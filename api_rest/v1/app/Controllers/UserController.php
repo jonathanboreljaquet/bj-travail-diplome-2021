@@ -214,6 +214,55 @@ class UserController {
             return ResponseController::notFoundResponse();
         }
 
+        $dogs = $this->DAODog->findByUserId($user->id);
+
+        foreach ($dogs as $dog) {
+
+            if (!is_null($dog->picture_serial_id)) {
+
+                $filename = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$dog->picture_serial_id.".jpeg";
+
+                if (file_exists($filename)) {
+                    unlink($filename);
+                }
+            }
+        }
+
+        $documents = $this->DAODocument->findByUserId($user->id);
+
+        foreach ($documents as $document) {
+
+            if (!is_null($document->document_serial_id)) {
+
+                if ($document->type == Constants::DOCUMENT_TYPE_CONDTIONS_OF_REGISTRATION) {
+
+                    $filename = HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$document->document_serial_id.".pdf";
+                }
+                else{
+                    $filename = HelperController::getDefaultDirectory()."storage/app/pdf/".$document->document_serial_id.".pdf";
+                }
+                
+                if (file_exists($filename)) {
+
+                    unlink($filename);
+                }
+            }
+        }
+
+        $appoitments = $this->DAOAppoitment->findByUserId($user->id);
+
+        foreach ($appoitments as $appoitment) {
+
+            if (!is_null($appoitment->note_graphical_serial_id)) {
+
+                $filename = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$appoitment->note_graphical_serial_id.".png";
+
+                if (file_exists($filename)) {
+                    unlink($filename);
+                }
+            }
+        }
+
         $this->DAOUser->delete($user);
 
         return ResponseController::successfulRequest(null);
@@ -272,7 +321,7 @@ class UserController {
         }
         $dogs = $this->DAODog->findByUserId($userAuth->id);
         $documents = $this->DAODocument->findByUserId($userAuth->id);
-        $appoitments = $this->DAOAppoitment->findByUserIdForCustomer($userAuth->id);
+        $appoitments = $this->DAOAppoitment->findByUserId($userAuth->id);
         $userAuth->dogs = $dogs;
         $userAuth->documents = $documents;
         $userAuth->appoitments = $appoitments;

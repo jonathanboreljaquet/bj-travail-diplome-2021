@@ -318,14 +318,14 @@ pm.test("The data structure of the response is correct", () => {
                   },
                   "required": ["id","document_serial_id","type","user_id"]
               },
-              "documents" : {
+              "appoitments" : {
                   "type" : "array",
                   "properties" : {
                       "id" : {"type" : "integer"},
                       "datetime_appoitment" : {"type" : "string"},
                       "duration_in_hour" : {"type" : "string"},
                       "note_text" : {"type" : "null"},
-                      "note_graphical_serial_id" : {"type" : "null"},
+                      "note_graphical_serial_id" : {"type" : ["null","string"]},
                       "summary" : {"type" : ["string","null"]},
                       "user_id_customer" : {"type" : "integer"},
                       "user_id_educator" : {"type" : "integer"}
@@ -333,7 +333,7 @@ pm.test("The data structure of the response is correct", () => {
                   "required": ["id","datetime_appoitment","duration_in_hour","note_text","note_graphical_serial_id","summary","user_id_customer","user_id_educator"]
               }
           },
-          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash","dogs"]
+          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash","dogs","documents","appoitments"]
   })
 });
 ```
@@ -2647,7 +2647,36 @@ pm.test("Right code for successful uploaded ressource", function () {
 });
 ```
 
+**[PLA-GO1] Get one planning for non-existent educator**
 
+```javascript
+pm.test("User not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[PLA-GO2] Get right planning**
+
+```javascript
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+      "type": "array",
+      "items": [{
+          "type": "object",
+          "properties": {
+              "date" : {"type" : "string"},
+              "time_start" : {"type" : "string"},
+              "time_end" : {"type" : "string"}
+          },
+          "required": ["time_start","time_end","date"]
+      }]
+  })
+});
+```
 
 **Contenu du fichier dateAndTimeTestData.csv**
 

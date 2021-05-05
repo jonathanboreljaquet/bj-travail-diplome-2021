@@ -631,7 +631,7 @@ Récupérer l'image d'un chien stockée dans le serveur.
 
 ##### Utilisation concrète
 
-Cet endpoint permet de récupérer la photo d'un chien en base64 grâce à son identifiant de série.
+Cet endpoint permet de récupérer la photo d'un chien en base64 grâce à son identifiant de série. L'endpoint est accessible par n'importe quel type d'utilisateur.
 
 ##### Flow chart
 
@@ -1440,6 +1440,25 @@ Cet endpoint permet de récupérer une note graphique en base64 grâce à son id
 * **[APP-DNG1] Download note graphical with a user api token**
 * **[APP-DNG2] Download non-existant note graphical**
 * **[APP-DNG3] Download note graphical without problems**
+
+####  GET api/v1/plannings/{idEducator}
+
+##### Objectif
+
+Récupérer le planning d'un éducateur canin grâce à son identifiant.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer le planning d'un éducateur canin. Le planning d'un éducateur canin contient toutes les dates et heures qui permettent un rendez-vous avec celui-ci. L'endpoint est accessible par n'importe quel type d'utilisateur.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOnePlanning.png)
+
+##### Tests unitaires
+
+* **[PLA-GO1] Get one planning for non-existent educator**
+* **[PLA-GO2] Get right planning**
 
 ## PWA
 

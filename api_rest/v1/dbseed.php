@@ -14,7 +14,7 @@ function generateApiToken(){
 
 $userStatement = "
     
-INSERT INTO `api-rest_douceur-de-chien`.`user`
+INSERT INTO `api_rest_douceur_de_chien`.`user`
     (id, email, firstname, lastname, phonenumber, address, api_token, code_role, password_hash)
 VALUES
     (1, 'borel@eduge.ch', 'Jonathan', 'Borel-Jaquet', '0772345212', 'Route de Frontenex 99 1208 Genève','e8e08012c93cce830cb19ff8e2977504','2', '$2y$10$8H2s458tYmy72XFrEw3DlOBvgn60NKo0itM/KVd6HVzd0gj4nmQPG'),
@@ -29,7 +29,7 @@ VALUES
 
 $dogStatement = "
 
-INSERT INTO `api-rest_douceur-de-chien`.`dog`
+INSERT INTO `api_rest_douceur_de_chien`.`dog`
     (id, name, breed, sex, picture_serial_id, chip_id, user_id)
 VALUES
     (1, 'Paco', 'Staffy', 'Mâle', null, '123456789112345',4),
@@ -37,7 +37,7 @@ VALUES
     (3, 'Jaya', 'Rhodesian Ridgeback', 'Femelle', 'fYPxlcOc', '123123123123123',6)";
 
 $documentStatement = "
-INSERT INTO `api-rest_douceur-de-chien`.`document`
+INSERT INTO `api_rest_douceur_de_chien`.`document`
     (id, document_serial_id, type, user_id)
 VALUES
     (1, 'ly5uy43256', 'conditions_inscription', 4),
@@ -46,7 +46,7 @@ VALUES
     (4, 'mASE47FP', 'conditions_inscription', 4)";
 
 $appoitmentStatement = "
-INSERT INTO `api-rest_douceur-de-chien`.`appoitment`
+INSERT INTO `api_rest_douceur_de_chien`.`appoitment`
     (id, datetime_appoitment, duration_in_hour, note_text, note_graphical_serial_id,summary,datetime_deletion,user_id_customer,user_id_educator,user_id_deletion)
 VALUES
     (1, '2020-04-02 09:00:00',2, null, 'JQ5LD72g', null, null, 4, 1, null),
@@ -54,7 +54,7 @@ VALUES
     (3, '2020-06-22 14:00:00',2 ,null, null, null, null, 6, 3, null)";
 
 $absenceStatement = "
-INSERT INTO `api-rest_douceur-de-chien`.`absence`
+INSERT INTO `api_rest_douceur_de_chien`.`absence`
     (id, date_absence_from, date_absence_to, description, is_deleted, id_educator)
 VALUES
     (1, '2021-01-01', '2021-01-07', 'Vacance de janvier',0 , 1),
@@ -65,7 +65,7 @@ VALUES
 
 $weeklyScheduleStatement = "
 
-INSERT INTO `api-rest_douceur-de-chien`.`weekly_schedule`
+INSERT INTO `api_rest_douceur_de_chien`.`weekly_schedule`
     (id, date_valid_from, date_valid_to, is_deleted, id_educator)
 VALUES
     (1, '2021-03-29', '2021-05-09',0 , 1),
@@ -77,7 +77,7 @@ VALUES
 
 $scheduleOverrideStatement = "
 
-INSERT INTO `api-rest_douceur-de-chien`.`schedule_override`
+INSERT INTO `api_rest_douceur_de_chien`.`schedule_override`
     (id, date_schedule_override, is_deleted, id_educator)
 VALUES
     (1, '2021-04-15', 0, 1),
@@ -88,7 +88,7 @@ VALUES
 
 $timeSlotStatement = "
 
-INSERT INTO `api-rest_douceur-de-chien`.`time_slot`
+INSERT INTO `api_rest_douceur_de_chien`.`time_slot`
     (id, code_day, time_start, time_end,is_deleted, id_weekly_schedule, id_schedule_override, id_educator)
 VALUES
     (1, 2,'08:00:00', '10:00:00',0, 1,null,1),

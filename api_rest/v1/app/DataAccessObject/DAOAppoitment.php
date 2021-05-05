@@ -122,10 +122,10 @@ class DAOAppoitment {
      * @param int $userId The user identifier 
      * @return Appoitment[] A Appoitment object array
      */
-    public function findByUserIdForCustomer(int $userId)
+    public function findByUserId(int $userId)
     {
         $statement = "
-        SELECT id, datetime_appoitment,duration_in_hour, summary, datetime_deletion,
+        SELECT id, datetime_appoitment,duration_in_hour,note_graphical_serial_id, summary, datetime_deletion,
         user_id_customer,user_id_educator,user_id_deletion
         FROM appoitment
         WHERE user_id_customer = :ID_USER
@@ -144,6 +144,7 @@ class DAOAppoitment {
                 $appoitment->id = $result["id"];
                 $appoitment->datetime_appoitment = $result["datetime_appoitment"];
                 $appoitment->duration_in_hour = $result["duration_in_hour"];
+                $appoitment->note_graphical_serial_id = $result["note_graphical_serial_id"];
                 $appoitment->summary = $result["summary"];
                 $appoitment->user_id_customer = $result["user_id_customer"];
                 $appoitment->user_id_educator = $result["user_id_educator"];
