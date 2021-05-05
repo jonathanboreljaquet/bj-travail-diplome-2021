@@ -158,6 +158,51 @@ class DAOAppoitment {
 
     /**
      * 
+     * Method to return a dog from the database from his graphical note serial id.
+     * 
+     * @param string $serial_id The graphical note serial id  
+     * @return Appoitment A Appoitment model object containing all the result rows of the query 
+     */
+    public function findBySerialId(string $serial_id)
+    {
+        $statement = "
+        SELECT id, datetime_appoitment,duration_in_hour, note_text, 
+        note_graphical_serial_id, summary, datetime_deletion,
+        user_id_customer,user_id_educator,user_id_deletion
+        FROM appoitment
+        WHERE note_graphical_serial_id = :SERIAL_ID;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':SERIAL_ID', $serial_id, \PDO::PARAM_STR);
+            $statement->execute();
+
+            $appoitment = new Appoitment();
+
+            if ($statement->rowCount()==1) {
+                $result = $statement->fetch(\PDO::FETCH_ASSOC);
+                $appoitment->id = $result["id"];
+                $appoitment->datetime_appoitment = $result["datetime_appoitment"];
+                $appoitment->duration_in_hour = $result["duration_in_hour"];
+                $appoitment->note_text = $result["note_text"];
+                $appoitment->note_graphical_serial_id = $result["note_graphical_serial_id"];
+                $appoitment->summary = $result["summary"];
+                $appoitment->user_id_customer = $result["user_id_customer"];
+                $appoitment->user_id_educator = $result["user_id_educator"];
+            }
+            else{
+                $appoitment = null;
+            }
+
+            return $appoitment;
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    /**
+     * 
      * Method to insert a appoitment in the database.
      * 
      * @param Appoitment $appoitment The absence model object

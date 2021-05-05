@@ -6,3 +6,5 @@ api_rest/v1/storage/app/conditions_registration/*
 !api_rest/v1/storage/app/conditions_registration/mASE47FP.pdf
 api_rest/v1/storage/app/pdf/*
 !api_rest/v1/storage/app/pdf/V9CUouI8.pdf
+api_rest/v1/storage/app/graphical_note/*
+!api_rest/v1/storage/app/graphical_note/JQ5LD72g.png

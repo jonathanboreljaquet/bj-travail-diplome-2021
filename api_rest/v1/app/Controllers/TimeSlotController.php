@@ -233,19 +233,18 @@ class TimeSlotController {
      * 
      * Method to return all available valid time slots with their corresponding dates in JSON format.
      * 
-     * @param int  $idUser The user identifier
+     * @param int  $idUser The edcuator user identifier
      * @return string The status and the body in json format of the response
      */
     public function getPlanningTimeSlots(int $idUser)
     {
+        $educator = $this->DAOUser->find($idUser);
 
-        $user = $this->DAOUser->find($idUser);
-
-        if (is_null($user) || $user->code_role != Constants::ADMIN_CODE_ROLE) {
+        if (is_null($educator) || $educator->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::notFoundResponse();
         }
 
-        $planning = $this->DAOTimeSlot->findPlanningForEducator($user->id);        
+        $planning = $this->DAOTimeSlot->findPlanningForEducator($idUser);        
         
         return ResponseController::successfulRequest($planning);  
     }

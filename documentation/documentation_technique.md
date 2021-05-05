@@ -1270,6 +1270,177 @@ Cet endpoint permet la suppression non définitive d'une exception d'horaire de 
 * **[TIM-DO2] Delete one non-existent time slot**
 * **[TIM-DO3] Delete one time slot without problems**
 
+####  POST api/v1/appoitments
+
+##### Objectif
+
+Créer un rendez-vous entre un utilisateur et un éducateur canin dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet d'ajouter un rendez-vous entre un client et éducateur canin canin authentifié, la création de rendez-vous insère uniquement les données temporelles du rendez-vous. L'endpoint est accessible par les utilisateurs authentifiés.
+Body de la requête :
+
+| Clef                | Définition                         | Obligatoire | Format                                                       |
+| ------------------- | ---------------------------------- | :---------: | ------------------------------------------------------------ |
+| datetime_appoitment | La date et l'heure du rendez-vous  |      X      | La date et l'heure doivent respecter le format  <br />(YYYY-MM-DD HH:MM:SS) |
+| duration_in_hour    | La durée du rendez en heure        |      X      |                                                              |
+| user_id_customer    | L'identifiant du client            |      X      |                                                              |
+| user_id_educator    | L'identifiant de l'éducateur canin |      X      |                                                              |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostAppoitment.png)
+
+##### Tests unitaires
+
+* **[APP-CO1] Create one appoitment with unauthorized user**
+* **[APP-CO2] Create one appoitment without datetime_appoitment**
+* **[APP-CO3] Create one appoitment without duration_in_hour**
+* **[APP-C04] Create one appoitment without user_id_customer**
+* **[APP-C05] Create one appoitment without user_id_educator**
+* **[APP-C06] Create one appoitment for non-existent customer user**
+* **[APP-C07] Create one appoitment for non-existent educator user**
+* **[APP-CO8] Create one appoitment with invalid datetime_appoitment format (dateAndTimeTestData.csv)**
+* **[APP-CO9] Create one appoitment for invalid appoitment slot**
+* **[APP-CO10] Create one appoitment without problems**
+
+####  GET api/v1/appoitments
+
+##### Objectif
+
+Récupérer tout les rendez-vous de l'utilisateur authentifié de la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer toutes les informations des rendez-vous de l'utilisateur authentifié, si l'utilisateur est un client, l'endpoint ne retourne pas les notes de l'éducateur canin. L'endpoint est accessible par les utilisateurs authentifiés.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllAppoitment.png)
+
+##### Tests unitaires
+
+* **[APP-GA1] Get all appoitments with unauthorized user**
+* **[APP-GA2] Get right appoitments for customer**
+* **[APP-GA3] Get right appoitments for educator**
+
+####  GET api/v1/appoitments/{idAppoitment}
+
+##### Objectif
+
+Récupérer un rendez-vous de la base de données grâce à son identifiant.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer un rendez-vous spécifique. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneAppoitment.png)
+
+##### Tests unitaires
+
+* **[APP-GO1] Get one appoitment with a user api token**
+* **[APP-GO2] Get one non-existent appoitment**
+* **[APP-GO3] Get right appoitment**
+
+####  PATCH api/v1/appoitments/{idAppoitment}
+
+##### Objectif
+
+Modifier un rendez-vous de la base de données grâce à son identifiant.
+
+##### Utilisation concrète
+
+Cet endpoint permet la modification des informations d'un rendez-vous. Il est impossible de modifier les informations temporelle d'un rendez-vous, uniquement les notes textuelles et le résumé peuvent l'être. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef      | Définition                          | Obligatoire | Format |
+| --------- | ----------------------------------- | :---------: | ------ |
+| note_text | Les notes textuelles du rendez-vous |             |        |
+| summary   | Le résumé du rendez-vous            |             |        |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneAppoitment.png)
+
+##### Tests unitaires
+
+* **[APP-UO1] Update one appoitment with a user api token**
+* **[APP-UO2] Update one non-existent appoitment**
+* **[APP-UO3] Update one appoitment without problems**
+
+####  DELETE api/v1/appoitments/{idAppoitment}
+
+##### Objectif
+
+Supprimer un rendez-vous de manière non définitive dans la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet la suppression non définitive d'un rendez-vous. Cette suppression non définitive permet d'identifier quand le rendez-vous a été supprimé et par quel utilisateur. L'endpoint est accessible uniquement par les administrateurs.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneAppoitment.png)
+
+##### Tests unitaires
+
+* **[APP-DO1] Delete one appoitment with unauthorized user**
+* **[APP-DO2] Delete one non-existent appoitment**
+* **[APP-DO3] Delete one appoitment with unauthorized customer or educator**
+* **[APP-DO4] Delete one appoitment without problems**
+
+####  POST api/v1/appoitments/uploadNoteGraphical
+
+##### Objectif
+
+Upload une note graphique sur le serveur et l'attribue à un rendez-vous de la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet d'ajouter une note graphique à un rendez-vous. L'endpoint est accessible uniquement par les administrateurs.
+Body de la requête :
+
+| Clef           | Définition                   | Obligatoire | Format |
+| -------------- | ---------------------------- | :---------: | ------ |
+| note_graphical | La note graphique            |      X      | PNG    |
+| appoitment_id  | L'identifiant du rendez-vous |      X      |        |
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUploadNoteGraphical.png)
+
+##### Tests unitaires
+
+* **[APP-UNG1] Upload note graphical with a user api token**
+* **[APP-UNG2] Upload note graphical without note_graphical**
+* **[APP-UNG3] Upload note graphical without appoitment_id**
+* **[APP-UNG4] Upload note graphical for non-existant appoitment**
+* **[APP-UNG5] Upload note graphical with invalid image format**
+* **[APP-UNG6] Upload note graphical without problems**
+
+####  GET api/v1/appoitments/downloadNoteGraphical/{serial_id}
+
+##### Objectif
+
+Récupérer une note graphique stockée dans le serveur.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer une note graphique en base64 grâce à son identifiant de série.
+
+##### Flow chart
+
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDownloadNoteGraphical.png)
+
+##### Tests unitaires
+
+* **[APP-DNG1] Download note graphical with a user api token**
+* **[APP-DNG2] Download non-existant note graphical**
+* **[APP-DNG3] Download note graphical without problems**
+
 ## PWA
 
 ### Arborescence

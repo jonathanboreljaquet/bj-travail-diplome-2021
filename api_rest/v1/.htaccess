@@ -10,4 +10,5 @@ RewriteRule ^public/weeklySchedules/([0-9a-zA-Z_-]*)$ public/weeklySchedules/ind
 RewriteRule ^public/scheduleOverrides/([0-9a-zA-Z_-]*)$ public/scheduleOverrides/index.php/$1 [NC,L]
 RewriteRule ^public/timeSlots/([0-9a-zA-Z_-]*)$ public/timeSlots/index.php/$1 [NC,L]
 RewriteRule ^public/appoitments/([0-9a-zA-Z_-]*)$ public/appoitments/index.php/$1 [NC,L]
+RewriteRule ^public/appoitments/downloadNoteGraphical/([0-9a-zA-Z_-]*)$ public/appoitments/downloadNoteGraphical/index.php/$1 [NC,L]
 RewriteRule ^public/plannings/([0-9a-zA-Z_-]*)$ public/plannings/index.php/$1 [NC,L]

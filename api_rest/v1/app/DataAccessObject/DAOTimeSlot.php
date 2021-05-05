@@ -338,6 +338,8 @@ class DAOTimeSlot {
         AND (SELECT COUNT(*)
         FROM appoitment AS ap
         WHERE ap.user_id_educator = :ID_EDUCATOR
+        AND datetime_deletion IS NULL
+        AND user_id_deletion IS NULL
         AND DATE(ap.datetime_appoitment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
         AND TIME(ap.datetime_appoitment) = ts.time_start
         AND TIME(ADDTIME(ap.datetime_appoitment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
@@ -395,8 +397,8 @@ class DAOTimeSlot {
         AND (SELECT COUNT(*)
         FROM appoitment AS ap
         WHERE ap.user_id_educator = :ID_EDUCATOR
-        AND appoitment.user_id_deletion IS NULL
-        AND appoitment.datetime_deletion IS NULL
+        AND ap.user_id_deletion IS NULL
+        AND ap.datetime_deletion IS NULL
         AND DATE(ap.datetime_appoitment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
         AND TIME(ap.datetime_appoitment) = ts.time_start
         AND TIME(ADDTIME(ap.datetime_appoitment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0

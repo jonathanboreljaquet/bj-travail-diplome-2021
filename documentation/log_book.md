@@ -1201,7 +1201,7 @@ Entre ce week-end et aujourd'hui, j'ai travaillé sur la modification des endpoi
 
 Réflexion par rapport aux endpoints de la gestion des rendez-vous. En effet, la création de rendez-vous devra être également possible par des utilisateurs non administrateur (client). Un rendez-vous contient différentes informations. Les premières informations qui sont très importantes sont les données temporel d'un rendez-vous. Ces données pourront être créé autant par un administrateur que par un client. Tandis que la modification d'un rendez-vous pour lui ajouter un résumé ou des notes textuels ou des notes graphiques devra être possible que par l'éducateur canin. J'en déduis donc que le création d'un rendez-vous donc le endpoint `POST api/v1/appoitments` sera accessible par un éducateur canin ou un client tandis que l'endpoint `PATCH api/v1/appoitments` lui, sera accessible uniquement par un administrateur. 
 
-Rendez-vous GMeet hebdomadaire avec M. Mathieu, nous avons discuté du résultat de l'évaluation intermédiaire numéro 1. M. Mathieu m'a dit que j'étais dans l'ensemble sur la bonne lancé. Nous avons également discuté du frontend de mon application car j'approche de la fin de mon API REST. M. Mathieu m'a demandé de dessiner mes vues sur papier afin d'en discuter vendredi. Pour finir, M. Mathieu m'a également conseillé d'utilisé la fonction proposé par PHP `checkdate` pour valider mes différentes données de date.
+Rendez-vous GMeet hebdomadaire avec M. Mathieu, nous avons discuté du résultat de l'évaluation intermédiaire numéro 1. M. Mathieu m'a dit que j'étais dans l'ensemble sur la bonne lancé. Nous avons également discuté du frontend de mon application car j'approche de la fin de mon API REST. M. Mathieu m'a demandé de dessiner mes vues sur papier afin d'en discuter le vendredi 07 mai 2021. Pour finir, M. Mathieu m'a également conseillé d'utilisé la fonction proposé par PHP `checkdate` pour valider mes différentes données de date.
 
 Développement des endpoints suivants :
 
@@ -1215,3 +1215,16 @@ Développement des endpoints suivants :
 Il reste encore à rajouter l'endpoint d'upload de note graphique, l'endpoint de récupération de planning et à documenter tout les endpoints Appoitment et l'API REST aura une très bonne base. Je vais pouvoir donc commencer à me concentrer sur le frontend de mon application.
 
 ### Mercredi 05 mai 2021
+
+Réalisation des derniers endpoints de l'API REST :
+
+* `POST api/v1/appoitments/uploadNoteGraphical` pour uploadé sur le serveur une note graphique pour un rendez-vous spécifique. L'endpoint est accessible uniquement par les administrateurs.
+* `GET api/v1/appoitments/downloadNoteGraphical/{serial_id}` pour download une note graphique disponible sur le serveur grâce à son identifiant de série. L'endpoint est accessible uniquement par les administrateurs.
+* `GET api/v1/plannings/{idEducator}` pour récupérer le planning d'un éducateur canin spécifique grâce à son identifiant. Le planning contient les dates et heures de rendez-vous libre pour un éducateur canin. L'endpoint est accessible par n'importe quel type d'utilisateur.
+
+Réalisation de le documentation technique des endpoints développés hier et aujourd'hui.
+
+Début de recherche d'une librairie javascript permettant l'affichage des différentes dates de mon application. Cette libraire doit permettre un affichage responsive de calendrier afin de respecter les conditions d'une PWA. [Source intéressante](https://www.jqueryscript.net/blog/best-event-calendar-plugins.html) 
+
+Début de la réalisation du poster. Le rendu du poster est prévu pour le 14 mai 2021.
+

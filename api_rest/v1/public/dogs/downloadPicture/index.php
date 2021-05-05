@@ -2,7 +2,7 @@
 /**
  * index.php
  *
- * File being the front controller of the API and allowing to process upload dog picture.
+ * File being the front controller of the API and allowing to process download dog picture.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */

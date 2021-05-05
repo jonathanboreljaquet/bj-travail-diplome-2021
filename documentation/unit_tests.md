@@ -2278,6 +2278,377 @@ pm.test("Right code for successful updated ressource", function () {
 });
 ```
 
+**[APP-CO1] Create one appoitment with unauthorized user**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[APP-CO2] Create one appoitment without datetime_appoitment**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without datetime_appoitment", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[APP-CO3] Create one appoitment without duration_in_hour**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without duration_in_hour", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[APP-C04] Create one appoitment without user_id_customer**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without user_id_customer", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[APP-C05] Create one appoitment without user_id_educator**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without user_id_educator", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[APP-C06] Create one appoitment for non-existent customer user**
+
+```javascript
+pm.test("User not found", function () {
+    pm.response.to.have.status(404);
+});
+
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[APP-C07] Create one appoitment for non-existent educator user**
+
+```javascript
+pm.test("User not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[APP-CO8] Create one appoitment with invalid datetime_appoitment format (dateAndTimeTestData.csv)**
+
+```javascript
+pm.test("Right code for invalid datetime_appoitment format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid datetime_appoitment format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD HH:MM:SS).");
+});
+```
+
+**[APP-CO9] Create one appoitment for invalid appoitment slot**
+
+```javascript
+pm.test("Right code for invalid datetime_appoitment format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid datetime_appoitment format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Impossible de prendre ce rendez-vous.");
+});
+```
+
+**[APP-CO10] Create one appoitment without problems**
+
+```javascript
+pm.test("Right code for successful created ressource", function () {
+    pm.response.to.have.status(201);
+});
+```
+
+**[APP-GA1] Get all appoitments with unauthorized user**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[APP-GA2] Get right appoitments for customer or educator**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+      "type": "array",
+      "items": [{
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "datetime_appoitment" : {"type" : "string"},
+              "duration_in_hour" : {"type" : "integer"},
+              "note_text" : {"type" : "null"},
+              "note_graphical_serial_id" : {"type" : "null"},
+              "summary" : {"type" : ["string","null"]},
+              "user_id_customer" : {"type" : "integer"},
+              "user_id_educator" : {"type" : "integer"}
+          },
+          "required": ["id","datetime_appoitment","duration_in_hour","note_text","note_graphical_serial_id","summary","user_id_customer","user_id_educator"]
+      }]
+  })
+});
+```
+
+**[APP-GA3] Get right appoitments for educator**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+      "type": "array",
+      "items": [{
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "datetime_appoitment" : {"type" : "string"},
+              "duration_in_hour" : {"type" : "integer"},
+              "note_text" : {"type" : ["string","null"]},
+              "note_graphical_serial_id" : {"type" : ["string","null"]},
+              "summary" : {"type" : ["string","null"]},
+              "user_id_customer" : {"type" : "integer"},
+              "user_id_educator" : {"type" : "integer"}
+          },
+          "required": ["id","datetime_appoitment","duration_in_hour","note_text","note_graphical_serial_id","summary","user_id_customer","user_id_educator"]
+      }]
+  })
+});
+```
+
+**[APP-UO1] Update one appoitment with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[APP-UO2] Update one non-existent appoitment**
+
+```javascript
+pm.test("Appoitment not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[APP-UO3] Update one appoitment without problems**
+
+```javascript
+pm.test("Right code for successful updated ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[APP-DO1] Delete one appoitment with unauthorized user**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[APP-DO2] Delete one non-existent appoitment**
+
+```javascript
+pm.test("Appoitment not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[APP-DO3] Delete one appoitment with unauthorized customer or educator**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+**[APP-DO4] Delete one appoitment without problems**
+
+```javascript
+pm.test("Right code for successful updated ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[APP-UNG1] Upload note graphical with a user api token**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+
+```
+
+**[APP-UNG2] Upload note graphical without note_graphical**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without dog_picture", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[APP-UNG3] Upload note graphical without appoitment_id**
+
+```javascript
+pm.test("Right code for invalid attributes", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for request without dog_id", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Attributs invalides.");
+});
+```
+
+**[APP-UNG4] Upload note graphical for non-existant appoitment**
+
+```javascript
+pm.test("Appoitment not found", function () {
+    pm.response.to.have.status(404);
+});
+
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[APP-UNG5] Upload note graphical with invalid image format**
+
+```javascript
+pm.test("Right code for invalid image file format", function () {
+    pm.response.to.have.status(415);
+});
+pm.test("Right message for invalid image file format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format d'image par pris en charge.");
+});
+```
+
+**[APP-DNG1] Download note graphical with a user api token**
+
+```javascript
+pm.test("Right code for successful uploaded ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[APP-DNG2] Download non-existant note graphical**
+
+```javascript
+pm.test("Right code for successful uploaded ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+**[APP-DNG3] Download note graphical without problems**
+
+```javascript
+pm.test("Right code for successful uploaded ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
+
+
 **Contenu du fichier dateAndTimeTestData.csv**
 
 | date        | time      |

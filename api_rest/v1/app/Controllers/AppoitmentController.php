@@ -62,7 +62,7 @@ class AppoitmentController {
             $allAppoitments = $this->DAOAppoitment->findAll(null,$userAuth->id);
         }
         else{
-            $allAppoitments = $this->DAOAppoitment->findAll($userAuth->id,null);
+            $allAppoitments = $this->DAOAppoitment->findByUserIdForCustomer($userAuth->id);
         }
         
         return ResponseController::successfulRequest($allAppoitments);   
@@ -251,12 +251,16 @@ class AppoitmentController {
             return ResponseController::notFoundResponse();
         }
 
+        if ($_FILES["note_graphical"]["type"] != Constants::IMAGE_TYPE_PNG) {
+            return ResponseController::imageFileFormatProblem();
+        }
+
         $tmp_file = $_FILES["note_graphical"]["tmp_name"];
         $img_name = HelperController::generateRandomString();
         $upload_dir = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$img_name.".png";
 
-        if (!is_null($appoitment->picture_serial_id)) {
-            $filename = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$appoitment->picture_serial_id.".jpeg";
+        if (!is_null($appoitment->note_graphical_serial_id)) {
+            $filename = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$appoitment->note_graphical_serial_id.".png";
             if (file_exists($filename)) {
                 unlink($filename);
             }
@@ -271,6 +275,36 @@ class AppoitmentController {
         $this->DAOAppoitment->update($appoitment);
         
         return ResponseController::successfulRequest();
+    }
+
+    /**
+     * 
+     * Method to download a graphical note.
+     * 
+     * @param string  $serial_id The serial_id of the graphical note
+     * @return string The status and the body in JSON format of the response
+     */
+    public function downloadNoteGraphical(string $serial_id)
+    {
+        $headers = apache_request_headers();
+
+        if (!isset($headers['Authorization'])) {
+            return ResponseController::notFoundAuthorizationHeader();
+        }
+
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
+
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
+            return ResponseController::unauthorizedUser();
+        }
+
+        if(is_null($this->DAOAppoitment->findBySerialId($serial_id))){
+            return ResponseController::notFoundResponse();
+        }
+
+        $image = file_get_contents(HelperController::getDefaultDirectory()."storage/app/graphical_note/".$serial_id.".png");
+        
+        return ResponseController::successfulRequestWithoutJson('data:image/png;base64, '.base64_encode($image));
     }
 
      /**

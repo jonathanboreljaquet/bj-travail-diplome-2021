@@ -274,7 +274,7 @@ class DogController {
      */
     public function downloadDogPicture(string $serial_id)
     {
-        if(!$this->DAODog->findBySerialId($serial_id)){
+        if(is_null($this->DAODog->findBySerialId($serial_id))){
             return ResponseController::notFoundResponse();
         }
 

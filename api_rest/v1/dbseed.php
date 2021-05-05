@@ -49,7 +49,7 @@ $appoitmentStatement = "
 INSERT INTO `api-rest_douceur-de-chien`.`appoitment`
     (id, datetime_appoitment, duration_in_hour, note_text, note_graphical_serial_id,summary,datetime_deletion,user_id_customer,user_id_educator,user_id_deletion)
 VALUES
-    (1, '2020-04-02 09:00:00',2, null, null, null, null, 4, 1, null),
+    (1, '2020-04-02 09:00:00',2, null, 'JQ5LD72g', null, null, 4, 1, null),
     (2, '2020-05-12 10:00:00',3 ,null, null, null, null, 5, 2, null),
     (3, '2020-06-22 14:00:00',2 ,null, null, null, null, 6, 3, null)";
 
