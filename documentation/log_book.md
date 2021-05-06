@@ -1232,3 +1232,20 @@ Recherche d'une librairie javascript permettant l'affichage des différentes dat
 
 Début de la réalisation du poster pour son rendu prévu le 14 mai 2021.
 
+### Jeudi 06 mai 2021
+
+Réalisation des maquettes papier crayon de la PWA. Les maquettes réalisées jusque là sont les interfaces des invités et des clients connectés.
+
+![dateTestPlanningSecondUser](./maquette/accueil.jpeg)![dateTestPlanningSecondUser](./maquette/aPropos.jpeg)![dateTestPlanningSecondUser](./maquette/agenda.jpeg)![dateTestPlanningSecondUser](./maquette/popUpConnexion.jpeg)![dateTestPlanningSecondUser](./maquette/popUpInscription.jpeg)![dateTestPlanningSecondUser](./maquette/informationsClient.jpeg)![dateTestPlanningSecondUser](./maquette/rendezVousClient.jpeg)
+
+Réalisation d'un POC pour l'utilisation d'une librairie permettant l'affichage d'un calendrier responsive avec FullCalendar. Pour palier au problème affichage d'un calendrier par mois sur mobile, j'ai décider d'essayer d'afficher un calendrier par jour uniquement. Je compte demander l'avis de M. Mathieu lors de notre rendez-vous hebdomadaire demain. 
+Le résultat ressemble à ca :  
+
+Grand écran (Navigateur PC) :
+
+![dateTestPlanningSecondUser](./maquette/calendarMonth.png)
+
+Petit écran (Mobile) :
+
+![dateTestPlanningSecondUser](./maquette/calendarday.png)
+

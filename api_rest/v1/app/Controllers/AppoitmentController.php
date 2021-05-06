@@ -62,7 +62,7 @@ class AppoitmentController {
             $allAppoitments = $this->DAOAppoitment->findAll(null,$userAuth->id);
         }
         else{
-            $allAppoitments = $this->DAOAppoitment->findByUserIdForCustomer($userAuth->id);
+            $allAppoitments = $this->DAOAppoitment->findByUserId($userAuth->id);
         }
         
         return ResponseController::successfulRequest($allAppoitments);   
