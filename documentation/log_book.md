@@ -1246,11 +1246,11 @@ Le résultat ressemble à ca :
 
 Grand écran (Navigateur PC) :
 
-![dateTestPlanningSecondUser](./maquette/calendarMonth.png)
+![dateTestPlanningSecondUser](./maquette/calendarMonth.PNG)
 
 Petit écran (Mobile) :
 
-![dateTestPlanningSecondUser](./maquette/calendarday.png)
+![dateTestPlanningSecondUser](./maquette/calendarday.PNG)
 
 ### Vendredi 06 mai 2021
 
