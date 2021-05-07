@@ -1259,7 +1259,7 @@ Réalisation de maquette :![dateTestPlanningSecondUser](./maquette/rendezvousCli
 
 ![dateTestPlanningSecondUser](./maquette/administrateurAdmin.jpeg)
 
-![dateTestPlanningSecondUser](./maquette/rendezvousClient.jpeg)
+![dateTestPlanningSecondUser](./maquette/rendezVousClient.jpeg)
 
 Discussion hebdomadaire avec M. Mathieu, nous avons discuté des maquettes papiers crayon que j'avais réalisé au préalable. Les commentaires importants de M. Mathieu ont été :
 
