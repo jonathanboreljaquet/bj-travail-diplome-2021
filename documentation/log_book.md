@@ -779,7 +779,7 @@ Création de la Class Constants dans le fichier `app/system/Constants.php` perme
 
 Création des tests unitaires des endpoints du modèle User :
 
-![unitsTestsTimeSlot](.\logbook\unitsTestsUser.PNG)
+![unitsTestsTimeSlot](.\logbook\unitsTestsUser.png)
 
 Développement du modèle User et du contrôleur UserController permettant un CRUD nécessitant les droits administrateurs.
 
