@@ -779,9 +779,6 @@ Création de la Class Constants dans le fichier `app/system/Constants.php` perme
 
 Création des tests unitaires des endpoints du modèle User :
 
-<<<<<<< Updated upstream
-![unitsTestsTimeSlot](.\logbook\unitsTestsUser.png)
-=======
 ![unitsTestsTimeSlot](./logbook/unitsTestsUser.PNG)
 
 Développement du modèle User et du contrôleur UserController permettant un CRUD nécessitant les droits administrateurs.
@@ -1250,7 +1247,7 @@ Grand écran (Navigateur PC) :
 
 Petit écran (Mobile) :
 
-![dateTestPlanningSecondUser](./maquette/calendarday.PNG)
+![dateTestPlanningSecondUser](./maquette/calendarDay.PNG)
 
 ### Vendredi 06 mai 2021
 
