@@ -10,6 +10,8 @@ Pour la réalisation de ce POC, Monsieur Mathieu et moi-même avons convenu de r
 
 C'est-à-dire, les tables suivantes :
 
+
+
 ![dbdiagram_poc](./logbook/dbdiagram_poc.png)
 
 L'objectif est de permettre à l'éducateur canin de créer ses différents créneaux horaires. Ces créneaux horaires (time_slot) pourront être réguliers pour une certaine distance (weekly_schedule) ou unique pour un jour (schedule_override). De plus, l'éducateur canin pourra spécifier des distances de vacances (absences) qui devront rendre indisponibles tous les créneaux horaires les incluant, le tout en gérant les différents problèmes de chevauchement que la création de planning pourra entraîner.
@@ -1251,7 +1253,13 @@ Petit écran (Mobile) :
 
 ### Vendredi 06 mai 2021
 
+Réalisation de maquette :![dateTestPlanningSecondUser](./maquette/rendezvousClientAdmin.jpeg)
 
+![dateTestPlanningSecondUser](./maquette/editionClientAdmin.jpeg)
+
+![dateTestPlanningSecondUser](./maquette/administrateurAdmin.jpeg)
+
+![dateTestPlanningSecondUser](./maquette/rendezvousClient.jpeg)
 
 Discussion hebdomadaire avec M. Mathieu, nous avons discuté des maquettes papiers crayon que j'avais réalisé au préalable. Les commentaires importants de M. Mathieu ont été :
 
@@ -1261,3 +1269,5 @@ Discussion hebdomadaire avec M. Mathieu, nous avons discuté des maquettes papie
 * Réaliser le frontend de mon travail de diplôme uniquement en HTML, CSS et JavaScript est totalement envisageable.
 * Commencer par bien réaliser les interfaces clientes car le but de l'application et d'attirer et satisfaire un maximum de client.
 
+Réalisation du persona dans le rapport.
+Modification du readme du travail de diplôme.
