@@ -783,7 +783,6 @@ Création des tests unitaires des endpoints du modèle User :
 ![unitsTestsTimeSlot](.\logbook\unitsTestsUser.png)
 =======
 ![unitsTestsTimeSlot](./logbook/unitsTestsUser.PNG)
->>>>>>> Stashed changes
 
 Développement du modèle User et du contrôleur UserController permettant un CRUD nécessitant les droits administrateurs.
 
