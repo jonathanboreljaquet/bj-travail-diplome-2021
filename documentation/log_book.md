@@ -1124,7 +1124,7 @@ Réalisation du début de la documentation technique afin de documenter les prem
   * Endpoints
     * Description de chaque endpoints de l'API REST. Chaque endpoint contient :
       * L'objectif de son existence
-      * L'utilisation concrète de celui-ci avec ces données de body lorsque l'endpoint est de type POST 
+      * L'utilisation concrète de celui-ci avec ses données de body lorsque l'endpoint est de type POST 
       * Un use case lorsqu'un endpoint est difficilement compréhensible
       * Flow chart représentant le déroulement de traitement de l'endpoint
       * Les tests unitaires développés pour l'endpoint
@@ -1155,15 +1155,15 @@ Exemple de `serial_id` : u0NKD3uP
 
 Rendez-vous physique hebdomadaire avec M. Mathieu. Aujourd'hui, nous avons discuté de l'évaluation intermédiaire à rendre le jour même à 16h10. M. Mathieu m'a surtout demandé de réaliser le squelette de mon rapport et de ma documentation technique. M. Mathieu en a profité pour également me faire des remarques sur le code et la documentation de mon API REST. Les remarques qui ont été faites :
 
-* Création du squelette du rapport et de la documentation technique
+* La création du squelette du rapport et de la documentation technique
 * Les méthodes de recherche de mes DAO avec comme début de nom : `FindWith`. M. Mathieu m'a conseillé de les modifier en `FindBy`
-*  Le code des tests unitaires Postman réalisés pour mon API REST se trouvaient dans ma documentation technique. M. Mathieu m'a conseillé de les mettre dans un document annexe et d'uniquement les référencer dans le document technique.
+*  Le code des tests unitaires Postman réalisés pour mon API REST se trouvaient dans ma documentation technique. M. Mathieu m'a conseillé de les mettre dans un document annexe et uniquement les référencer dans le document technique
 
-Documentation des endpoints document dans la documentation technique.
+Documentation des endpoints dans la documentation technique.
 
 ### Lundi 03 mai 2021
 
-Rendu de l'évaluation intermédiaire numéro 1. Dans l'ensemble, M. Mathieu est plutôt satisfait du travail fournit. Toutefois, il me conseille de travailler de manière plus légère pour ne pas me démotiver afin d'être constant jusqu'à la fin du travail de diplôme. En effet, afin de rattraper le problème de structure de l'API REST qui est apparue à la fin de la première semaine, j'ai travaillé sur mon projet à mes heures perdus.
+Rendu de l'évaluation intermédiaire numéro 1. Dans l'ensemble, M. Mathieu est plutôt satisfait du travail fourni. Toutefois, il me conseille de travailler de manière plus légère pour ne pas me démotiver afin d'être constant jusqu'à la fin du travail de diplôme. En effet, afin de rattraper le problème de structure de l'API REST qui est apparu à la fin de la première semaine, j'ai travaillé sur mon projet à mes heures perdues.
 
 Entre ce week-end et aujourd'hui, j'ai travaillé sur la modification des endpoints Absence,WeeklySchedule, ScheduleOverride en respectant la nouvelle structure objet de l'API REST ainsi que leurs documentations techniques.  Les endpoints documentés et retravaillés sont : 
 
@@ -1176,7 +1176,7 @@ Entre ce week-end et aujourd'hui, j'ai travaillé sur la modification des endpoi
 
 
 * `POST api/v1/weeklySchedules` pour créer un nouveau calendrier hebdomadaire. Endpoint accessible uniquement par les administrateurs.
-* `GET api/v1/weeklySchedules` pour retourner les informations de tout les calendriers hebdomadaires. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/weeklySchedules` pour retourner les informations de tous les calendriers hebdomadaires. Endpoint accessible uniquement par les administrateurs.
 * `GET api/v1/weeklySchedules/{idWeeklySchedules}` pour retourner les informations d'un calendrier hebdomadaire.  Endpoint accessible uniquement par les administrateurs.
 * `PATCH api/v1/weeklySchedules/{idWeeklySchedules}` pour modifier les informations d'un calendrier hebdomadaire. Endpoint accessible uniquement par les administrateurs.
 * `DELETE api/v1/weeklySchedules/{idWeeklySchedules}` pour supprimer un calendrier hebdomadaire.  Endpoint accessible uniquement par les administrateurs.
@@ -1191,44 +1191,44 @@ Entre ce week-end et aujourd'hui, j'ai travaillé sur la modification des endpoi
 
 
 
-* `POST api/v1/timeSlots` pour créer une nouveau créneau horaire. Endpoint accessible uniquement par les administrateurs.
-* `GET api/v1/timeSlots` pour retourner les informations de tout les créneaux horaires. Endpoint accessible uniquement par les administrateurs.
+* `POST api/v1/timeSlots` pour créer un nouveau créneau horaire. Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/timeSlots` pour retourner les informations de tous les créneaux horaires. Endpoint accessible uniquement par les administrateurs.
 * `GET api/v1/timeSlots/{idTimeSlot}` pour retourner les informations d'un créneau horaire.  Endpoint accessible uniquement par les administrateurs.
 * `PATCH api/v1/timeSlots/{idTimeSlot}` pour modifier les informations d'un créneau horaire. Endpoint accessible uniquement par les administrateurs.
 * `DELETE api/v1/timeSlots/{idTimeSlot}` pour supprimer un créneau horaire.  Endpoint accessible uniquement par les administrateurs.
 
 ### Mardi 04 mai 2021
 
-Réflexion par rapport aux endpoints de la gestion des rendez-vous. En effet, la création de rendez-vous devra être également possible par des utilisateurs non administrateur (client). Un rendez-vous contient différentes informations. Les premières informations qui sont très importantes sont les données temporel d'un rendez-vous. Ces données pourront être créé autant par un administrateur que par un client. Tandis que la modification d'un rendez-vous pour lui ajouter un résumé ou des notes textuels ou des notes graphiques devra être possible que par l'éducateur canin. J'en déduis donc que le création d'un rendez-vous donc le endpoint `POST api/v1/appoitments` sera accessible par un éducateur canin ou un client tandis que l'endpoint `PATCH api/v1/appoitments` lui, sera accessible uniquement par un administrateur. 
+Réflexion par rapport aux endpoints de la gestion des rendez-vous. En effet, la création de rendez-vous devra être également possible par des utilisateurs non administrateurs (client). Un rendez-vous contient différentes informations. Les premières informations qui sont très importantes sont les données temporelles d'un rendez-vous. Ces données pourront être créés autant par un administrateur que par un client. Tandis que la modification d'un rendez-vous pour lui ajouter un résumé ou des notes textuelles ou des notes graphiques devra être possible que par l'éducateur canin. J'en déduis donc que le création d'un rendez-vous soit le endpoint `POST api/v1/appoitments` sera accessible par un éducateur canin ou un client tandis que l'endpoint `PATCH api/v1/appoitments` lui, sera accessible uniquement par un administrateur. 
 
-Rendez-vous GMeet hebdomadaire avec M. Mathieu, nous avons discuté du résultat de l'évaluation intermédiaire numéro 1. M. Mathieu m'a dit que j'étais dans l'ensemble sur la bonne lancé. Nous avons également discuté du frontend de mon application car j'approche de la fin de mon API REST. M. Mathieu m'a demandé de dessiner mes vues sur papier afin d'en discuter le vendredi 07 mai 2021. Pour finir, M. Mathieu m'a également conseillé d'utilisé la fonction proposé par PHP `checkdate` pour valider mes différentes données de date.
+Rendez-vous GMeet hebdomadaire avec M. Mathieu. Nous avons discuté du résultat de l'évaluation intermédiaire numéro 1. M. Mathieu m'a dit que j'étais dans l'ensemble sur la bonne lancée. Nous avons également discuté du frontend de mon application car j'approche de la fin de mon API REST. M. Mathieu m'a demandé de dessiner mes vues sur papier afin d'en discuter le vendredi 07 mai 2021. Pour finir, M. Mathieu m'a également conseillé d'utiliser la fonction proposée par PHP `checkdate` pour valider mes différentes données de date.
 
 Développement des endpoints suivants :
 
 * `POST api/v1/appoitments` pour créer un nouveau rendez-vous entre un éducateur canin et un client. Endpoint accessible uniquement par les administrateurs et les utilisateurs authentifiés.
-* `GET api/v1/appoitments` pour retourner les informations de tout les rendez-vous de l'utilisateur authentifié ou de l'éducateur canin authentifié. Endpoint accessible uniquement par les administrateurs et les utilisateurs authentifiés.
-* `GET api/v1/appoitments/{idAppoitment}` pour retourner les informations d'un rendez-vous spécifique.  Endpoint accessible uniquement par les administrateurs.
+* `GET api/v1/appoitments` pour retourner les informations de tous les rendez-vous de l'utilisateur authentifié ou de l'éducateur canin authentifié. Endpoint accessible uniquement par les administrateurs et les utilisateurs authentifiés.
+* `GET api/v1/appoitments/{idAppoitment}` pour retourner les informations d'un rendez-vous spécifique. Endpoint accessible uniquement par les administrateurs.
 * `PATCH api/v1/appoitments/{idAppoitment}` pour modifier les informations d'un rendez-vous, dans ce cas là, l'endpoint permet uniquement la modification des notes textuelles et résumé du rendez-vous. Endpoint accessible uniquement par les administrateurs.
-* `DELETE api/v1/appoitments/{idAppoitment}` pour supprimer un rendez-vous de manière non définitif.   Endpoint accessible uniquement par les administrateurs et les utilisateurs authentifiés.
-* `GET api/v1/users/educators` pour récupérer tout les éducateurs canin de l'application.  Endpoint accessible par n'importe quel type d'utilisateur.
+* `DELETE api/v1/appoitments/{idAppoitment}` pour supprimer un rendez-vous de manière non définitif.  Endpoint accessible uniquement par les administrateurs et les utilisateurs authentifiés.
+* `GET api/v1/users/educators` pour récupérer tous les éducateurs canins de l'application. Endpoint accessible par n'importe quel type d'utilisateur.
 
-Il reste encore à rajouter l'endpoint d'upload de note graphique, l'endpoint de récupération de planning et à documenter tout les endpoints Appoitment et l'API REST aura une très bonne base. Je vais pouvoir donc commencer à me concentrer sur le frontend de mon application.
+Il reste encore à rajouter l'endpoint d'upload de note graphique, l'endpoint de récupération de planning et à documenter tous les endpoints Appoitment et l'API REST aura une très bonne base. Je vais pouvoir donc commencer à me concentrer sur le frontend de mon application.
 
 ### Mercredi 05 mai 2021
 
 Réalisation des derniers endpoints de l'API REST :
 
-* `POST api/v1/appoitments/uploadNoteGraphical` pour uploadé sur le serveur une note graphique pour un rendez-vous spécifique. L'endpoint est accessible uniquement par les administrateurs.
+* `POST api/v1/appoitments/uploadNoteGraphical` pour uploader sur le serveur une note graphique pour un rendez-vous spécifique. L'endpoint est accessible uniquement par les administrateurs.
 * `GET api/v1/appoitments/downloadNoteGraphical/{serial_id}` pour download une note graphique disponible sur le serveur grâce à son identifiant de série. L'endpoint est accessible uniquement par les administrateurs.
-* `GET api/v1/plannings/{idEducator}` pour récupérer le planning d'un éducateur canin spécifique grâce à son identifiant. Le planning contient les dates et heures de rendez-vous libre pour un éducateur canin. L'endpoint est accessible par n'importe quel type d'utilisateur.
+* `GET api/v1/plannings/{idEducator}` pour récupérer le planning d'un éducateur canin spécifique grâce à son identifiant. Le planning contient les dates et heures de rendez-vous libres pour un éducateur canin. L'endpoint est accessible par n'importe quel type d'utilisateur.
 
-Réalisation de le documentation technique des endpoints développés hier et aujourd'hui.
+Réalisation de la documentation technique des endpoints développés hier et aujourd'hui.
 
 Modification du endpoint `DELETE api/v1/users/{idUser}` et des clefs étrangères des tables `dog` `document` `appoitment` afin qu'une suppression en cascade soit faite lors de la suppression d'un utilisateur. Dorénavant, lors de la suppression d'un utilisateur, ses chiens et leurs photos, ses documents et leur fichiers PDF, ses rendez-vous et leurs notes graphiques sont également supprimés. 
 
-Mise en production de l'API REST sur l'hébergement WEB infomaniak. Problème d'accès aux ressource vu que le point d'accès du site est le dossier `public`. A ma connaissance, Laravel permet de générer des liens symbolique vers le dossier `storage`, il faut que maintenant que je trouve l'alternative en PHP. 
+Mise en production de l'API REST sur l'hébergement WEB infomaniak. Problème d'accès aux ressources vues que le point d'accès du site est le dossier `public`. A ma connaissance, Laravel permet de générer des liens symboliques vers le dossier `storage`, il faut maintenant que je trouve l'alternative en PHP. 
 
-Recherche d'une librairie javascript permettant l'affichage des différentes dates de mon application. Cette libraire doit permettre un affichage responsive de calendrier afin de respecter les conditions d'une PWA. [Source intéressante](https://www.jqueryscript.net/blog/best-event-calendar-plugins.html) 
+Recherche d'une librairie javascript permettant l'affichage des différentes dates de mon application. Cette librairie doit permettre un affichage responsive de calendrier afin de respecter les conditions d'une PWA. [Source intéressante](https://www.jqueryscript.net/blog/best-event-calendar-plugins.html) 
 
 Début de la réalisation du poster pour son rendu prévu le 14 mai 2021.
 
@@ -1238,8 +1238,8 @@ Réalisation des maquettes papier crayon de la PWA. Les maquettes réalisées ju
 
 ![dateTestPlanningSecondUser](./maquette/accueil.jpeg)![dateTestPlanningSecondUser](./maquette/aPropos.jpeg)![dateTestPlanningSecondUser](./maquette/agenda.jpeg)![dateTestPlanningSecondUser](./maquette/popUpConnexion.jpeg)![dateTestPlanningSecondUser](./maquette/popUpInscription.jpeg)![dateTestPlanningSecondUser](./maquette/informationsClient.jpeg)![dateTestPlanningSecondUser](./maquette/rendezVousClient.jpeg)
 
-Réalisation d'un POC pour l'utilisation d'une librairie permettant l'affichage d'un calendrier responsive avec FullCalendar. Pour palier au problème affichage d'un calendrier par mois sur mobile, j'ai décider d'essayer d'afficher un calendrier par jour uniquement. Je compte demander l'avis de M. Mathieu lors de notre rendez-vous hebdomadaire demain. 
-Le résultat ressemble à ca :  
+Réalisation d'un POC pour l'utilisation d'une librairie permettant l'affichage d'un calendrier responsive avec FullCalendar. Pour palier au problème affichage d'un calendrier par mois sur mobile, j'ai décidé d'essayer d'afficher un calendrier par jour uniquement. Je compte demander l'avis de M. Mathieu lors de notre rendez-vous hebdomadaire demain. 
+Le résultat ressemble à ça :  
 
 Grand écran (Navigateur PC) :
 

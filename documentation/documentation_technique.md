@@ -791,7 +791,7 @@ Créer une donnée de vacance pour l'éducateur canin authentifié dans la base 
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter une donnée de vacance, cette donnée aura une date de début,une date de fin ainsi qu'une description. Les vacances permettront de spécifier une distance temporelle ou l'éducateur canin l'ayant créé ne travaillera pas. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet d'ajouter une donnée de vacance, cette donnée aura une date de début, une date de fin ainsi qu'une description. Les vacances permettront de spécifier une distance temporelle où l'éducateur canin l'ayant créé ne travaillera pas. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
 | Clef              | Définition                      | Obligatoire | Format                                                       |
@@ -818,7 +818,7 @@ Body de la requête :
 
 ##### Objectif
 
-Récupérer tous les données de vacances de l'utilisateur authentifié de la base de données.
+Récupérer toutes les données de vacances de l'utilisateur authentifié de la base de données.
 
 ##### Utilisation concrète
 
@@ -911,7 +911,7 @@ Créer un calendrier hebdomadaire pour l'utilisateur authentifié dans la base d
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter un calendrier hebdomadaire de l'éducateur canin authentifié, ce calendrier hebdomadaire doit avoir une date de début mais peut avoir une date de fin. C'est à dire qu'un calendrier hebdomadaire sans date de fin est un calendrier hebdomadaire permanant, de ce fait, il peux y avoir qu'un seul calendrier permanant existant. Les calendriers hebdomadaires permettront de de créer des créneaux horaires hebdomadaires sur une certaine durée. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet d'ajouter un calendrier hebdomadaire de l'éducateur canin authentifié. Ce calendrier hebdomadaire doit avoir une date de début mais peut avoir une date de fin. C'est-à-dire qu'un calendrier hebdomadaire sans date de fin est un calendrier hebdomadaire permanant. De ce fait, il peut y avoir qu'un seul calendrier permanant existant. Les calendriers hebdomadaires permettront de créer des créneaux horaires hebdomadaires sur une certaine durée. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
 | Clef            | Définition                                  | Obligatoire | Format                                                       |
@@ -1032,7 +1032,7 @@ Créer une exception d'horaire de l'utilisateur authentifié dans la base de don
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter une exception d'horaire de l'éducateur canin authentifié, cette exception horaire est une date unique. Les exceptions horaires permettront de de créer des créneaux horaires hebdomadaires sur un jour unique particulier. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet d'ajouter une exception d'horaire de l'éducateur canin authentifié, cette exception horaire est une date unique. Les exceptions horaires permettront de créer des créneaux horaires hebdomadaires sur un jour unique particulier. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
 | Clef                   | Définition                       | Obligatoire | Format                                                |
@@ -1145,7 +1145,7 @@ Créer un créneau horaire pour l'utilisateur authentifié dans la base de donn�
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter créneau horaire pour un calendrier hebdomadaire ou pour une exception d'horaire de l'éducateur canin authentifié, ce créneau horaire doit avoir une heure de début, une heure de fin et un code correspondant à la journée de la semaine désiré. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet d'ajouter un créneau horaire pour un calendrier hebdomadaire ou pour une exception d'horaire de l'éducateur canin authentifié. Ce créneau horaire doit avoir une heure de début, une heure de fin et un code correspondant à la journée de la semaine désirée. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
 | Clef                 | Définition                                    |            Obligatoire             | Format                                                       |
@@ -1182,11 +1182,11 @@ Body de la requête :
 
 ##### Objectif
 
-Récupérer tout les créneaux horaires de l'utilisateur authentifié de la base de données.
+Récupérer tous les créneaux horaires de l'utilisateur authentifié de la base de données.
 
 ##### Utilisation concrète
 
-Cet endpoint permet de récupérer tout les créneaux horaires existants de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet de récupérer tous les créneaux horaires existants de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
 ##### Flow chart
 
@@ -1278,13 +1278,13 @@ Créer un rendez-vous entre un utilisateur et un éducateur canin dans la base d
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter un rendez-vous entre un client et éducateur canin canin authentifié, la création de rendez-vous insère uniquement les données temporelles du rendez-vous. L'endpoint est accessible par les utilisateurs authentifiés.
+Cet endpoint permet d'ajouter un rendez-vous entre un client et l'éducateur canin authentifié, la création de rendez-vous insère uniquement les données temporelles du rendez-vous. L'endpoint est accessible par les utilisateurs authentifiés.
 Body de la requête :
 
 | Clef                | Définition                         | Obligatoire | Format                                                       |
 | ------------------- | ---------------------------------- | :---------: | ------------------------------------------------------------ |
 | datetime_appoitment | La date et l'heure du rendez-vous  |      X      | La date et l'heure doivent respecter le format  <br />(YYYY-MM-DD HH:MM:SS) |
-| duration_in_hour    | La durée du rendez en heure        |      X      |                                                              |
+| duration_in_hour    | La durée du rendez-vous en heure   |      X      |                                                              |
 | user_id_customer    | L'identifiant du client            |      X      |                                                              |
 | user_id_educator    | L'identifiant de l'éducateur canin |      X      |                                                              |
 
@@ -1309,7 +1309,7 @@ Body de la requête :
 
 ##### Objectif
 
-Récupérer tout les rendez-vous de l'utilisateur authentifié de la base de données.
+Récupérer tous les rendez-vous de l'utilisateur authentifié de la base de données.
 
 ##### Utilisation concrète
 
@@ -1353,7 +1353,7 @@ Modifier un rendez-vous de la base de données grâce à son identifiant.
 
 ##### Utilisation concrète
 
-Cet endpoint permet la modification des informations d'un rendez-vous. Il est impossible de modifier les informations temporelle d'un rendez-vous, uniquement les notes textuelles et le résumé peuvent l'être. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet la modification des informations d'un rendez-vous. Il est impossible de modifier les informations temporelles d'un rendez-vous, uniquement les notes textuelles et le résumé peuvent l'être. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
 | Clef      | Définition                          | Obligatoire | Format |
