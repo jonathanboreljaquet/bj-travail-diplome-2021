@@ -10,7 +10,9 @@ Pour la réalisation de ce POC, Monsieur Mathieu et moi-même avons convenu de r
 
 C'est-à-dire, les tables suivantes :
 
-![dbdiagram_poc](.\logbook\dbdiagram_poc.png)
+
+
+![dbdiagram_poc](./logbook/dbdiagram_poc.png)
 
 L'objectif est de permettre à l'éducateur canin de créer ses différents créneaux horaires. Ces créneaux horaires (time_slot) pourront être réguliers pour une certaine distance (weekly_schedule) ou unique pour un jour (schedule_override). De plus, l'éducateur canin pourra spécifier des distances de vacances (absences) qui devront rendre indisponibles tous les créneaux horaires les incluant, le tout en gérant les différents problèmes de chevauchement que la création de planning pourra entraîner.
 
@@ -18,23 +20,23 @@ Exemple de données de planning allant du 30 mars 2021 jusqu'au 30 avril 2021 :
 
 **weekly_schedule**
 
-![dbdiagram_poc](.\logbook\data_weekly_schedule.png)
+![dbdiagram_poc](./logbook/data_weekly_schedule.png)
 
 **schedule_override**
 
-![dbdiagram_poc](.\logbook\data_schedule_override.png)
+![dbdiagram_poc](./logbook/data_schedule_override.png)
 
 **time_slot**
 
-![dbdiagram_poc](.\logbook\data_time_slot.png)
+![dbdiagram_poc](./logbook/data_time_slot.png)
 
 **absence**
 
-![dbdiagram_poc](.\logbook\data_absence.png)
+![dbdiagram_poc](./logbook/data_absence.png)
 
 Croquis d'une représentation graphique du planning
 
-![dbdiagram_poc](.\logbook\graph_calendar.png)
+![dbdiagram_poc](./logbook/graph_calendar.png)
 
 L'objectif du POC sera de réaliser les différents endpoints de l'API afin de permettre à l'éducateur canin de réaliser son planning et de rendre possible la prise de rendez-vous avec celui-ci.
 
@@ -59,7 +61,7 @@ api-rest_douceur-de-chien
 Dossier contenant les Controllers de l'API qui permettent l'exécution des fonctions CRUD adéquate pour les endpoints.
 Exemple de Class Controller permettant les endpoints *users* ou *user/{id}* :
 
-![dbdiagram_poc](.\logbook\diagram_UserController.png)
+![dbdiagram_poc](./logbook/diagram_UserController.png)
 
 
 
@@ -68,14 +70,14 @@ Exemple de Class Controller permettant les endpoints *users* ou *user/{id}* :
 Dossier contenant les Models de l'API qui permettent le traitement SQL des données.
 Exemple de Class Model permettant de récupérer un utilisateur ou tous les utilisateurs :
 
-![dbdiagram_poc](.\logbook\diagram_UserModel.png)
+![dbdiagram_poc](./logbook/diagram_UserModel.png)
 
 **app/System**
 
 Dossier contenant les fichiers de système de l'API.
 Exemple de Class System permettant la connexion à la base de données :
 
-![dbdiagram_poc](.\logbook\diagram_DatabaseConnector.png)
+![dbdiagram_poc](./logbook/diagram_DatabaseConnector.png)
 
 **public**
 
@@ -237,7 +239,7 @@ Ajout de fonction dans le Controller WeeklyScheduleController :
   * Permet de créer un nouveau calendrier hebdomadaire en vérifiant les points suivants :
     * Attributs obligatoires spécifiés dans la requête (date_valid_from)
     * Format de date valide pour l'attribut date_valid_from et date_valid_to si défini
-    * Problème de chevauchement aves les autres dates de la base de données **( /!\ Vérifie pour l'instant uniquement les problèmes de chevauchements avec les deux attributs date_valid_from et date_valid_to définis /!\ )**
+    * Problème de chevauchement aves les autres dates de la base de données **( /!/ Vérifie pour l'instant uniquement les problèmes de chevauchements avec les deux attributs date_valid_from et date_valid_to définis /!/ )**
 * validateWeeklySchedule($input)
   * Contrôle si l'attribut date_valid_from est bien défini.
 * validateDateFormat($date)
@@ -254,7 +256,7 @@ Ajout et modification de fonction dans le Controller ResponseController :
 * invalidDateFormat()
   * Retourne le code 422 Unprocessable Entity ainsi que le message : *Format de date invalide => (DD-MM-YYYY).*
 * overlapProblem
-  * Retourne le code 422 Unprocessable Entity ainsi que le message : *Les dates chevauchent d\'autres dates déjà existantes.*
+  * Retourne le code 422 Unprocessable Entity ainsi que le message : *Les dates chevauchent d/'autres dates déjà existantes.*
 
 ### Jeudi 08 avril 2021
 
@@ -665,11 +667,11 @@ Ajout d'une vérification du format du code day lors de la création ou la modif
 
 * Création de la méthode `validateCodeDayFormat(string $code_day)`dans le HelperController permettant de vérifier si le code day est entre 1 inclus et 7 inclus.
 * Création de la méthode de réponse `invalidCodeDayFormat() `dans le ResponseController 
-  * La méthode renvoie le code erreur 400 Bad Request avec le message :  Format de jour invalide => (1 jusqu\'à 7, dimanche = 1).
+  * La méthode renvoie le code erreur 400 Bad Request avec le message :  Format de jour invalide => (1 jusqu/'à 7, dimanche = 1).
 
 Modification de la base de données afin de permettre la création, l'utilisation et la gestion de planning pour plusieurs éducateurs canins. Les 4 tables permettant ces fonctionnalités détiennent dorénavant un champs `id_educator` :
 
-![mcd_planning_modified](.\logbook\mcd_planning_modified.PNG)
+![mcd_planning_modified](./logbook/mcd_planning_modified.PNG)
 
 Modification de tous les modèles et contrôleurs concernés.
 
@@ -681,15 +683,15 @@ Modification du script dbseed.php. Dorénavant, en plus de la création des 10 u
 
 Premier éducateur canin :
 
-![dateTestPlanningFirstUser](.\logbook\dateTestPlanningFirstUser.png)
+![dateTestPlanningFirstUser](./logbook/dateTestPlanningFirstUser.png)
 
 Deuxième éducateur canin :
 
-![dateTestPlanningSecondUser](.\logbook\dateTestPlanningSecondUser.png)
+![dateTestPlanningSecondUser](./logbook/dateTestPlanningSecondUser.png)
 
 Troisième éducateur canin :
 
-![dateTestPlanningThirdUser](.\logbook\dateTestPlanningThirdUser.png)
+![dateTestPlanningThirdUser](./logbook/dateTestPlanningThirdUser.png)
 
 Documentation et recherche de la fonctionnalité de test proposée par Postman afin de tester mon API REST.
 
@@ -700,19 +702,19 @@ Création des tests unitaires avec l'outil Postman des différents endpoints dé
 
 Tests des endpoints du modèle Absence :
 
-![unitsTestsAbsence](.\logbook\unitsTestsAbsence.PNG)
+![unitsTestsAbsence](./logbook/unitsTestsAbsence.PNG)
 
 Tests des endpoints du modèle ScheduleOverride :
 
-![unitsTestsScheduleOverride](.\logbook\unitsTestsScheduleOverride.PNG)
+![unitsTestsScheduleOverride](./logbook/unitsTestsScheduleOverride.PNG)
 
 Tests des endpoints du modèle WeeklySchedule :
 
-![unitsTestsWeeklySchedule](.\logbook\unitsTestsWeeklySchedule.PNG)
+![unitsTestsWeeklySchedule](./logbook/unitsTestsWeeklySchedule.PNG)
 
 Tests des endpoints du modèle TimeSlot :
 
-![unitsTestsTimeSlot](.\logbook\unitsTestsTimeSlot.PNG)
+![unitsTestsTimeSlot](./logbook/unitsTestsTimeSlot.PNG)
 
 Pour tester la plupart des scénarios d'utilisations de mon API REST, j'ai rajouté dans le script dbseed.php d'autres données permettant de vérifier le maximum de scénarios d'utilisations possibles.
 
@@ -732,7 +734,7 @@ Début de la documentation théorique en format LaTeX en utilisant l'éditeur en
 
 Création des tests unitaires du endpoint permettant la récupération du planning final de l'éducateur canin authentifié.
 
-![unitsTestsTimeSlot](.\logbook\unitsTestsPlanning.PNG)
+![unitsTestsTimeSlot](./logbook/unitsTestsPlanning.PNG)
 
 Modification des commentaires des modèles de planning (Absence, ScheduleOverride, WeeklySchedule et TimeSlot) qui ne contenait pas le commentaire de paramètre `$idEducator` . 
 Modification de toutes les méthodes `findAll(bool $deleted,int $idEducator)` des modèles de planning afin de réaliser un bindparam sur le paramètre `$deleted`. 
@@ -779,7 +781,7 @@ Création de la Class Constants dans le fichier `app/system/Constants.php` perme
 
 Création des tests unitaires des endpoints du modèle User :
 
-![unitsTestsTimeSlot](.\logbook\unitsTestsUser.PNG)
+![unitsTestsTimeSlot](./logbook/unitsTestsUser.PNG)
 
 Développement du modèle User et du contrôleur UserController permettant un CRUD nécessitant les droits administrateurs.
 
@@ -796,21 +798,21 @@ Modification de toutes les méthodes update des différents contrôleurs déjà 
 Modification du script dbseed.php. Dorénavant, le script insère 3 chiens appartenant à un 1 utilisateur différent.
 Création des tests unitaires des endpoints du modèle Dog :
 
-![unitsTestsTimeSlot](.\logbook\unitsTestsDog.PNG)
+![unitsTestsTimeSlot](./logbook/unitsTestsDog.PNG)
 
 Modification de toutes les méthodes `find($id)` de l'API REST afin que celles-ci retournent uniquement un résultat objet et non un objet avec un tableau d'un élément. 
 
 Modification du script dbseed.php. Dorénavant, le script insère 3 documents appartenant à un 1 utilisateur différent.
 Création des tests unitaires des endpoints du modèle Document :
 
-![unitsTestsTimeSlot](.\logbook\unitsTestsDocument.PNG)
+![unitsTestsTimeSlot](./logbook/unitsTestsDocument.PNG)
 
 Développement du modèle Document et du contrôleur DocumentController permettant un CRUD nécessitant les droits administrateurs.
 
 Modification du script dbseed.php. Dorénavant, le script insère 3 rendez-vous appartenant entre un client et un éducateur canin.
 Création des tests unitaires des endpoints du modèle Appoitment :
 
-![unitsTestsTimeSlot](.\logbook\unitsTestsAppoitment.PNG)
+![unitsTestsTimeSlot](./logbook/unitsTestsAppoitment.PNG)
 
 Développement du modèle Appoitment et du contrôleur AppoitmentController permettant un CRUD nécessitant les droits administrateurs.
 
@@ -818,7 +820,7 @@ Maintenant que tous les endpoints de base de la partie clientèle ont été dév
 
 **Cas d'utilisation de l'API numéro 1 : Inscription et connexion de l'utilisateur autonome**
 
-![unitsTestsTimeSlot](.\diagram\UseCaseInscription.png)
+![unitsTestsTimeSlot](./diagram/UseCaseInscription.png)
 
 Modification du endpoint [POST] api/v1/users afin qu'il soit accessible pour les utilisateurs non-authentifiés. Lors de la création de fiche client via l'appel téléphonique, l'éducateur canin ne spécifiera pas le mot de passe de l'utilisateur. De ce fait, le endpoint devra permettre de générer un mot de passe automatique et de l'envoyer par e-mail au client afin qu'il puisse récupérer son api token grâce à ces identifiants.
 
@@ -1243,9 +1245,29 @@ Le résultat ressemble à ça :
 
 Grand écran (Navigateur PC) :
 
-![dateTestPlanningSecondUser](./maquette/calendarMonth.png)
+![dateTestPlanningSecondUser](./maquette/calendarMonth.PNG)
 
 Petit écran (Mobile) :
 
-![dateTestPlanningSecondUser](./maquette/calendarday.png)
+![dateTestPlanningSecondUser](./maquette/calendarDay.PNG)
 
+### Vendredi 06 mai 2021
+
+Réalisation de maquette :![dateTestPlanningSecondUser](./maquette/rendezvousClientAdmin.jpeg)
+
+![dateTestPlanningSecondUser](./maquette/editionClientAdmin.jpeg)
+
+![dateTestPlanningSecondUser](./maquette/administrateurAdmin.jpeg)
+
+![dateTestPlanningSecondUser](./maquette/rendezVousClient.jpeg)
+
+Discussion hebdomadaire avec M. Mathieu, nous avons discuté des maquettes papiers crayon que j'avais réalisé au préalable. Les commentaires importants de M. Mathieu ont été :
+
+* Réaliser un onglet "Mes documents" pour le client afin de lui retourner tout ses documents dans une liste.
+* L'affichage mobile du calendrier devrait montrer le mois courant et ensuite avoir la possibilité de cliquer sur le jour pour afficher une visualisation de journée réf (Petit écran Mobile de jeudi 05 mais 2021).
+* Essayer un maximum de réaliser la même interface de prise de rendez-vous que [agenda.ch](https://agenda.ch/) .
+* Réaliser le frontend de mon travail de diplôme uniquement en HTML, CSS et JavaScript est totalement envisageable.
+* Commencer par bien réaliser les interfaces clientes car le but de l'application et d'attirer et satisfaire un maximum de client.
+
+Réalisation du persona dans le rapport.
+Modification du readme du travail de diplôme.
