@@ -1289,3 +1289,51 @@ Réalisation des éléments suivant dans le rapport :
     * Visual studio code
       * Postman
       * HTML et CSS
+
+Suite à la discussion avec M. Mathieu le vendredi 07 mai 2021, nous avions convenu que réaliser le frontend de mon travail de diplôme HTML, CSS et JavaScript était suffisant. Toutefois et afin de sortir de ma zone de confort, je me suis lancé sur le développement de ma PWA avec le framework JavaScript [vue.js](https://vuejs.org/). Lors de notre discussion avec M. Mathieu, j'avais déjà omis l'idée d'utiliser vue.js. M. Mathieu m'a convaincu de pas le faire car l'élaboration d'un projet vue.js nécessiterait un hébergement Node.js . En effet, lors de notre rencontre, je connaissais que très peu l'interaction que vue.js avait avec node.js, je pensais que vue.js nécessitait l'exécution du javascript coté serveur avec node.js pour fonctionner. Ayant la tête dur et la motivation pour découvrir ce framework ce Week-end, je me suis lancé sur des recherches pour la possible élaboration d'un projet vue.js sans node.js. C'est alors que j'ai appris que vue.js n'avait rien à voir avec node.js. En effet, celui-ci permet l'utilisation de node.js lors de son développement mais en est en aucun cas dépendant. Afin de construire la mise en production d'un projet vue.js, il suffit d'exécuter la commande `npm run build` afin de compiler le projet en fichiers HTML, CSS et JavaScript et d'y placer sur son hébergement WEB. Tout cela n'étant que de la théorie, je me suis dis qu'un cas pratique afin d'être sûr que la mise en production ne posera pas de problème n'était pas une mauvaise idée. Et c'est exactement ce que j'ai réalisé aujourd'hui, en effet, j'ai créé un projet avec `vue-cli` (outil de développement proposé par vue.js et qui permet entre autre de créer des projets avec une structure de base), j'ai ajouté Bootstrap pour vue.js et j'ai commencé le développement de ma SPA (Single Page Application) avec la futur page d'accueil de l'application. Lors de ce développement je me suis documenté et j'ai utilisé :
+
+* Vue Router qui est le routeur officiel de vue.js et qui m'a permis de réaliser ma première navbar ainsi que les différentes redirections dans ma SPA
+* BootstrapVue qui m'a permis de réaliser les composants responsive de mon application
+* Des vue components qui m'ont permis de découper les différents éléments de mon application en composant
+
+Lors de cette journée de découverte, j'ai réalisé les composants suivant :
+
+* `App.vue`
+  * Composant racine de l'application, il permet de définir le modèle de la SPA
+* `Home.vue`
+  * Composant qui correspond à la page d'accueil de l'application
+* `About.vue`
+  * Composant qui correspond à la page "À propos" de l'application
+* `Navbar.vue`
+  *  Composant représentant la navbar de mon application
+* `LeftSectionContent.vue` et `RightSectionContent.vue`
+  * Composants qui permettent l'affichage de contenue d'une certaine manière
+* `Footer.vue`
+  * Composant représentant le pied de page de l'application
+* `PrivacyPolicy.vue`
+  * Composant qui correspond à la page "politique de confidentialité" de l'application
+
+Ces différents composants et librairies fonctionnent de la manière suivante :
+
+Le script `main.js` va : 
+
+* importer les différents fichiers et librairies permettant le bon fonctionnement de l'application
+* Importer le composant racine `App.vue` qui contient le modèle de la Single Page Application donc :
+  * La barre de navigation
+  * Le composant qui sera appelé par le routeur
+  * Le pied de page
+* Importer le composant routeur de l'application contenant les différentes routes de l'application.
+* Créer la vue avec le composant routeur et le composant racine de l'application
+
+Exemple :
+
+L'index de l'application va utiliser la route du composant `Home.vue` qui contient les deux composant `LeftSectionContent.vue` et `RightSectionContent.vue`. Donc va être afficher à l'écran : 
+
+1. Le composant `Navbar.vue` qui est présent sur chaque vue
+2. Le composant appelé par le routeur, donc `Home.vue` contenant les deux composants `LeftSectionContent.vue` et `RightSectionContent.vue`
+3. Le composant `Footer.vue` qui est présent sur chaque vue
+
+![dateTestPlanningSecondUser](./img/vuejs_home_exemple.PNG)
+
+Après avoir réalisé cette première vue avec vue.js, j'ai donc décider d'héberger le résultat afin de vérifier qu'aucun problème du au développement ne survienne.
+J'ai alors exécuté la commande `npm run build` qui à créé un dossier `dist` contenant tout les fichiers prêt pour la mise en production. J'ai ensuite uploadé ces fichiers sur mon serveur hébergé chez infomaniak. C'est alors que j'ai remarqué qu'il y avait aucun problème de déploiement si je procédais de cette façon. De ce fait, je compte me lancer dans le développement de ma PWA en créant une SPA avec le framework vue.js.  

@@ -6,12 +6,12 @@
         <b-img v-if="imageSource != null" id="circleImage" :src="imageSource" fluid  rounded="circle" alt="Circle image"></b-img>
       </b-col>
       <b-col class="text-content" cols="12" sm="6">
-        <h1>{{ textH1 }}</h1>
-        <h2>{{ textH2 }}</h2>
-        <p class="text-justify lead">{{ textParagraph }}</p>
+        <h1 class="font-weight-bold display-4">{{ textH1 }}</h1>
+        <h3 class="font-weight-bold">{{ textH3 }}</h3>
+        <p>{{ textParagraph }}</p>
         <h5>{{ textH5 }}</h5>
         <h6>{{ textH6 }}</h6>
-        <b-button id="button" pill v-if="textButton != null"> {{ textButton }}</b-button>
+        <b-button id="button" pill :to="routeBouton" v-if="textButton != null"> {{ textButton }}</b-button>
       </b-col>
     </b-row>
   </b-container>
@@ -21,7 +21,7 @@
 <script>
 
 export default {
-    props: ['textParagraph','textH1','textH2','textH5','textH6','textButton','imageSource'] ,
+    props: ['textParagraph','textH1','textH3','textH5','textH6','routeBouton','textButton','imageSource'] ,
     name: "RightSectionContent",
 };
 </script>
@@ -37,7 +37,8 @@ p{
 .content{
 background-color:#ffffff;
 padding-top: 20px;
-padding-bottom: 20px
+padding-bottom: 20px;
+color: #3ea3d8;
 }
 #button{
   background-color:#3ea3d8 ;
