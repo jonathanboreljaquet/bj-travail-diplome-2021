@@ -1,6 +1,7 @@
 api_rest/v1/.env
 api_rest/v1/vendor/*
-pwa/fontawesome/*
+pwa2/*
+pwa/node_modules/*
 
 api_rest/v1/storage/app/dog_picture/*
 !api_rest/v1/storage/app/dog_picture/fYPxlcOc.jpeg

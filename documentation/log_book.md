@@ -1251,7 +1251,7 @@ Petit écran (Mobile) :
 
 ![dateTestPlanningSecondUser](./maquette/calendarDay.PNG)
 
-### Vendredi 06 mai 2021
+### Vendredi 07 mai 2021
 
 Réalisation de maquette :![dateTestPlanningSecondUser](./maquette/rendezvousClientAdmin.jpeg)
 
@@ -1271,3 +1271,21 @@ Discussion hebdomadaire avec M. Mathieu, nous avons discuté des maquettes papie
 
 Réalisation du persona dans le rapport.
 Modification du readme du travail de diplôme.
+
+### Lundi 10 mai 2021
+
+Réalisation des éléments suivant dans le rapport :
+
+* Organisation
+  * Analyse concurentielle
+    * GESPET
+    * jegeremonbusiness
+  * Environnement de développement
+    * Laragon
+      * Serveur HTTP
+      * Serveur MySQL
+      * HeidiSQL
+      * PHP
+    * Visual studio code
+      * Postman
+      * HTML et CSS
