@@ -1333,7 +1333,131 @@ L'index de l'application va utiliser la route du composant `Home.vue` qui contie
 2. Le composant appelé par le routeur, donc `Home.vue` contenant les deux composants `LeftSectionContent.vue` et `RightSectionContent.vue`
 3. Le composant `Footer.vue` qui est présent sur chaque vue
 
-![dateTestPlanningSecondUser](./img/vuejs_home_exemple.PNG)
+![dateTestPlanningSecondUser](./img/vue_home_exemple.png)
 
 Après avoir réalisé cette première vue avec vue.js, j'ai donc décider d'héberger le résultat afin de vérifier qu'aucun problème du au développement ne survienne.
 J'ai alors exécuté la commande `npm run build` qui à créé un dossier `dist` contenant tout les fichiers prêt pour la mise en production. J'ai ensuite uploadé ces fichiers sur mon serveur hébergé chez infomaniak. C'est alors que j'ai remarqué qu'il y avait aucun problème de déploiement si je procédais de cette façon. De ce fait, je compte me lancer dans le développement de ma PWA en créant une SPA avec le framework vue.js.  
+
+### Mardi 11 mai 2021
+
+Réalisation du composant `Calendar.vue` qui représente la page Agenda de l'application. L'objectif de cette vue est de : 
+
+* Pouvoir choisir l'agenda de l'éducateur canin à visualiser
+* Visualiser les créneaux horaires libre de l'éducateur canin concerné dans un calendrier
+  * Calendrier qui affiche en premier lieu une vue mensuelle mais qui permet l'affichage d'une vue hebdomadaire ou journalière
+  * Créneaux horaires qui lors d'un clique sur eux même, redirige sur la vue journalière afin d'y afficher l'heure de début et de fin du rendez-vous.
+
+![dateTestPlanningSecondUser](./img/vue_calendar.PNG)
+
+Pour la réalisation de cette page, j'ai utilisé la librairie [FullCalendar](https://fullcalendar.io/). Pour ce faire, j'ai exécuté les commandes :
+
+* `npm install --save @fullcalendar/vue @fullcalendar/daygrid`
+* `npm i @fullcalendar/timegrid`
+
+Les composants vue sont divisé en 3 parties logiques :
+
+* La première partie est l'HTML du composant, il doit être réalisé entre les balises `<template>`
+* La deuxième partie est le JavaScript, il doit être réalisé entre les balises `<script>`
+* La troisième partie est le CSS, il doit être réalisé entres les balises `<style>`
+
+Dans le cas du composant `Calendar.vue` représentant la page "Agenda" et afin de réaliser l'agenda des éducateurs canin sous forme de calendrier, j'ai du ajouter dans mon composant les éléments suivants :
+
+Dans la partie HTML, j'ai ajouté une balise pour la création du composant FullCalendar en lui attribuant ses options grâce à l'abréviation de `v-bind` proposé par vue.js `:`.
+
+```html
+<template>
+    ... 
+    <FullCalendar ref="fullCalendar" :options="calendarOptions"/>
+    ... 
+</template>
+```
+
+En effet, il existe différentes instructions que vue.js met à disposition de ses utilisateurs, celles que j'ai utilisé jusqu'à là sont :
+
+* `v-bind` qui peut être abrégé en `:` et `v-model` qui permettent entre autre la liaison dynamique d'un attribut HTML à une expression. La différence entre `v-bind` et `v-model` est que `v-model` permet une liaison bidirectionnelles entre les valeurs d'entrée et les données liées. C'est à dire que si vous changer la valeur d'entrée, les données liées seront modifiées et si les données liées sont modifiées, la valeur d'entrée sera également modifié. `v-bind` lui, permet une liaison à sens unique, c'est à dire que vous pouvez modifier la valeur d'entrée en modifiant les données liées, mais vous ne pouvez pas modifier les données liées en modifiant la valeur d'entrée via l'élément.
+* `v-on` qui peut être abrégé en `@` qui permet l'exécution de JavaScript lors événements sur le DOM . Imaginons que nous voulons appelé une fonction JavaScript lors d'un click sur un bouton. Il faudra alors ajouter `v-on:click="function()"` ou `@click="function()"` dans la balise HTML du bouton afin d'appeler la fonction `function()` spécifié dans la partie JavaScript du composant.
+* `v-for` qui permet de boucler une balise selon les données sources. Imaginons que nous souhaitons afficher tout les chiens d'un tableau JavaScript dans une liste à puce HTML. Pour ce faire, il faudra modifier la balise d'élément de puce  en `<li v-for="dog in dogArray">{{ dog }}</li>`. Les doubles accolades `{{ dog }}` seront  remplacée par la valeur de la propriété dog (donc à la valeur de l'élément du tableau concerné) .
+
+Dans la partie JavaScript :
+
+```javascript
+import FullCalendar from '@fullcalendar/vue'; //Importation du composant FullCalendar
+import dayGridPlugin from '@fullcalendar/daygrid'; //Imporation du plugin permettant l'affichage d'un calendrier mensuelles
+import timeGridPlugin from '@fullcalendar/timegrid'; //Importation du plugin permettant l'affichage d'un calendrier hebdomadaire et journalier
+import interactionPlugin from '@fullcalendar/interaction'; //Importation du plugin permettant les interactions avec les calendriers
+import frLocale from '@fullcalendar/core/locales/fr'; //Imporation du fichier permettant l'affichage du calendrier en francais
+import axios from 'axios'; //Importation d'axios permettant d'effectuer des requêtes HTTP à mon API REST
+import $ from 'jquery'; //Importation de JQuery permettant de faciliter l'écriture de code JavaScript
+
+export default { // Définit l'exportation par défaut du composant
+    components:{
+        FullCalendar //Utilisation du composant FullCalendar
+    },
+    name: 'Calendar', //Nom du composant actuel
+    data() { //Donnée du composant Calendar
+        return {
+        calendarOptions: { //Options du calendrier
+            plugins: [ dayGridPlugin,timeGridPlugin ,interactionPlugin ],//Spécification des plugins utilisés
+            initialView: 'dayGridMonth', //Vue initial du calendrier, ici ca sera la vue mensuelle
+            headerToolbar: { //Élements de l'en tête du calendrier
+              left: 'prev,next today', //À gauche, il y aura les boutons de directions pour changer de jour/semaine/mois et le bouton pour retourner au jour actuel 
+              center: 'title',//Au centre, il y aura la titre du jour/semaine/mois
+              right: 'dayGridMonth,timeGridWeek,timeGridDay'//À droite, il y aura les boutons pour changer le type de vue du calendrier (journalier, hebdomadiare, mensuelle)
+            },
+            height: 'auto',//Taille du calendrier automatique
+            locale: frLocale,//Utilisation du fichier de langue
+            eventDisplay: 'block',//Affichage des événements en block
+            allDaySlot: false,//Permet de ne pas pas afficher l'apercu du jour actuelle qui est par défaut
+            slotMinTime: "06:00:00",//Heure minimum
+            slotMaxTime : "20:00:00",//Heure maximum
+            events: [],//Événements du calendrier
+            eventBackgroundColor: "green",//Couleur de fond des événements
+            eventClick: function(info) { //Méthode appelée lors du clique sur un événement 
+                this.gotoDate(info.event.endStr);//Permet d'afficher le jour de l'événement en question 
+                this.changeView('timeGridDay');//Change le type de vue en journalier
+            }
+        },
+        //Cariables du composant Calendar
+        selected: null,
+        educators: []
+        }
+    },
+    methods:{//Méthodes du composant Calendar
+        loadEducators(){//Méthode permettant de charger dans la variable educators les éducateurs canins de l'application grâce à une requête HTTP envoyé avec axios.
+            axios.get('https://api-rest-douceur-de-chien.boreljaquet.ch/users/educators/')
+            .then(response => (this.educators = response.data))
+        },
+        onChange(){//Méthode permettant de modifier les événements du calendrier en fonction de l'éducateur canin
+            axios.get('https://api-rest-douceur-de-chien.boreljaquet.ch/plannings/'+this.selected)
+            .then(response =>{
+                const vm = this;
+                vm.calendarOptions.events = [];
+                $.each(response.data, function(index) {
+                            vm.calendarOptions.events.push({
+                                "title": "Disponible",
+                                "start": response.data[index].date + " " + response.data[index].time_start,
+                                "end": response.data[index].date + " " +response.data[index].time_end
+
+                            });
+                        });
+            })
+            
+        }
+    },
+    mounted(){// Permet d'éxécuter du code JavaScript après le chargement du DOM
+        this.loadEducators();
+    }
+}
+```
+
+Rendez-vous GMeet hebdomadaire avec M. Mathieu. Lors de cette discussion j'ai parlé à M. Mathieu du POC que j'avais réalisé avec le framework vue.js. M. Mathieu m'a conseillé de réaliser en premier lieu, les fonctionnalités complexe de ma PWA. Après lui avoir montré l'avancé de mon projet vue.js déployé sur mon hébergement web, M. Mathieu m'a fait deux remarques rapides :
+
+* Rajouter +33 au numéro de téléphone du patron de la société.
+* Modifier le pied de page de l'application afin d'enlever la fonctionnalité `mailto:` et d'y ajouter un formulaire d'envoie de mail afin d'éviter le potentiel spam et de rendre cette fonctionnalité plus facilement utilisable.
+
+Dorénavant, je compte me concentrer sur les parties que je pense être complexe comme :
+
+* La connexion incluant : le changement de barre de navigation et le contrôle d'accès aux vues en fonction du type d'utilisateur
+* La réalisation des éléments permettant de transformer l'application en PWA  
+
+### Mercredi 12 mai 2021

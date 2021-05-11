@@ -18,6 +18,8 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 * `GET api/v1/users/me`
 * `GET api/v1/users/educators`
 
+------
+
 * `POST api/v1/dogs`
 * `GET api/v1/dogs`
 * `GET api/v1/dogs/{idDog}`
@@ -26,6 +28,8 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 * `POST api/v1/dogs/uploadPicture`
 * `GET api/v1/dogs/downloadPicture/{serial_number}`
 
+------
+
 * `POST api/v1/documents`
 * `GET api/v1/documents`
 * `GET api/v1/documents/{idDocument}`
@@ -33,11 +37,15 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 * `DELETE api/v1/documents/{idDocument}`
 * `GET api/v1/documents/downloadDocument/{serial_number}`
 
+------
+
 * `POST api/v1/absences`
 * `GET api/v1/absences`
 * `GET api/v1/absences/{idAbsence}`
 * `PATCH api/v1/absences/{idAbsence}`
 * `DELETE api/v1/absences/{idAbsence}`
+
+------
 
 * `POST api/v1/weeklySchedules`
 * `GET api/v1/weeklySchedules`
@@ -45,17 +53,23 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 * `PATCH api/v1/weeklySchedules/{idWeeklySchedule}`
 * `DELETE api/v1/weeklySchedules/{idWeeklySchedule}`
 
+------
+
 * `POST api/v1/scheduleOverrides`
 * `GET api/v1/scheduleOverrides`
 * `GET api/v1/scheduleOverrides/{idScheduleOverride}`
 * `PATCH api/v1/scheduleOverrides/{idScheduleOverride}`
 * `DELETE api/v1/scheduleOverrides/{idScheduleOverride}`
 
+------
+
 * `POST api/v1/timeSlots`
 * `GET api/v1/timeSlots`
 * `GET api/v1/timeSlots/{idTimeSlot}`
 * `PATCH api/v1/timeSlots/{idTimeSlot}`
 * `DELETE api/v1/timeSlots/{idTimeSlot}`
+
+------
 
 * `POST api/v1/appoitments`
 * `GET api/v1/appoitments`
@@ -64,8 +78,9 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 * `DELETE api/v1/appoitments/{idTimeSlot}`
 * `POST api/v1/appoitments/uploadNoteGraphical`
 * `POST api/v1/appoitments/downloadNoteGraphical/{serial_number}`
-
 * `GET api/v1/plannings/{idEducator}`
+
+Pour plus d'informations, dirigez-vous sur la [documentation technique](./documentation/documentation_technique.md).
 
 ## Pré-requis
 
@@ -82,7 +97,9 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 
 ### JAVASCRIPT - APPLICATION
 
-### Installation
+## Installation
+
+### PHP - API REST
 
 1. Télécharger le projet
 2. Exécuter la commande ``composer install``
@@ -90,7 +107,11 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 4. Renseignez les valeurs des variables d'environnement dans le fichier **.env**
 5. Exécuter la commande `php dbseed.php` pour générer les données de test
 
-### Commandes
+### JAVASCRIPT - APPLICATION
+
+1. 
+
+## Commandes
 
 ``composer install`` : Installe toutes les dépendances PHP du projet
 `php dbseed.php` : Exécute le script PHP `dbseed.php` afin d'insérer dans la base de données des données de test.

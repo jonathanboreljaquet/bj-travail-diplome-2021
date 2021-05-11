@@ -5,10 +5,10 @@
       <b-col class="text-content" cols="12" sm="6">
         <h1 class="font-weight-bold display-4">{{ textH1 }}</h1>
         <h3 class="font-weight-bold">{{ textH3 }}</h3>
-        <p>{{ textParagraph }}</p>
         <h5>{{ textH5 }}</h5>
         <h6>{{ textH6 }}</h6>
-        <b-button id="button" :to="routeBouton" pill v-if="textButton != null"> {{ textButton }}</b-button>
+        <p class="text-justify">{{ textParagraph }}</p>
+        <b-button id="button" :to="routeBouton" pill v-if="textButton != ''"> {{ textButton }}</b-button>
       </b-col>
       <b-col cols="12" sm="6">
         <b-img v-if="imageSource != null" id="circleImage" :src="imageSource" fluid  rounded="circle" alt="Circle image"></b-img>

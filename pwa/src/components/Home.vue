@@ -7,9 +7,9 @@
 
 <script>
 import LeftSectionContent  from './LeftSectionContent.vue';
-import Hyron from '../assets/hyron.webp'
+import Hyron from '../assets/img/hyron.webp'
 import RightSectionContent from './RightSectionContent.vue';
-import BorisWithDogs from '../assets/borisWithDogs.webp';
+import BorisWithDogs from '../assets/img/borisWithDogs.webp';
 
 export default {
   components: { LeftSectionContent, RightSectionContent },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar fixed="top" toggleable="lg" type="dark" variant="dark">
-      <b-img src="../assets/logoblancblanc.png" v-bind="logo" fluid alt="Responsive image"></b-img>
+      <b-img src="../assets/img/logoblancblanc.png" v-bind="logo" fluid alt="Responsive image"></b-img>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>

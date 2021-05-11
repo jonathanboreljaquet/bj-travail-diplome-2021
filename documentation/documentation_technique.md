@@ -282,6 +282,7 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
         <td>DD</td>
     </tr>
 </table>
+
 ### Librairies
 
 #### PHPMailer
