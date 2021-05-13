@@ -297,6 +297,7 @@ class UserController {
         
         $result = array();
         $result["api_token"] = $userAuth->api_token;
+        $result["code_role"] = $userAuth->code_role;
         return ResponseController::successfulRequest($result);
     }
 

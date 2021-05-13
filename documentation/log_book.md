@@ -1461,3 +1461,49 @@ Dorénavant, je compte me concentrer sur les parties que je pense être complexe
 * La réalisation des éléments permettant de transformer l'application en PWA  
 
 ### Mercredi 12 mai 2021
+
+Modification de la SPA vue.js afin que celle-ci devienne un PWA. Pour ce faire, j'ai suivis plusieurs tutoriels
+
+* https://www.webnoob.dev/articles/turn-your-vue-web-app-into-a-pwa
+  * Dans ce tutoriel, j'ai appris l'existence d'un plugin PWA pour vue.js. Afin de l'installer j'ai du exécuter la commande `vue add @vue/pwa`. Cette commande permet de générer tout les fichiers nécessaires pour une PWA. Parmi les fichiers générés se trouve le `registerServiceWorker.js`, ce fichier permet de créer un service worker lors de la mise en production de l'application. Un service worker est un API Web qui aide à mettre en cache les différents fichiers d'une application afin que lorsque l'utilisateur est hors ligne ou sur un réseau lent, il puisse toujours avoir accès à quelques fonctionnalités. En effet, il permet de créer une meilleure expérience utilisateur. La commande m'a également créé un dossier `img/icons` ou il faudra y ajouter les différents logo de la PWA correspondant aux différents appareils dans différentes résolutions.
+* https://hackernoon.com/build-a-progressive-web-app-in-vuejs-from-zero-to-hero-part-2-the-service-worker-d9babc3d756f
+  * Dans celui-ci, j'ai appris un peu plus comment fonctionnait et a quoi servait un service worker.
+* https://levelup.gitconnected.com/vue-pwa-example-298a8ea953c9
+  * Dans celui-ci, j'ai utilisé le code d'exemple permettant à l'utilisateur de ma PWA d'installer celle-ci sur son bureau ou son écran d'accueil de téléphone.
+
+* https://cli.vuejs.org/core-plugins/pwa.html#configuration
+  * Dans cette doc officiel de Vue CLI, j'ai appris comment configuré la PWA en créant le fichier `vue.config.js` et qui permet entre autre de générer le fichier `manifest.json`. Le fichier `manifest.json` est un fichier JSON qui permet au navigateur d'installer l'application en créant un launcher. Le fichier fournit au navigateur le nom de l'application, les icônes, etc...
+
+Pour résumer : 
+
+1. J'ai exécuté la commande `vue add @vue/pwa`
+2. J'ai modifié les icones pré-créé par la commande avec les miens
+3. J'ai créé un bouton dans ma navbar qui, si l'utilisateur n'a pas la PWA d'installer, peu avoir accès au bouton `Installer` pour installer la PWA sur son bureau ou son écran d'accueil de téléphone.
+4. J'ai créé le fichier `vue.config.js` qui m'a permis de configuré ma PWA
+
+Résultat final : Dorénavant l'application peut être téléchargé sur le bureau et stock en cache les différents fichiers de l'application. Toutefois elle stock en cache uniquement les fichiers et non les données reçus par l'API REST.
+
+L'objectif dans un premier lieu était de pouvoir télécharger l'application sur son bureau ou écran d'accueil de téléphone et de mettre en cache les fichiers de l'application afin de la rendre plus facilement accessible. Normalement, une PWA devrait permettre une utilisation quasi fonctionnelle malgré une perte de connexion. L'élaboration d'un tel système étant très complexe, je compte pour l'instant mettre de côté l'élaboration de le PWA et de me concentrer d'avantage sur le frontend de mon application.
+
+Modification du composant `Calendar.vue` qui représente la vue "Agenda" afin que celle-ci charge à son ouverture, le planning du premier éducateur canin.
+
+### Jeudi 13 mai 2021
+
+J'ai profité de cette journée de congé pour avancer dans mon rapport. Les points que j'ai développés sont :
+
+* Organisation
+  * Environnement de développement
+    * **Visual Studio Code**
+    * **Postman**
+  * **Déploiement**
+* Développement
+  * API REST
+    * Technologie utilisée
+      * **PHP**
+    * Librairies utilisées
+      * **PHPMailer**
+      * **Dompdf**
+    * **Tests unitaires**
+      * **Postman**
+
+J'ai également profité de cette journée pour me renseigner sur l'élaboration du système qui me permettra de gérer les droits d'accès de mon application vue.js. En effet, l'application devra permettre une connexion pour ses utilisateurs. Deux type d'utilisateur pourront se connecter afin d'avoir accès à différentes fonctionnalités. Le premier type d'utilisateur est le client, une fois connecté, celui-ci devra avoir accès à la page "Mes informations". Tandis que l'utilisateur de type administrateur (éducateur canin) lui, devra avoir accès à la page "Administration". Lors de cette recherche, j'ai appris l'existence de `Vuex`. `Vuex` est un gestionnaire d'état et une bibliothèque pour des applications Vue.js, Il permet de stocker des données de manière centralisée pour tout les composant d'une application vue.js. De cette façon `vuex`va me permettre de stocker de manière centralisée l'api token et le rôle de l'utilisateur authentifié afin de lui permettre l'accès à ses fonctionnalité et a gérer ces différents accès.

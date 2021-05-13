@@ -7,17 +7,19 @@
 </template>
 
 <script>
-import Footer from './components/Footer.vue'
-import Navbar from './components/Navbar.vue'
+import Footer from "./components/Footer.vue";
+import Navbar from "./components/Navbar.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Navbar,
-    Footer
-  }
-}
+    Footer,
+  },
+  created() {
+    this.$store.dispatch("AutoLogin");
+  },
+};
 </script>
 
-<style>
-</style>
+<style></style>
