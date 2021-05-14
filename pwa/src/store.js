@@ -2,43 +2,25 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import router from "./router";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     api_token: null,
+    code_role: null,
   },
   mutations: {
     authUser(state, userData) {
       state.api_token = userData.api_token;
+      state.code_role = userData.code_role;
     },
     clearAuth(state) {
       state.api_token = null;
+      state.code_role = null;
     },
   },
   actions: {
-    signup({ commit }, authData) {
-      axios
-        .post(
-          "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyAv71t6_6YOyOdpbkmsvqtE2i68uhL3U1g",
-          {
-            email: authData.email,
-            password: authData.password,
-            returnSecureToken: true,
-          }
-        )
-        .then((res) => {
-          console.log(res);
-          localStorage.setItem("token", res.data.idToken);
-          localStorage.setItem("userId", res.data.localId);
-          commit("authUser", {
-            token: res.data.idToken,
-            userId: res.data.localId,
-          });
-          router.push("/dashboard");
-        })
-        .catch((error) => console.log(error));
-    },
     login({ commit }, authData) {
       const params = new URLSearchParams();
       params.append("email", authData.email);
@@ -55,34 +37,53 @@ export default new Vuex.Store({
           config
         )
         .then((res) => {
-          console.log("Bien");
-          console.log(res);
           localStorage.setItem("api_token", res.data.api_token);
+          localStorage.setItem("code_role", res.data.code_role);
           commit("authUser", {
             api_token: res.data.api_token,
+            code_role: res.data.code_role,
           });
-          router.push("/customer_information");
+          Vue.prototype.$alertify.success("Vous êtes connecté");
+          if (this.state.code_role == "2") {
+            router.push("/administration");
+          }
+          if (this.state.code_role == "1") {
+            router.push("/customer_information");
+          }
         })
         .catch((error) => {
+          Vue.prototype.$alertify.error(
+            "Le nom d'utilisateur et le mot de passe que vous avez entrés ne correspondent pas à ceux présents dans nos fichiers. Veuillez vérifier et réessayer."
+          );
           console.log(error);
         });
     },
     logout({ commit }) {
       commit("clearAuth");
       localStorage.removeItem("api_token");
+      localStorage.removeItem("code_role");
       router.replace("/");
     },
-    AutoLogin({ commit }) {
+    autoLogin({ commit }) {
       const api_token = localStorage.getItem("api_token");
-      if (!api_token) {
+      const code_role = localStorage.getItem("code_role");
+      if (!api_token || !code_role) {
         return;
       }
       commit("authUser", {
         api_token: api_token,
+        code_role: code_role,
       });
     },
   },
   getters: {
+    ifCustomerAuthenticated(state) {
+      console.log(state);
+      return state.api_token !== null && state.code_role == "1";
+    },
+    ifAdministratorAuthenticated(state) {
+      return state.api_token !== null && state.code_role == "2";
+    },
     ifAuthenticated(state) {
       return state.api_token !== null;
     },

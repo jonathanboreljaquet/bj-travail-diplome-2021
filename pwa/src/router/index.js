@@ -7,7 +7,10 @@ import Calendar from "./../components/Calendar.vue";
 import PrivacyPolicy from "./../components/PrivacyPolicy.vue";
 import Connection from "./../components/Connection.vue";
 import CustomerInformation from "./../components/CustomerInformation.vue";
+import Administration from "./../components/Administration.vue";
+
 Vue.use(Router);
+
 export default new Router({
   routes: [
     { path: "/", component: Home },
@@ -23,6 +26,17 @@ export default new Router({
           next();
         } else {
           next("/connection");
+        }
+      },
+    },
+    {
+      path: "/administration",
+      component: Administration,
+      beforeEnter(to, from, next) {
+        if (store.state.api_token && store.state.code_role == "2") {
+          next();
+        } else {
+          next("/");
         }
       },
     },

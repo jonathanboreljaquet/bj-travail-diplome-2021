@@ -17,7 +17,7 @@ export default {
     Footer,
   },
   created() {
-    this.$store.dispatch("AutoLogin");
+    this.$store.dispatch("autoLogin");
   },
 };
 </script>

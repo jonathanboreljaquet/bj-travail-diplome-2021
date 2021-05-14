@@ -13,6 +13,12 @@
           <b-nav-item class="navbar-style" to="/" href="#">Accueil</b-nav-item>
           <b-nav-item to="/about" href="#">À propos</b-nav-item>
           <b-nav-item to="/calendar" href="#">Agenda</b-nav-item>
+          <b-nav-item to="/customer_information" v-if="authCustomer" href="#">
+            Mes informations
+          </b-nav-item>
+          <b-nav-item to="/administration" v-if="authAdministrator" href="#">
+            Administration
+          </b-nav-item>
           <b-nav-item
             @click="installer()"
             :style="{ ' display ': installBtn }"
@@ -39,6 +45,12 @@ export default {
   computed: {
     auth() {
       return this.$store.getters.ifAuthenticated;
+    },
+    authCustomer() {
+      return this.$store.getters.ifCustomerAuthenticated;
+    },
+    authAdministrator() {
+      return this.$store.getters.ifAdministratorAuthenticated;
     },
   },
   methods: {
@@ -88,17 +100,18 @@ export default {
   -moz-transition: color 0.2s ease-in;
   -o-transition: color 0.2s ease-in;
   transition: color 0.2s ease-in;
+  text-align: center;
 }
 .navbar-dark .navbar-nav .router-link-exact-active {
-  color: #ee8d83;
+  color: #e08f25;
+  font-weight: 500;
 }
 .navbar-dark .navbar-nav .nav-link:hover {
-  color: #ee8d83;
+  color: #e08f25;
+  font-weight: 500;
 }
-.navbar-dark .navbar-nav #logoutBtn .nav-link {
-  color: red;
-}
-.navbar-dark .navbar-nav #loginBtn .nav-link {
-  color: green;
+.navbar-collapse .nav-item .nav-link {
+  margin: auto;
+  font-weight: 500;
 }
 </style>

@@ -36,7 +36,7 @@
               ></b-form-input>
             </b-form-group>
             <b-button block type="submit" variant="outline-primary">
-              Connection
+              Connexion
             </b-button>
           </b-form>
         </b-col>

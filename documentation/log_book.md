@@ -1507,3 +1507,36 @@ J'ai profité de cette journée de congé pour avancer dans mon rapport. Les poi
       * **Postman**
 
 J'ai également profité de cette journée pour me renseigner sur l'élaboration du système qui me permettra de gérer les droits d'accès de mon application vue.js. En effet, l'application devra permettre une connexion pour ses utilisateurs. Deux type d'utilisateur pourront se connecter afin d'avoir accès à différentes fonctionnalités. Le premier type d'utilisateur est le client, une fois connecté, celui-ci devra avoir accès à la page "Mes informations". Tandis que l'utilisateur de type administrateur (éducateur canin) lui, devra avoir accès à la page "Administration". Lors de cette recherche, j'ai appris l'existence de `Vuex`. `Vuex` est un gestionnaire d'état et une bibliothèque pour des applications Vue.js, Il permet de stocker des données de manière centralisée pour tout les composant d'une application vue.js. De cette façon `vuex`va me permettre de stocker de manière centralisée l'api token et le rôle de l'utilisateur authentifié afin de lui permettre l'accès à ses fonctionnalité et a gérer ces différents accès.
+
+### Vendredi 14 mai 2021
+
+Réalisation du poster :
+
+![dateTestPlanningSecondUser](./poster/poster-douceur-de-chien.png)
+
+Réalisation du gestionnaire d'état permettant l'authentification et les différentes droits d'accès avec `Vuex` correspondant au fichier `store-js`. Ce fichier est décomposé en différentes parties :
+
+* `state`
+  * Représente les différents états de l'application. Dans mon cas, les états sont `api_token` et `code_role`.
+* `mutations`
+  * Représente les mutations d'états gestionnaire d'état. Ces mutations sont les seuls et uniques fonctions permettant de modifier les états de l'application, ces fonctions contiennent forcément les états en argument ainsi qu'un argument additionnel si nécessaire. Pour l'instant, dans mon cas, ces fonctions sont `authUser(state, userData)` et `clearAuth(state)`. `authUser(state, userData)` permet de modifier les états de l'application avec les valeurs passées en paramètre tandis que `clearAuth(state)` supprime la valeur des états actuelle.
+* `actions`
+  * Les actions son similaire aux mutations, à la différence qu'au lieu de modifier l'état elle appellent des mutations et que celles-ci peuvent contenir des opérations asynchrone. Les actions reçoivent un objet contexte qui expose le même ensemble de méthode et propriétés que l'instance du gestionnaire d'état afin de permettre l'appel aux mutations ou afin d'accéder aux états. Pour l'instant. dans mon cas, les actions de mon gestionnaire d'état sont :
+    `login(context,authData)` qui effectue une requête POST à mon API REST avec axios en utilisant les données passées en paramêtres. Si la requête retourne pas d'erreur, alors celle-ci va stocker dans le local storage le résultat de la réponse HTTP, soit l'api token et le code du rôle de l'utilisateur. Il va réaliser le même procédé en effectuant une mutation des états ave ces valeurs. 
+    `logout(context)` qui va effectuer la mutation `clearAuth` et retirer du local storage l'api token et le code du rôle de l'utilisateur.
+    `AutoLogin(context)` qui va permettre, si l'api token et le code du rôle de l'utilisateur du local storage sont existant, effectuer une mutation `authUser` avec ces données.
+* `getters`
+  * Les getters sont les propriétés calculés du gestionnaire d'état. Dans mon cas je me sert des getters pour tester mes états avec les fonctions : 
+    `ifCustomerAuthenticated` qui me retourne si l'utilisateur est un client ou non.
+    `ifAdministratorAuthenticated` qui me retourne si l'utilisateur est un administrateur ou non.
+    `ifAuthenticated` qui me retourne si l'utilisateur est authentifié ou non.
+
+Une fois que mon gestionnaire d'état a été configuré, j'ai pu me servir de celui-ci pour gérer l'authentification et les différentes droits d'accès.
+
+* Le bouton connexion de la page de connexion déclenche l'action `login(authData)` qui reçoit en paramètre les données du formulaire de connexion.
+* La navbar affiche le bouton "Connexion" si l'utilisateur est pas authentifié et "Déconnexion" si c'est le cas. Ce test est effectué grâce au getter `ifAuthenticated`. Le bouton "Connexion" redirige l'utilisateur vers la page de connexion et le bouton "Déconnexion" déconnecte l'utilisateur en déclenchant l'action `logout()`.
+* La navbar affiche le bouton "Mes informations" si l'utilisateur est un client en utilisant le getter `ifCustomerAuthenticated`.
+* La navbar affiche le bouton "Administration" si l'utilisateur est un administrateur en utilisant le getter `ifAdministratorAuthenticated`. 
+* Le routeur de l'application contrôle si l'utilisateur souhaitant accéder a la page "Mes informations" est authentifié en contrôlant les états. Si ce n'est pas le cas, le routeur retourne l'utilisateur vers la page de connexion.
+* Le routeur de l'application contrôle si l'utilisateur souhaitant accéder a la page "Administrateur" est authentifié et administrateur en contrôlant les états. Si ce n'est pas le cas, le routeur retourne l'utilisateur vers la page d'accueil.
+
