@@ -249,7 +249,7 @@ Afin d'afficher les rendez-vous de l'éducateur canin ainsi que des clients, je 
 
 ## Modèle de données
 
-![image database](../database/dbdiagram_travail_de_diplome.png)
+![image database](/img/database.png)
 
 <table>
     <tr>
@@ -819,7 +819,7 @@ Afin de rendre les données de l'application utilisables sur différents futurs 
 
 ### Diagramme de séquence
 
-![image diagram sequence](./diagram/sequence_diagram_travail_de_diplome.svg)
+![image_diagram_séquence](/diagram/diagram_sequence.png)
 
 ## Maquettes prévisionnelles de l'application
 

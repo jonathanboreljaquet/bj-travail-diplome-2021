@@ -15,7 +15,7 @@ Body de la requête :
 
 | Clef        | Définition                              | Obligatoire | Format                            |
 | ----------- | --------------------------------------- | :---------: | --------------------------------- |
-| email       | L'adresse e-mail de l'utilisateur       |      X      | l'adresse e-mail doit être valide |
+| email       | L'adresse e-mail de l'utilisateur       |      X      | L'adresse e-mail doit être valide |
 | firstname   | Le prénom de l'utilisateur              |      X      |                                   |
 | lastname    | Le nom de l'utilisateur                 |      X      |                                   |
 | phonenumber | Le numéro de téléphone de l'utilisateur |      X      |                                   |
@@ -96,7 +96,7 @@ Body de la requête :
 
 | Clef        | Définition                              | Obligatoire | Format                            |
 | ----------- | --------------------------------------- | :---------: | --------------------------------- |
-| email       | L'adresse e-mail de l'utilisateur       |             | l'adresse e-mail doit être valide |
+| email       | L'adresse e-mail de l'utilisateur       |             | L'adresse e-mail doit être valide |
 | firstname   | Le prénom de l'utilisateur              |             |                                   |
 | lastname    | Le nom de l'utilisateur                 |             |                                   |
 | phonenumber | Le numéro de téléphone de l'utilisateur |             |                                   |
@@ -157,11 +157,12 @@ Cet endpoint permet de récupérer toutes les données de l'utilisateur authenti
 
 ##### Objectif
 
-Récupérer l'api token d'un utilisateur dans la base de données grâce à son adresse e-mail ainsi que son mot de passe .
+Récupérer l'api token d'un utilisateur dans la base de données grâce à son adresse e-mail ainsi que son mot de passe.
 
 ##### Utilisation concrète
 
-Cet endpoint permet la récupération de l'api token afin de permettre à l'utilisateur d'accéder aux différentes fonctionnalités de l'application.Body de la requête :
+Cet endpoint permet la récupération de l'api token afin de permettre à l'utilisateur d'accéder aux différentes fonctionnalités de l'application. 
+Body de la requête :
 
 | Clef     | Définition                        | Obligatoire | Format |
 | -------- | --------------------------------- | :---------: | ------ |
@@ -195,7 +196,7 @@ Body de la requête :
 | name              | Le nom du chien                                      |      X      |        |
 | breed             | La race du chien                                     |      X      |        |
 | sex               | Le sexe du chien                                     |      X      |        |
-| picture_serial_id | Le numéro de série de la photo du chien              |             |        |
+| picture_serial_id | L'identifiant de série de la photo du chien          |             |        |
 | chip_id           | Le numéro de puce sous-cutanée du chien              |             |        |
 | user_id           | L'identifiant de l'utilisateur propriétaire du chien |      X      |        |
 
@@ -363,7 +364,7 @@ Body de la requête :
 
 | Clef             | Définition                                              |                Obligatoire                | Format                                                 |
 | ---------------- | ------------------------------------------------------- | :---------------------------------------: | ------------------------------------------------------ |
-| type             | Le type de document à créer                             |                     X                     | le type doit être "conditions_inscription" ou "poster" |
+| type             | Le type de document à créer                             |                     X                     | Le type doit être "conditions_inscription" ou "poster" |
 | user_id          | L'identifiant de l'utilisateur propriétaire du document |                     X                     |                                                        |
 | package_number   | Le numéro de forfait des conditions d'inscription       | X si le type est "conditions_inscription" | Le numéro de forfait doit être de 1 à 5                |
 | signature_base64 | La signature des conditions d'inscription               | X si le type est "conditions_inscription" |                                                        |
@@ -438,7 +439,7 @@ Body de la requête :
 
 | Clef               | Définition                         | Obligatoire | Format                                                 |
 | ------------------ | ---------------------------------- | :---------: | ------------------------------------------------------ |
-| type               | Le type de document à créer        |             | le type doit être "conditions_inscription" ou "poster" |
+| type               | Le type de document à créer        |             | Le type doit être "conditions_inscription" ou "poster" |
 | document_serial_id | L'identifiant de série du document |             |                                                        |
 
 ##### Flow chart
@@ -499,7 +500,7 @@ Créer une donnée de vacance pour l'éducateur canin authentifié dans la base 
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter une donnée de vacance, cette donnée aura une date de début, une date de fin ainsi qu'une description. Les vacances permettront de spécifier une distance temporelle où l'éducateur canin l'ayant créé ne travaillera pas. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet d'ajouter une donnée de vacance. Cette donnée aura une date de début, une date de fin ainsi qu'une description. Les vacances permettront de spécifier une distance temporelle où l'éducateur canin l'ayant créé ne travaillera pas. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
 | Clef              | Définition                      | Obligatoire | Format                                                       |
@@ -619,13 +620,13 @@ Créer un calendrier hebdomadaire pour l'utilisateur authentifié dans la base d
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter un calendrier hebdomadaire de l'éducateur canin authentifié. Ce calendrier hebdomadaire doit avoir une date de début mais peut avoir une date de fin. C'est-à-dire qu'un calendrier hebdomadaire sans date de fin est un calendrier hebdomadaire permanant. De ce fait, il peut y avoir qu'un seul calendrier permanant existant. Les calendriers hebdomadaires permettront de créer des créneaux horaires hebdomadaires sur une certaine durée. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet d'ajouter un calendrier hebdomadaire pour l'éducateur canin authentifié. Ce calendrier hebdomadaire doit avoir une date de début mais peut avoir une date de fin. C'est-à-dire qu'un calendrier hebdomadaire sans date de fin est un calendrier hebdomadaire permanent. De ce fait, il peut y avoir qu'un seul calendrier permanent existant pour un éducateur canin. Les calendriers hebdomadaires permettront de créer des créneaux horaires hebdomadaires sur une certaine durée. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
 | Clef            | Définition                                  | Obligatoire | Format                                                       |
 | --------------- | ------------------------------------------- | :---------: | ------------------------------------------------------------ |
 | date_valid_from | La date de début du calendrier hebdomadaire |      X      | La date doit respecter le format de date (YYYY-MM-DD)        |
-| date_valid_to   | La date de fin du calendrier hebdomadaire   |             | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début des vacances |
+| date_valid_to   | La date de fin du calendrier hebdomadaire   |             | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début du calendrier hebdomadaire |
 
 ##### Flow chart
 
@@ -695,7 +696,7 @@ Body de la requête :
 | Clef            | Définition                                  | Obligatoire | Format                                                       |
 | --------------- | ------------------------------------------- | :---------: | ------------------------------------------------------------ |
 | date_valid_from | La date de début du calendrier hebdomadaire |             | La date doit respecter le format de date (YYYY-MM-DD)        |
-| date_valid_to   | La date de fin du calendrier hebdomadaire   |             | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début des vacances |
+| date_valid_to   | La date de fin du calendrier hebdomadaire   |             | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début du calendrier hebdomadaire |
 
 ##### Flow chart
 
@@ -740,7 +741,7 @@ Créer une exception d'horaire de l'utilisateur authentifié dans la base de don
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter une exception d'horaire de l'éducateur canin authentifié, cette exception horaire est une date unique. Les exceptions horaires permettront de créer des créneaux horaires hebdomadaires sur un jour unique particulier. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet d'ajouter une exception d'horaire de l'éducateur canin authentifié. Cette exception d'horaire est une date unique. Les exceptions d'horaires permettront de créer des créneaux horaires hebdomadaires sur un jour unique particulier. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
 | Clef                   | Définition                       | Obligatoire | Format                                                |
@@ -962,11 +963,11 @@ Body de la requête :
 
 ##### Objectif
 
-Supprimer une exception d'horaire de manière non définitive de l'utilisateur authentifié dans la base de données.
+Supprimer un créneau horaire de manière non définitive de l'utilisateur authentifié dans la base de données.
 
 ##### Utilisation concrète
 
-Cet endpoint permet la suppression non définitive d'une exception d'horaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet la suppression non définitive d'un créneau horaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
 ##### Flow chart
 
@@ -982,17 +983,17 @@ Cet endpoint permet la suppression non définitive d'une exception d'horaire de 
 
 ##### Objectif
 
-Créer un rendez-vous entre un utilisateur et un éducateur canin dans la base de données.
+Créer un rendez-vous entre deux utilisateurs dans la base de données.
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter un rendez-vous entre un client et l'éducateur canin authentifié, la création de rendez-vous insère uniquement les données temporelles du rendez-vous. L'endpoint est accessible par les utilisateurs authentifiés.
+Cet endpoint permet d'ajouter un rendez-vous entre un client et un éducateur canin. La création de rendez-vous insère uniquement les données temporelles du rendez-vous. L'endpoint est accessible par les utilisateurs authentifiés.
 Body de la requête :
 
 | Clef                | Définition                         | Obligatoire | Format                                                       |
 | ------------------- | ---------------------------------- | :---------: | ------------------------------------------------------------ |
 | datetime_appoitment | La date et l'heure du rendez-vous  |      X      | La date et l'heure doivent respecter le format  <br />(YYYY-MM-DD HH:MM:SS) |
-| duration_in_hour    | La durée du rendez-vous en heure   |      X      |                                                              |
+| duration_in_hour    | La durée en heure du rendez-vous   |      X      |                                                              |
 | user_id_customer    | L'identifiant du client            |      X      |                                                              |
 | user_id_educator    | L'identifiant de l'éducateur canin |      X      |                                                              |
 
@@ -1021,7 +1022,7 @@ Récupérer tous les rendez-vous de l'utilisateur authentifié de la base de don
 
 ##### Utilisation concrète
 
-Cet endpoint permet de récupérer toutes les informations des rendez-vous de l'utilisateur authentifié, si l'utilisateur est un client, l'endpoint ne retourne pas les notes de l'éducateur canin. L'endpoint est accessible par les utilisateurs authentifiés.
+Cet endpoint permet de récupérer toutes les informations des rendez-vous de l'utilisateur authentifié. Si l'utilisateur est un client, l'endpoint ne retourne pas les notes de l'éducateur canin. L'endpoint est accessible par les utilisateurs authentifiés.
 
 ##### Flow chart
 
@@ -1087,7 +1088,7 @@ Supprimer un rendez-vous de manière non définitive dans la base de données.
 
 ##### Utilisation concrète
 
-Cet endpoint permet la suppression non définitive d'un rendez-vous. Cette suppression non définitive permet d'identifier quand le rendez-vous a été supprimé et par quel utilisateur. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet la suppression non définitive d'un rendez-vous. Cette suppression non définitive permet d'identifier quand le rendez-vous a été supprimé et par quel utilisateur. L'endpoint est accessible uniquement par les utilisateurs authentifiés.
 
 ##### Flow chart
 

@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import axios from "axios";
 import router from "./router";
 
 Vue.use(Vuex);
@@ -30,7 +29,7 @@ export default new Vuex.Store({
           "Content-Type": "application/x-www-form-urlencoded",
         },
       };
-      axios
+      Vue.prototype.$http
         .post(
           "https://api-rest-douceur-de-chien.boreljaquet.ch/connection/",
           params,

@@ -1263,18 +1263,18 @@ Réalisation de maquette :![dateTestPlanningSecondUser](./maquette/rendezvousCli
 
 Discussion hebdomadaire avec M. Mathieu, nous avons discuté des maquettes papiers crayon que j'avais réalisé au préalable. Les commentaires importants de M. Mathieu ont été :
 
-* Réaliser un onglet "Mes documents" pour le client afin de lui retourner tout ses documents dans une liste.
+* Réaliser un onglet "Mes documents" pour le client afin de lui retourner tous ses documents dans une liste.
 * L'affichage mobile du calendrier devrait montrer le mois courant et ensuite avoir la possibilité de cliquer sur le jour pour afficher une visualisation de journée réf (Petit écran Mobile de jeudi 05 mais 2021).
 * Essayer un maximum de réaliser la même interface de prise de rendez-vous que [agenda.ch](https://agenda.ch/) .
 * Réaliser le frontend de mon travail de diplôme uniquement en HTML, CSS et JavaScript est totalement envisageable.
-* Commencer par bien réaliser les interfaces clientes car le but de l'application et d'attirer et satisfaire un maximum de client.
+* Commencer par bien réaliser les interfaces clientes car le but de l'application et d'attirer et satisfaire un maximum de clients.
 
 Réalisation du persona dans le rapport.
 Modification du readme du travail de diplôme.
 
 ### Lundi 10 mai 2021
 
-Réalisation des éléments suivant dans le rapport :
+Réalisation des éléments suivants dans le rapport :
 
 * Organisation
   * Analyse concurentielle
@@ -1290,13 +1290,13 @@ Réalisation des éléments suivant dans le rapport :
       * Postman
       * HTML et CSS
 
-Suite à la discussion avec M. Mathieu le vendredi 07 mai 2021, nous avions convenu que réaliser le frontend de mon travail de diplôme HTML, CSS et JavaScript était suffisant. Toutefois et afin de sortir de ma zone de confort, je me suis lancé sur le développement de ma PWA avec le framework JavaScript [vue.js](https://vuejs.org/). Lors de notre discussion avec M. Mathieu, j'avais déjà omis l'idée d'utiliser vue.js. M. Mathieu m'a convaincu de pas le faire car l'élaboration d'un projet vue.js nécessiterait un hébergement Node.js . En effet, lors de notre rencontre, je connaissais que très peu l'interaction que vue.js avait avec node.js, je pensais que vue.js nécessitait l'exécution du javascript coté serveur avec node.js pour fonctionner. Ayant la tête dur et la motivation pour découvrir ce framework ce Week-end, je me suis lancé sur des recherches pour la possible élaboration d'un projet vue.js sans node.js. C'est alors que j'ai appris que vue.js n'avait rien à voir avec node.js. En effet, celui-ci permet l'utilisation de node.js lors de son développement mais en est en aucun cas dépendant. Afin de construire la mise en production d'un projet vue.js, il suffit d'exécuter la commande `npm run build` afin de compiler le projet en fichiers HTML, CSS et JavaScript et d'y placer sur son hébergement WEB. Tout cela n'étant que de la théorie, je me suis dis qu'un cas pratique afin d'être sûr que la mise en production ne posera pas de problème n'était pas une mauvaise idée. Et c'est exactement ce que j'ai réalisé aujourd'hui, en effet, j'ai créé un projet avec `vue-cli` (outil de développement proposé par vue.js et qui permet entre autre de créer des projets avec une structure de base), j'ai ajouté Bootstrap pour vue.js et j'ai commencé le développement de ma SPA (Single Page Application) avec la futur page d'accueil de l'application. Lors de ce développement je me suis documenté et j'ai utilisé :
+Suite à la discussion avec M. Mathieu le vendredi 07 mai 2021, nous avions convenu que réaliser le frontend de mon travail de diplôme HTML, CSS et JavaScript était suffisant. Toutefois, et afin de sortir de ma zone de confort, je me suis lancé sur le développement de ma PWA avec le framework JavaScript [vue.js](https://vuejs.org/). Lors de notre discussion avec M. Mathieu, j'avais déjà omis l'idée d'utiliser vue.js. M. Mathieu m'a convaincu de ne pas le faire car l'élaboration d'un projet vue.js nécessiterait un hébergement Node.js . En effet, lors de notre rencontre, je connaissais que très peu l'interaction que vue.js avait avec node.js. Je pensais que vue.js nécessitait l'exécution du javascript côté serveur avec node.js pour fonctionner. Ayant la tête dure et la motivation pour découvrir ce framework ce week-end, je me suis lancé sur des recherches pour la possible élaboration d'un projet vue.js sans node.js. C'est alors que j'ai appris que vue.js n'avait rien à voir avec node.js. En effet, celui-ci permet l'utilisation de node.js lors de son développement, mais il en est en aucun cas dépendant. Afin de construire la mise en production d'un projet vue.js, il suffit d'exécuter la commande `npm run build` afin de compiler le projet en fichiers HTML, CSS et JavaScript et d'y placer sur son hébergement WEB. Tout cela n'étant que de la théorie, je me suis dit qu'un cas pratique afin d'être sûr que la mise en production ne posera pas de problème n'était pas une mauvaise idée. Et c'est exactement ce que j'ai réalisé aujourd'hui. En effet, j'ai créé un projet avec `vue-cli` (outil de développement proposé par vue.js et qui permet entre autre de créer des projets avec une structure de base), j'ai ajouté Bootstrap pour vue.js et j'ai commencé le développement de ma SPA (Single Page Application) avec la future page d'accueil de l'application. Lors de ce développement je me suis documenté et j'ai utilisé :
 
 * Vue Router qui est le routeur officiel de vue.js et qui m'a permis de réaliser ma première navbar ainsi que les différentes redirections dans ma SPA
 * BootstrapVue qui m'a permis de réaliser les composants responsive de mon application
 * Des vue components qui m'ont permis de découper les différents éléments de mon application en composant
 
-Lors de cette journée de découverte, j'ai réalisé les composants suivant :
+Lors de cette journée de découverte, j'ai réalisé les composants suivants :
 
 * `App.vue`
   * Composant racine de l'application, il permet de définir le modèle de la SPA
@@ -1307,7 +1307,7 @@ Lors de cette journée de découverte, j'ai réalisé les composants suivant :
 * `Navbar.vue`
   *  Composant représentant la navbar de mon application
 * `LeftSectionContent.vue` et `RightSectionContent.vue`
-  * Composants qui permettent l'affichage de contenue d'une certaine manière
+  * Composants qui permettent l'affichage de contenu d'une certaine manière
 * `Footer.vue`
   * Composant représentant le pied de page de l'application
 * `PrivacyPolicy.vue`
@@ -1317,17 +1317,17 @@ Ces différents composants et librairies fonctionnent de la manière suivante :
 
 Le script `main.js` va : 
 
-* importer les différents fichiers et librairies permettant le bon fonctionnement de l'application
+* Importer les différents fichiers et librairies permettant le bon fonctionnement de l'application
 * Importer le composant racine `App.vue` qui contient le modèle de la Single Page Application donc :
   * La barre de navigation
   * Le composant qui sera appelé par le routeur
   * Le pied de page
-* Importer le composant routeur de l'application contenant les différentes routes de l'application.
+* Importer le composant routeur de l'application contenant les différentes routes de l'application
 * Créer la vue avec le composant routeur et le composant racine de l'application
 
 Exemple :
 
-L'index de l'application va utiliser la route du composant `Home.vue` qui contient les deux composant `LeftSectionContent.vue` et `RightSectionContent.vue`. Donc va être afficher à l'écran : 
+L'index de l'application va utiliser la route du composant `Home.vue` qui contient les deux composants `LeftSectionContent.vue` et `RightSectionContent.vue`. Donc va être afficher à l'écran : 
 
 1. Le composant `Navbar.vue` qui est présent sur chaque vue
 2. Le composant appelé par le routeur, donc `Home.vue` contenant les deux composants `LeftSectionContent.vue` et `RightSectionContent.vue`
@@ -1335,17 +1335,17 @@ L'index de l'application va utiliser la route du composant `Home.vue` qui contie
 
 ![dateTestPlanningSecondUser](./img/vue_home_exemple.png)
 
-Après avoir réalisé cette première vue avec vue.js, j'ai donc décider d'héberger le résultat afin de vérifier qu'aucun problème du au développement ne survienne.
-J'ai alors exécuté la commande `npm run build` qui à créé un dossier `dist` contenant tout les fichiers prêt pour la mise en production. J'ai ensuite uploadé ces fichiers sur mon serveur hébergé chez infomaniak. C'est alors que j'ai remarqué qu'il y avait aucun problème de déploiement si je procédais de cette façon. De ce fait, je compte me lancer dans le développement de ma PWA en créant une SPA avec le framework vue.js.  
+Après avoir réalisé cette première vue avec vue.js, j'ai donc décidé d'héberger le résultat afin de vérifier qu'aucun problème du au développement ne survienne.
+J'ai alors exécuté la commande `npm run build` qui à créé un dossier `dist` contenant tous les fichiers prêts pour la mise en production. J'ai ensuite uploadé ces fichiers sur mon serveur hébergé chez infomaniak. C'est alors que j'ai remarqué qu'il y avait aucun problème de déploiement si je procédais de cette façon. De ce fait, je compte me lancer dans le développement de ma PWA en créant une SPA avec le framework vue.js.  
 
 ### Mardi 11 mai 2021
 
 Réalisation du composant `Calendar.vue` qui représente la page Agenda de l'application. L'objectif de cette vue est de : 
 
 * Pouvoir choisir l'agenda de l'éducateur canin à visualiser
-* Visualiser les créneaux horaires libre de l'éducateur canin concerné dans un calendrier
+* Visualiser les créneaux horaires libres de l'éducateur canin concerné dans un calendrier
   * Calendrier qui affiche en premier lieu une vue mensuelle mais qui permet l'affichage d'une vue hebdomadaire ou journalière
-  * Créneaux horaires qui lors d'un clique sur eux même, redirige sur la vue journalière afin d'y afficher l'heure de début et de fin du rendez-vous.
+  * Créneaux horaires qui lors d'un click sur eux-mêmes, redirige sur la vue journalière afin d'y afficher l'heure de début et de fin du créneau horaire
 
 ![dateTestPlanningSecondUser](./img/vue_calendar.PNG)
 
@@ -1354,13 +1354,13 @@ Pour la réalisation de cette page, j'ai utilisé la librairie [FullCalendar](ht
 * `npm install --save @fullcalendar/vue @fullcalendar/daygrid`
 * `npm i @fullcalendar/timegrid`
 
-Les composants vue sont divisé en 3 parties logiques :
+Les composants vue sont divisés en 3 parties logiques :
 
 * La première partie est l'HTML du composant, il doit être réalisé entre les balises `<template>`
 * La deuxième partie est le JavaScript, il doit être réalisé entre les balises `<script>`
 * La troisième partie est le CSS, il doit être réalisé entres les balises `<style>`
 
-Dans le cas du composant `Calendar.vue` représentant la page "Agenda" et afin de réaliser l'agenda des éducateurs canin sous forme de calendrier, j'ai du ajouter dans mon composant les éléments suivants :
+Dans le cas du composant `Calendar.vue` représentant la page "Agenda" et afin de réaliser l'agenda des éducateurs canins sous forme de calendrier, j'ai du ajouter dans mon composant les éléments suivants :
 
 Dans la partie HTML, j'ai ajouté une balise pour la création du composant FullCalendar en lui attribuant ses options grâce à l'abréviation de `v-bind` proposé par vue.js `:`.
 
@@ -1372,20 +1372,20 @@ Dans la partie HTML, j'ai ajouté une balise pour la création du composant Full
 </template>
 ```
 
-En effet, il existe différentes instructions que vue.js met à disposition de ses utilisateurs, celles que j'ai utilisé jusqu'à là sont :
+En effet, il existe différentes instructions que vue.js met à disposition à ses utilisateurs, celles que j'ai utilisé jusque là sont :
 
-* `v-bind` qui peut être abrégé en `:` et `v-model` qui permettent entre autre la liaison dynamique d'un attribut HTML à une expression. La différence entre `v-bind` et `v-model` est que `v-model` permet une liaison bidirectionnelles entre les valeurs d'entrée et les données liées. C'est à dire que si vous changer la valeur d'entrée, les données liées seront modifiées et si les données liées sont modifiées, la valeur d'entrée sera également modifié. `v-bind` lui, permet une liaison à sens unique, c'est à dire que vous pouvez modifier la valeur d'entrée en modifiant les données liées, mais vous ne pouvez pas modifier les données liées en modifiant la valeur d'entrée via l'élément.
-* `v-on` qui peut être abrégé en `@` qui permet l'exécution de JavaScript lors événements sur le DOM . Imaginons que nous voulons appelé une fonction JavaScript lors d'un click sur un bouton. Il faudra alors ajouter `v-on:click="function()"` ou `@click="function()"` dans la balise HTML du bouton afin d'appeler la fonction `function()` spécifié dans la partie JavaScript du composant.
-* `v-for` qui permet de boucler une balise selon les données sources. Imaginons que nous souhaitons afficher tout les chiens d'un tableau JavaScript dans une liste à puce HTML. Pour ce faire, il faudra modifier la balise d'élément de puce  en `<li v-for="dog in dogArray">{{ dog }}</li>`. Les doubles accolades `{{ dog }}` seront  remplacée par la valeur de la propriété dog (donc à la valeur de l'élément du tableau concerné) .
+* `v-bind` qui peut être abrégé en `:` et `v-model` qui permettent entre autre la liaison dynamique d'un attribut HTML à une expression. La différence entre `v-bind` et `v-model` est que `v-model` permet une liaison bidirectionnelle entre les valeurs d'entrée et les données liées. C'est-à-dire que si vous changé la valeur d'entrée, les données liées seront modifiées et si les données liées sont modifiées, la valeur d'entrée sera également modifiée. `v-bind` lui, permet une liaison à sens unique, c'est-à-dire que vous pouvez modifier la valeur d'entrée en modifiant les données liées, mais vous ne pouvez pas modifier les données liées en modifiant la valeur d'entrée via l'élément.
+* `v-on` qui peut être abrégée en `@` qui permet l'exécution de JavaScript lors d'événements sur le DOM. Imaginons que nous voulons appeler une fonction JavaScript lors d'un click sur un bouton. Il faudra alors ajouter `v-on:click="function()"` ou `@click="function()"` dans la balise HTML du bouton afin d'appeler la fonction `function()` spécifiée dans la partie JavaScript du composant.
+* `v-for` qui permet de boucler une balise selon les données sources. Imaginons que nous souhaitons afficher tous les chiens d'un tableau JavaScript dans une liste à puce HTML. Pour ce faire, il faudra modifier la balise d'élément de puce  en `<li v-for="dog in dogArray">{{ dog }}</li>`. Les doubles accolades `{{ dog }}` seront  remplacées par la valeur de la propriété dog (donc à la valeur de l'élément du tableau concerné) .
 
 Dans la partie JavaScript :
 
 ```javascript
 import FullCalendar from '@fullcalendar/vue'; //Importation du composant FullCalendar
-import dayGridPlugin from '@fullcalendar/daygrid'; //Imporation du plugin permettant l'affichage d'un calendrier mensuelles
+import dayGridPlugin from '@fullcalendar/daygrid'; //Importation du plugin permettant l'affichage d'un calendrier mensuel
 import timeGridPlugin from '@fullcalendar/timegrid'; //Importation du plugin permettant l'affichage d'un calendrier hebdomadaire et journalier
 import interactionPlugin from '@fullcalendar/interaction'; //Importation du plugin permettant les interactions avec les calendriers
-import frLocale from '@fullcalendar/core/locales/fr'; //Imporation du fichier permettant l'affichage du calendrier en francais
+import frLocale from '@fullcalendar/core/locales/fr'; //Importation du fichier permettant l'affichage du calendrier en francais
 import axios from 'axios'; //Importation d'axios permettant d'effectuer des requêtes HTTP à mon API REST
 import $ from 'jquery'; //Importation de JQuery permettant de faciliter l'écriture de code JavaScript
 
@@ -1394,36 +1394,36 @@ export default { // Définit l'exportation par défaut du composant
         FullCalendar //Utilisation du composant FullCalendar
     },
     name: 'Calendar', //Nom du composant actuel
-    data() { //Donnée du composant Calendar
+    data() { //Données du composant Calendar
         return {
         calendarOptions: { //Options du calendrier
             plugins: [ dayGridPlugin,timeGridPlugin ,interactionPlugin ],//Spécification des plugins utilisés
-            initialView: 'dayGridMonth', //Vue initial du calendrier, ici ca sera la vue mensuelle
-            headerToolbar: { //Élements de l'en tête du calendrier
+            initialView: 'dayGridMonth', //Vue initiale du calendrier, ici ce sera la vue mensuelle
+            headerToolbar: { //Élements de l'en-tête du calendrier
               left: 'prev,next today', //À gauche, il y aura les boutons de directions pour changer de jour/semaine/mois et le bouton pour retourner au jour actuel 
-              center: 'title',//Au centre, il y aura la titre du jour/semaine/mois
-              right: 'dayGridMonth,timeGridWeek,timeGridDay'//À droite, il y aura les boutons pour changer le type de vue du calendrier (journalier, hebdomadiare, mensuelle)
+              center: 'title',//Au centre, il y aura le titre du jour/semaine/mois
+              right: 'dayGridMonth,timeGridWeek,timeGridDay'//À droite, il y aura les boutons pour changer le type de vue du calendrier (journalier, hebdomadiare, mensuel)
             },
             height: 'auto',//Taille du calendrier automatique
             locale: frLocale,//Utilisation du fichier de langue
             eventDisplay: 'block',//Affichage des événements en block
-            allDaySlot: false,//Permet de ne pas pas afficher l'apercu du jour actuelle qui est par défaut
-            slotMinTime: "06:00:00",//Heure minimum
+            allDaySlot: false,//Permet de ne pas afficher l'aperçu du jour actuel qui est par défaut
+            slotMinTime: "06:00:00",//Heure minimum 
             slotMaxTime : "20:00:00",//Heure maximum
             events: [],//Événements du calendrier
             eventBackgroundColor: "green",//Couleur de fond des événements
-            eventClick: function(info) { //Méthode appelée lors du clique sur un événement 
+            eventClick: function(info) { //Méthode appelée lors du click sur un événement 
                 this.gotoDate(info.event.endStr);//Permet d'afficher le jour de l'événement en question 
                 this.changeView('timeGridDay');//Change le type de vue en journalier
             }
         },
-        //Cariables du composant Calendar
+        //Variables du composant Calendar
         selected: null,
         educators: []
         }
     },
     methods:{//Méthodes du composant Calendar
-        loadEducators(){//Méthode permettant de charger dans la variable educators les éducateurs canins de l'application grâce à une requête HTTP envoyé avec axios.
+        loadEducators(){//Méthode permettant de charger dans la variable educators les éducateurs canins de l'application grâce à une requête HTTP envoyée avec axios
             axios.get('https://api-rest-douceur-de-chien.boreljaquet.ch/users/educators/')
             .then(response => (this.educators = response.data))
         },
@@ -1450,42 +1450,42 @@ export default { // Définit l'exportation par défaut du composant
 }
 ```
 
-Rendez-vous GMeet hebdomadaire avec M. Mathieu. Lors de cette discussion j'ai parlé à M. Mathieu du POC que j'avais réalisé avec le framework vue.js. M. Mathieu m'a conseillé de réaliser en premier lieu, les fonctionnalités complexe de ma PWA. Après lui avoir montré l'avancé de mon projet vue.js déployé sur mon hébergement web, M. Mathieu m'a fait deux remarques rapides :
+Rendez-vous GMeet hebdomadaire avec M. Mathieu. Lors de cette discussion j'ai parlé à M. Mathieu du POC que j'avais réalisé avec le framework vue.js. M. Mathieu m'a conseillé de réaliser en premier lieu les fonctionnalités complexes de ma PWA. Après lui avoir montré l'avancée de mon projet vue.js déployé sur mon hébergement web, M. Mathieu m'a fait deux remarques rapides :
 
 * Rajouter +33 au numéro de téléphone du patron de la société.
-* Modifier le pied de page de l'application afin d'enlever la fonctionnalité `mailto:` et d'y ajouter un formulaire d'envoie de mail afin d'éviter le potentiel spam et de rendre cette fonctionnalité plus facilement utilisable.
+* Modifier le pied de page de l'application afin d'enlever la fonctionnalité `mailto:` et d'y ajouter un formulaire d'envoie de e-mail afin d'éviter le potentiel spam et de rendre cette fonctionnalité plus facilement utilisable.
 
-Dorénavant, je compte me concentrer sur les parties que je pense être complexe comme :
+Dorénavant, je compte me concentrer sur les parties que je pense être complexes comme :
 
 * La connexion incluant : le changement de barre de navigation et le contrôle d'accès aux vues en fonction du type d'utilisateur
 * La réalisation des éléments permettant de transformer l'application en PWA  
 
 ### Mercredi 12 mai 2021
 
-Modification de la SPA vue.js afin que celle-ci devienne un PWA. Pour ce faire, j'ai suivis plusieurs tutoriels
+Modification de la SPA vue.js afin que celle-ci devienne un PWA. Pour ce faire, j'ai suivi plusieurs tutoriels
 
 * https://www.webnoob.dev/articles/turn-your-vue-web-app-into-a-pwa
-  * Dans ce tutoriel, j'ai appris l'existence d'un plugin PWA pour vue.js. Afin de l'installer j'ai du exécuter la commande `vue add @vue/pwa`. Cette commande permet de générer tout les fichiers nécessaires pour une PWA. Parmi les fichiers générés se trouve le `registerServiceWorker.js`, ce fichier permet de créer un service worker lors de la mise en production de l'application. Un service worker est un API Web qui aide à mettre en cache les différents fichiers d'une application afin que lorsque l'utilisateur est hors ligne ou sur un réseau lent, il puisse toujours avoir accès à quelques fonctionnalités. En effet, il permet de créer une meilleure expérience utilisateur. La commande m'a également créé un dossier `img/icons` ou il faudra y ajouter les différents logo de la PWA correspondant aux différents appareils dans différentes résolutions.
+  * Dans ce tutoriel, j'ai appris l'existence d'un plugin PWA pour vue.js. Afin de l'installer j'ai dû exécuter la commande `vue add @vue/pwa`. Cette commande permet de générer tous les fichiers nécessaires pour une PWA. Parmi les fichiers générés se trouve le `registerServiceWorker.js`, ce fichier permet de créer un service worker lors de la mise en production de l'application. Un service worker est une API Web qui aide à mettre en cache les différents fichiers d'une application afin que lorsque l'utilisateur est hors ligne ou sur un réseau lent, il puisse toujours avoir accès à quelques fonctionnalités. En effet, il permet de créer une meilleure expérience utilisateur. La commande m'a également créé un dossier `img/icons` où il faudra y ajouter les différents logo de la PWA correspondant aux différents appareils dans différentes résolutions.
 * https://hackernoon.com/build-a-progressive-web-app-in-vuejs-from-zero-to-hero-part-2-the-service-worker-d9babc3d756f
-  * Dans celui-ci, j'ai appris un peu plus comment fonctionnait et a quoi servait un service worker.
+  * Dans celui-ci, j'ai appris un peu plus comment fonctionnait et à quoi servait un service worker.
 * https://levelup.gitconnected.com/vue-pwa-example-298a8ea953c9
   * Dans celui-ci, j'ai utilisé le code d'exemple permettant à l'utilisateur de ma PWA d'installer celle-ci sur son bureau ou son écran d'accueil de téléphone.
 
 * https://cli.vuejs.org/core-plugins/pwa.html#configuration
-  * Dans cette doc officiel de Vue CLI, j'ai appris comment configuré la PWA en créant le fichier `vue.config.js` et qui permet entre autre de générer le fichier `manifest.json`. Le fichier `manifest.json` est un fichier JSON qui permet au navigateur d'installer l'application en créant un launcher. Le fichier fournit au navigateur le nom de l'application, les icônes, etc...
+  * Dans cette documentation officielle de Vue CLI, j'ai appris comment configurer la PWA en créant le fichier `vue.config.js` et qui permet entre autre de générer le fichier `manifest.json`. Le fichier `manifest.json` est un fichier JSON qui permet au navigateur d'installer l'application en créant un launcher. Le fichier fournit au navigateur le nom de l'application, les icônes, etc...
 
 Pour résumer : 
 
 1. J'ai exécuté la commande `vue add @vue/pwa`
-2. J'ai modifié les icones pré-créé par la commande avec les miens
-3. J'ai créé un bouton dans ma navbar qui, si l'utilisateur n'a pas la PWA d'installer, peu avoir accès au bouton `Installer` pour installer la PWA sur son bureau ou son écran d'accueil de téléphone.
-4. J'ai créé le fichier `vue.config.js` qui m'a permis de configuré ma PWA
+2. J'ai modifié les icônes pré-créés par la commande avec les miens
+3. J'ai créé un bouton dans ma navbar qui, si l'utilisateur n'a pas la PWA d'installer, peut avoir accès au bouton `Installer` pour installer la PWA sur son bureau ou son écran d'accueil de téléphone
+4. J'ai créé le fichier `vue.config.js` qui m'a permis de configurer ma PWA
 
-Résultat final : Dorénavant l'application peut être téléchargé sur le bureau et stock en cache les différents fichiers de l'application. Toutefois elle stock en cache uniquement les fichiers et non les données reçus par l'API REST.
+Résultat final : Dorénavant, l'application peut être téléchargée sur le bureau et stocke en cache les différents fichiers de l'application. Toutefois, elle stocke en cache uniquement les fichiers et non les données reçues par l'API REST.
 
-L'objectif dans un premier lieu était de pouvoir télécharger l'application sur son bureau ou écran d'accueil de téléphone et de mettre en cache les fichiers de l'application afin de la rendre plus facilement accessible. Normalement, une PWA devrait permettre une utilisation quasi fonctionnelle malgré une perte de connexion. L'élaboration d'un tel système étant très complexe, je compte pour l'instant mettre de côté l'élaboration de le PWA et de me concentrer d'avantage sur le frontend de mon application.
+L'objectif dans un premier lieu était de pouvoir télécharger l'application sur son bureau ou écran d'accueil de téléphone et de mettre en cache les fichiers de l'application afin de la rendre plus facilement accessible. Normalement, une PWA devrait permettre une utilisation quasi fonctionnelle malgré une perte de connexion. L'élaboration d'un tel système étant très complexe, je compte pour l'instant mettre de côté l'élaboration de la PWA et de me concentrer d'avantage sur le frontend de mon application.
 
-Modification du composant `Calendar.vue` qui représente la vue "Agenda" afin que celle-ci charge à son ouverture, le planning du premier éducateur canin.
+Modification du composant `Calendar.vue` qui représente la vue "Agenda" afin que celle-ci charge à son ouverture le planning du premier éducateur canin.
 
 ### Jeudi 13 mai 2021
 
@@ -1506,7 +1506,7 @@ J'ai profité de cette journée de congé pour avancer dans mon rapport. Les poi
     * **Tests unitaires**
       * **Postman**
 
-J'ai également profité de cette journée pour me renseigner sur l'élaboration du système qui me permettra de gérer les droits d'accès de mon application vue.js. En effet, l'application devra permettre une connexion pour ses utilisateurs. Deux type d'utilisateur pourront se connecter afin d'avoir accès à différentes fonctionnalités. Le premier type d'utilisateur est le client, une fois connecté, celui-ci devra avoir accès à la page "Mes informations". Tandis que l'utilisateur de type administrateur (éducateur canin) lui, devra avoir accès à la page "Administration". Lors de cette recherche, j'ai appris l'existence de `Vuex`. `Vuex` est un gestionnaire d'état et une bibliothèque pour des applications Vue.js, Il permet de stocker des données de manière centralisée pour tout les composant d'une application vue.js. De cette façon `vuex`va me permettre de stocker de manière centralisée l'api token et le rôle de l'utilisateur authentifié afin de lui permettre l'accès à ses fonctionnalité et a gérer ces différents accès.
+J'ai également profité de cette journée pour me renseigner sur l'élaboration du système qui me permettra de gérer les droits d'accès de mon application vue.js. En effet, l'application devra permettre une connexion pour ses utilisateurs. Deux types d'utilisateurs pourront se connecter afin d'avoir accès à différentes fonctionnalités. Le premier type d'utilisateur est le client, une fois connecté, celui-ci devra avoir accès à la page "Mes informations". Tandis que l'utilisateur de type administrateur (éducateur canin) lui, devra avoir accès à la page "Administration". Lors de cette recherche, j'ai appris l'existence de `Vuex`. `Vuex` est un gestionnaire d'état et une bibliothèque pour les applications Vue.js, Il permet de stocker des données de manière centralisée pour tous les composants d'une application vue.js. De cette façon, `vuex`va me permettre de stocker de manière centralisée l'api token et le rôle de l'utilisateur authentifié afin de lui permettre l'accès à ses fonctionnalités et à gérer ses différents accès.
 
 ### Vendredi 14 mai 2021
 
@@ -1514,29 +1514,33 @@ Réalisation du poster :
 
 ![dateTestPlanningSecondUser](./poster/poster-douceur-de-chien.png)
 
-Réalisation du gestionnaire d'état permettant l'authentification et les différentes droits d'accès avec `Vuex` correspondant au fichier `store-js`. Ce fichier est décomposé en différentes parties :
+Réalisation du gestionnaire d'état permettant l'authentification et les différents droits d'accès avec `Vuex` correspondant au fichier `store.js`. Ce fichier est décomposé en différentes parties :
 
 * `state`
   * Représente les différents états de l'application. Dans mon cas, les états sont `api_token` et `code_role`.
 * `mutations`
-  * Représente les mutations d'états gestionnaire d'état. Ces mutations sont les seuls et uniques fonctions permettant de modifier les états de l'application, ces fonctions contiennent forcément les états en argument ainsi qu'un argument additionnel si nécessaire. Pour l'instant, dans mon cas, ces fonctions sont `authUser(state, userData)` et `clearAuth(state)`. `authUser(state, userData)` permet de modifier les états de l'application avec les valeurs passées en paramètre tandis que `clearAuth(state)` supprime la valeur des états actuelle.
+  * Représente les mutations d'états gestionnaire d'état. Ces mutations sont les seules et uniques fonctions permettant de modifier les états de l'application. Ces fonctions contiennent forcément les états en argument ainsi qu'un argument additionnel si nécessaire. Pour l'instant, dans mon cas, ces fonctions sont `authUser(state, userData)` et `clearAuth(state)`. `authUser(state, userData)` permet de modifier les états de l'application avec les valeurs passées en paramètre tandis que `clearAuth(state)` supprime la valeur des états actuels.
 * `actions`
-  * Les actions son similaire aux mutations, à la différence qu'au lieu de modifier l'état elle appellent des mutations et que celles-ci peuvent contenir des opérations asynchrone. Les actions reçoivent un objet contexte qui expose le même ensemble de méthode et propriétés que l'instance du gestionnaire d'état afin de permettre l'appel aux mutations ou afin d'accéder aux états. Pour l'instant. dans mon cas, les actions de mon gestionnaire d'état sont :
-    `login(context,authData)` qui effectue une requête POST à mon API REST avec axios en utilisant les données passées en paramêtres. Si la requête retourne pas d'erreur, alors celle-ci va stocker dans le local storage le résultat de la réponse HTTP, soit l'api token et le code du rôle de l'utilisateur. Il va réaliser le même procédé en effectuant une mutation des états ave ces valeurs. 
+  * Les actions sont similaires aux mutations, à la différence qu'au lieu de modifier l'état elles appellent des mutations et que celles-ci peuvent contenir des opérations asynchrones. Les actions reçoivent un objet contexte qui expose le même ensemble de méthode et propriétés que l'instance du gestionnaire d'état afin de permettre l'appel aux mutations ou afin d'accéder aux états. Pour l'instant, dans mon cas, les actions de mon gestionnaire d'état sont :
+    `login(context,authData)` qui effectue une requête POST à mon API REST avec axios en utilisant les données passées en paramètres. Si la requête ne retourne pas d'erreur, alors celle-ci va stocker dans le local storage le résultat de la réponse HTTP, soit l'api token et le code du rôle de l'utilisateur. Il va réaliser le même procédé en effectuant une mutation des états avec ces valeurs. 
     `logout(context)` qui va effectuer la mutation `clearAuth` et retirer du local storage l'api token et le code du rôle de l'utilisateur.
-    `AutoLogin(context)` qui va permettre, si l'api token et le code du rôle de l'utilisateur du local storage sont existant, effectuer une mutation `authUser` avec ces données.
+    `AutoLogin(context)` qui va permettre, lors de la création de la vue, si l'api token et le code du rôle de l'utilisateur du local storage sont existants, effectuer une mutation `authUser` avec ces données.
 * `getters`
-  * Les getters sont les propriétés calculés du gestionnaire d'état. Dans mon cas je me sert des getters pour tester mes états avec les fonctions : 
+  * Les getters sont les propriétés calculées du gestionnaire d'état. Dans mon cas, je me sert des getters pour tester mes états avec les fonctions : 
     `ifCustomerAuthenticated` qui me retourne si l'utilisateur est un client ou non.
     `ifAdministratorAuthenticated` qui me retourne si l'utilisateur est un administrateur ou non.
     `ifAuthenticated` qui me retourne si l'utilisateur est authentifié ou non.
 
-Une fois que mon gestionnaire d'état a été configuré, j'ai pu me servir de celui-ci pour gérer l'authentification et les différentes droits d'accès.
+Une fois que mon gestionnaire d'état a été configuré, j'ai pu me servir de celui-ci pour gérer l'authentification et les différents droits d'accès.
 
-* Le bouton connexion de la page de connexion déclenche l'action `login(authData)` qui reçoit en paramètre les données du formulaire de connexion.
-* La navbar affiche le bouton "Connexion" si l'utilisateur est pas authentifié et "Déconnexion" si c'est le cas. Ce test est effectué grâce au getter `ifAuthenticated`. Le bouton "Connexion" redirige l'utilisateur vers la page de connexion et le bouton "Déconnexion" déconnecte l'utilisateur en déclenchant l'action `logout()`.
+* Le bouton "Connexion" de la page de connexion déclenche l'action `login(authData)` qui reçoit en paramètre les données du formulaire de connexion.
+* La navbar affiche le bouton "Connexion" si l'utilisateur n'est pas authentifié et "Déconnexion" si c'est le cas. Ce test est effectué grâce au getter `ifAuthenticated`. Le bouton "Connexion" redirige l'utilisateur vers la page de connexion et le bouton "Déconnexion" déconnecte l'utilisateur en déclenchant l'action `logout()`.
 * La navbar affiche le bouton "Mes informations" si l'utilisateur est un client en utilisant le getter `ifCustomerAuthenticated`.
 * La navbar affiche le bouton "Administration" si l'utilisateur est un administrateur en utilisant le getter `ifAdministratorAuthenticated`. 
-* Le routeur de l'application contrôle si l'utilisateur souhaitant accéder a la page "Mes informations" est authentifié en contrôlant les états. Si ce n'est pas le cas, le routeur retourne l'utilisateur vers la page de connexion.
-* Le routeur de l'application contrôle si l'utilisateur souhaitant accéder a la page "Administrateur" est authentifié et administrateur en contrôlant les états. Si ce n'est pas le cas, le routeur retourne l'utilisateur vers la page d'accueil.
+* Le routeur de l'application contrôle si l'utilisateur souhaitant accéder à la page "Mes informations" est authentifié en contrôlant les états. Si ce n'est pas le cas, le routeur retourne l'utilisateur vers la page de connexion.
+* Le routeur de l'application contrôle si l'utilisateur souhaitant accéder à la page "Administrateur" est authentifié et administrateur en contrôlant les états. Si ce n'est pas le cas, le routeur retourne l'utilisateur vers la page d'accueil.
+
+### Samedi 14 mai 2021
+
+Rencontre d'un problème très ennuyeux lors de la requête HTTP envoyé à l'API REST. En effet, j'ai appris que pour les requêtes HTTP dites non simples, soit avec un header `Authorization` pour ma part, le navigateur enverra d'abord une requête de "contrôle en amont" (une requête avec la méthode OPTIONS) afin de déterminer si les en-têtes de la requête qui vont être envoyées correspondent bien avec les en-têtes du serveur. Par exemple, si un en-tête que nous souhaitons ne figure pas dans la liste des en-têtes autorisées (`Access-Control-Allow-Header`), le navigateur refusera d'envoyer votre requête. Après 5 heures de recherche et de test, toutes les solutions cherchées sur Internet n'ont mené à rien. Par la suite, j'ai trouvé une réponse permettant de passer outre cette requête de vérification en retournant un code HTTP `200 OK` lors d'une requête avec la méthode OPTIONS. Pour l'instant, je compte laisser cela comme cela en attendant de discuter avec M. Mathieu de ce problème.
 

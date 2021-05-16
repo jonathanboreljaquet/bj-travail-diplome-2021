@@ -12,7 +12,12 @@
             {{ textButton }}</b-button
           >
         </b-col>
-        <b-col class="d-flex align-items-center justify-content-center" cols="12" sm="12" lg="6">
+        <b-col
+          class="d-flex align-items-center justify-content-center"
+          cols="12"
+          sm="12"
+          lg="6"
+        >
           <b-img
             v-if="imageSource != null"
             class="circleImage"

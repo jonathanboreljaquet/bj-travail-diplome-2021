@@ -40,8 +40,6 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import frLocale from "@fullcalendar/core/locales/fr";
-import axios from "axios";
-import $ from "jquery";
 
 export default {
   components: {
@@ -77,14 +75,14 @@ export default {
   },
   methods: {
     loadEducators() {
-      axios
+      this.$http
         .get(
           "https://api-rest-douceur-de-chien.boreljaquet.ch/users/educators/"
         )
         .then((response) => (this.educators = response.data));
     },
     loadEducatorEvents(idEducator){
-      axios
+      this.$http
         .get(
           "https://api-rest-douceur-de-chien.boreljaquet.ch/plannings/" +
             idEducator
@@ -92,7 +90,7 @@ export default {
         .then((response) => {
           const vm = this;
           vm.calendarOptions.events = [];
-          $.each(response.data, function (index) {
+          this.$jquery.each(response.data, function (index) {
             vm.calendarOptions.events.push({
               title: "Disponible",
               start:
