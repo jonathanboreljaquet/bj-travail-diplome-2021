@@ -24,11 +24,11 @@ Body de la requête :
 
 ##### Use case
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\UseCaseInscription.png)
+![dateTestPlanningSecondUser](./diagram/UseCaseInscription.png)
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartPostUser.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostUser.png)
 
 ##### Tests unitaires
 
@@ -52,7 +52,7 @@ Cet endpoint permet de récupérer tous les clients de l'application. L'endpoint
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetAllUser.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllUser.png)
 
 ##### Tests unitaires
 
@@ -73,7 +73,7 @@ Cet endpoint permet de récupérer un client spécifique de l'application. L'end
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetOneUser.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneUser.png)
 
 ##### Tests unitaires
 
@@ -104,7 +104,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartUpdateOneUser.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneUser.png)
 
 ##### Tests unitaires
 
@@ -125,7 +125,7 @@ Cet endpoint permet la suppression définitive d'un utilisateur. L'endpoint est 
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartDeleteOneUser.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneUser.png)
 
 ##### Tests unitaires
 
@@ -145,7 +145,7 @@ Cet endpoint permet de récupérer toutes les données de l'utilisateur authenti
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetUserAuthdrawio.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetUserAuthdrawio.png)
 
 ##### Tests unitaires
 
@@ -171,7 +171,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartConnection.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartConnection.png)
 
 ##### Tests unitaires
 
@@ -202,7 +202,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartPostDog.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostDog.png)
 
 ##### Tests unitaires
 
@@ -226,7 +226,7 @@ Cet endpoint permet de récupérer tous les chiens existants de l'application. L
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetAllDog.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllDog.png)
 
 ##### Tests unitaires
 
@@ -246,7 +246,7 @@ Cet endpoint permet de récupérer un chien spécifique de l'application. L'endp
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetOneDog.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneDog.png)
 
 ##### Tests unitaires
 
@@ -275,7 +275,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartUpdateOneDog.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneDog.png)
 
 ##### Tests unitaires
 
@@ -295,7 +295,7 @@ Cet endpoint permet la suppression définitive d'un chien. L'endpoint est access
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartDeleteOneDog.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneDog.png)
 
 ##### Tests unitaires
 
@@ -321,7 +321,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartUploadDogPicture.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUploadDogPicture.png)
 
 ##### Tests unitaires
 
@@ -344,7 +344,7 @@ Cet endpoint permet de récupérer la photo d'un chien en base64 grâce à son i
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartDownloadDogPicture.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDownloadDogPicture.png)
 
 ##### Tests unitaires
 
@@ -372,7 +372,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartCreateDocument.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartCreateDocument.png)
 
 ##### Tests unitaires
 
@@ -399,7 +399,7 @@ Cet endpoint permet de récupérer tous les documents existants de tous les clie
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetAllDocument.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllDocument.png)
 
 ##### Tests unitaires
 
@@ -418,7 +418,7 @@ Cet endpoint permet de récupérer un document spécifique de l'application. L'e
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetOneDocument.png)
+![dateTestPlanningSecondUser](./diagram/drawio/drawio/flowchartGetOneDocument.png)
 
 ##### Tests unitaires
 
@@ -444,7 +444,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartUpdateOneDog.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneDog.png)
 
 ##### Tests unitaires
 
@@ -465,7 +465,7 @@ Cet endpoint permet la suppression définitive d'un document avec son document s
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartDeleteOneDocument.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneDocument.png)
 
 ##### Tests unitaires
 
@@ -485,7 +485,7 @@ Cet endpoint permet de récupérer le document d'un client. L'endpoint est acces
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartDownloadDocument.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDownloadDocument.png)
 
 ##### Tests unitaires
 
@@ -511,7 +511,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartPostAbsence.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostAbsence.png)
 
 ##### Tests unitaires
 
@@ -535,7 +535,7 @@ Cet endpoint permet de récupérer toutes les vacances existantes de l'éducateu
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetAllAbsence.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllAbsence.png)
 
 ##### Tests unitaires
 
@@ -554,7 +554,7 @@ Cet endpoint permet de récupérer une vacance spécifique de l'éducateur canin
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetOneAbsence.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneAbsence.png)
 
 ##### Tests unitaires
 
@@ -581,7 +581,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartUpdateOneAbsence.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneAbsence.png)
 
 ##### Tests unitaires
 
@@ -604,7 +604,7 @@ Cet endpoint permet la suppression non définitive d'une vacance de l'éducateur
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartDeleteOneAbsence.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneAbsence.png)
 
 ##### Tests unitaires
 
@@ -630,7 +630,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartPostWeeklySchedule.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostWeeklySchedule.png)
 
 ##### Tests unitaires
 
@@ -655,7 +655,7 @@ Cet endpoint permet de récupérer tous les calendriers hebdomadaires existants 
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetAllWeeklySchedule.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllWeeklySchedule.png)
 
 ##### Tests unitaires
 
@@ -674,7 +674,7 @@ Cet endpoint permet de récupérer un calendrier hebdomadaire spécifique de l'�
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetOneWeeklySchedule.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneWeeklySchedule.png)
 
 ##### Tests unitaires
 
@@ -700,7 +700,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartUpdateOneWeeklySchedule.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneWeeklySchedule.png)
 
 ##### Tests unitaires
 
@@ -725,7 +725,7 @@ Cet endpoint permet la suppression non définitive d'un calendrier hebdomadaire 
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartDeleteOneWeeklySchedule.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneWeeklySchedule.png)
 
 ##### Tests unitaires
 
@@ -750,7 +750,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartPostScheduleOverride.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostScheduleOverride.png)
 
 ##### Tests unitaires
 
@@ -772,7 +772,7 @@ Cet endpoint permet de récupérer toutes les exceptions d'horaires existantes d
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetAllScheduleOverride.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllScheduleOverride.png)
 
 ##### Tests unitaires
 
@@ -791,7 +791,7 @@ Cet endpoint permet de récupérer une exception d'horaire spécifique de l'édu
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetOneScheduleOverride.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneScheduleOverride.png)
 
 ##### Tests unitaires
 
@@ -816,7 +816,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartUpdateOneScheduleOverride.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneScheduleOverride.png)
 
 ##### Tests unitaires
 
@@ -838,7 +838,7 @@ Cet endpoint permet la suppression non définitive d'une exception d'horaire de 
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartDeleteOneScheduleOverride.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneScheduleOverride.png)
 
 ##### Tests unitaires
 
@@ -867,7 +867,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartPostTimeSlot.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostTimeSlot.png)
 
 ##### Tests unitaires
 
@@ -899,7 +899,7 @@ Cet endpoint permet de récupérer tous les créneaux horaires existants de l'é
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetAllTimeSlot.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllTimeSlot.png)
 
 ##### Tests unitaires
 
@@ -918,7 +918,7 @@ Cet endpoint permet de récupérer un créneau horaire spécifique de l'éducate
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetOneTimeSlot.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneTimeSlot.png)
 
 ##### Tests unitaires
 
@@ -945,7 +945,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartUpdateOneTimeSlot.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneTimeSlot.png)
 
 ##### Tests unitaires
 
@@ -971,7 +971,7 @@ Cet endpoint permet la suppression non définitive d'un créneau horaire de l'é
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartDeleteOneTimeSlot.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneTimeSlot.png)
 
 ##### Tests unitaires
 
@@ -999,7 +999,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartPostAppoitment.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostAppoitment.png)
 
 ##### Tests unitaires
 
@@ -1026,7 +1026,7 @@ Cet endpoint permet de récupérer toutes les informations des rendez-vous de l'
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetAllAppoitment.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllAppoitment.png)
 
 ##### Tests unitaires
 
@@ -1046,7 +1046,7 @@ Cet endpoint permet de récupérer un rendez-vous spécifique. L'endpoint est ac
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetOneAppoitment.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneAppoitment.png)
 
 ##### Tests unitaires
 
@@ -1072,7 +1072,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartUpdateOneAppoitment.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneAppoitment.png)
 
 ##### Tests unitaires
 
@@ -1092,7 +1092,7 @@ Cet endpoint permet la suppression non définitive d'un rendez-vous. Cette suppr
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartDeleteOneAppoitment.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneAppoitment.png)
 
 ##### Tests unitaires
 
@@ -1119,7 +1119,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartUploadNoteGraphical.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartUploadNoteGraphical.png)
 
 ##### Tests unitaires
 
@@ -1142,7 +1142,7 @@ Cet endpoint permet de récupérer une note graphique en base64 grâce à son id
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartDownloadNoteGraphical.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartDownloadNoteGraphical.png)
 
 ##### Tests unitaires
 
@@ -1162,7 +1162,7 @@ Cet endpoint permet de récupérer le planning d'un éducateur canin. Le plannin
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](C:\laragon\www\bj-travail-diplome-2021\documentation\diagram\drawio\flowchartGetOnePlanning.png)
+![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOnePlanning.png)
 
 ##### Tests unitaires
 
