@@ -8,6 +8,7 @@ import PrivacyPolicy from "./../components/PrivacyPolicy.vue";
 import Connection from "./../components/Connection.vue";
 import CustomerInformation from "./../components/CustomerInformation.vue";
 import Administration from "./../components/Administration.vue";
+import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./../variable.js";
 
 Vue.use(Router);
 
@@ -17,7 +18,22 @@ export default new Router({
     { path: "/about", component: About },
     { path: "/calendar", component: Calendar },
     { path: "/privacy_policy", component: PrivacyPolicy },
-    { path: "/connection", component: Connection },
+    {
+      path: "/connection",
+      component: Connection,
+      beforeEnter(to, from, next) {
+        if (store.state.api_token && store.state.code_role == CUSTOMER_CODE_ROLE) {
+          next("/customer_information");
+        } else {
+          next();
+        }
+        if (store.state.api_token && store.state.code_role == ADMIN_CODE_ROLE) {
+          next("/administration");
+        } else {
+          next();
+        }
+      },
+    },
     {
       path: "/customer_information",
       component: CustomerInformation,
@@ -33,7 +49,7 @@ export default new Router({
       path: "/administration",
       component: Administration,
       beforeEnter(to, from, next) {
-        if (store.state.api_token && store.state.code_role == "2") {
+        if (store.state.api_token && store.state.code_role == ADMIN_CODE_ROLE) {
           next();
         } else {
           next("/");

@@ -8,7 +8,7 @@
       </b-row>
       <b-row id="title" class="justify-content-center">
         <b-col lg="6">
-          <b-form @submit="onSubmit">
+          <b-form @submit.prevent="onSubmit">
             <b-form-group
               id="input-group-1"
               label="Adresse email:"

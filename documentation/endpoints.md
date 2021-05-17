@@ -44,11 +44,11 @@ Body de la requête :
 
 ##### Objectif
 
-Récupérer tous les utilisateurs avec le `code_role` 1 (client) de la base de données.
+Récupérer tous les utilisateurs avec le `code_role` 1 (client) avec leurs chiens de la base de données.
 
 ##### Utilisation concrète
 
-Cet endpoint permet de récupérer tous les clients de l'application. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet de récupérer tous les clients ainsi que leurs chiens de l'application. L'endpoint est accessible uniquement par les administrateurs.
 
 ##### Flow chart
 

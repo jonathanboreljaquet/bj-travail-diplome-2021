@@ -15,7 +15,7 @@
                 :key="educator.id"
                 :value="educator.id"
                 >{{ educator.firstname }} {{ educator.lastname }}</b-form-select-option
-              >W
+              >
             </b-form-select>
           </b-form-group>
         </b-col>

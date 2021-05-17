@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "./router";
+import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./variable.js";
 
 Vue.use(Vuex);
 
@@ -43,10 +44,10 @@ export default new Vuex.Store({
             code_role: res.data.code_role,
           });
           Vue.prototype.$alertify.success("Vous êtes connecté");
-          if (this.state.code_role == "2") {
+          if (this.state.code_role == ADMIN_CODE_ROLE) {
             router.push("/administration");
           }
-          if (this.state.code_role == "1") {
+          if (this.state.code_role == CUSTOMER_CODE_ROLE) {
             router.push("/customer_information");
           }
         })
@@ -77,11 +78,10 @@ export default new Vuex.Store({
   },
   getters: {
     ifCustomerAuthenticated(state) {
-      console.log(state);
-      return state.api_token !== null && state.code_role == "1";
+      return state.api_token !== null && state.code_role == CUSTOMER_CODE_ROLE;
     },
     ifAdministratorAuthenticated(state) {
-      return state.api_token !== null && state.code_role == "2";
+      return state.api_token !== null && state.code_role == ADMIN_CODE_ROLE;
     },
     ifAuthenticated(state) {
       return state.api_token !== null;

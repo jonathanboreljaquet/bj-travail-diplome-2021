@@ -1540,7 +1540,26 @@ Une fois que mon gestionnaire d'état a été configuré, j'ai pu me servir de c
 * Le routeur de l'application contrôle si l'utilisateur souhaitant accéder à la page "Mes informations" est authentifié en contrôlant les états. Si ce n'est pas le cas, le routeur retourne l'utilisateur vers la page de connexion.
 * Le routeur de l'application contrôle si l'utilisateur souhaitant accéder à la page "Administrateur" est authentifié et administrateur en contrôlant les états. Si ce n'est pas le cas, le routeur retourne l'utilisateur vers la page d'accueil.
 
-### Samedi 14 mai 2021
+### Samedi 15 mai 2021
 
 Rencontre d'un problème très ennuyeux lors de la requête HTTP envoyé à l'API REST. En effet, j'ai appris que pour les requêtes HTTP dites non simples, soit avec un header `Authorization` pour ma part, le navigateur enverra d'abord une requête de "contrôle en amont" (une requête avec la méthode OPTIONS) afin de déterminer si les en-têtes de la requête qui vont être envoyées correspondent bien avec les en-têtes du serveur. Par exemple, si un en-tête que nous souhaitons ne figure pas dans la liste des en-têtes autorisées (`Access-Control-Allow-Header`), le navigateur refusera d'envoyer votre requête. Après 5 heures de recherche et de test, toutes les solutions cherchées sur Internet n'ont mené à rien. Par la suite, j'ai trouvé une réponse permettant de passer outre cette requête de vérification en retournant un code HTTP `200 OK` lors d'une requête avec la méthode OPTIONS. Pour l'instant, je compte laisser cela comme cela en attendant de discuter avec M. Mathieu de ce problème.
 
+### Lundi 17 mai 2021
+
+Réalisation de la page "Administration". La page "Administration" est accessible uniquement par les utilisateurs avec comme code rôle "2" (éducateur canin). En effet, lors de la connexion d'un éducateur canin, celui-ci sera directement redirigé sur cette page. L'objectif de la page est d'afficher tous les utilisateurs de type client de l'application dans un tableau et d'offrir différentes fonctionnalités. Les éducateur canins auront la possibilité de faire une recherche dans le tableau de client par nom ou par prénom. Il auront également la possibilité d'afficher les chiens d'un client avec le bouton "Afficher les chiens". Pour l'instant, cette page permet uniquement l'affichage des clients. Dans le futur, la page permettra de rediriger l'éducateur canin sur les informations personnelles/rendez-vous d'un client sélectionné via le bouton "Afficher les détails".    
+
+![dateTestPlanningSecondUser](./img/vue_administration.PNG)
+
+Actuellement la page est chargé de la manière suivante :
+
+1. Chargement des données de tous les clients de l'application ainsi que leurs chiens avec l'endpoint `GET api/v1/users`
+2. Chargement des photos de chien en base64 si elle il y en a avec l'endpoint `GET api/v1/dogs/downlaodPicture`
+
+Réalisation de la page "Mes informations". La page "Mes informations" est accessible par les utilisateurs authentifié. En effet, lors de la connexion d'un client, celui-ci sera directement redirigé sur cette page. L'objectif de la page est d'afficher les informations personnelles de l'utilisateur authentifié (informations personnelles, chiens, documents). Pour l'instant, la page affiche les informations personnelles ainsi que les chiens de l'utilisateur authentifié. Dans le futur, la page permettra également de voir les documents ainsi qu'un affichage avec les informations des différents rendez-vous.
+
+![dateTestPlanningSecondUser](./img/vue_mesinformations.PNG)
+
+Actuellement la page est chargé de la manière suivante :
+
+1. Chargement des données de l'utilisateur authentifié avec l'endpoint `GET api/v1/users/me`
+2. Chargement des photos de chien en base64 si elle il y en a avec l'endpoint `GET api/v1/dogs/downlaodPicture`

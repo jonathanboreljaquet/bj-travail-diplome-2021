@@ -44,7 +44,7 @@ class UserController {
      * 
      * @return string The status and the body in json format of the response
      */
-    public function getAllCustomerUsers()
+    public function getAllCustomerUsersWithDogs()
     {
         $headers = apache_request_headers();
 
@@ -61,6 +61,10 @@ class UserController {
         }
         
         $allCustomerUsers = $this->DAOUser->findAll(Constants::USER_CODE_ROLE);
+
+        foreach ($allCustomerUsers as $customerUser) {
+            $customerUser->dogs = $this->DAODog->findByUserId($customerUser->id);
+        }
 
         return ResponseController::successfulRequest($allCustomerUsers);  
     }
