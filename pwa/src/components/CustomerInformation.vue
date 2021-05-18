@@ -3,19 +3,45 @@
     <b-container>
       <b-row id="title" class="text-center">
         <b-col>
-          <h1 class="font-weight-bold">Mes informations</h1>
+          <h1 class="font-weight-bold">{{ title }}</h1>
         </b-col>
       </b-row>
       <b-row id="title">
-        <b-col md="4" style="margin-bottom: 10px" class="text-center d-flex flex-column align-items-center text-center">
+        <b-col
+          md="4"
+          style="margin-bottom: 10px"
+          class="text-center d-flex flex-column align-items-center"
+        >
           <b-card
-            style="padding: 10px; width: 100%"
+            style="padding: 10px; width: 100%; margin-bottom: 10px"
             img-src="./../assets/img/user-profile.png"
             img-top
             :title="firstname"
           >
             <p class="text-secondary mb-1" v-if="code_role == '1'">Client</p>
             <p class="text-secondary mb-1">{{ address }}</p>
+            <b-button
+              class="btnAdmin"
+              v-if="authAdministrator"
+              style="margin-bottom: 10px"
+              v-b-modal.modal-add-dog
+            >
+              Ajouter un chien
+            </b-button>
+            <b-button class="btnAdmin" v-if="authAdministrator">
+              Ajouter un document
+            </b-button>
+          </b-card>
+
+          <b-card style="padding: 10px; width: 100%">
+            <b-row style="text-align: center">
+              <b-col>condition_inscription.pdf</b-col>
+            </b-row>
+            <hr style="margin-bottom: 0px; margin-top: 0px" />
+            <b-row style="text-align: center">
+              <b-col>poster.pdf</b-col>
+            </b-row>
+            <hr style="margin-bottom: 0px; margin-top: 0px" />
           </b-card>
         </b-col>
         <b-col md="8">
@@ -52,11 +78,24 @@
           </b-card>
           <b-row>
             <b-col md="6" v-for="dog in dogs" :key="dog.id">
-              <b-card>
+              <b-card style="margin-bottom: 10px">
                 <b-row no-gutters>
                   <b-col md="12">
-                    <b-card-img v-if="dataLoading" :src="require('../assets/img/placeholder-image.png')" alt="Imagedasd" style="margin-bottom:15px"></b-card-img>
-                    <b-card-img v-else :src="dog.base64_picture" alt="Image" style="margin-bottom:15px"></b-card-img>
+                    <b-card-img
+                      v-if="dog.picture_serial_id"
+                      :src="
+                        'https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/downloadPicture/' +
+                        dog.picture_serial_id
+                      "
+                      alt="Image"
+                      style="margin-bottom: 15px"
+                    ></b-card-img>
+                    <b-card-img
+                      v-else
+                      :src="require('../assets/img/placeholder-dog.png')"
+                      alt="placeholder"
+                      style="margin-bottom: 15px"
+                    ></b-card-img>
                   </b-col>
                 </b-row>
                 <b-row>
@@ -91,15 +130,89 @@
           </b-row>
         </b-col>
       </b-row>
+      <b-button v-if="authAdministrator" class="btnReturn" to="/administration">
+        <p class="h4">
+          <b-icon-arrow-return-left></b-icon-arrow-return-left>
+        </p>
+      </b-button>
+      <b-modal id="modal-add-dog" title="Ajouter un chien">
+        <b-form
+          @submit.prevent="addDogForCustomerWithUserId($route.params.userId)"
+        >
+          <b-form-group
+            id="input-group-dog-name"
+            label="Nom :"
+            label-for="input-dog-name"
+          >
+            <b-form-input
+              id="input-dog-name"
+              v-model="addDogForm.name"
+              type="text"
+              placeholder="Entrez le nom du chien"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-dog-breed"
+            label="Race :"
+            label-for="input-dog-breed"
+          >
+            <b-form-input
+              id="input-dog-breed"
+              v-model="addDogForm.breed"
+              type="text"
+              placeholder="Entrez la race du chien"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-dog-sex"
+            label="Sexe :"
+            label-for="input-dog-sex"
+          >
+            <b-form-select
+              id="input-dog-sex"
+              v-model="addDogForm.sex"
+              :options="sex"
+              required
+            ></b-form-select>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-dog-chip-id"
+            label="Numéro de puce :"
+            label-for="input-dog-chip-id"
+          >
+            <b-form-input
+              id="input-dog-chip-id"
+              v-model="addDogForm.chip_id"
+              type="text"
+              placeholder="Entrez le numéro de puce du chien"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button block type="submit" variant="outline-primary">
+            Ajouter le chien
+          </b-button>
+        </b-form>
+      </b-modal>
     </b-container>
   </div>
 </template>
 
 <script>
+import { BIconArrowReturnLeft } from "bootstrap-vue";
 export default {
+  components: {
+    BIconArrowReturnLeft,
+  },
   name: "CustomerInformation",
   data() {
     return {
+      title: null,
       id: null,
       email: null,
       firstname: null,
@@ -108,54 +221,115 @@ export default {
       address: null,
       code_role: null,
       dogs: [],
-      dataLoading: true,
+      addDogForm: {
+        name: "",
+        breed: "",
+        sex: "",
+        chip_id: "",
+      },
+      sex: ["Mâle", "Femelle"],
     };
   },
   methods: {
     loadAuthCustomerInformations() {
       const config = {
         headers: {
+          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
       };
       this.$http
-        .get("https://api-rest-douceur-de-chien.boreljaquet.ch/users/me/", config)
+        .get(
+          "https://api-rest-douceur-de-chien.boreljaquet.ch/users/me/",
+          config
+        )
         .then((response) => {
-          const vm = this;
-          let url = "https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/downloadPicture/";
-          let promisedEvents = [];
-          vm.$jquery.each(response.data.dogs, function (index, item) {
-            if (item.picture_serial_id) {
-              promisedEvents.push(vm.$http.get(url + item.picture_serial_id));
-            }
-          });
-          vm.id = response.data.id;
-          vm.email = response.data.email;
-          vm.firstname = response.data.firstname;
-          vm.lastname = response.data.lastname;
-          vm.phonenumber = response.data.phonenumber;
-          vm.address = response.data.address;
-          vm.code_role = response.data.code_role;
-          vm.dogs = response.data.dogs;
-          return Promise.all(promisedEvents);
-        })
-        .then((response) => {
-          const vm = this;
-          this.$jquery.each(response, function (index, item) {
-            var parts = item.config.url.split("/");
-            var picture_serial_id = parts[parts.length - 1];
-            const dog = vm.dogs.find(element => element.picture_serial_id == picture_serial_id);
-            dog["base64_picture"] = item.data;
-          });
-          this.dataLoading = false;
+          this.id = response.data.id;
+          this.email = response.data.email;
+          this.firstname = response.data.firstname;
+          this.lastname = response.data.lastname;
+          this.phonenumber = response.data.phonenumber;
+          this.address = response.data.address;
+          this.code_role = response.data.code_role;
+          this.dogs = response.data.dogs;
         })
         .catch((error) => {
-          console.log(error);
+          this.$alertify.error(error.response.data.error);
+        });
+    },
+    loadCustomerInformationsByUserId(userId) {
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token
+        },
+      };
+      this.$http
+        .get(
+          "https://api-rest-douceur-de-chien.boreljaquet.ch/users/" + userId,
+          config
+        )
+        .then((response) => {
+          this.id = response.data.id;
+          this.email = response.data.email;
+          this.firstname = response.data.firstname;
+          this.lastname = response.data.lastname;
+          this.phonenumber = response.data.phonenumber;
+          this.address = response.data.address;
+          this.code_role = response.data.code_role;
+          this.dogs = response.data.dogs;
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
+    addDogForCustomerWithUserId(userId) {
+      const params = new URLSearchParams();
+      params.append("name", this.addDogForm.name);
+      params.append("breed", this.addDogForm.breed);
+      params.append("sex", this.addDogForm.sex);
+      params.append("chip_id", this.addDogForm.chip_id);
+      params.append("user_id", userId);
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      };
+      this.$http
+        .post(
+          "https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/",
+          params,
+          config
+        )
+        .then((response) => {
+          console.log(response);
+          this.dogs.push({
+            name: this.addDogForm.name,
+            breed: this.addDogForm.breed,
+            sex: this.addDogForm.sex,
+            chip_id: this.addDogForm.chip_id,
+          });
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
         });
     },
   },
+  computed: {
+    authAdministrator() {
+      return this.$store.getters.ifAdministratorAuthenticated;
+    },
+  },
   mounted() {
-    this.loadAuthCustomerInformations();
+    if (this.authAdministrator && this.$route.params.userId) {
+      this.title = "Informations du client";
+      this.loadCustomerInformationsByUserId(this.$route.params.userId);
+    } else {
+      this.title = "Mes informations";
+      this.loadAuthCustomerInformations();
+    }
   },
 };
 </script>
@@ -164,5 +338,21 @@ export default {
 #title {
   margin-top: 20px;
   color: #3ea3d8;
+}
+.btnReturn {
+  padding-top: 18px;
+  position: fixed;
+  bottom: 100px;
+  right: 15px;
+  z-index: 5;
+  display: block;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  background-color: #008afc;
+  box-shadow: -1px -1px 15px 1px rgba(0, 0, 0, 0.7);
+}
+.btnAdmin {
+  width: 100%;
 }
 </style>

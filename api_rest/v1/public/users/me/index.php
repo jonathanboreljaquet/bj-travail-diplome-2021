@@ -13,15 +13,15 @@ require "../../../bootstrap.php";
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
 $requestMethod = $_SERVER["REQUEST_METHOD"];
-if ($requestMethod == "OPTIONS") {
-    header('Access-Control-Allow-Origin: *');
-    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
-    header("HTTP/1.1 200 OK");
-    die();
+
+if (strcmp("OPTIONS", $requestMethod) == 0) {
+  header('Allow: GET');
+  return;
 }
 
 $controller = new UserController($dbConnection);

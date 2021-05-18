@@ -6,6 +6,7 @@ import About from "./../components/About.vue";
 import Calendar from "./../components/Calendar.vue";
 import PrivacyPolicy from "./../components/PrivacyPolicy.vue";
 import Connection from "./../components/Connection.vue";
+import Inscription from "./../components/Inscription.vue";
 import CustomerInformation from "./../components/CustomerInformation.vue";
 import Administration from "./../components/Administration.vue";
 import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./../variable.js";
@@ -22,7 +23,10 @@ export default new Router({
       path: "/connection",
       component: Connection,
       beforeEnter(to, from, next) {
-        if (store.state.api_token && store.state.code_role == CUSTOMER_CODE_ROLE) {
+        if (
+          store.state.api_token &&
+          store.state.code_role == CUSTOMER_CODE_ROLE
+        ) {
           next("/customer_information");
         } else {
           next();
@@ -35,13 +39,33 @@ export default new Router({
       },
     },
     {
-      path: "/customer_information",
+      path: "/inscription",
+      component: Inscription,
+      beforeEnter(to, from, next) {
+        if (
+          store.state.api_token &&
+          store.state.code_role == CUSTOMER_CODE_ROLE
+        ) {
+          next("/customer_information");
+        } else {
+          next();
+        }
+        if (store.state.api_token && store.state.code_role == ADMIN_CODE_ROLE) {
+          next("/administration");
+        } else {
+          next();
+        }
+      },
+    },
+    {
+      path: "/customer_information/:idUser?",
+      name: "customerInformation",
       component: CustomerInformation,
       beforeEnter(to, from, next) {
         if (store.state.api_token) {
           next();
         } else {
-          next("/connection");
+          next("/");
         }
       },
     },

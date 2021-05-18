@@ -278,9 +278,13 @@ class DogController {
             return ResponseController::notFoundResponse();
         }
 
-        $image = file_get_contents(HelperController::getDefaultDirectory()."storage/app/dog_picture/".$serial_id.".jpeg");
+        $image = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$serial_id.".jpeg";
         
-        return ResponseController::successfulRequestWithoutJson('data:image/jpeg;base64, '.base64_encode($image));
+        $imageInfo = getimagesize($image);
+
+        header("Content-Type: " . $imageInfo["mime"]);
+        header("Content-Length: " . filesize($image));
+        readfile($image);
     }
 
      /**

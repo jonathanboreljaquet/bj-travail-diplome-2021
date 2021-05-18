@@ -44,7 +44,7 @@ class UserController {
      * 
      * @return string The status and the body in json format of the response
      */
-    public function getAllCustomerUsersWithDogs()
+    public function getAllCustomerUsers()
     {
         $headers = apache_request_headers();
 
@@ -109,6 +109,11 @@ class UserController {
             return ResponseController::notFoundResponse();
         }
 
+        $dogs = $this->DAODog->findByUserId($user->id);
+        $documents = $this->DAODocument->findByUserId($user->id);
+        $user->dogs = $dogs;
+        $user->documents = $documents;
+
         return ResponseController::successfulRequest($user);
     }
 
@@ -146,7 +151,10 @@ class UserController {
             HelperController::sendMail($random_password,$user->email);
         }
 
-        return ResponseController::successfulCreatedRessource();
+        $result = array();
+        $result["api_token"] = $user->api_token;
+        $result["code_role"] = $user->code_role;
+        return ResponseController::successfulRequest($result);
     }
 
     /**

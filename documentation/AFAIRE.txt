@@ -17,3 +17,18 @@ Format ics envoyé par mail au client
 
 Authentification d’API via JWT et les Cookies
 https://website.simplx.fr/blog/2016/09/27/authentification-api-via-jwt-et-cookies/
+
+retourner les permissions en brut lors du endpoint de connexion 
+
+Modification du endpoint `GET api/v1/dogs/downloadPicture` (retourne directement image)
+-MODIFIER documentation du endpoint
+-MODIFIER tests unitaires postman et dans la doc
+Modification du endpoint `POST api/v1/users` (retourne mtn api token + code role)
+-MODIFIER documentation du endpoint
+-MODIFIER tests unitaires postman et dans la doc
+Modification du endpoint `GET api/v1/users` (retourner avec les chiens)
+-MODIFIER documentation du endpoint
+-MODIFIER tests unitaires postman et dans la doc
+Modification du endpoint `GET api/v1/users/{userId]` (retourner avec les chiens et documents)
+-MODIFIER documentation du endpoint
+-MODIFIER tests unitaires postman et dans la doc

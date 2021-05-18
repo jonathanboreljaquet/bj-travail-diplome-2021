@@ -6,6 +6,14 @@
           <h1>Se connecter</h1>
         </b-col>
       </b-row>
+      <b-row class="text-center text-secondary">
+        <b-col>
+          Nouveau sur ce site ?
+          <router-link to="/inscription">
+            <span role="link">S'inscrire</span>
+          </router-link>
+        </b-col>
+      </b-row>
       <b-row id="title" class="justify-content-center">
         <b-col lg="6">
           <b-form @submit.prevent="onSubmit">

@@ -14,7 +14,8 @@
                 v-for="educator in educators"
                 :key="educator.id"
                 :value="educator.id"
-                >{{ educator.firstname }} {{ educator.lastname }}</b-form-select-option
+                >{{ educator.firstname }}
+                {{ educator.lastname }}</b-form-select-option
               >
             </b-form-select>
           </b-form-group>
@@ -81,7 +82,7 @@ export default {
         )
         .then((response) => (this.educators = response.data));
     },
-    loadEducatorEvents(idEducator){
+    loadEducatorEvents(idEducator) {
       this.$http
         .get(
           "https://api-rest-douceur-de-chien.boreljaquet.ch/plannings/" +
@@ -101,11 +102,14 @@ export default {
                 response.data[index].date + " " + response.data[index].time_end,
             });
           });
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
         });
     },
-    onChange(){
-        this.loadEducatorEvents(this.selected);
-    }
+    onChange() {
+      this.loadEducatorEvents(this.selected);
+    },
   },
   mounted() {
     this.loadEducators();

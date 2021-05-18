@@ -26,6 +26,7 @@
       </b-row>
       <b-table
         :items="items"
+        :busy="isBusy"
         :fields="fields"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
@@ -35,27 +36,48 @@
         striped
         responsive="sm"
       >
+        <template #table-busy>
+          <div class="text-center text-danger my-2">
+            <b-spinner class="align-middle"></b-spinner>
+            <strong> Chargement...</strong>
+          </div>
+        </template>
+
         <template #cell(chiens)="row">
           <b-button size="sm" @click="row.toggleDetails" class="mr-2">
-            {{ row.detailsShowing ? "Cacher les" : "Afficher les"}} chiens
+            {{ row.detailsShowing ? "Cacher les" : "Afficher les" }} chiens
           </b-button>
         </template>
         <template #cell(details)="row">
-          <b-button :value="row.item.id"> Afficher les détails</b-button>
+          <b-button
+            :to="{
+              name: 'customerInformation',
+              params: { userId: row.item.id },
+            }"
+          >
+            Afficher les détails
+          </b-button>
         </template>
 
         <template #row-details="row">
           <div v-if="row.item.dogs.length > 0">
-            <b-card style="margin-bottom: 5px" v-for="dog in row.item.dogs" :key="dog.id">
+            <b-card
+              style="margin-bottom: 5px"
+              v-for="dog in row.item.dogs"
+              :key="dog.id"
+            >
               <b-row>
                 <b-col><b>Nom du chien:</b></b-col>
                 <b-col>{{ dog.name }}</b-col>
               </b-row>
               <b-row>
                 <b-col><b>Photo du chien:</b></b-col>
-                <b-col v-if="dog.base64_picture">
+                <b-col v-if="dog.picture_serial_id">
                   <b-img
-                    :src="dog.base64_picture"
+                    :src="
+                      'https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/downloadPicture/' +
+                      dog.picture_serial_id
+                    "
                     rounded
                     fluid
                     :alt="dog.name + ' picture'"
@@ -94,12 +116,14 @@ export default {
       items: [],
       filter: null,
       filterOn: ["nom", "prenom"],
+      isBusy: true,
     };
   },
   methods: {
     loadCustomersWithDogs() {
       const config = {
         headers: {
+          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
       };
@@ -107,14 +131,7 @@ export default {
         .get("https://api-rest-douceur-de-chien.boreljaquet.ch/users/", config)
         .then((response) => {
           const vm = this;
-          let url = "https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/downloadPicture/";
-          var promisedEvents = [];
           this.$jquery.each(response.data, function (index, item) {
-            vm.$jquery.each(item.dogs, function (index, item) {
-              if (item.picture_serial_id) {
-                promisedEvents.push(vm.$http.get(url + item.picture_serial_id));
-              }
-            });
             vm.items.push({
               id: item.id,
               prenom: item.firstname,
@@ -122,27 +139,17 @@ export default {
               dogs: item.dogs,
             });
           });
-          return Promise.all(promisedEvents);
-        })
-        .then((response) => {
-          const vm = this;
-          vm.$jquery.each(response, function (index, promise_result) {
-            vm.$jquery.each(vm.items, function (index, item) {
-              var parts = promise_result.config.url.split("/");
-              var picture_serial_id = parts[parts.length - 1];
-              const dog = item.dogs.find(element => element.picture_serial_id == picture_serial_id);
-              if (dog) {
-                dog["base64_picture"] = promise_result.data;
-              }
-            });
-          });
+          this.toggleBusy();
         })
         .catch((error) => {
-          console.log(error);
+          this.$alertify.error(error.response.data.error);
         });
     },
+    toggleBusy() {
+      this.isBusy = !this.isBusy;
+    },
   },
-  mounted() {
+  created() {
     this.loadCustomersWithDogs();
   },
 };

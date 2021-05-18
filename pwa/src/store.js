@@ -21,6 +21,40 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    inscription({ commit }, authData) {
+      const params = new URLSearchParams();
+      params.append("email", authData.email);
+      params.append("firstname", authData.firstname);
+      params.append("lastname", authData.lastname);
+      params.append("phonenumber", authData.phonenumber);
+      params.append("address", authData.address);
+      params.append("password", authData.password);
+      const config = {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      };
+      Vue.prototype.$http
+        .post(
+          "https://api-rest-douceur-de-chien.boreljaquet.ch/users/",
+          params,
+          config
+        )
+        .then((res) => {
+          console.log(res);
+          localStorage.setItem("api_token", res.data.api_token);
+          localStorage.setItem("code_role", res.data.code_role);
+          commit("authUser", {
+            api_token: res.data.api_token,
+            code_role: res.data.code_role,
+          });
+          Vue.prototype.$alertify.success("Vous êtes inscrit");
+          router.push("/customer_information");
+        })
+        .catch((error) => {
+          Vue.prototype.$alertify.error(error.response.data.error);
+        });
+    },
     login({ commit }, authData) {
       const params = new URLSearchParams();
       params.append("email", authData.email);
@@ -52,16 +86,14 @@ export default new Vuex.Store({
           }
         })
         .catch((error) => {
-          Vue.prototype.$alertify.error(
-            "Le nom d'utilisateur et le mot de passe que vous avez entrés ne correspondent pas à ceux présents dans nos fichiers. Veuillez vérifier et réessayer."
-          );
-          console.log(error);
+          Vue.prototype.$alertify.error(error.response.data.error);
         });
     },
     logout({ commit }) {
       commit("clearAuth");
       localStorage.removeItem("api_token");
       localStorage.removeItem("code_role");
+      Vue.prototype.$alertify.success("Vous êtes déconnecté");
       router.replace("/");
     },
     autoLogin({ commit }) {

@@ -27,10 +27,10 @@
           </b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
-          <b-nav-item id="logoutBtn" v-if="auth" @click="logout()" href="#">
+          <b-nav-item v-if="auth" @click="logout()" href="#">
             Deconnexion
           </b-nav-item>
-          <b-nav-item id="loginBtn" v-if="!auth" to="/connection" href="#">
+          <b-nav-item v-if="!auth" to="/connection" href="#">
             Connexion
           </b-nav-item>
         </b-navbar-nav>

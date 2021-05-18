@@ -14,15 +14,15 @@ require "../../bootstrap.php";
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
+header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE,OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
 $requestMethod = $_SERVER["REQUEST_METHOD"];
-if ($requestMethod == "OPTIONS") {
-    header('Access-Control-Allow-Origin: *');
-    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
-    header("HTTP/1.1 200 OK");
-    die();
+
+if (strcmp("OPTIONS", $requestMethod) == 0) {
+	header('Allow: GET,POST,PATCH,DELETE');
+	return;
 }
 
 $controller = new UserController($dbConnection);
@@ -47,7 +47,7 @@ $user->password_hash = $input["password"] ?? null;
 switch ($requestMethod) {
     case 'GET':
         if (empty($id) || !is_numeric($id)) {
-            $response = $controller->getAllCustomerUsersWithDogs();
+            $response = $controller->getAllCustomerUsers();
         }
         else{
             $response = $controller->getUser($id);

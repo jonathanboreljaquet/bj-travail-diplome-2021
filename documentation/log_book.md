@@ -1566,3 +1566,42 @@ Actuellement, la page est chargée de la manière suivante :
 
 Lors de la réalisation de ces deux pages, j'ai été confronté au même problème. Exécutant les requête HTTP de récupération de photo de chien avec axios dans le résultat de la requête HTTP de récupération de tous les utilisateurs ou de l'utilisateur authentifié, le DOM se voyait être chargé avec la récupération des photos de chien. Pour palier à ce problème, j'ai stocké toutes mes requêtes de récupération de photo de chien dans une liste de promesse. Une promesse est un objet qui représente l'état d'une opération asynchrone. Une fois la liste de mes promesse chargée, j'ai utilisé la méthode `Promise.all()` permettant de renvoyer une promesse qui est résolue lorsque l'ensemble des promesses contenues dans cette liste ont été résolues. Cette méthode permet donc de charger toutes les photos de chiens au même moment. Par contre, si une des requêtes échoue, la totalité des requêtes ne seront pas exécutées. Je compte poser une question à M. Mathieu lors de notre rendez-vous GMeet hebdomadaire demain afin de lui demander si cela serait pas mieux que mon API REST retourne directement la photo du chien en base64 si elle existe lors des endpoints retournant les informations des chiens. 
 
+### Mardi 18 mai 2021
+
+Rendez-vous hebdomadaire GMeet avec M. Mathieu. Au début de notre rendez-vous, j'ai posé des questions par rapport à des problèmes techniques à M. Mathieu. Ces questions étaient :
+
+* Comment résoudre le problème du samedi 15 mai, qui, lors de l'envoie de requêtes HTTP depuis le navigateur envoyait d'abord une requête OPTIONS.
+  * M. Mathieu m'a montré une solution qui lors de la réception de requête de type OPTIONS, retourne un en-tête `Allow: POST`
+* Comment simplifier l'endpoint de récupération de l'image du chien ? En effet, actuellement, l'endpoint `GET api/v1/dogs/downloadPicture` retourne la photo du chien en base64.
+  * M. Mathieu m'a conseillé de retourner directement l'image à la place de retourner l'image en base64 car très lourd. En effet, il m'a proposé de retourner dans les différents endpoints qui me retourne les informations des chiens, l'endpoint de récupération de l'image.
+* Comment gérer les permissions de mon frontend ? En effet, actuellement, j'effectue le contrôle des permissions depuis le code du rôle de l'utilisateur retourné avec l'api token depuis l'endpoint `POST api/v1/connection`.
+  * M. Mathieu m'a conseillé de retourner les différentes permissions d'un utilisateur dans un tableau de permission depuis l'endpoint de connexion `POST api/v1/connection`
+
+Ensuite, M. Mathieu m'a fait part de ses commentaires par rapport à la documentation de mon projet. Pour résumé, ses commentaires sont les suivants :
+
+* Passez dans un correcteur orthographique l'abstract en anglais, mais aussi le résumé pour le français.
+* Le persona doit être d'avantage enrichi.
+* Revoir la formulation des scénarios 
+* Expliquer la différence entre une application web responsive et une PWA au point 5.5.1.
+* Ajouter l'analyse concurrentielle d'agenda.ch
+* MAIL
+* Exemple de la manière dont j'ai créé les tests unitaires.
+* Ajouter un explain pour les requêtes compliquées écrites
+* Ajouter un schéma mindmap de ce que fait l'application
+* Ajouter un schéma qui regroupe les actions par type t'utilisateur
+
+Je vais commencer ma journée avec les points techniques et j'enchainerais sur les points concernant la documentation.
+
+* Modification des fichiers d'entrée des endpoints utilisés jusqu'à là afin de gérer le problème de la requête OPTIONS.
+* Modification du endpoint `GET api/v1/dogs/downloadPicture` afin que celui-ci retourne maintenant directement l'image et non sa base64.
+  * Modification des vues concerné jusqu'à là ("Mes informations" et "Administration"), dorénavant je n'ai plus besoin d'utiliser une liste de promesse car j'assigne directement la source de l'image avec mon endpoint. Exemple : `:src='https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/downloadPicture/' + dog.picture_serial_id"`
+
+Réalisation de la page "Inscription". La page "Inscription" est accessible par tous les types d'utilisateur. L'objectif de la page est de créer un compte utilisateur pour un client. Pour l'instant, le formulaire d'inscription contient juste une confirmation de mot de passe. Si tout ce passe bien lors de l'inscription, l'utilisateur est automatiquement connecté à l'application et est redirigé vers la page "Mes informations".
+
+![dateTestPlanningSecondUser](./img/vue_inscription.PNG)
+
+Dorénavant, la page "Administration" des éducateurs canins permet d'accéder aux informations d'un client en cliquant sur le bouton "Afficher les détails". L'objectif de cette page est d'afficher les informations du client en utilisant le même composant que la page "Mes informations" mais avec différentes fonctionnalités que seul les éducateurs canins auront accès. Pour l'instant, l'éducateur canin peut ajouter un chien à un utilisateur depuis un fenêtre modale en cliquant sur le bouton "Ajouter un chien" et retourner en arrière sur la page "Administration" depuis un sticky bouton.
+
+![dateTestPlanningSecondUser](./img/vue_adddog.png)
+
+Pour ce qui est des points concernant la documentation, je compte les réaliser demain car actuellement, j'ai besoin de sortir la tête de mon travail de diplôme.
