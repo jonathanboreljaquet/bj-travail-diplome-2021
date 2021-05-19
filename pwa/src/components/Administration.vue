@@ -8,7 +8,7 @@
       </b-row>
       <b-row>
         <b-col>
-          <b-input-group size="sm">
+          <b-input-group size="sm" style="margin-bottom: 10px">
             <b-form-input
               id="filter-input"
               v-model="filter"
@@ -24,6 +24,13 @@
           </b-input-group>
         </b-col>
       </b-row>
+      <b-pagination
+        v-model="currentPage"
+        align="fill"
+        size="sm"
+        class="my-0"
+        :total-rows="totalRows"
+      ></b-pagination>
       <b-table
         :items="items"
         :busy="isBusy"
@@ -32,6 +39,8 @@
         :sort-desc.sync="sortDesc"
         :filter="filter"
         :filter-included-fields="filterOn"
+        :perPage="10"
+        :current-page="currentPage"
         sort-icon-left
         striped
         responsive="sm"
@@ -44,18 +53,19 @@
         </template>
 
         <template #cell(chiens)="row">
-          <b-button size="sm" @click="row.toggleDetails" class="mr-2">
-            {{ row.detailsShowing ? "Cacher les" : "Afficher les" }} chiens
+          <b-button size="sm" @click="row.toggleDetails" class="mr-2 tableBtn">
+            {{ row.detailsShowing ? "Cacher" : "Afficher" }}
           </b-button>
         </template>
-        <template #cell(details)="row">
+        <template #cell(edition)="row">
           <b-button
             :to="{
               name: 'customerInformation',
               params: { userId: row.item.id },
             }"
+            class="tableBtn"
           >
-            Afficher les détails
+            <b-icon-pencil-square></b-icon-pencil-square>
           </b-button>
         </template>
 
@@ -101,7 +111,11 @@
 </template>
 
 <script>
+import { BIconPencilSquare } from "bootstrap-vue";
 export default {
+  components: {
+    BIconPencilSquare,
+  },
   name: "Administration",
   data() {
     return {
@@ -111,12 +125,14 @@ export default {
         { key: "nom", sortable: true },
         { key: "prenom", sortable: true },
         { key: "chiens", sortable: false },
-        { key: "details", sortable: false },
+        { key: "edition", sortable: false },
       ],
       items: [],
       filter: null,
       filterOn: ["nom", "prenom"],
       isBusy: true,
+      currentPage: 1,
+      totalRows: 1,
     };
   },
   methods: {
@@ -140,6 +156,7 @@ export default {
             });
           });
           this.toggleBusy();
+          this.totalRows = this.items.length;
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
@@ -159,5 +176,8 @@ export default {
 #title {
   margin-top: 20px;
   color: #3ea3d8;
+}
+.tableBtn {
+  background-color: #3ea3d8;
 }
 </style>

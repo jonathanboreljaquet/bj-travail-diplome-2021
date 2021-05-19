@@ -1584,7 +1584,7 @@ Ensuite, M. Mathieu m'a fait part de ses commentaires par rapport à la document
 * Revoir la formulation des scénarios 
 * Expliquer la différence entre une application web responsive et une PWA au point 5.5.1.
 * Ajouter l'analyse concurrentielle d'agenda.ch
-* MAIL
+* Suppression des éléments superflus
 * Exemple de la manière dont j'ai créé les tests unitaires.
 * Ajouter un explain pour les requêtes compliquées écrites
 * Ajouter un schéma mindmap de ce que fait l'application
@@ -1605,3 +1605,26 @@ Dorénavant, la page "Administration" des éducateurs canins permet d'accéder a
 ![dateTestPlanningSecondUser](./img/vue_adddog.png)
 
 Pour ce qui est des points concernant la documentation, je compte les réaliser demain car actuellement, j'ai besoin de sortir la tête de mon travail de diplôme.
+
+### Mercredi 19 mai 2021
+
+Création d'un captcha pour l'inscription d'un utilisateur grâce à des camarades de classes qui ont eut la bonne idée de spam ma fonctionnalité d'inscription. Pour ce faire, j'ai commencé par me rendre sur reCAPTCHA qui est le captcha de Google que M. Mathieu m'avait proposé il y a une semaine. J'ai ensuite enregistré les paramètres de configurations du captcha. J'ai pour l'instant choisis la version 2 de reCAPTCHA avec le mode "Je ne suis pas un robot" qui va demander à l'utilisateur de cocher une checkbox, qui si celui-ci est suspect, va également lui demander de remplir un formulaire de vérification. J'ai ensuite eu accès à une clef pour l'intégration côté client. Pour intégrer reCAPTCHA, j'ai utilisé le plugin `vue-recaptcha` avec la commande NPM `npm install --save vue-recaptcha`. J'ai ensuite importé et intégré le composant à mon formulaire d'inscription avec la clef fournit par Google.
+
+Ajout d'une pagination sur le tableau des clients de la page "Administration" et modification de l'affichage des colonnes d'affichages de chiens et d'édition de client.
+
+Début du développement de la fonctionnalité permettant d'ajouter une photo de chien à un chien n'en possédant aucune. La fonctionnalité va fonctionner de la manière suivante :
+
+1. Ajout d'un bouton "Ajouter une photo" en dessous des informations des chiens n'ayant pas encore de photo.
+2. Le bouton "Ajouter une photo"  va ouvrir une fenêtre modale permettant de prendre une photo si l'utilisateur à une caméra ou si ce n'est pas le cas, ouvrir le système de fichier.
+3. Une fois la photo prise ou sélectionné dans le système de fichier, appel de l'endpoint `POST api/v1/dogs/uploadPicture`
+4. Rechargement des données afin d'afficher la nouvelle photo du chien
+
+Recherche sur l'utilisation du plugin `vue-cropperjs` utilisant la librairie `Cropper.js` afin de recadrer la photo à uploadé afin d'obliger celle-ci à être carré pour un meilleur affichage.
+
+Lien pour demain :
+
+* https://www.npmjs.com/package/vue-cropperjs
+* https://lobotuerto.com/blog/cropping-images-with-vuejs-and-cropperjs/
+* https://github.com/fengyuanchen/cropperjs#cropperjs
+
+### Jeudi 19 mai 2021

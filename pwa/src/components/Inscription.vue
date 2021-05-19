@@ -108,6 +108,19 @@
                 required
               ></b-form-input>
             </b-form-group>
+            <b-form-group
+              id="input-group-8"
+              label="Captcha :"
+              label-for="input-8"
+            >
+              <label for="robot"></label>
+              <vue-recaptcha
+                ref="recaptcha"
+                @verify="onVerify"
+                sitekey="6LdDq9saAAAAAG7jxON5LMecQiHSpHXddkE6-Jek"
+              >
+              </vue-recaptcha>
+            </b-form-group>
             <b-button block type="submit" variant="outline-primary">
               Inscription
             </b-button>
@@ -119,8 +132,13 @@
 </template>
 
 <script>
+import VueRecaptcha from "vue-recaptcha";
+
 export default {
   name: "Inscription",
+  components: {
+    VueRecaptcha,
+  },
   data() {
     return {
       form: {
@@ -131,24 +149,44 @@ export default {
         address: "",
         password: "",
         repeatPassword: "",
+        robot: false,
       },
     };
   },
   methods: {
-    onSubmit() {
-      if (this.form.password == this.form.repeatPassword) {
-        this.$store.dispatch("inscription", {
-          email: this.form.email,
-          firstname: this.form.firstname,
-          lastname: this.form.lastname,
-          phonenumber: this.form.phonenumber,
-          address: this.form.address,
-          password: this.form.password,
-        });
-      } else {
-        this.$alertify.error("les mots de passes ne corréspondent pas");
+    onVerify(response) {
+      if (response) {
+        this.form.robot = true;
       }
     },
+    onSubmit() {
+      if (this.form.password != this.form.repeatPassword) {
+        this.$alertify.error("les mots de passes ne corréspondent pas");
+        return;
+      }
+
+      if (!this.form.robot) {
+        this.$alertify.error("la vérification du captcha a échoué");
+        return;
+      }
+
+      this.$store.dispatch("inscription", {
+        email: this.form.email,
+        firstname: this.form.firstname,
+        lastname: this.form.lastname,
+        phonenumber: this.form.phonenumber,
+        address: this.form.address,
+        password: this.form.password,
+      });
+    },
+  },
+  mounted() {
+    let recaptchaScript = document.createElement("script");
+    recaptchaScript.setAttribute(
+      "src",
+      "https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit"
+    );
+    document.head.appendChild(recaptchaScript);
   },
 };
 </script>

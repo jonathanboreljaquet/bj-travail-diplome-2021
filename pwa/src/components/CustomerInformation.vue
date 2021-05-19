@@ -89,6 +89,7 @@
                       "
                       alt="Image"
                       style="margin-bottom: 15px"
+                      bottom
                     ></b-card-img>
                     <b-card-img
                       v-else
@@ -125,6 +126,21 @@
                   </b-col>
                   <b-col sm="8" class="text-secondary">{{ dog.chip_id }}</b-col>
                 </b-row>
+                <div v-if="!dog.picture_serial_id && authAdministrator">
+                  <hr />
+                  <b-row>
+                    <b-col>
+                      <b-button
+                        class="btnAdmin"
+                        style="margin-bottom: 10px"
+                        v-b-modal.modal-add-picture-dog
+                        @click="sendDogId(dog.id)"
+                      >
+                        Ajouter une photo
+                      </b-button>
+                    </b-col>
+                  </b-row>
+                </div>
               </b-card>
             </b-col>
           </b-row>
@@ -199,15 +215,53 @@
           </b-button>
         </b-form>
       </b-modal>
+      <b-modal id="modal-add-picture-dog" title="Ajouter une photo">
+        <b-form
+          @submit.prevent="
+            uploadDogPictureByDogId(dogPictureFile, selectedDogId)
+          "
+        >
+          <b-form-group
+            id="input-group-dog-picture-file"
+            label="Photo :"
+            label-for="input-dog-picture-file"
+          >
+            <b-form-file
+              required
+              v-model="dogPictureFile"
+              :capture="true"
+              placeholder="Aucun fichier choisi"
+              browse-text="Ajouter"
+              id="input-dog-picture-file"
+              size="sm"
+              @change="setupCropper"
+            ></b-form-file>
+          </b-form-group>
+
+          <b-button block type="submit" variant="outline-primary">
+            Ajouter la photo
+          </b-button>
+        </b-form>
+        <vue-cropper
+          ref="cropper"
+          :src="imgSrc"
+          alt="Source Image"
+        >
+        </vue-cropper>
+      </b-modal>
     </b-container>
   </div>
 </template>
 
 <script>
 import { BIconArrowReturnLeft } from "bootstrap-vue";
+import VueCropper from "vue-cropperjs";
+import "cropperjs/dist/cropper.css";
+
 export default {
   components: {
     BIconArrowReturnLeft,
+    VueCropper,
   },
   name: "CustomerInformation",
   data() {
@@ -227,7 +281,10 @@ export default {
         sex: "",
         chip_id: "",
       },
+      selectedDogId: "",
+      dogPictureFile: null,
       sex: ["Mâle", "Femelle"],
+      imgSrc: "",
     };
   },
   methods: {
@@ -270,6 +327,7 @@ export default {
           config
         )
         .then((response) => {
+          console.log("load");
           this.id = response.data.id;
           this.email = response.data.email;
           this.firstname = response.data.firstname;
@@ -304,17 +362,43 @@ export default {
           config
         )
         .then((response) => {
+          this.loadCustomerInformationsByUserId(this.$route.params.userId);
           console.log(response);
-          this.dogs.push({
-            name: this.addDogForm.name,
-            breed: this.addDogForm.breed,
-            sex: this.addDogForm.sex,
-            chip_id: this.addDogForm.chip_id,
-          });
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
+    },
+    uploadDogPictureByDogId(dogPictureFile, dogId) {
+      console.log(dogPictureFile);
+      let formData = new FormData();
+      formData.append("dog_picture", dogPictureFile);
+      formData.append("dog_id", dogId);
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token
+        },
+      };
+      this.$http
+        .post(
+          "https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/uploadPicture/",
+          formData,
+          config
+        )
+        .then((response) => {
+          this.loadCustomerInformationsByUserId(this.$route.params.userId);
+          console.log(response);
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
+    sendDogId(dogId) {
+      this.selectedDogId = dogId;
+    },
+    setupCropper(selectedFile) {
+      console.log(window.URL.createObjectURL(selectedFile))
     },
   },
   computed: {

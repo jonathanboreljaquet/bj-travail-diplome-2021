@@ -28,7 +28,7 @@
     <b-container fluid>
       <b-row class="text-center">
         <b-col style="background-color: white; color: #3ea3d8">
-          ©2020 Douceur de chien -
+          ©2021 Douceur de chien -
           <RouterLink class="link" to="/privacy_policy"
             >politique de confidentialité</RouterLink
           >
