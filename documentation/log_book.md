@@ -1614,8 +1614,8 @@ Ajout d'une pagination sur le tableau des clients de la page "Administration" et
 
 Début du développement de la fonctionnalité permettant d'ajouter une photo de chien à un chien n'en possédant aucune. La fonctionnalité va fonctionner de la manière suivante :
 
-1. Ajout d'un bouton "Ajouter une photo" en dessous des informations des chiens n'ayant pas encore de photo.
-2. Le bouton "Ajouter une photo"  va ouvrir une fenêtre modale permettant de prendre une photo si l'utilisateur à une caméra ou si ce n'est pas le cas, ouvrir le système de fichier.
+1. Ajout d'un bouton "Ajouter une photo" en dessous des informations des chiens n'ayant pas encore de photo
+2. Le bouton "Ajouter une photo"  va ouvrir une fenêtre modale permettant de prendre une photo si l'utilisateur à une caméra ou si ce n'est pas le cas, ouvrir le système de fichier
 3. Une fois la photo prise ou sélectionné dans le système de fichier, appel de l'endpoint `POST api/v1/dogs/uploadPicture`
 4. Rechargement des données afin d'afficher la nouvelle photo du chien
 
@@ -1629,31 +1629,31 @@ Lien pour demain :
 
 ### Jeudi 20 mai 2021
 
-Amélioration de l'interface utilisateur après des tests effectués sur IOS. En effet, les appareils IOS place automatiquement un élément sélectionné dans un input de type select mais ne l'introduit pas vraiment sa valeur. De ce fait, j'ai ajouté un élément sélectionné de base. J'ai également améliorer l'interaction utilisateur sur les fenêtre modale "Ajouter un chien" et "Ajouter une photo de chien" .
+Amélioration de l'interface utilisateur après des tests effectués sur IOS. En effet, les appareils IOS placent automatiquement un élément sélectionné dans un input de type select, mais n'introduisent pas vraiment sa valeur. De ce fait, j'ai ajouté un élément sélectionné par défaut. J'ai également amélioré l'interaction utilisateur sur les fenêtres modales "Ajouter un chien" et "Ajouter une photo de chien".
 
-Finalisation de de la fonctionnalité d'ajout de photo qui permet d'ajouter une photo pour un chien depuis la caméra de l'appareil si celui-ci en a la possibilité. La photo ajouté ne s'affiche pas encore de manière carrée comme je l'avais annoncé hier. En effet, afin de ne par perdre trop de temps, je compte reporter à plus tard le développement de cette fonctionnalité.
+Finalisation de la fonctionnalité d'ajout de photo qui permet d'ajouter une photo pour un chien depuis la caméra de l'appareil si celui-ci en a la possibilité. La photo ajoutée ne s'affiche pas encore de manière carrée comme je l'avais annoncé hier. En effet, afin de ne pas perdre trop de temps, je compte reporter à plus tard le développement de cette fonctionnalité.
 
 ![dateTestPlanningSecondUser](./img/vue_adddogpicture.png)
 
 Développement de la fonctionnalité permettant d'ajouter un document à un client. La fonctionnalité va fonctionner de la manière suivante :
 
-1. Ajout d'un bouton "Ajouter un document" en dessous des informations du client.
-2. Le bouton "Ajouter un document"  va ouvrir une fenêtre modale permettant en premier lieux de choisir le type de document à ajouter
+1. Ajout d'un bouton "Ajouter un document" en dessous des informations du client
+2. Le bouton "Ajouter un document" va ouvrir une fenêtre modale permettant en premier lieux de choisir le type de document à ajouter
    1. Le premier type est "Document pdf", il permet d'ajouter un document pdf quelconque
-   2. Le deuxième type est "Conditions d'inscription", il permet de générer une condition d'inscription pour le client. Cette condition d'inscription nécessitera plusieurs informations. Le forfait choisit par le client ainsi que sa signature dans un canevas. Le client pourra effacer sa signature si celle-ci lui convient pas. Il devra également charger sa signature afin de la validé avant de créer les conditions d'inscription.
+   2. Le deuxième type est "Conditions d'inscription", il permet de générer une condition d'inscription pour le client. Cette condition d'inscription nécessitera plusieurs informations comme le forfait choisit par le client ainsi que sa signature dans un canevas. Le client pourra effacer sa signature si celle-ci ne lui convient pas. Il devra également charger sa signature afin de la validé avant de créer les conditions d'inscription
 3. Une fois le document pdf ou les conditions d'inscription configurés, appel de l'endpoint `POST api/v1/documents`
 
 ![dateTestPlanningSecondUser](./img/vue_adddocument.PNG)
 
-Pour réaliser cette fonctionnalité, j'ai créé un composant `Sketchpad.vue` contenant le canevas généré grâce à la librairie sans dépendance `Responsive-Sketchpad`. Pour ce faire, j'ai exécuté la commande `npm install responsive-sketchpad` afin de créé le canevas dans composant. J'ai ensuite importé ce composant dans le composant `CustomerInformation.vue`
+Pour réaliser cette fonctionnalité, j'ai créé un composant `Sketchpad.vue` contenant le canevas généré grâce à la librairie sans dépendance `Responsive-Sketchpad`. Pour ce faire, j'ai exécuté la commande `npm install responsive-sketchpad` afin de créer le canevas dans le composant. J'ai ensuite importé ce composant dans le composant `CustomerInformation.vue`.
 
 ### Vendredi 21 mai 2021
 
 Développement de la fonctionnalité d'affichage et de téléchargement des différents documents d'utilisateurs. Pour ce faire, j'ai :
 
 * Modifié l'endpoint `GET api/v1/documents/downloadDocument/{serialId}` afin que les administrateurs puissent également avoir les droits pour télécharger les documents pdf
-* Récupéré les documents du client lors de utilisation du endpoint `GET api/v1/users/{userId}` afin de les afficher
+* Récupéré les documents du client lors de l'utilisation du endpoint `GET api/v1/users/{userId}` afin de les afficher
 * Réalisé la fonctionnalité permettant de télécharger les documents lors d'un click sur ceux-ci fonctionnant de la manière suivante :
   1. Appel de l'endpoint `GET api/v1/documents/downloadDocument/{serialId}` afin de récupérer la chaîne binaire (binaryString) du document PDF
-  2. Création d'un BLOB (Binary large Object) avec la chaîne binaire.
+  2. Création d'un BLOB (Binary large Object) avec la chaîne binaire
   3. COMPLETER
