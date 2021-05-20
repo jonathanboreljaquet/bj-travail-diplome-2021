@@ -1645,15 +1645,15 @@ Développement de la fonctionnalité permettant d'ajouter un document à un clie
 
 ![dateTestPlanningSecondUser](./img/vue_adddocument.PNG)
 
-Pour réaliser cette fonctionnalité, j'ai créé un composant `Sketchpad.vue` contenant le canevas généré grâce à la librairie sans dépendance `Responsive-Sketchpad`. Pour ce faire, j'ai exécuté la commande `npm install responsive-sketchpad` afin de créer le canevas dans le composant. J'ai ensuite importé ce composant dans le composant `CustomerInformation.vue`.
+Pour réaliser cette fonctionnalité, j'ai créé un composant `Sketchpad.vue` contenant le canevas généré grâce à la librairie sans dépendance `Responsive-Sketchpad`. Pour ce faire, j'ai exécuté la commande `npm install responsive-sketchpad` afin d'importer le canevas dans le composant. J'ai ensuite importé ce composant dans le composant `CustomerInformation.vue`.
 
 ### Vendredi 21 mai 2021
 
 Développement de la fonctionnalité d'affichage et de téléchargement des différents documents d'utilisateurs. Pour ce faire, j'ai :
 
-* Modifié l'endpoint `GET api/v1/documents/downloadDocument/{serialId}` afin que les administrateurs puissent également avoir les droits pour télécharger les documents pdf
+* Modifié l'endpoint `GET api/v1/documents/downloadDocument/{serialId}` afin que les administrateurs puissent également avoir les droits de téléchargement des documents pdf
 * Récupéré les documents du client lors de l'utilisation du endpoint `GET api/v1/users/{userId}` afin de les afficher
-* Réalisé la fonctionnalité permettant de télécharger les documents lors d'un click sur ceux-ci fonctionnant de la manière suivante :
+* Réalisé la fonctionnalité permettant de télécharger un document en cliquant sur celui-ci fonctionnant de la manière suivante :
   1. Appel de l'endpoint `GET api/v1/documents/downloadDocument/{serialId}` afin de récupérer la chaîne binaire (binaryString) du document PDF
   2. Création d'un BLOB (Binary large Object) avec la chaîne binaire
   3. COMPLETER
