@@ -1,4 +1,4 @@
-i<template>
+<template>
   <div class="content">
     <b-container>
       <b-row align-h="center">

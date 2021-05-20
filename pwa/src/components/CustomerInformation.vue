@@ -21,6 +21,7 @@
             <p class="text-secondary mb-1" v-if="code_role == '1'">Client</p>
             <p class="text-secondary mb-1">{{ address }}</p>
             <b-button
+              variant="outline-success"
               class="btnAdmin"
               v-if="authAdministrator"
               style="margin-bottom: 10px"
@@ -29,6 +30,7 @@
               Ajouter un chien
             </b-button>
             <b-button
+              variant="outline-success"
               class="btnAdmin"
               v-if="authAdministrator"
               v-b-modal.modal-add-document
@@ -37,13 +39,24 @@
             </b-button>
           </b-card>
 
-          <b-card style="padding: 10px; width: 100%">
+          <b-card
+            v-if="documents.length > 0"
+            style="padding: 10px; width: 100%"
+          >
             <div v-for="document in documents" :key="document.id">
               <b-row style="text-align: center">
                 <b-col>
-                  <a @click="downloadDocument(document.document_serial_id)">
+                  <b-button style="width: 100%">
                     {{ document.type }}_{{ document.document_serial_id }}
-                  </a>
+                    <b-icon-download
+                      @click="
+                        downloadDocument(
+                          document.type,
+                          document.document_serial_id
+                        )
+                      "
+                    ></b-icon-download>
+                  </b-button>
                 </b-col>
               </b-row>
               <hr style="margin-bottom: 0px; margin-top: 0px" />
@@ -312,12 +325,13 @@
 </template>
 
 <script>
-import { BIconArrowReturnLeft } from "bootstrap-vue";
+import { BIconArrowReturnLeft, BIconDownload } from "bootstrap-vue";
 import Sketchpad from "./Sketchpad.vue";
 
 export default {
   components: {
     BIconArrowReturnLeft,
+    BIconDownload,
     Sketchpad,
   },
   name: "CustomerInformation",
@@ -510,12 +524,13 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    downloadDocument(document_serial_id) {
+    downloadDocument(type, document_serial_id) {
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
-          "Authorization" : this.$store.state.api_token
+          "Authorization" : this.$store.state.api_token,
         },
+        responseType: "blob",
       };
       this.$http
         .get(
@@ -525,16 +540,13 @@ export default {
         )
         .then((response) => {
           var blob = new Blob([response.data]);
-          const link = document.createElement('a');
-          // create a blobURI pointing to our Blob
-          link.href = URL.createObjectURL(blob);
-          link.download = "fileName.pdf";
-          // some browser needs the anchor to be in the doc
-          document.body.append(link);
-          link.click();
-          link.remove();
-          // in case the Blob uses a lot of memory
-          setTimeout(() => URL.revokeObjectURL(link.href), 7000);
+          var file = window.URL.createObjectURL(blob);
+          var a = document.createElement("a");
+          a.href = file;
+          a.download = type + "_" + document_serial_id + ".pdf";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);

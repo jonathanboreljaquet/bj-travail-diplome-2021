@@ -99,9 +99,7 @@
           </div>
           <b-card v-else>
             <b-row>
-              <b-col>
-                <p>L'utilisateur n'a aucun chiens pour l'instant</p>
-              </b-col>
+              <b-col>L'utilisateur n'a aucun chiens pour l'instant</b-col>
             </b-row>
           </b-card>
         </template>

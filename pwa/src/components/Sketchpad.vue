@@ -4,14 +4,24 @@
       <div id="sketchpad" ref="sketchpad"></div>
       <b-row id="buttonRow" class="text-center">
         <b-col>
-          <b-button block type="button" @click="getSketchpad" variant="outline-success">
+          <b-button
+            block
+            type="button"
+            @click="getSketchpad"
+            variant="outline-success"
+          >
             Charger
           </b-button>
         </b-col>
         <b-col>
-          <b-button block type="button" @click="clearSketchpad" variant="outline-danger">
+          <b-button
+            block
+            type="button"
+            @click="clearSketchpad"
+            variant="outline-danger"
+          >
             Effacer
-        </b-button>
+          </b-button>
         </b-col>
       </b-row>
     </b-container>
