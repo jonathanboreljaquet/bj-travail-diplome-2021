@@ -137,6 +137,45 @@ class DAODocument {
 
     /**
      * 
+     * Method to return a document from the database with the serial id in a document model object.
+     * 
+     * @param string $serial_id The serial id of the document 
+     * @return Document A Document model object containing all the result rows of the query 
+     */
+    public function findBySerialId(string $serial_id)
+    {
+        $statement = "
+        SELECT id, document_serial_id, type, user_id 
+        FROM document
+        WHERE document_serial_id= :SERIAL_ID;";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':SERIAL_ID', $serial_id, \PDO::PARAM_STR);
+            $statement->execute();
+            
+            $document = new Document();
+
+            if ($statement->rowCount()==1) {
+                $result = $statement->fetch(\PDO::FETCH_ASSOC);
+                $document->id = $result["id"];
+                $document->document_serial_id = $result["document_serial_id"];
+                $document->type = $result["type"];
+                $document->user_id = $result["user_id"];
+            }
+            else{
+                $document = null;
+            }
+
+            return $document;
+
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }    
+    }
+
+    /**
+     * 
      * Method to return a document from the database with the user id and serial id in a document model object.
      * 
      * @param int $userId The user identifier 

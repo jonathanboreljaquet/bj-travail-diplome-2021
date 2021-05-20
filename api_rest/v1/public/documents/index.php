@@ -18,17 +18,18 @@ header("Access-Control-Allow-Methods: GET,POST,PATCH,DELETE");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-
-
 $requestMethod = $_SERVER["REQUEST_METHOD"];
+
+if (strcmp("OPTIONS", $requestMethod) == 0) {
+	header('Allow: GET,POST,PATCH,DELETE');
+	return;
+}
 
 $controller = new DocumentController($dbConnection);
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $pathFragments = explode('/', $path);
 $id = intval(end($pathFragments));
-
-parse_str(file_get_contents('php://input'), $input);
 
 $document = new Document();
 $document->id = $id ?? null;

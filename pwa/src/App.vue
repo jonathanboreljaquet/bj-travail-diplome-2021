@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <Navbar />
-    <router-view />
+    <div id="content">
+      <Navbar />
+      <router-view />
+    </div>
     <Footer />
   </div>
 </template>
@@ -22,4 +24,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#content {
+  min-height: calc(100vh - 260px);
+}
+</style>

@@ -1627,4 +1627,6 @@ Lien pour demain :
 * https://lobotuerto.com/blog/cropping-images-with-vuejs-and-cropperjs/
 * https://github.com/fengyuanchen/cropperjs#cropperjs
 
-### Jeudi 19 mai 2021
+### Jeudi 20 mai 2021
+
+Amélioration de l'interface utilisateur après des tests effectués sur IOS. En effet, les appareils IOS place automatiquement un élément sélectionné dans un input de type select mais ne l'introduit pas vraiment sa valeur. De ce fait, j'ai ajouté un élément sélectionné de base. J'ai également améliorer l'interaction utilisateur sur les fenêtre modale "Ajouter un chien" et "Ajouter une photo de chien" .

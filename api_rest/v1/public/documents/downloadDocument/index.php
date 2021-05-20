@@ -19,6 +19,11 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
+if (strcmp("OPTIONS", $requestMethod) == 0) {
+	header('Allow: GET');
+	return;
+}
+
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $pathFragments = explode('/', $path);
 $serial_id = end($pathFragments);

@@ -28,20 +28,26 @@
             >
               Ajouter un chien
             </b-button>
-            <b-button class="btnAdmin" v-if="authAdministrator">
+            <b-button
+              class="btnAdmin"
+              v-if="authAdministrator"
+              v-b-modal.modal-add-document
+            >
               Ajouter un document
             </b-button>
           </b-card>
 
           <b-card style="padding: 10px; width: 100%">
-            <b-row style="text-align: center">
-              <b-col>condition_inscription.pdf</b-col>
-            </b-row>
-            <hr style="margin-bottom: 0px; margin-top: 0px" />
-            <b-row style="text-align: center">
-              <b-col>poster.pdf</b-col>
-            </b-row>
-            <hr style="margin-bottom: 0px; margin-top: 0px" />
+            <div v-for="document in documents" :key="document.id">
+              <b-row style="text-align: center">
+                <b-col>
+                  <a @click="downloadDocument(document.document_serial_id)">
+                    {{ document.type }}_{{ document.document_serial_id }}
+                  </a>
+                </b-col>
+              </b-row>
+              <hr style="margin-bottom: 0px; margin-top: 0px" />
+            </div>
           </b-card>
         </b-col>
         <b-col md="8">
@@ -151,7 +157,7 @@
           <b-icon-arrow-return-left></b-icon-arrow-return-left>
         </p>
       </b-button>
-      <b-modal id="modal-add-dog" title="Ajouter un chien">
+      <b-modal id="modal-add-dog" title="Ajouter un chien" :hide-footer="true">
         <b-form
           @submit.prevent="addDogForCustomerWithUserId($route.params.userId)"
         >
@@ -215,12 +221,12 @@
           </b-button>
         </b-form>
       </b-modal>
-      <b-modal id="modal-add-picture-dog" title="Ajouter une photo">
-        <b-form
-          @submit.prevent="
-            uploadDogPictureByDogId(dogPictureFile, selectedDogId)
-          "
-        >
+      <b-modal
+        id="modal-add-picture-dog"
+        title="Ajouter une photo de chien"
+        :hide-footer="true"
+      >
+        <b-form @submit.prevent="uploadDogPictureByDogId(selectedDogId)">
           <b-form-group
             id="input-group-dog-picture-file"
             label="Photo :"
@@ -234,7 +240,6 @@
               browse-text="Ajouter"
               id="input-dog-picture-file"
               size="sm"
-              @change="setupCropper"
             ></b-form-file>
           </b-form-group>
 
@@ -242,12 +247,65 @@
             Ajouter la photo
           </b-button>
         </b-form>
-        <vue-cropper
-          ref="cropper"
-          :src="imgSrc"
-          alt="Source Image"
-        >
-        </vue-cropper>
+      </b-modal>
+      <b-modal
+        id="modal-add-document"
+        title="Ajouter un document"
+        :hide-footer="true"
+        @hidden="resetModalAddDocument"
+      >
+        <b-form @submit.prevent="createDocument()">
+          <b-form-group
+            id="input-group-document-type"
+            label="Type du document :"
+            label-for="input-document-type"
+          >
+            <b-form-select
+              id="input-document-type"
+              v-model="addDocumentForm.type"
+              :options="documentTypes"
+              required
+            ></b-form-select>
+          </b-form-group>
+
+          <div v-if="addDocumentForm.type == 'conditions_inscription'">
+            <b-form-group
+              id="input-group-document-package-number"
+              label="Forfait :"
+              label-for="input-document-package-number"
+            >
+              <b-form-select
+                id="input-document-package-number"
+                v-model="addDocumentForm.packageNumber"
+                :options="packageNumbers"
+                required
+              ></b-form-select>
+            </b-form-group>
+            <sketchpad @saveSignature="saveSignature"></sketchpad>
+            <b-button block type="submit" variant="outline-primary">
+              Créer les conditions d'inscription
+            </b-button>
+          </div>
+          <div v-else>
+            <b-form-group
+              id="input-group-document-file"
+              label="Document PDF :"
+              label-for="input-dog-document-file"
+            >
+              <b-form-file
+                required
+                v-model="documentFile"
+                placeholder="Aucun fichier choisi"
+                browse-text="Ajouter"
+                id="input-document-file"
+                size="sm"
+              ></b-form-file>
+            </b-form-group>
+            <b-button block type="submit" variant="outline-primary">
+              Ajouter le document
+            </b-button>
+          </div>
+        </b-form>
       </b-modal>
     </b-container>
   </div>
@@ -255,13 +313,12 @@
 
 <script>
 import { BIconArrowReturnLeft } from "bootstrap-vue";
-import VueCropper from "vue-cropperjs";
-import "cropperjs/dist/cropper.css";
+import Sketchpad from "./Sketchpad.vue";
 
 export default {
   components: {
     BIconArrowReturnLeft,
-    VueCropper,
+    Sketchpad,
   },
   name: "CustomerInformation",
   data() {
@@ -275,16 +332,33 @@ export default {
       address: null,
       code_role: null,
       dogs: [],
+      documents: [],
       addDogForm: {
         name: "",
         breed: "",
-        sex: "",
+        sex: "Mâle",
         chip_id: "",
       },
       selectedDogId: "",
       dogPictureFile: null,
       sex: ["Mâle", "Femelle"],
-      imgSrc: "",
+      documentFile: null,
+      addDocumentForm: {
+        type: "poster",
+        packageNumber: 1,
+      },
+      documentTypes: [
+        { value: "poster", text: "Document pdf" },
+        { value: "conditions_inscription", text: "Conditions d'inscription" },
+      ],
+      packageNumbers: [
+        { value: 1, text: "Bilan d’évaluation : 70 € / 80 CHF" },
+        { value: 2, text: "Bilan + 1 séance d’éducation : 125 € / 140 CHF" },
+        { value: 3, text: "Forfait bilan + 3 séances : 230 € / 250 CHF" },
+        { value: 4, text: "Forfait bilan + 6 séances : 400 € / 440 CHF" },
+        { value: 5, text: "Forfait bilan + 9 séances : 520 € / 560 CHF" },
+      ],
+      signatureBase64: "",
     };
   },
   methods: {
@@ -309,6 +383,7 @@ export default {
           this.address = response.data.address;
           this.code_role = response.data.code_role;
           this.dogs = response.data.dogs;
+          this.documents = response.data.documents;
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
@@ -327,7 +402,7 @@ export default {
           config
         )
         .then((response) => {
-          console.log("load");
+          console.log(response);
           this.id = response.data.id;
           this.email = response.data.email;
           this.firstname = response.data.firstname;
@@ -336,6 +411,7 @@ export default {
           this.address = response.data.address;
           this.code_role = response.data.code_role;
           this.dogs = response.data.dogs;
+          this.documents = response.data.documents;
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
@@ -362,17 +438,18 @@ export default {
           config
         )
         .then((response) => {
-          this.loadCustomerInformationsByUserId(this.$route.params.userId);
           console.log(response);
+          this.loadCustomerInformationsByUserId(this.$route.params.userId);
+          this.$alertify.success("Chien ajouté avec succès");
+          this.$bvModal.hide("modal-add-dog");
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
     },
-    uploadDogPictureByDogId(dogPictureFile, dogId) {
-      console.log(dogPictureFile);
+    uploadDogPictureByDogId(dogId) {
       let formData = new FormData();
-      formData.append("dog_picture", dogPictureFile);
+      formData.append("dog_picture", this.dogPictureFile);
       formData.append("dog_id", dogId);
       const config = {
         headers: {
@@ -387,18 +464,90 @@ export default {
           config
         )
         .then((response) => {
-          this.loadCustomerInformationsByUserId(this.$route.params.userId);
           console.log(response);
+          this.loadCustomerInformationsByUserId(this.$route.params.userId);
+          this.$alertify.success("Photo du chien ajouté avec succès");
+          this.$bvModal.hide("modal-add-picture-dog");
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
     },
+    createDocument() {
+      var params;
+      if (this.addDocumentForm.type == "conditions_inscription") {
+        params = new URLSearchParams();
+        params.append("type", this.addDocumentForm.type);
+        params.append("signature_base64", this.signatureBase64);
+        params.append("package_number", this.addDocumentForm.packageNumber);
+        params.append("user_id", this.$route.params.userId);
+      } else {
+        params = new FormData();
+        params.append("type", this.addDocumentForm.type);
+        params.append("document", this.documentFile);
+        params.append("user_id", this.$route.params.userId);
+      }
+
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token
+        },
+      };
+      this.$http
+        .post(
+          "https://api-rest-douceur-de-chien.boreljaquet.ch/documents/",
+          params,
+          config
+        )
+        .then((response) => {
+          console.log(response);
+          this.loadCustomerInformationsByUserId(this.$route.params.userId);
+          this.$alertify.success("Document ajouté avec succès");
+          this.$bvModal.hide("modal-add-document");
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
+    downloadDocument(document_serial_id) {
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token
+        },
+      };
+      this.$http
+        .get(
+          "https://api-rest-douceur-de-chien.boreljaquet.ch/documents/downloadDocument/" +
+            document_serial_id,
+          config
+        )
+        .then((response) => {
+          var blob = new Blob([response.data]);
+          const link = document.createElement('a');
+          // create a blobURI pointing to our Blob
+          link.href = URL.createObjectURL(blob);
+          link.download = "fileName.pdf";
+          // some browser needs the anchor to be in the doc
+          document.body.append(link);
+          link.click();
+          link.remove();
+          // in case the Blob uses a lot of memory
+          setTimeout(() => URL.revokeObjectURL(link.href), 7000);
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
+    resetModalAddDocument() {
+      this.addDocumentForm.type = "poster";
+    },
     sendDogId(dogId) {
       this.selectedDogId = dogId;
     },
-    setupCropper(selectedFile) {
-      console.log(window.URL.createObjectURL(selectedFile))
+    saveSignature(value) {
+      this.signatureBase64 = value;
     },
   },
   computed: {

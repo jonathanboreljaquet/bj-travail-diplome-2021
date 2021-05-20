@@ -291,7 +291,12 @@ class DocumentController {
             return ResponseController::notFoundResponse();
         }
 
-        $document = $this->DAODocument->findByUserIdAndSerialId($userAuth->id, $serial_id);
+        if ($userAuth ||  $userAuth->code_role == Constants::ADMIN_CODE_ROLE) {
+            $document = $this->DAODocument->findBySerialId($serial_id);
+        }
+        else{
+            $document = $this->DAODocument->findByUserIdAndSerialId($userAuth->id, $serial_id);
+        }
 
         if (is_null($document)) {
             return ResponseController::notFoundResponse();
