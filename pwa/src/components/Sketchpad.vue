@@ -1,18 +1,8 @@
 <template>
   <div class="content">
     <b-container id="container">
-      <div id="sketchpad" ref="sketchpad"></div>
+      <div :class="isBlocked ? blocked : sketchpad" ref="sketchpad"></div>
       <b-row id="buttonRow" class="text-center">
-        <b-col>
-          <b-button
-            block
-            type="button"
-            @click="getSketchpad"
-            variant="outline-success"
-          >
-            Charger
-          </b-button>
-        </b-col>
         <b-col>
           <b-button
             block
@@ -21,6 +11,17 @@
             variant="outline-danger"
           >
             Effacer
+          </b-button>
+        </b-col>
+        <b-col>
+          <b-button
+            :disabled="isBlocked"
+            block
+            type="button"
+            @click="getSketchpad"
+            variant="outline-success"
+          >
+            Valider la signature
           </b-button>
         </b-col>
       </b-row>
@@ -36,6 +37,10 @@ export default {
   data() {
     return {
       pad: null,
+      dataURL: "",
+      isBlocked: false,
+      blocked: "blockedSketchpad",
+      sketchpad: "sketchpad",
     };
   },
   mounted() {
@@ -49,19 +54,29 @@ export default {
   },
   methods: {
     getSketchpad() {
-      var dataURL = this.pad.toDataURL();
-      this.$emit("saveSignature", dataURL);
+      this.isBlocked = true;
+      this.pad.setReadOnly(true);
+      this.dataURL = this.pad.toDataURL();
+      this.$emit("getSignature", this.dataURL, this.isBlocked);
     },
     clearSketchpad() {
       this.pad.clear();
+      this.isBlocked = false;
+      this.pad.setReadOnly(false);
+      this.$emit("getSignature", this.dataURL, this.isBlocked);
     },
   },
 };
 </script>
 
 <style scoped>
-#sketchpad {
+.sketchpad {
   border: 0.2rem solid #c2c2c2;
+  background-color: #ffffff !important;
+}
+.blockedSketchpad {
+  border: 0.2rem solid #c2c2c2;
+  background-color: #cccccc !important;
 }
 #container {
   padding: 0px;

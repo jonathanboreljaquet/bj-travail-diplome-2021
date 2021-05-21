@@ -77,17 +77,12 @@ export default {
   methods: {
     loadEducators() {
       this.$http
-        .get(
-          "https://api-rest-douceur-de-chien.boreljaquet.ch/users/educators/"
-        )
+        .get(this.$API_URL + "users/educators/")
         .then((response) => (this.educators = response.data));
     },
     loadEducatorEvents(idEducator) {
       this.$http
-        .get(
-          "https://api-rest-douceur-de-chien.boreljaquet.ch/plannings/" +
-            idEducator
-        )
+        .get(this.$API_URL + "plannings/" + idEducator)
         .then((response) => {
           const vm = this;
           vm.calendarOptions.events = [];

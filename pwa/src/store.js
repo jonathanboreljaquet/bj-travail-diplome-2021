@@ -35,11 +35,7 @@ export default new Vuex.Store({
         },
       };
       Vue.prototype.$http
-        .post(
-          "https://api-rest-douceur-de-chien.boreljaquet.ch/users/",
-          params,
-          config
-        )
+        .post(Vue.prototype.$API_URL + "users/", params, config)
         .then((res) => {
           console.log(res);
           localStorage.setItem("api_token", res.data.api_token);
@@ -65,11 +61,7 @@ export default new Vuex.Store({
         },
       };
       Vue.prototype.$http
-        .post(
-          "https://api-rest-douceur-de-chien.boreljaquet.ch/connection/",
-          params,
-          config
-        )
+        .post(Vue.prototype.$API_URL + "/connection/", params, config)
         .then((res) => {
           localStorage.setItem("api_token", res.data.api_token);
           localStorage.setItem("code_role", res.data.code_role);
