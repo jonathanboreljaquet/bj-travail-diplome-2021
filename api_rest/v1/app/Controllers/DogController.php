@@ -285,6 +285,8 @@ class DogController {
         header("Content-Type: " . $imageInfo["mime"]);
         header("Content-Length: " . filesize($image));
         readfile($image);
+
+        return ResponseController::successfulRequest();
     }
 
      /**

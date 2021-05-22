@@ -1542,7 +1542,7 @@ Une fois que mon gestionnaire d'état a été configuré, j'ai pu me servir de c
 
 ### Samedi 15 mai 2021
 
-Rencontre d'un problème très ennuyeux lors de la requête HTTP envoyé à l'API REST. En effet, j'ai appris que pour les requêtes HTTP dites non simples, soit avec un header `Authorization` pour ma part, le navigateur enverra d'abord une requête de "contrôle en amont" (une requête avec la méthode OPTIONS) afin de déterminer si les en-têtes de la requête qui vont être envoyées correspondent bien avec les en-têtes du serveur. Par exemple, si un en-tête que nous souhaitons ne figure pas dans la liste des en-têtes autorisées (`Access-Control-Allow-Header`), le navigateur refusera d'envoyer votre requête. Après 5 heures de recherche et de test, toutes les solutions cherchées sur Internet n'ont mené à rien. Par la suite, j'ai trouvé une réponse permettant de passer outre cette requête de vérification en retournant un code HTTP `200 OK` lors d'une requête avec la méthode OPTIONS. Pour l'instant, je compte laisser cela comme cela en attendant de discuter avec M. Mathieu de ce problème.
+Rencontre d'un problème très ennuyeux lors de la requête HTTP envoyé à l'API REST. En effet, j'ai appris que pour les requêtes HTTP dites non simples, soit avec un header `Authorization` pour ma part, le navigateur enverra d'abord une requête de "contrôle en amont" (une requête avec la méthode OPTIONS) afin de déterminer si les en-têtes de la requête qui vont être envoyées correspondent bien avec les en-têtes du serveur. Par exemple, si un en-tête que nous souhaitons ne figure pas dans la liste des en-têtes autorisées (`Access-Control-Allow-Header`), le navigateur refusera d'envoyer votre requête. Après 5 heures de recherche et de test, toutes les solutions cherchées sur Internet n'ont mené à rien. Par la suite, j'ai trouvé une réponse permettant de passer outre cette requête de vérification en retournant un code HTTP `200 OK` lors d'une requête avec la méthode OPTIONS. Pour l'instant, je compte laisser tel quel en attendant de discuter de ce problème avec M. Mathieu.
 
 ### Lundi 17 mai 2021
 
@@ -1553,7 +1553,7 @@ Réalisation de la page "Administration". La page "Administration" est accessibl
 Actuellement, la page est chargée de la manière suivante :
 
 1. Chargement des données de tous les clients de l'application ainsi que leurs chiens avec l'endpoint `GET api/v1/users`
-2. Chargement des photos de chien en base64 si elle il y en a avec l'endpoint `GET api/v1/dogs/downloadPicture`
+2. Chargement des photos de chiens en base64 s'il y en a avec l'endpoint `GET api/v1/dogs/downloadPicture`
 
 Réalisation de la page "Mes informations". La page "Mes informations" est accessible par les utilisateurs authentifiés. En effet, lors de la connexion d'un client, celui-ci sera directement redirigé sur cette page. L'objectif de la page est d'afficher les informations personnelles de l'utilisateur authentifié (informations personnelles, chiens, documents). Pour l'instant, la page affiche les informations personnelles ainsi que les chiens de l'utilisateur authentifié. Dans le futur, la page permettra également de voir les documents ainsi qu'un affichage avec les informations des différents rendez-vous.
 
@@ -1562,41 +1562,41 @@ Réalisation de la page "Mes informations". La page "Mes informations" est acces
 Actuellement, la page est chargée de la manière suivante :
 
 1. Chargement des données de l'utilisateur authentifié avec l'endpoint `GET api/v1/users/me`
-2. Chargement des photos de chien en base64 si elle il y en a avec l'endpoint `GET api/v1/dogs/downlaodPicture`
+2. Chargement des photos de chiens en base64 s'il y en a avec l'endpoint `GET api/v1/dogs/downlaodPicture`
 
-Lors de la réalisation de ces deux pages, j'ai été confronté au même problème. Exécutant les requête HTTP de récupération de photo de chien avec axios dans le résultat de la requête HTTP de récupération de tous les utilisateurs ou de l'utilisateur authentifié, le DOM se voyait être chargé avec la récupération des photos de chien. Pour palier à ce problème, j'ai stocké toutes mes requêtes de récupération de photo de chien dans une liste de promesse. Une promesse est un objet qui représente l'état d'une opération asynchrone. Une fois la liste de mes promesse chargée, j'ai utilisé la méthode `Promise.all()` permettant de renvoyer une promesse qui est résolue lorsque l'ensemble des promesses contenues dans cette liste ont été résolues. Cette méthode permet donc de charger toutes les photos de chiens au même moment. Par contre, si une des requêtes échoue, la totalité des requêtes ne seront pas exécutées. Je compte poser une question à M. Mathieu lors de notre rendez-vous GMeet hebdomadaire demain afin de lui demander si cela serait pas mieux que mon API REST retourne directement la photo du chien en base64 si elle existe lors des endpoints retournant les informations des chiens. 
+Lors de la réalisation de ces deux pages, j'ai été confronté au même problème. Exécutant les requêtes HTTP de récupération de photo de chien avec axios dans le résultat de la requête HTTP de récupération de tous les utilisateurs ou de l'utilisateur authentifié, le DOM se voyait être chargé avant la récupération des photos de chiens. Pour palier à ce problème, j'ai stocké toutes mes requêtes de récupération de photo de chien dans une liste de promesse. Une promesse est un objet qui représente l'état d'une opération asynchrone. Une fois la liste de mes promesses chargées, j'ai utilisé la méthode `Promise.all()` permettant de renvoyer une promesse qui est résolue lorsque l'ensemble des promesses contenues dans cette liste ont été résolues. Cette méthode permet donc de charger toutes les photos de chiens au même moment. Par contre, si une des requêtes échoue, la totalité des requêtes ne seront pas exécutées. Je compte poser une question à M. Mathieu lors de notre rendez-vous GMeet hebdomadaire demain afin de lui demander si cela ne serait pas mieux que mon API REST retourne directement la photo du chien en base64 si elle existe lors des endpoints retournant les informations des chiens. 
 
 ### Mardi 18 mai 2021
 
 Rendez-vous hebdomadaire GMeet avec M. Mathieu. Au début de notre rendez-vous, j'ai posé des questions par rapport à des problèmes techniques à M. Mathieu. Ces questions étaient :
 
-* Comment résoudre le problème du samedi 15 mai, qui, lors de l'envoie de requêtes HTTP depuis le navigateur envoyait d'abord une requête OPTIONS.
+* Comment résoudre le problème du samedi 15 mai, qui, lors de l'envoi de requêtes HTTP depuis le navigateur envoyait d'abord une requête OPTIONS ?
   * M. Mathieu m'a montré une solution qui lors de la réception de requête de type OPTIONS, retourne un en-tête `Allow: POST`
 * Comment simplifier l'endpoint de récupération de l'image du chien ? En effet, actuellement, l'endpoint `GET api/v1/dogs/downloadPicture` retourne la photo du chien en base64.
-  * M. Mathieu m'a conseillé de retourner directement l'image à la place de retourner l'image en base64 car très lourd. En effet, il m'a proposé de retourner dans les différents endpoints qui me retourne les informations des chiens, l'endpoint de récupération de l'image.
+  * M. Mathieu m'a conseillé de retourner directement l'image à la place de retourner l'image en base64 car très lourd. 
 * Comment gérer les permissions de mon frontend ? En effet, actuellement, j'effectue le contrôle des permissions depuis le code du rôle de l'utilisateur retourné avec l'api token depuis l'endpoint `POST api/v1/connection`.
   * M. Mathieu m'a conseillé de retourner les différentes permissions d'un utilisateur dans un tableau de permission depuis l'endpoint de connexion `POST api/v1/connection`
 
 Ensuite, M. Mathieu m'a fait part de ses commentaires par rapport à la documentation de mon projet. Pour résumé, ses commentaires sont les suivants :
 
-* Passez dans un correcteur orthographique l'abstract en anglais, mais aussi le résumé pour le français.
-* Le persona doit être d'avantage enrichi.
+* Passez dans un correcteur orthographique l'abstract en anglais, mais aussi le résumé pour le français
+* Le persona doit être d'avantage enrichi
 * Revoir la formulation des scénarios 
-* Expliquer la différence entre une application web responsive et une PWA au point 5.5.1.
+* Expliquer la différence entre une application web responsive et une PWA au point 5.5.1
 * Ajouter l'analyse concurrentielle d'agenda.ch
 * Suppression des éléments superflus
-* Exemple de la manière dont j'ai créé les tests unitaires.
+* Exemple de la manière dont j'ai créé les tests unitaires
 * Ajouter un explain pour les requêtes compliquées écrites
 * Ajouter un schéma mindmap de ce que fait l'application
-* Ajouter un schéma qui regroupe les actions par type t'utilisateur
+* Ajouter un schéma qui regroupe les actions par type d'utilisateur
 
 Je vais commencer ma journée avec les points techniques et j'enchainerais sur les points concernant la documentation.
 
-* Modification des fichiers d'entrée des endpoints utilisés jusqu'à là afin de gérer le problème de la requête OPTIONS.
+* Modification des fichiers d'entrée des endpoints utilisés jusque là afin de gérer le problème de la requête OPTIONS.
 * Modification du endpoint `GET api/v1/dogs/downloadPicture` afin que celui-ci retourne maintenant directement l'image et non sa base64.
-  * Modification des vues concerné jusqu'à là ("Mes informations" et "Administration"), dorénavant je n'ai plus besoin d'utiliser une liste de promesse car j'assigne directement la source de l'image avec mon endpoint. Exemple : `:src='https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/downloadPicture/' + dog.picture_serial_id"`
+  * Modification des vues concernées jusque là ("Mes informations" et "Administration"). Dorénavant je n'ai plus besoin d'utiliser une liste de promesses car j'assigne directement la source de l'image avec mon endpoint. Exemple : `:src='https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/downloadPicture/' + dog.picture_serial_id"`
 
-Réalisation de la page "Inscription". La page "Inscription" est accessible par tous les types d'utilisateur. L'objectif de la page est de créer un compte utilisateur pour un client. Pour l'instant, le formulaire d'inscription contient juste une confirmation de mot de passe. Si tout ce passe bien lors de l'inscription, l'utilisateur est automatiquement connecté à l'application et est redirigé vers la page "Mes informations".
+Réalisation de la page "Inscription". La page "Inscription" est accessible par tous les types d'utilisateurs. L'objectif de la page est de créer un compte utilisateur pour un client. Pour l'instant, le formulaire d'inscription contient juste une confirmation de mot de passe. Si tout se passe bien lors de l'inscription, l'utilisateur est automatiquement connecté à l'application et redirigé vers la page "Mes informations".
 
 ![dateTestPlanningSecondUser](./img/vue_inscription.PNG)
 

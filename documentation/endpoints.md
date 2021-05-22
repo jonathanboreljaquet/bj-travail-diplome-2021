@@ -2,7 +2,7 @@
 
 ##### Objectif
 
-Créer un utilisateur dans la base de données.
+Créer un utilisateur dans la base de données et retourner son code de rôle ainsi que son api token.
 
 ##### Utilisation concrète
 
@@ -38,7 +38,8 @@ Body de la requête :
 * **[USE_CO4] Create one user without phonenumber**
 * **[USE_CO5] Create one user without address**
 * **[USE_CO6] Create one user with invalid email format**
-* **[USE_CO7] Create one user without problems**
+* **[USE-CO7] Create one user with email address already exists**
+* **[USE_CO8] Create one user without problems**
 
 ####  GET api/v1/users
 
@@ -65,11 +66,11 @@ Cet endpoint permet de récupérer tous les clients ainsi que leurs chiens de l'
 
 ##### Objectif
 
-Récupérer un utilisateur de la base de données grâce à son identifiant.
+Récupérer un utilisateur avec ses chiens et ses documents de la base de données grâce à son identifiant.
 
 ##### Utilisation concrète
 
-Cet endpoint permet de récupérer un client spécifique de l'application. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet de récupérer un client spécifique de l'application avec ses chiens et ses documents. L'endpoint est accessible uniquement par les administrateurs.
 
 ##### Flow chart
 
@@ -340,7 +341,7 @@ Récupérer l'image d'un chien stockée dans le serveur.
 
 ##### Utilisation concrète
 
-Cet endpoint permet de récupérer la photo d'un chien en base64 grâce à son identifiant de série. L'endpoint est accessible par n'importe quel type d'utilisateur.
+Cet endpoint permet de récupérer la photo d'un chien grâce à son identifiant de série. L'endpoint est accessible par n'importe quel type d'utilisateur.
 
 ##### Flow chart
 

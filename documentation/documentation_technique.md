@@ -545,9 +545,9 @@ La valeur du champ `date_absence_to` peut être `null` si le service est suspend
 
 ### Tests unitaires
 
-Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécuter des scripts de test pour chaque endpoint de mon API REST. Ces tests sont réalisables en JavaScript en utilisant la bibliothèque `pm`. Tous les tests unitaires de mon API REST sont identifiables grâce à un code qui leur est propre dans l'annexe [`unit_tests.md`](./unit_tests.md).
+Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécuter des scripts de test pour chaque endpoint de mon API REST. Ces tests sont réalisables en JavaScript en utilisant la bibliothèque proposé par Postman `pm`. Tous les tests unitaires de mon API REST sont identifiables grâce à un code qui leur est propre dans l'annexe [`unit_tests.md`](./unit_tests.md).
 
-**Format de code**
+#### Format de code
 
 ![dateTestPlanningSecondUser](./diagram/drawio/unitTestCodeFormat.png)
 
@@ -654,6 +654,89 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
         <td>DNG</td>
     </tr>
 </table>
+#### Syntaxe
+
+Postman propose à ses utilisateurs la possibilité d'écrire des scripts de test pours tester les différentes requêtes de leurs API. Afin de rédiger ces tests, j'ai du utiliser une certaine syntaxe JavaScript proposé par Postman. Lors de la réalisation de mes tests unitaires avec Postman, j'ai utilisé la fonction `pm.test` afin de tester tout les cas d'utilisation et d'exception de mon API REST. La fonction `pm.test` prend en premier paramètre une chaîne de caractère qui apparaîtra dans la sortie des résultats du test afin d'identifier le test. Le deuxième paramètre est une fonction qui doit retourner un booléen pour indiquer si le test a réussi ou échoué. 
+
+Dans tous mes tests unitaires, j'ai utilisé la fonction `pm.test` avec comme fonction `pm.response.to.have.status(status)` afin de tester si le cas d'utilisation de l'endpoint en question retournait le bon code HTTP. En effet, cette ligne retourne `true` si le code d'état de la réponse est identique à son paramètre de fonction et `false` si ce n'est pas le cas.
+Par exemple, afin de tester que l'endpoint de création d'utilisateur `POST api/v1/users` retourne bien le code HTTP `201`, j'ai réalisé le test :
+
+```javascript
+pm.test("Right code for successful created ressource", function () {
+    pm.response.to.have.status(201);
+});
+```
+
+Pour les endpoints nécessitant de retourner un message, j'ai également testé que celui-ci soit correct en utilisant la fonction ` pm.expect(element1).to.eql(element2)` qui permet de tester que le premier élément corresponde bien au second. 
+Par exemple, afin de tester que l'endpoint de création d'utilisateur `POST api/v1/users` avec une adresse email ne respectant pas le bon format retourne bien le code HTTP `400` ainsi que le message d'erreur `Format d'adresse email invalide.`, j'ai réalisé les tests :
+
+```javascript
+pm.test("Right code for invalid email format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for for invalid email format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format d'adresse email invalide.");
+});
+```
+
+Pour les tests unitaires nécessitant le test de plusieurs données de corp de requêtes différentes, j'ai utilisé la fonctionnalité d'importation de CSV proposé par Postman. En effet, Postman permet de sélectionner un fichier CSV contenant différentes données afin de procéder à plusieurs itération de test avec celles-ci. 
+Par exemple, afin de tester que l'endpoint de création de vacances `POST api/v1/absences` avec une date ne respectant pas le bon format retourne bien le code HTTP `400` ainsi que le message d'erreur `Format de date invalide => (YYYY-MM-DD).`, j'ai réalisé les tests :
+
+```javascript
+pm.test("Right code for invalid date_to format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date_to format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+Ce test est réalisé avec les différentes données du fichier CSV disponibles à la fin de l'annexe [`unit_tests.md`](./unit_tests.md).
+
+Pour les tests unitaires nécessitant un test sur l'en-tête d'autorisation, j'ai utilisé la fonction `pm.request.to.have.header(header)`.
+Par exemple, afin de tester que l'endpoint de suppression d'un document `DELETE api/v1/documents` avec un api token appartenant à un client retourne bien le code HTTP `403` ainsi que le message d'erreur `Vous n'avez pas les permissions.`, j'ai réalisé les tests :
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+Pour les tests unitaires retournant une réponse JSON spécifique, j'ai effectué un test afin de vérifier que sa structure soit respecté avec la fonction `pm.response.to.have.jsonSchema(jsonSchema)`.
+Par exemple, afin de tester que l'endpoint de récupération d'un chien spécifique `GET api/v1/dogs` avec un api token appartenant à un éducateur canin retourne bien le code HTTP `200` ainsi que la réponse JSON au bon format, j'ai réalisé les test :
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "name" : {"type" : "string"},
+              "breed" : {"type" : "string"},
+              "sex" : {"type" : "string"},
+              "picture_serial_id" : {"type" : ["string","null"]},
+              "chip_id" : {"type" : ["string","null"]},
+              "user_id" : {"type" : "integer"}
+          },
+          "required": ["id","name","breed","sex","picture_serial_id","chip_id","user_id"]
+  })
+});
+```
 
 ### Composer
 

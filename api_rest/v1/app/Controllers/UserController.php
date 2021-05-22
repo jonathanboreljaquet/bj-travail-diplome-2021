@@ -137,6 +137,10 @@ class UserController {
             return ResponseController::invalidEmailFormat();
         }
 
+        if (!is_null($this->DAOUser->findUserByEmail($user->email))) {
+            return ResponseController::emailAlreadyExist();
+        }
+
         if ($user->password_hash != null) {
             $user->password_hash = password_hash($user->password_hash,PASSWORD_DEFAULT);
         }
@@ -154,7 +158,7 @@ class UserController {
         $result = array();
         $result["api_token"] = $user->api_token;
         $result["code_role"] = $user->code_role;
-        return ResponseController::successfulRequest($result);
+        return ResponseController::successfulCreatedRessourceWithJson($result);
     }
 
     /**

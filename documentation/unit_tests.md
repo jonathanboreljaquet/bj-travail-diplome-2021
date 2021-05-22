@@ -70,11 +70,33 @@ pm.test("Right message for for invalid email format", function () {
 });
 ```
 
-**[USE-CO7] Create one user without problems**
+**[USE-CO7] Create one user with email address already exists**
+
+```javascript
+pm.test("Right code for email address already exists", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for for email address already exists", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Un compte avec cette adresse e-mail existe déjà.");
+});
+```
+
+**[USE-CO8] Create one user without problems**
 
 ```javascript
 pm.test("Right code for successful created ressource", function () {
     pm.response.to.have.status(201);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+          "type": "object",
+          "properties": {
+              "api_token" : {"type" : "string"},
+              "code_role" : {"type" : "integer"}
+          },
+          "required": ["api_token", "code_role"]
+  })
 });
 ```
 
@@ -99,6 +121,7 @@ pm.test("Right message for access without permission", function () {
 pm.test("Authorization header is present", () => {
   pm.request.to.have.header("Authorization");
 });
+
 pm.test("Authorization header is right", function () {
     pm.response.to.have.status(200);
 });
@@ -116,9 +139,22 @@ pm.test("The data structure of the response is correct", () => {
               "address" : {"type" : "string"},
               "api_token" : {"type" : "null"},
               "code_role" : {"type" : "null"},
-              "password_hash" : {"type" : "null"}
+              "password_hash" : {"type" : "null"},
+             "dogs" : {
+                  "type" : "array",
+                  "properties" : {
+                      "id" : {"type" : "integer"},
+                      "name" : {"type" : "string"},
+                      "breed" : {"type" : "string"},
+                      "sex" : {"type" : "string"},
+                      "picture_serial_id" : {"type" : ["string","null"]},
+                      "chip_id" : {"type" : ["string","null"]},
+                      "user_id" : {"type" : "integer"},
+                  },
+                  "required": ["id","name","breed","sex","picture_serial_id","chip_id","user_id"]
+              }
           },
-          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash"]
+          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash","dogs"]
       }]
   })
 });
@@ -172,9 +208,34 @@ pm.test("The data structure of the response is correct", () => {
               "address" : {"type" : "string"},
               "api_token" : {"type" : "string"},
               "code_role" : {"type" : "integer"},
-              "password_hash" : {"type" : ["string","null"]}
+              "password_hash" : {"type" : ["string","null"]},
+             "dogs" : {
+                  "type" : "array",
+                  "properties" : {
+                      "id" : {"type" : "integer"},
+                      "name" : {"type" : "string"},
+                      "breed" : {"type" : "string"},
+                      "sex" : {"type" : "string"},
+                      "picture_serial_id" : {"type" : ["string","null"]},
+                      "chip_id" : {"type" : ["string","null"]},
+                      "user_id" : {"type" : "integer"},
+                  },
+                  "required": ["id","name","breed","sex","picture_serial_id","chip_id","user_id"]
+              },
+              "documents" : {
+                  "type" : "array",
+                  "properties" : {
+                      "id" : {"type" : "integer"},
+                      "document_serial_id" : {"type" : "string"},
+                      "type" : {"type" : "string"},
+                      "user_id" : {"type" : "string"},
+                      "package_number" : {"type" : "null"},
+                      "signature_base64" : {"type" : "null"},
+                  },
+                  "required": ["id","document_serial_id","type","user_id"]
+              }
           },
-          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash"]
+          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash","dogs","documents"]
   })
 });
 ```

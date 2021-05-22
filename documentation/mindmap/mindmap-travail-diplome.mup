@@ -1,0 +1,651 @@
+{
+  "formatVersion": 3,
+  "id": "root",
+  "ideas": {
+    "1": {
+      "title": "Douceur de Chien",
+      "id": 1,
+      "attr": {
+        "position": [
+          265,
+          -852,
+          1
+        ],
+        "style": {
+          "width": 110
+        }
+      },
+      "ideas": {
+        "1": {
+          "title": "Technologies",
+          "id": 3,
+          "ideas": {
+            "1": {
+              "title": "Versionning",
+              "id": 5,
+              "ideas": {
+                "1": {
+                  "title": "GitHub",
+                  "id": 6,
+                  "attr": {
+                    "style": {
+                      "backgroundColor": "#FFFF99"
+                    }
+                  }
+                }
+              },
+              "attr": {
+                "style": {
+                  "backgroundColor": "#FFFF99"
+                }
+              }
+            },
+            "2": {
+              "title": "PWA",
+              "id": 7,
+              "ideas": {
+                "3": {
+                  "title": "Vue.js",
+                  "id": 12,
+                  "ideas": {
+                    "1": {
+                      "title": "HTML5",
+                      "id": 16,
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#FFFF99"
+                        }
+                      }
+                    },
+                    "2": {
+                      "title": "JavaScript",
+                      "id": 17,
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#FFFF99"
+                        }
+                      }
+                    },
+                    "3": {
+                      "title": "CSS",
+                      "id": 18,
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#FFFF99"
+                        }
+                      }
+                    }
+                  },
+                  "attr": {
+                    "style": {
+                      "backgroundColor": "#FFFF99"
+                    }
+                  }
+                }
+              },
+              "attr": {
+                "style": {
+                  "backgroundColor": "#FFFF99"
+                }
+              }
+            },
+            "3": {
+              "title": "API REST",
+              "id": 13,
+              "ideas": {
+                "1": {
+                  "title": "PHP",
+                  "id": 14,
+                  "attr": {
+                    "style": {
+                      "backgroundColor": "#FFFF99"
+                    }
+                  }
+                },
+                "3": {
+                  "title": "Base de données",
+                  "id": 19,
+                  "ideas": {
+                    "1": {
+                      "title": "SQL",
+                      "id": 20,
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#FFFF99"
+                        }
+                      }
+                    },
+                    "2": {
+                      "title": "MySQL",
+                      "id": 21,
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#FFFF99"
+                        }
+                      }
+                    }
+                  },
+                  "attr": {
+                    "style": {
+                      "backgroundColor": "#FFFF99"
+                    }
+                  }
+                }
+              },
+              "attr": {
+                "style": {
+                  "backgroundColor": "#FFFF99"
+                }
+              }
+            }
+          },
+          "attr": {
+            "position": [
+              148,
+              153,
+              6
+            ],
+            "style": {
+              "backgroundColor": "#FFFF99"
+            }
+          }
+        },
+        "0.5": {
+          "title": "Roles",
+          "id": 27,
+          "attr": {
+            "position": [
+              200,
+              -136.984375,
+              7
+            ],
+            "style": {
+              "backgroundColor": "#33CCCC"
+            }
+          },
+          "ideas": {
+            "1": {
+              "title": "Client",
+              "id": 28,
+              "attr": {
+                "style": {
+                  "backgroundColor": "#33CCCC"
+                }
+              }
+            },
+            "2": {
+              "title": "Éducateur canin",
+              "id": 29,
+              "attr": {
+                "style": {
+                  "backgroundColor": "#33CCCC"
+                }
+              }
+            }
+          }
+        },
+        "-1": {
+          "title": "Fonctionnalités",
+          "id": 32,
+          "ideas": {
+            "0.5": {
+              "title": "Clients",
+              "id": 44,
+              "ideas": {
+                "1": {
+                  "title": "Informations client",
+                  "id": 58,
+                  "ideas": {
+                    "1": {
+                      "title": "Consulter",
+                      "id": 65,
+                      "attr": {
+                        "style": {
+                          "width": 93,
+                          "backgroundColor": "#FFCC99"
+                        }
+                      }
+                    },
+                    "2": {
+                      "title": "Télécharger les documents",
+                      "id": 72,
+                      "attr": {
+                        "style": {
+                          "textAlign": "center",
+                          "backgroundColor": "#FFCC99",
+                          "width": 94
+                        }
+                      }
+                    }
+                  },
+                  "attr": {
+                    "style": {
+                      "width": 93,
+                      "backgroundColor": "#FFCC99"
+                    }
+                  }
+                },
+                "2": {
+                  "title": "Rendez-vous",
+                  "id": 66,
+                  "attr": {
+                    "style": {
+                      "width": 93,
+                      "backgroundColor": "#FFCC99"
+                    }
+                  },
+                  "ideas": {
+                    "1": {
+                      "title": "Création autonome",
+                      "id": 71,
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#FFCC99"
+                        }
+                      }
+                    },
+                    "0.5": {
+                      "title": "Consulter",
+                      "id": 84,
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#FFCC99",
+                          "width": 94
+                        }
+                      }
+                    }
+                  }
+                },
+                "3": {
+                  "title": "Modification du mot de passe",
+                  "id": 60,
+                  "attr": {
+                    "style": {
+                      "width": 113,
+                      "backgroundColor": "#FFCC99"
+                    }
+                  }
+                }
+              },
+              "attr": {
+                "style": {
+                  "width": 93,
+                  "backgroundColor": "#FFCC99"
+                },
+                "position": [
+                  128.97222900390625,
+                  -186.95831298828125,
+                  5
+                ]
+              }
+            },
+            "1.5": {
+              "title": "Éducateurs canins",
+              "id": 43,
+              "ideas": {
+                "1": {
+                  "title": "Informations client",
+                  "id": 33,
+                  "ideas": {
+                    "1": {
+                      "title": "Informations personnelles",
+                      "id": 34,
+                      "ideas": {
+                        "1": {
+                          "title": "Créer",
+                          "id": 35,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        },
+                        "2": {
+                          "title": "Modifier",
+                          "id": 36,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        },
+                        "3": {
+                          "title": "Supprimer",
+                          "id": 37,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        }
+                      },
+                      "attr": {
+                        "style": {
+                          "width": 93,
+                          "backgroundColor": "#FF99CC"
+                        },
+                        "position": [
+                          310.97222900390625,
+                          -265.9861145019531,
+                          3
+                        ]
+                      }
+                    },
+                    "2": {
+                      "title": "Informations du/des chiens",
+                      "id": 38,
+                      "ideas": {
+                        "1": {
+                          "title": "Créer",
+                          "id": 39,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        },
+                        "2": {
+                          "title": "Modifier",
+                          "id": 40,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        },
+                        "3": {
+                          "title": "Supprimer",
+                          "id": 41,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        }
+                      },
+                      "attr": {
+                        "style": {
+                          "width": 93,
+                          "backgroundColor": "#FF99CC"
+                        }
+                      }
+                    },
+                    "3": {
+                      "title": "Contenu de séance",
+                      "id": 45,
+                      "ideas": {
+                        "1": {
+                          "title": "Créer",
+                          "id": 51,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        },
+                        "2": {
+                          "title": "Modifier",
+                          "id": 52,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        },
+                        "3": {
+                          "title": "Supprimer",
+                          "id": 53,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        }
+                      },
+                      "attr": {
+                        "style": {
+                          "width": 93,
+                          "backgroundColor": "#FF99CC"
+                        },
+                        "position": [
+                          314.9583740234375,
+                          -21.98260498046875,
+                          2
+                        ]
+                      }
+                    },
+                    "4": {
+                      "title": "Documents",
+                      "id": 46,
+                      "ideas": {
+                        "1": {
+                          "title": "Générer des conditions d'inscription",
+                          "id": 47,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        },
+                        "2": {
+                          "title": "Ajouter des document PDF",
+                          "id": 48,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        },
+                        "3": {
+                          "title": "Supprimer",
+                          "id": 54,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        },
+                        "4": {
+                          "title": "Télécharger",
+                          "id": 57,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        }
+                      },
+                      "attr": {
+                        "style": {
+                          "width": 93,
+                          "backgroundColor": "#FF99CC"
+                        },
+                        "position": [
+                          326.9895935058594,
+                          279.02435302734375,
+                          4
+                        ]
+                      }
+                    },
+                    "3.5": {
+                      "title": "Rendez-vous",
+                      "id": 67,
+                      "ideas": {
+                        "1": {
+                          "title": "Créer",
+                          "id": 68,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        },
+                        "2": {
+                          "title": "Modifier",
+                          "id": 69,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        },
+                        "3": {
+                          "title": "Supprimer",
+                          "id": 70,
+                          "attr": {
+                            "style": {
+                              "width": 93,
+                              "backgroundColor": "#FF99CC"
+                            }
+                          }
+                        }
+                      },
+                      "attr": {
+                        "style": {
+                          "width": 93,
+                          "backgroundColor": "#FF99CC"
+                        }
+                      }
+                    }
+                  },
+                  "attr": {
+                    "style": {
+                      "width": 93,
+                      "backgroundColor": "#FF99CC"
+                    }
+                  }
+                },
+                "2": {
+                  "title": "Planning",
+                  "id": 73,
+                  "ideas": {
+                    "1": {
+                      "title": "Vacances",
+                      "id": 74,
+                      "ideas": {
+                        "1": {
+                          "title": "Créer",
+                          "id": 77,
+                          "attr": {
+                            "style": {
+                              "backgroundColor": "#FF99CC",
+                              "width": 91
+                            }
+                          }
+                        },
+                        "2": {
+                          "title": "Modifier",
+                          "id": 78,
+                          "attr": {
+                            "style": {
+                              "backgroundColor": "#FF99CC",
+                              "width": 88
+                            },
+                            "position": [
+                              92.97918701171875,
+                              -4.937469482421875,
+                              1
+                            ]
+                          }
+                        },
+                        "3": {
+                          "title": "Supprimer",
+                          "id": 79,
+                          "attr": {
+                            "style": {
+                              "backgroundColor": "#FF99CC",
+                              "width": 96
+                            }
+                          }
+                        }
+                      },
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#FF99CC"
+                        }
+                      }
+                    },
+                    "2": {
+                      "title": "Créneaux horaires",
+                      "id": 80,
+                      "ideas": {
+                        "1": {
+                          "title": "Créer",
+                          "id": 81,
+                          "attr": {
+                            "style": {
+                              "backgroundColor": "#FF99CC",
+                              "width": 87
+                            }
+                          }
+                        },
+                        "2": {
+                          "title": "Modifier",
+                          "id": 82,
+                          "attr": {
+                            "style": {
+                              "backgroundColor": "#FF99CC",
+                              "width": 88
+                            }
+                          }
+                        },
+                        "3": {
+                          "title": "Supprimer",
+                          "id": 83,
+                          "attr": {
+                            "style": {
+                              "backgroundColor": "#FF99CC",
+                              "width": 88
+                            }
+                          }
+                        }
+                      },
+                      "attr": {
+                        "style": {
+                          "backgroundColor": "#FF99CC"
+                        }
+                      }
+                    }
+                  },
+                  "attr": {
+                    "style": {
+                      "backgroundColor": "#FF99CC"
+                    }
+                  }
+                }
+              },
+              "attr": {
+                "style": {
+                  "backgroundColor": "#FF99CC"
+                }
+              }
+            }
+          },
+          "attr": {
+            "style": {
+              "width": 93,
+              "backgroundColor": "#FF6600"
+            }
+          }
+        }
+      }
+    }
+  },
+  "title": "Douceur de Chien",
+  "links": []
+}

@@ -20,15 +20,5 @@ https://website.simplx.fr/blog/2016/09/27/authentification-api-via-jwt-et-cookie
 
 retourner les permissions en brut lors du endpoint de connexion 
 
-Modification du endpoint `GET api/v1/dogs/downloadPicture` (retourne directement image)
--MODIFIER documentation du endpoint
--MODIFIER tests unitaires postman et dans la doc
-Modification du endpoint `POST api/v1/users` (retourne mtn api token + code role)
--MODIFIER documentation du endpoint
--MODIFIER tests unitaires postman et dans la doc
-Modification du endpoint `GET api/v1/users` (retourner avec les chiens)
--MODIFIER documentation du endpoint
--MODIFIER tests unitaires postman et dans la doc
-Modification du endpoint `GET api/v1/users/{userId]` (retourner avec les chiens et documents)
--MODIFIER documentation du endpoint
--MODIFIER tests unitaires postman et dans la doc
+Pour les requêtes compliquées que nous avons eu à écrire, il serait intéressant de mettre l’explain plain
+cf.
