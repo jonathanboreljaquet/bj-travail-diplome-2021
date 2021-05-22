@@ -19,6 +19,8 @@ import "./registerServiceWorker";
 import jquery from "jquery";
 Vue.prototype.$jquery = jquery;
 
+Vue.prototype.$API_URL = "https://api-rest-douceur-de-chien.boreljaquet.ch/";
+
 Vue.config.productionTip = false;
 
 new Vue({

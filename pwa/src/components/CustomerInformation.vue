@@ -21,21 +21,28 @@
             <p class="text-secondary mb-1" v-if="code_role == '1'">Client</p>
             <p class="text-secondary mb-1">{{ address }}</p>
             <b-button
-              variant="outline-success"
+              variant="outline-primary"
               class="btnAdmin"
               v-if="authAdministrator"
-              style="margin-bottom: 10px"
               v-b-modal.modal-add-dog
             >
               Ajouter un chien
             </b-button>
             <b-button
-              variant="outline-success"
+              variant="outline-primary"
               class="btnAdmin"
               v-if="authAdministrator"
               v-b-modal.modal-add-document
             >
               Ajouter un document
+            </b-button>
+            <b-button
+              variant="outline-danger"
+              class="btnAdmin"
+              v-if="authAdministrator"
+              v-b-modal.modal-delete-user
+            >
+              Supprimer l'utilisateur
             </b-button>
           </b-card>
 
@@ -44,18 +51,31 @@
             style="padding: 10px; width: 100%"
           >
             <div v-for="document in documents" :key="document.id">
-              <b-row style="text-align: center">
+              <b-row style="text-align: center; margin-top: 10px">
                 <b-col>
-                  <b-button style="width: 100%">
+                  <b-button
+                    @click="
+                      downloadDocument(
+                        document.type,
+                        document.document_serial_id
+                      )
+                    "
+                    class="btnAdmin"
+                    block
+                    variant="outline-primary"
+                  >
                     {{ document.type }}_{{ document.document_serial_id }}
-                    <b-icon-download
-                      @click="
-                        downloadDocument(
-                          document.type,
-                          document.document_serial_id
-                        )
-                      "
-                    ></b-icon-download>
+                    <b-icon-download></b-icon-download>
+                  </b-button>
+                  <b-button
+                    class="btnAdmin"
+                    block
+                    variant="outline-danger"
+                    v-if="authAdministrator"
+                    v-b-modal.modal-delete-document
+                    @click="sendDocumentId(document.id)"
+                  >
+                    Supprimer le document
                   </b-button>
                 </b-col>
               </b-row>
@@ -103,7 +123,8 @@
                     <b-card-img
                       v-if="dog.picture_serial_id"
                       :src="
-                        'https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/downloadPicture/' +
+                        $API_URL +
+                        'dogs/downloadPicture/' +
                         dog.picture_serial_id
                       "
                       alt="Image"
@@ -145,18 +166,29 @@
                   </b-col>
                   <b-col sm="8" class="text-secondary">{{ dog.chip_id }}</b-col>
                 </b-row>
-                <div v-if="!dog.picture_serial_id && authAdministrator">
+                <div v-if="authAdministrator">
                   <hr />
+                  <b-button
+                    variant="outline-danger"
+                    class="btnAdmin"
+                    v-if="authAdministrator"
+                    v-b-modal.modal-delete-dog
+                    @click="sendDogId(dog.id)"
+                  >
+                    Supprimer le chien
+                  </b-button>
                   <b-row>
                     <b-col>
-                      <b-button
-                        class="btnAdmin"
-                        style="margin-bottom: 10px"
-                        v-b-modal.modal-add-picture-dog
-                        @click="sendDogId(dog.id)"
-                      >
-                        Ajouter une photo
-                      </b-button>
+                      <div v-if="!dog.picture_serial_id">
+                        <b-button
+                          class="btnAdmin"
+                          variant="outline-primary"
+                          v-b-modal.modal-add-picture-dog
+                          @click="sendDogId(dog.id)"
+                        >
+                          Ajouter une photo
+                        </b-button>
+                      </div>
                     </b-col>
                   </b-row>
                 </div>
@@ -294,8 +326,13 @@
                 required
               ></b-form-select>
             </b-form-group>
-            <sketchpad @saveSignature="saveSignature"></sketchpad>
-            <b-button block type="submit" variant="outline-primary">
+            <sketchpad @getSignature="saveSignature"></sketchpad>
+            <b-button
+              :disabled="!signatureIsBlocked"
+              block
+              type="submit"
+              variant="outline-primary"
+            >
               Créer les conditions d'inscription
             </b-button>
           </div>
@@ -318,6 +355,92 @@
               Ajouter le document
             </b-button>
           </div>
+        </b-form>
+      </b-modal>
+      <b-modal
+        id="modal-delete-user"
+        title="Confirmation de supression d'utilisateur"
+        :hide-footer="true"
+        :hide-header="true"
+      >
+        <h5 style="text-align: center">Supprimer l'utilisateur ?</h5>
+        <b-form @submit.prevent="deleteUser()">
+          <b-row>
+            <b-col>
+              <b-button
+                block
+                variant="danger"
+                @click="$bvModal.hide('modal-delete-user')"
+              >
+                Non
+              </b-button>
+            </b-col>
+            <b-col>
+              <b-button block type="submit" variant="success">Oui</b-button>
+            </b-col>
+          </b-row>
+        </b-form>
+      </b-modal>
+      <b-modal
+        id="modal-delete-document"
+        title="Confirmation de supression d'utilisateur"
+        :hide-footer="true"
+        :hide-header="true"
+      >
+        <h5 style="text-align: center">Supprimer le document ?</h5>
+        <b-form @submit.prevent="deleteDocument(selectedDocumentId)">
+          <b-row>
+            <b-col>
+              <b-button
+                block
+                variant="danger"
+                @click="$bvModal.hide('modal-delete-document')"
+              >
+                Non
+              </b-button>
+            </b-col>
+            <b-col>
+              <b-button
+                block
+                type="submit"
+                variant="success"
+                @click="$bvModal.hide('modal-delete-document')"
+              >
+                Oui
+              </b-button>
+            </b-col>
+          </b-row>
+        </b-form>
+      </b-modal>
+      <b-modal
+        id="modal-delete-dog"
+        title="Confirmation de supression d'utilisateur"
+        :hide-footer="true"
+        :hide-header="true"
+      >
+        <h5 style="text-align: center">Supprimer le chien ?</h5>
+        <b-form @submit.prevent="deleteDog(selectedDogId)">
+          <b-row>
+            <b-col>
+              <b-button
+                block
+                variant="danger"
+                @click="$bvModal.hide('modal-delete-dog')"
+              >
+                Non
+              </b-button>
+            </b-col>
+            <b-col>
+              <b-button
+                @click="$bvModal.hide('modal-delete-dog')"
+                block
+                type="submit"
+                variant="success"
+              >
+                Oui
+              </b-button>
+            </b-col>
+          </b-row>
         </b-form>
       </b-modal>
     </b-container>
@@ -353,7 +476,8 @@ export default {
         sex: "Mâle",
         chip_id: "",
       },
-      selectedDogId: "",
+      selectedDogId: null,
+      selectedDocumentId: null,
       dogPictureFile: null,
       sex: ["Mâle", "Femelle"],
       documentFile: null,
@@ -373,6 +497,7 @@ export default {
         { value: 5, text: "Forfait bilan + 9 séances : 520 € / 560 CHF" },
       ],
       signatureBase64: "",
+      signatureIsBlocked: false,
     };
   },
   methods: {
@@ -384,10 +509,7 @@ export default {
         },
       };
       this.$http
-        .get(
-          "https://api-rest-douceur-de-chien.boreljaquet.ch/users/me/",
-          config
-        )
+        .get(this.$API_URL + "users/me/", config)
         .then((response) => {
           this.id = response.data.id;
           this.email = response.data.email;
@@ -411,10 +533,7 @@ export default {
         },
       };
       this.$http
-        .get(
-          "https://api-rest-douceur-de-chien.boreljaquet.ch/users/" + userId,
-          config
-        )
+        .get(this.$API_URL + "users/" + userId, config)
         .then((response) => {
           console.log(response);
           this.id = response.data.id;
@@ -446,11 +565,7 @@ export default {
         },
       };
       this.$http
-        .post(
-          "https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/",
-          params,
-          config
-        )
+        .post(this.$API_URL + "dogs/", params, config)
         .then((response) => {
           console.log(response);
           this.loadCustomerInformationsByUserId(this.$route.params.userId);
@@ -472,11 +587,7 @@ export default {
         },
       };
       this.$http
-        .post(
-          "https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/uploadPicture/",
-          formData,
-          config
-        )
+        .post(this.$API_URL + "dogs/uploadPicture/", formData, config)
         .then((response) => {
           console.log(response);
           this.loadCustomerInformationsByUserId(this.$route.params.userId);
@@ -509,11 +620,7 @@ export default {
         },
       };
       this.$http
-        .post(
-          "https://api-rest-douceur-de-chien.boreljaquet.ch/documents/",
-          params,
-          config
-        )
+        .post(this.$API_URL + "documents/", params, config)
         .then((response) => {
           console.log(response);
           this.loadCustomerInformationsByUserId(this.$route.params.userId);
@@ -534,8 +641,7 @@ export default {
       };
       this.$http
         .get(
-          "https://api-rest-douceur-de-chien.boreljaquet.ch/documents/downloadDocument/" +
-            document_serial_id,
+          this.$API_URL + "documents/downloadDocument/" + document_serial_id,
           config
         )
         .then((response) => {
@@ -552,14 +658,75 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    deleteUser() {
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token,
+        },
+      };
+      this.$http
+        .delete(this.$API_URL + "users/" + this.$route.params.userId, config)
+        .then((response) => {
+          this.$alertify.success("Utilisateur supprimé");
+          this.$router.push("/administration");
+          console.log(response);
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
+    deleteDog(dogId) {
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token,
+        },
+      };
+      this.$http
+        .delete(this.$API_URL + "dogs/" + dogId, config)
+        .then((response) => {
+          this.loadCustomerInformationsByUserId(this.$route.params.userId);
+          this.$alertify.success("Chien supprimé");
+          console.log(response);
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
+    deleteDocument(documentId) {
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token,
+        },
+      };
+      this.$http
+        .delete(this.$API_URL + "documents/" + documentId, config)
+        .then((response) => {
+          this.loadCustomerInformationsByUserId(this.$route.params.userId);
+          this.$alertify.success("Document supprimé");
+          console.log(response);
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
     resetModalAddDocument() {
       this.addDocumentForm.type = "poster";
+      this.signatureIsBlocked = false;
     },
     sendDogId(dogId) {
       this.selectedDogId = dogId;
     },
-    saveSignature(value) {
-      this.signatureBase64 = value;
+    sendDocumentId(documentId) {
+      this.selectedDocumentId = documentId;
+    },
+    saveSignature(...args) {
+      const [base64, isBlocked] = args;
+      this.signatureBase64 = base64;
+      this.signatureIsBlocked = isBlocked;
+      console.log(isBlocked);
     },
   },
   computed: {
@@ -599,5 +766,6 @@ export default {
 }
 .btnAdmin {
   width: 100%;
+  margin-bottom: 10px;
 }
 </style>

@@ -1656,4 +1656,47 @@ Développement de la fonctionnalité d'affichage et de téléchargement des diff
 * Réalisé la fonctionnalité permettant de télécharger un document en cliquant sur celui-ci fonctionnant de la manière suivante :
   1. Appel de l'endpoint `GET api/v1/documents/downloadDocument/{serialId}` afin de récupérer la chaîne binaire (binaryString) du document PDF
   2. Création d'un BLOB (Binary large Object) avec la chaîne binaire
-  3. COMPLETER
+  3. Création d'une chaine contenant une URL représentant les données passées en paramètre (le BLOB)
+  4. Création d'une balise `<a>` en lui attribuant l'URL et le nom du fichier
+  5. Ajout de la balise `<a>` au body
+  6. Click sur la balise `<a>`
+  7. Retirer la balise `<a>` du body
+
+```javascript
+var blob = new Blob([response.data]);
+var file = window.URL.createObjectURL(blob);
+var a = document.createElement("a");
+a.href = file;
+a.download = type + "_" + document_serial_id + ".pdf";
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+```
+
+
+
+Rendez-vous physique hebdomadaire avec M. Mathieu. J'ai montré les fonctionnalités que j'ai développées à M. Mathieu et il en a profité pour me faire part de ses remarques. Pour résumer, ses remarques étaient :
+
+* Faciliter l'interection utilisateur de la fonctionnalité d'ajout de conditions d'inscription
+* Rester cohérant dans la réalisation des différentes fonctionnalités
+* Ajouter une variable global contenant l'URL de l'API REST
+
+J'en ai également profité pour parler de la taille conséquente des photos prisent par un appareil muni de caméra. En effet, les photos prisent pèsent plus de 1 MO ce qui est assez conséquent. M. Mathieu m'a dit qu'il avait développé une fonctionnalité en PHP pour traiter une image afin de la réduire en taille. M. Mathieu compte m'envoyer un mail afin de me communiquer les sources de cette fonctionnalité afin que je me renseigne sur celles-ci.
+
+Modification de l'interection utilisateur de la fonctionnalité d'ajout de conditions d'inscription afin de bloquer la possibilité de créer une condition sans avoir sauvegardé la signature.
+
+Création de la variable globale accessible par tous les composants `API_URL` : `Vue.prototype.$API_URL = "https://api-rest-douceur-de-chien.boreljaquet.ch/"` et utilisation de celle-ci dans toutes les requêtes HTTP.
+
+Ajout de toutes les fonctionnalités permettant la suppression des différentes informations des utilisateurs :
+
+* Suppression du client (Incluant la suppression de ses chiens et ses documents)
+* Suppression d'un chien
+* Suppression d'un document
+
+![dateTestPlanningSecondUser](./img/vue_delete_user_dog_document.PNG)
+
+Les trois fonctionnalités de suppression fonctionnent de la manière suivante :
+
+1. Click sur le bouton de suppression
+2. Ouverture de la fenêtre modale de confirmation de suppression
+3. Click sur `Oui` afin de supprimer l'élément avec l'endpoint correspondant `DELETE api/v1/users/{userId} ou DELETE api/v1/dogs/{dogId} ou DELETE api/v1/documents/{documentId}`. Click sur `Non` afin de revenir en arrière

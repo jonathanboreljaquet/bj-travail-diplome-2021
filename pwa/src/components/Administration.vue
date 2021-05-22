@@ -85,8 +85,7 @@
                 <b-col v-if="dog.picture_serial_id">
                   <b-img
                     :src="
-                      'https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/downloadPicture/' +
-                      dog.picture_serial_id
+                      $API_URL + 'dogs/downloadPicture/' + dog.picture_serial_id
                     "
                     rounded
                     fluid
@@ -142,7 +141,7 @@ export default {
         },
       };
       this.$http
-        .get("https://api-rest-douceur-de-chien.boreljaquet.ch/users/", config)
+        .get(this.$API_URL + "users/", config)
         .then((response) => {
           const vm = this;
           this.$jquery.each(response.data, function (index, item) {
