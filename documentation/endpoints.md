@@ -24,11 +24,13 @@ Body de la requête :
 
 ##### Use case
 
-![dateTestPlanningSecondUser](./diagram/UseCaseInscription.png)
+<img src="./diagram/UseCaseInscription.svg" width="450px" />
+
+<div style="page-break-after: always;"></div>
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostUser.png)
+<img src="./diagram/drawio/flowchartPostUser.svg" width="350px"/>
 
 ##### Tests unitaires
 
@@ -53,7 +55,7 @@ Cet endpoint permet de récupérer tous les clients ainsi que leurs chiens de l'
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllUser.png)
+<img src="./diagram/drawio/flowchartGetAllUser.svg" width="350px"/>
 
 ##### Tests unitaires
 
@@ -61,6 +63,7 @@ Cet endpoint permet de récupérer tous les clients ainsi que leurs chiens de l'
 
 * **[USE-GA2] Get right users with admin api token**
 
+<div style="page-break-after: always;"></div>
 
 #### GET api/v1/users/{idUser}
 
@@ -74,7 +77,7 @@ Cet endpoint permet de récupérer un client spécifique de l'application avec s
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneUser.png)
+<img src="./diagram/drawio/flowchartGetOneUser.svg" width="350px"/>
 
 ##### Tests unitaires
 
@@ -83,6 +86,8 @@ Cet endpoint permet de récupérer un client spécifique de l'application avec s
 * **[USE_GO2] Get one non-existent user**
 
 * **[USE-GO3] Get right user wtih admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  PATCH api/v1/users/{idUser}
 
@@ -105,7 +110,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneUser.png)
+<img src="./diagram/drawio/flowchartUpdateOneUser.svg" width="200px"/>
 
 ##### Tests unitaires
 
@@ -126,7 +131,7 @@ Cet endpoint permet la suppression définitive d'un utilisateur. L'endpoint est 
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneUser.png)
+<img src="./diagram/drawio/flowchartDeleteOneUser.svg" width="350px"/>
 
 ##### Tests unitaires
 
@@ -146,13 +151,14 @@ Cet endpoint permet de récupérer toutes les données de l'utilisateur authenti
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetUserAuthdrawio.png)
+<img src="./diagram/drawio/flowchartGetUserAuthdrawio.svg" width="350px"/>
 
 ##### Tests unitaires
 
 * **[USE-GUA1] Get all user information of the current logged in non-existent user**
 * **[USE-GUA2] Get all user information of the current logged in user**
 
+<div style="page-break-after: always;"></div>
 
 ####  POST api/v1/connection
 
@@ -172,7 +178,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartConnection.png)
+<img src="./diagram/drawio/flowchartConnection.svg" width="250px"/>
 
 ##### Tests unitaires
 
@@ -201,9 +207,11 @@ Body de la requête :
 | chip_id           | Le numéro de puce sous-cutanée du chien              |             |        |
 | user_id           | L'identifiant de l'utilisateur propriétaire du chien |      X      |        |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostDog.png)
+<img src="./diagram/drawio/flowchartPostDog.svg" width="280px"/>
 
 ##### Tests unitaires
 
@@ -227,13 +235,14 @@ Cet endpoint permet de récupérer tous les chiens existants de l'application. L
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllDog.png)
+<img src="./diagram/drawio/flowchartGetAllDog.svg" width="350px"/>
 
 ##### Tests unitaires
 
 * **[DOG-GA1] Get all dogs with a user api token**
 * **[DOG-GA2] Get right dogs with admin api token**
 
+<div style="page-break-after: always;"></div>
 
 #### GET api/v1/dogs/{idDog}
 
@@ -247,13 +256,15 @@ Cet endpoint permet de récupérer un chien spécifique de l'application. L'endp
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneDog.png)
+<img src="./diagram/drawio/flowchartGetOneDog.svg" width="350px"/>
 
 ##### Tests unitaires
 
 * **[DOG-GO1] Get one dog with a user api token**
 * **[DOG_GO2] Get one non-existent dog**
 * **[DOG-GO3] Get right dog with admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  PATCH api/v1/dogs/{idDog}
 
@@ -276,7 +287,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneDog.png)
+<img src="./diagram/drawio/flowchartUpdateOneDog.svg" width="220px"/>
 
 ##### Tests unitaires
 
@@ -296,7 +307,7 @@ Cet endpoint permet la suppression définitive d'un chien. L'endpoint est access
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneDog.png)
+<img src="./diagram/drawio/flowchartDeleteOneDog.svg" width="270px"/>
 
 ##### Tests unitaires
 
@@ -320,9 +331,11 @@ Body de la requête :
 | dog_picture | La photo du chien      |      X      | PNG ou JPEG |
 | dog_id      | L'identifiant du chien |      X      |             |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartUploadDogPicture.png)
+<img src="./diagram/drawio/flowchartUploadDogPicture.svg" width="500px"/>
 
 ##### Tests unitaires
 
@@ -345,12 +358,14 @@ Cet endpoint permet de récupérer la photo d'un chien grâce à son identifiant
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartDownloadDogPicture.png)
+<img src="./diagram/drawio/flowchartDownloadDogPicture.svg" width="500px"/>
 
 ##### Tests unitaires
 
 * **[DOG-DDP1] Download non-existant dog picture**
 * **[DOG-DDP2] Download dog picture without problems**
+
+<div style="page-break-after: always;"></div>
 
 ####  POST api/v1/documents
 
@@ -371,9 +386,11 @@ Body de la requête :
 | signature_base64 | La signature des conditions d'inscription               | X si le type est "conditions_inscription" |                                                        |
 | document         | Le document PDF à upload                                |         X si le type est "poster"         | Le fichier doit être de type PDF                       |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartCreateDocument.png)
+<img src="./diagram/drawio/flowchartCreateDocument.svg" width="460px"/>
 
 ##### Tests unitaires
 
@@ -400,12 +417,14 @@ Cet endpoint permet de récupérer tous les documents existants de tous les clie
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllDocument.png)
+<img src="./diagram/drawio/flowchartGetAllDocument.svg"/>
 
 ##### Tests unitaires
 
 * **[DOC-GA1] Get all documents with a user api token**
 * **[DOC-GA2] Get right documents with admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  GET api/v1/documents/{idDocument}
 
@@ -419,13 +438,15 @@ Cet endpoint permet de récupérer un document spécifique de l'application. L'e
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/drawio/flowchartGetOneDocument.png)
+<img src="./diagram/drawio/flowchartGetOneDocument.svg"/>
 
 ##### Tests unitaires
 
 * **[DOC-GO1] Get one document with a user api token**
 * **[DOC-GO2] Get one non-existent document**
 * **[DOC-GO3] Get right document with admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  PATCH api/v1/documents/{idDocument}
 
@@ -445,7 +466,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneDog.png)
+<img src="./diagram/drawio/flowchartUpdateOneDocument.svg" width="200px"/>
 
 ##### Tests unitaires
 
@@ -466,7 +487,7 @@ Cet endpoint permet la suppression définitive d'un document avec son document s
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneDocument.png)
+<img src="./diagram/drawio/flowchartDeleteOneDocument.svg" width="280px"/>
 
 ##### Tests unitaires
 
@@ -486,7 +507,7 @@ Cet endpoint permet de récupérer le document d'un client. L'endpoint est acces
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartDownloadDocument.png)
+<img src="./diagram/drawio/flowchartDownloadDocument.svg"/>
 
 ##### Tests unitaires
 
@@ -510,9 +531,11 @@ Body de la requête :
 | date_absence_to   | La date de fin des vacances     |      X      | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début des vacances |
 | description       | La description/nom des vacances |             |                                                              |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostAbsence.png)
+<img src="./diagram/drawio/flowchartPostAbsence.svg" width="250px"/>
 
 ##### Tests unitaires
 
@@ -536,12 +559,14 @@ Cet endpoint permet de récupérer toutes les vacances existantes de l'éducateu
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllAbsence.png)
+<img src="./diagram/drawio/flowchartGetAllAbsence.svg"/>
 
 ##### Tests unitaires
 
 * **[ABS-GA1] Get all absences with a user api token**
 * **[ABS-GA2] Get right absences with admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  GET api/v1/absences/{idAbsence}
 
@@ -555,13 +580,15 @@ Cet endpoint permet de récupérer une vacance spécifique de l'éducateur canin
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneAbsence.png)
+<img src="./diagram/drawio/flowchartGetOneAbsence.svg"/>
 
 ##### Tests unitaires
 
 * **[ABS-GO1] Get one absence with a user api token**
 * **[ABS-GO2] Get one non-existent absence**
 * **[ABS-GO3] Get right absence with admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  PATCH api/v1/absences/{idAbsence}
 
@@ -580,9 +607,11 @@ Body de la requête :
 | date_absence_to   | La date de fin des vacances     |             | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début des vacances |
 | description       | La description/nom des vacances |             |                                                              |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneAbsence.png)
+<img src="./diagram/drawio/flowchartUpdateOneAbsence.svg" width="290px"/>
 
 ##### Tests unitaires
 
@@ -605,7 +634,7 @@ Cet endpoint permet la suppression non définitive d'une vacance de l'éducateur
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneAbsence.png)
+<img src="./diagram/drawio/flowchartDeleteOneAbsence.svg"/>
 
 ##### Tests unitaires
 
@@ -629,9 +658,11 @@ Body de la requête :
 | date_valid_from | La date de début du calendrier hebdomadaire |      X      | La date doit respecter le format de date (YYYY-MM-DD)        |
 | date_valid_to   | La date de fin du calendrier hebdomadaire   |             | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début du calendrier hebdomadaire |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostWeeklySchedule.png)
+<img src="./diagram/drawio/flowchartPostWeeklySchedule.svg" width="400px"/>
 
 ##### Tests unitaires
 
@@ -656,12 +687,14 @@ Cet endpoint permet de récupérer tous les calendriers hebdomadaires existants 
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllWeeklySchedule.png)
+<img src="./diagram/drawio/flowchartGetAllWeeklySchedule.svg"/>
 
 ##### Tests unitaires
 
 * **[WEE-GA1] Get all weekly schedules with a user api token**
 * **[WEE-GA2] Get right weekly schedules with admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  GET api/v1/weeklySchedules/{idWeeklySchedule}
 
@@ -675,13 +708,15 @@ Cet endpoint permet de récupérer un calendrier hebdomadaire spécifique de l'�
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneWeeklySchedule.png)
+<img src="./diagram/drawio/flowchartGetOneWeeklySchedule.svg"/>
 
 ##### Tests unitaires
 
 * **[WEE-GO1] Get one weekly schedule with a user api token**
 * **[WEE-GO2] Get one non-existent weekly schedule**
 * **[WEE-GO3] Get right weekly schedule with admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  PATCH api/v1/weeklySchedules/{idWeeklySchedule}
 
@@ -699,9 +734,11 @@ Body de la requête :
 | date_valid_from | La date de début du calendrier hebdomadaire |             | La date doit respecter le format de date (YYYY-MM-DD)        |
 | date_valid_to   | La date de fin du calendrier hebdomadaire   |             | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début du calendrier hebdomadaire |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneWeeklySchedule.png)
+<img src="./diagram/drawio/flowchartUpdateOneWeeklySchedule.svg" width="420px"/>
 
 ##### Tests unitaires
 
@@ -726,7 +763,7 @@ Cet endpoint permet la suppression non définitive d'un calendrier hebdomadaire 
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneWeeklySchedule.png)
+<img src="./diagram/drawio/flowchartDeleteOneWeeklySchedule.svg"/>
 
 ##### Tests unitaires
 
@@ -749,9 +786,11 @@ Body de la requête :
 | ---------------------- | -------------------------------- | :---------: | ----------------------------------------------------- |
 | date_schedule_override | La date de l'exception d'horaire |      X      | La date doit respecter le format de date (YYYY-MM-DD) |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostScheduleOverride.png)
+<img src="./diagram/drawio/flowchartPostScheduleOverride.svg" width="290px"/>
 
 ##### Tests unitaires
 
@@ -773,12 +812,14 @@ Cet endpoint permet de récupérer toutes les exceptions d'horaires existantes d
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllScheduleOverride.png)
+<img src="./diagram/drawio/flowchartGetAllScheduleOverride.svg"/>
 
 ##### Tests unitaires
 
 * **[SCH-GA1] Get all schedule overrides with a user api token**
 * **[SCH-GA2] Get right schedule overrides with admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  GET api/v1/scheduleOverrides/{idScheduleOverride}
 
@@ -792,13 +833,15 @@ Cet endpoint permet de récupérer une exception d'horaire spécifique de l'édu
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneScheduleOverride.png)
+<img src="./diagram/drawio/flowchartGetOneScheduleOverride.svg"/>
 
 ##### Tests unitaires
 
 * **[SCH-GO1] Get one schedule override with a user api token**
 * **[SCH-GO2] Get one non-existent schedule override**
 * **[SCH-GO3] Get right schedule override with admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  PATCH api/v1/scheduleOverrides/{idScheduleOverride}
 
@@ -815,9 +858,11 @@ Body de la requête :
 | ---------------------- | -------------------------------- | :---------: | ----------------------------------------------------- |
 | date_schedule_override | La date de l'exception d'horaire |             | La date doit respecter le format de date (YYYY-MM-DD) |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneScheduleOverride.png)
+<img src="./diagram/drawio/flowchartUpdateOneScheduleOverride.svg" width="340px"/>
 
 ##### Tests unitaires
 
@@ -839,7 +884,7 @@ Cet endpoint permet la suppression non définitive d'une exception d'horaire de 
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneScheduleOverride.png)
+<img src="./diagram/drawio/flowchartDeleteOneScheduleOverride.svg"/>
 
 ##### Tests unitaires
 
@@ -866,9 +911,11 @@ Body de la requête :
 | id_schedule_override | L'exception d'horaire du créneau horaire      |  X si id_weekly_schedule est null  |                                                              |
 | id_weekly_schedule   | Le calendrier hebdomadaire du créneau horaire | X si id_schedule_override est null |                                                              |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostTimeSlot.png)
+<img src="./diagram/drawio/flowchartPostTimeSlot.svg"/>
 
 ##### Tests unitaires
 
@@ -888,6 +935,8 @@ Body de la requête :
 * **[TIM-CO14] Create one time slot with time slot overlap in the same schedule override problem**
 * **[TIM-CO15] Create one time slot without problems**
 
+<div style="page-break-after: always;"></div>
+
 ####  GET api/v1/timeSlots
 
 ##### Objectif
@@ -900,12 +949,14 @@ Cet endpoint permet de récupérer tous les créneaux horaires existants de l'é
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllTimeSlot.png)
+<img src="./diagram/drawio/flowchartGetAllTimeSlot.svg"/>
 
 ##### Tests unitaires
 
 * **[TIM-GA1] Get all time slots with a user api token**
 * **[TIM-GA2] Get right time slots with admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  GET api/v1/timeSlots/{idTimeSlot}
 
@@ -919,13 +970,15 @@ Cet endpoint permet de récupérer un créneau horaire spécifique de l'éducate
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneTimeSlot.png)
+<img src="./diagram/drawio/flowchartGetOneTimeSlot.svg"/>
 
 ##### Tests unitaires
 
 * **[TIM-GO1] Get one time slot with a user api token**
 * **[TIM-GO2] Get one non-existent time slot**
 * **[TIM-GO3] Get right time slot with admin api token**
+
+<div style="page-break-after: always;"></div>
 
 ####  PATCH api/v1/timeSlots/{idTimeSlot}
 
@@ -944,9 +997,11 @@ Body de la requête :
 | time_start | L'heure de début du créneau horaire |             | L'heure doit respecter le format d'heure (HH-MM-SS)          |
 | time_end   | L'heure de fin du créneau horaire   |             | L'heure doit respecter le format d'heure (HH-MM-SS) et ne pas être située avant l'heure de début du créneau horaire |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneTimeSlot.png)
+<img src="./diagram/drawio/flowchartUpdateOneTimeSlot.svg" width="320px"/>
 
 ##### Tests unitaires
 
@@ -960,6 +1015,8 @@ Body de la requête :
 * **[TIM-UO8] Update one time slot with time slot overlap in the same schedule override problem**
 * **[TIM-UO9] Update one time slot without problems**
 
+<div style="page-break-after: always;"></div>
+
 ####  DELETE api/v1/timeSlots/{idTimeSlot}
 
 ##### Objectif
@@ -972,7 +1029,7 @@ Cet endpoint permet la suppression non définitive d'un créneau horaire de l'é
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneTimeSlot.png)
+<img src="./diagram/drawio/flowchartDeleteOneTimeSlot.svg"/>
 
 ##### Tests unitaires
 
@@ -998,9 +1055,11 @@ Body de la requête :
 | user_id_customer    | L'identifiant du client            |      X      |                                                              |
 | user_id_educator    | L'identifiant de l'éducateur canin |      X      |                                                              |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartPostAppoitment.png)
+<img src="./diagram/drawio/flowchartPostAppoitment.svg" width="260px"/>
 
 ##### Tests unitaires
 
@@ -1015,6 +1074,8 @@ Body de la requête :
 * **[APP-CO9] Create one appoitment for invalid appoitment slot**
 * **[APP-CO10] Create one appoitment without problems**
 
+<div style="page-break-after: always;"></div>
+
 ####  GET api/v1/appoitments
 
 ##### Objectif
@@ -1027,13 +1088,15 @@ Cet endpoint permet de récupérer toutes les informations des rendez-vous de l'
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetAllAppoitment.png)
+<img src="./diagram/drawio/flowchartGetAllAppoitment.svg"/>
 
 ##### Tests unitaires
 
 * **[APP-GA1] Get all appoitments with unauthorized user**
 * **[APP-GA2] Get right appoitments for customer**
 * **[APP-GA3] Get right appoitments for educator**
+
+<div style="page-break-after: always;"></div>
 
 ####  GET api/v1/appoitments/{idAppoitment}
 
@@ -1047,13 +1110,15 @@ Cet endpoint permet de récupérer un rendez-vous spécifique. L'endpoint est ac
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOneAppoitment.png)
+<img src="./diagram/drawio/flowchartGetOneAppoitment.svg"/>
 
 ##### Tests unitaires
 
 * **[APP-GO1] Get one appoitment with a user api token**
 * **[APP-GO2] Get one non-existent appoitment**
 * **[APP-GO3] Get right appoitment**
+
+<div style="page-break-after: always;"></div>
 
 ####  PATCH api/v1/appoitments/{idAppoitment}
 
@@ -1073,7 +1138,7 @@ Body de la requête :
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartUpdateOneAppoitment.png)
+<img src="./diagram/drawio/flowchartUpdateOneAppoitment.svg" width="280px"/>
 
 ##### Tests unitaires
 
@@ -1093,7 +1158,7 @@ Cet endpoint permet la suppression non définitive d'un rendez-vous. Cette suppr
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartDeleteOneAppoitment.png)
+<img src="./diagram/drawio/flowchartDeleteOneAppoitment.svg"/>
 
 ##### Tests unitaires
 
@@ -1118,9 +1183,11 @@ Body de la requête :
 | note_graphical | La note graphique            |      X      | PNG    |
 | appoitment_id  | L'identifiant du rendez-vous |      X      |        |
 
+<div style="page-break-after: always;"></div>
+
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartUploadNoteGraphical.png)
+<img src="./diagram/drawio/flowchartUploadNoteGraphical.svg" width="420px"/>
 
 ##### Tests unitaires
 
@@ -1143,13 +1210,15 @@ Cet endpoint permet de récupérer une note graphique en base64 grâce à son id
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartDownloadNoteGraphical.png)
+<img src="./diagram/drawio/flowchartDownloadNoteGraphical.svg"/>
 
 ##### Tests unitaires
 
 * **[APP-DNG1] Download note graphical with a user api token**
 * **[APP-DNG2] Download non-existant note graphical**
 * **[APP-DNG3] Download note graphical without problems**
+
+<div style="page-break-after: always;"></div>
 
 ####  GET api/v1/plannings/{idEducator}
 
@@ -1163,7 +1232,7 @@ Cet endpoint permet de récupérer le planning d'un éducateur canin. Le plannin
 
 ##### Flow chart
 
-![dateTestPlanningSecondUser](./diagram/drawio/flowchartGetOnePlanning.png)
+<img src="./diagram/drawio/flowchartGetOnePlanning.svg"/>
 
 ##### Tests unitaires
 

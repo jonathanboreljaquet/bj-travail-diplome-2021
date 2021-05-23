@@ -106,7 +106,7 @@ Fichier de bootage de l'API REST inclus dans tous les fichiers d'entrées, celui
 
 ### Structure
 
-![dateTestPlanningSecondUser](./diagram/drawio/system.png)
+![dateTestPlanningSecondUser](./diagram/drawio/system.svg)
 
 ### Base de données
 
@@ -549,7 +549,7 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
 
 #### Format de code
 
-![dateTestPlanningSecondUser](./diagram/drawio/unitTestCodeFormat.png)
+![dateTestPlanningSecondUser](./diagram/drawio/unitTestCodeFormat.svg)
 
 **Définition**
 
@@ -656,7 +656,7 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
 </table>
 #### Syntaxe
 
-Postman propose à ses utilisateurs la possibilité d'écrire des scripts de test pours tester les différentes requêtes de leurs API. Afin de rédiger ces tests, j'ai du utiliser une certaine syntaxe JavaScript proposé par Postman. Lors de la réalisation de mes tests unitaires avec Postman, j'ai utilisé la fonction `pm.test` afin de tester tout les cas d'utilisation et d'exception de mon API REST. La fonction `pm.test` prend en premier paramètre une chaîne de caractère qui apparaîtra dans la sortie des résultats du test afin d'identifier le test. Le deuxième paramètre est une fonction qui doit retourner un booléen pour indiquer si le test a réussi ou échoué. 
+Postman propose à ses utilisateurs la possibilité d'écrire des scripts de test pour tester les différentes requêtes de leurs API. Afin de rédiger ces tests, j'ai dû utiliser une certaine syntaxe JavaScript proposée par Postman. Lors de la réalisation de mes tests unitaires avec Postman, j'ai utilisé la fonction `pm.test` afin de tester tous les cas d'utilisation et d'exception de mon API REST. La fonction `pm.test` prend en premier paramètre une chaîne de caractères qui apparaîtra dans la sortie des résultats du test afin d'identifier le test. Le deuxième paramètre est une fonction qui doit retourner un booléen pour indiquer si le test a réussi ou échoué. 
 
 Dans tous mes tests unitaires, j'ai utilisé la fonction `pm.test` avec comme fonction `pm.response.to.have.status(status)` afin de tester si le cas d'utilisation de l'endpoint en question retournait le bon code HTTP. En effet, cette ligne retourne `true` si le code d'état de la réponse est identique à son paramètre de fonction et `false` si ce n'est pas le cas.
 Par exemple, afin de tester que l'endpoint de création d'utilisateur `POST api/v1/users` retourne bien le code HTTP `201`, j'ai réalisé le test :
@@ -667,8 +667,8 @@ pm.test("Right code for successful created ressource", function () {
 });
 ```
 
-Pour les endpoints nécessitant de retourner un message, j'ai également testé que celui-ci soit correct en utilisant la fonction ` pm.expect(element1).to.eql(element2)` qui permet de tester que le premier élément corresponde bien au second. 
-Par exemple, afin de tester que l'endpoint de création d'utilisateur `POST api/v1/users` avec une adresse email ne respectant pas le bon format retourne bien le code HTTP `400` ainsi que le message d'erreur `Format d'adresse email invalide.`, j'ai réalisé les tests :
+Pour les endpoints nécessitant de retourner un message, j'ai également testé que celui-ci soit correct en utilisant la fonction` pm.expect(element1).to.eql(element2)` qui permet de tester que le premier élément corresponde bien au second. 
+Par exemple, afin de tester que l'endpoint de création d'utilisateur `POST api/v1/users` avec une adresse e-mail ne respectant pas le bon format retourne bien le code HTTP `400` ainsi que le message d'erreur `Format d'adresse email invalide.`, j'ai réalisé les tests :
 
 ```javascript
 pm.test("Right code for invalid email format", function () {
@@ -680,7 +680,7 @@ pm.test("Right message for for invalid email format", function () {
 });
 ```
 
-Pour les tests unitaires nécessitant le test de plusieurs données de corp de requêtes différentes, j'ai utilisé la fonctionnalité d'importation de CSV proposé par Postman. En effet, Postman permet de sélectionner un fichier CSV contenant différentes données afin de procéder à plusieurs itération de test avec celles-ci. 
+Pour les tests unitaires nécessitant le test de plusieurs données de corps de requêtes différentes, j'ai utilisé la fonctionnalité d'importation de CSV proposé par Postman. En effet, Postman permet de sélectionner un fichier CSV contenant différentes données afin de procéder à plusieurs itérations de test avec celles-ci. 
 Par exemple, afin de tester que l'endpoint de création de vacances `POST api/v1/absences` avec une date ne respectant pas le bon format retourne bien le code HTTP `400` ainsi que le message d'erreur `Format de date invalide => (YYYY-MM-DD).`, j'ai réalisé les tests :
 
 ```javascript
@@ -711,8 +711,8 @@ pm.test("Right message for access without permission", function () {
 });
 ```
 
-Pour les tests unitaires retournant une réponse JSON spécifique, j'ai effectué un test afin de vérifier que sa structure soit respecté avec la fonction `pm.response.to.have.jsonSchema(jsonSchema)`.
-Par exemple, afin de tester que l'endpoint de récupération d'un chien spécifique `GET api/v1/dogs` avec un api token appartenant à un éducateur canin retourne bien le code HTTP `200` ainsi que la réponse JSON au bon format, j'ai réalisé les test :
+Pour les tests unitaires retournant une réponse JSON spécifique, j'ai effectué un test afin de vérifier que sa structure soit respectée avec la fonction `pm.response.to.have.jsonSchema(jsonSchema)`.
+Par exemple, afin de tester que l'endpoint de récupération d'un chien spécifique `GET api/v1/dogs` avec un api token appartenant à un éducateur canin retourne bien le code HTTP `200` ainsi que la réponse JSON au bon format, j'ai réalisé les tests :
 
 ```javascript
 pm.test("Authorization header is present", () => {

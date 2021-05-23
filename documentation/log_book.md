@@ -1600,7 +1600,7 @@ Réalisation de la page "Inscription". La page "Inscription" est accessible par 
 
 ![dateTestPlanningSecondUser](./img/vue_inscription.PNG)
 
-Dorénavant, la page "Administration" des éducateurs canins permet d'accéder aux informations d'un client en cliquant sur le bouton "Afficher les détails". L'objectif de cette page est d'afficher les informations du client en utilisant le même composant que la page "Mes informations" mais avec différentes fonctionnalités que seul les éducateurs canins auront accès. Pour l'instant, l'éducateur canin peut ajouter un chien à un utilisateur depuis un fenêtre modale en cliquant sur le bouton "Ajouter un chien" et retourner en arrière sur la page "Administration" depuis un sticky bouton.
+Dorénavant, la page "Administration" des éducateurs canins permet d'accéder aux informations d'un client en cliquant sur le bouton "Afficher les détails". L'objectif de cette page est d'afficher les informations du client en utilisant le même composant que la page "Mes informations" mais avec différentes fonctionnalités que seuls les éducateurs canins auront accès. Pour l'instant, l'éducateur canin peut ajouter un chien à un utilisateur depuis une fenêtre modale en cliquant sur le bouton "Ajouter un chien" et retourner en arrière sur la page "Administration" depuis un sticky bouton.
 
 ![dateTestPlanningSecondUser](./img/vue_adddog.png)
 
@@ -1608,18 +1608,18 @@ Pour ce qui est des points concernant la documentation, je compte les réaliser 
 
 ### Mercredi 19 mai 2021
 
-Création d'un captcha pour l'inscription d'un utilisateur grâce à des camarades de classes qui ont eut la bonne idée de spam ma fonctionnalité d'inscription. Pour ce faire, j'ai commencé par me rendre sur reCAPTCHA qui est le captcha de Google que M. Mathieu m'avait proposé il y a une semaine. J'ai ensuite enregistré les paramètres de configurations du captcha. J'ai pour l'instant choisis la version 2 de reCAPTCHA avec le mode "Je ne suis pas un robot" qui va demander à l'utilisateur de cocher une checkbox, qui si celui-ci est suspect, va également lui demander de remplir un formulaire de vérification. J'ai ensuite eu accès à une clef pour l'intégration côté client. Pour intégrer reCAPTCHA, j'ai utilisé le plugin `vue-recaptcha` avec la commande NPM `npm install --save vue-recaptcha`. J'ai ensuite importé et intégré le composant à mon formulaire d'inscription avec la clef fournit par Google.
+Création d'un captcha pour l'inscription d'un utilisateur grâce à des camarades de classe qui ont eu la bonne idée de spammer ma fonctionnalité d'inscription. Pour ce faire, j'ai commencé par me rendre sur reCAPTCHA qui est le captcha de Google que M. Mathieu m'avait proposé il y a une semaine. J'ai ensuite enregistré les paramètres de configurations du captcha. J'ai pour l'instant choisi la version 2 de reCAPTCHA avec le mode "Je ne suis pas un robot" qui va demander à l'utilisateur de cocher une checkbox, qui si celui-ci est suspect, va également lui demander de remplir un formulaire de vérification. J'ai ensuite eu accès à une clef pour l'intégration côté client. Pour intégrer reCAPTCHA, j'ai utilisé le plugin `vue-recaptcha` avec la commande NPM `npm install --save vue-recaptcha`. J'ai ensuite importé et intégré le composant à mon formulaire d'inscription avec la clef fournie par Google.
 
 Ajout d'une pagination sur le tableau des clients de la page "Administration" et modification de l'affichage des colonnes d'affichages de chiens et d'édition de client.
 
 Début du développement de la fonctionnalité permettant d'ajouter une photo de chien à un chien n'en possédant aucune. La fonctionnalité va fonctionner de la manière suivante :
 
 1. Ajout d'un bouton "Ajouter une photo" en dessous des informations des chiens n'ayant pas encore de photo
-2. Le bouton "Ajouter une photo"  va ouvrir une fenêtre modale permettant de prendre une photo si l'utilisateur à une caméra ou si ce n'est pas le cas, ouvrir le système de fichier
-3. Une fois la photo prise ou sélectionné dans le système de fichier, appel de l'endpoint `POST api/v1/dogs/uploadPicture`
+2. Le bouton "Ajouter une photo"  va ouvrir une fenêtre modale permettant de prendre une photo si l'utilisateur a une caméra ou si ce n'est pas le cas, ouvrir le système de fichier
+3. Une fois la photo prise ou sélectionnée dans le système de fichier, appel de l'endpoint `POST api/v1/dogs/uploadPicture`
 4. Rechargement des données afin d'afficher la nouvelle photo du chien
 
-Recherche sur l'utilisation du plugin `vue-cropperjs` utilisant la librairie `Cropper.js` afin de recadrer la photo à uploadé afin d'obliger celle-ci à être carré pour un meilleur affichage.
+Recherche sur l'utilisation du plugin `vue-cropperjs` utilisant la librairie `Cropper.js` afin de recadrer la photo à uploader afin d'obliger celle-ci à être carrée pour un meilleur affichage.
 
 Lien pour demain :
 
@@ -1638,10 +1638,10 @@ Finalisation de la fonctionnalité d'ajout de photo qui permet d'ajouter une pho
 Développement de la fonctionnalité permettant d'ajouter un document à un client. La fonctionnalité va fonctionner de la manière suivante :
 
 1. Ajout d'un bouton "Ajouter un document" en dessous des informations du client
-2. Le bouton "Ajouter un document" va ouvrir une fenêtre modale permettant en premier lieux de choisir le type de document à ajouter
+2. Le bouton "Ajouter un document" va ouvrir une fenêtre modale permettant en premier lieu de choisir le type de document à ajouter
    1. Le premier type est "Document pdf", il permet d'ajouter un document pdf quelconque
-   2. Le deuxième type est "Conditions d'inscription", il permet de générer une condition d'inscription pour le client. Cette condition d'inscription nécessitera plusieurs informations comme le forfait choisit par le client ainsi que sa signature dans un canevas. Le client pourra effacer sa signature si celle-ci ne lui convient pas. Il devra également charger sa signature afin de la validé avant de créer les conditions d'inscription
-3. Une fois le document pdf ou les conditions d'inscription configurés, appel de l'endpoint `POST api/v1/documents`
+   2. Le deuxième type est "Conditions d'inscription", il permet de générer une condition d'inscription pour le client. Cette condition d'inscription nécessitera plusieurs informations comme le forfait choisi par le client ainsi que sa signature dans un canevas. Le client pourra effacer sa signature si celle-ci ne lui convient pas. Il devra également charger sa signature afin de la valider avant de créer les conditions d'inscription
+3. Une fois le document pdf ou les conditions d'inscription configurées, appel de l'endpoint `POST api/v1/documents`
 
 ![dateTestPlanningSecondUser](./img/vue_adddocument.PNG)
 
@@ -1656,7 +1656,7 @@ Développement de la fonctionnalité d'affichage et de téléchargement des diff
 * Réalisé la fonctionnalité permettant de télécharger un document en cliquant sur celui-ci fonctionnant de la manière suivante :
   1. Appel de l'endpoint `GET api/v1/documents/downloadDocument/{serialId}` afin de récupérer la chaîne binaire (binaryString) du document PDF
   2. Création d'un BLOB (Binary large Object) avec la chaîne binaire
-  3. Création d'une chaine contenant une URL représentant les données passées en paramètre (le BLOB)
+  3. Création d'une chaîne contenant une URL représentant les données passées en paramètre (le BLOB)
   4. Création d'une balise `<a>` en lui attribuant l'URL et le nom du fichier
   5. Ajout de la balise `<a>` au body
   6. Click sur la balise `<a>`
@@ -1673,23 +1673,21 @@ a.click();
 document.body.removeChild(a);
 ```
 
-
-
 Rendez-vous physique hebdomadaire avec M. Mathieu. J'ai montré les fonctionnalités que j'ai développées à M. Mathieu et il en a profité pour me faire part de ses remarques. Pour résumer, ses remarques étaient :
 
-* Faciliter l'interection utilisateur de la fonctionnalité d'ajout de conditions d'inscription
+* Faciliter l'interaction utilisateur de la fonctionnalité d'ajout des conditions d'inscription
 * Rester cohérant dans la réalisation des différentes fonctionnalités
-* Ajouter une variable global contenant l'URL de l'API REST
+* Ajouter une variable globale contenant l'URL de l'API REST
 
-J'en ai également profité pour parler de la taille conséquente des photos prisent par un appareil muni de caméra. En effet, les photos prisent pèsent plus de 1 MO ce qui est assez conséquent. M. Mathieu m'a dit qu'il avait développé une fonctionnalité en PHP pour traiter une image afin de la réduire en taille. M. Mathieu compte m'envoyer un mail afin de me communiquer les sources de cette fonctionnalité afin que je me renseigne sur celles-ci.
+J'en ai également profité pour parler de la taille conséquente des photos prises par un appareil muni de caméra. En effet, les photos prises pèsent plus de 1 MO ce qui est assez conséquent. M. Mathieu m'a dit qu'il avait développé une fonctionnalité en PHP pour traiter une image afin de la réduire en taille. M. Mathieu compte m'envoyer un e-mail afin de me communiquer les sources de cette fonctionnalité afin que je me renseigne sur celles-ci.
 
-Modification de l'interection utilisateur de la fonctionnalité d'ajout de conditions d'inscription afin de bloquer la possibilité de créer une condition sans avoir sauvegardé la signature.
+Modification de l'interaction utilisateur de la fonctionnalité d'ajout de conditions d'inscription afin de bloquer la possibilité de créer une condition sans avoir sauvegardé la signature.
 
 Création de la variable globale accessible par tous les composants `API_URL` : `Vue.prototype.$API_URL = "https://api-rest-douceur-de-chien.boreljaquet.ch/"` et utilisation de celle-ci dans toutes les requêtes HTTP.
 
 Ajout de toutes les fonctionnalités permettant la suppression des différentes informations des utilisateurs :
 
-* Suppression du client (Incluant la suppression de ses chiens et ses documents)
+* Suppression du client (incluant la suppression de ses chiens et ses documents)
 * Suppression d'un chien
 * Suppression d'un document
 
