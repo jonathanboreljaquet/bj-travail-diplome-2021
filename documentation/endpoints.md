@@ -24,7 +24,7 @@ Body de la requête :
 
 ##### Use case
 
-<img src="./diagram/UseCaseInscription.svg" width="450px" />
+<img src="./diagram/useCaseInscription.svg" width="450px" />
 
 <div style="page-break-after: always;"></div>
 
