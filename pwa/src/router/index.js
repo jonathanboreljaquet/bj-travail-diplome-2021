@@ -8,6 +8,7 @@ import PrivacyPolicy from "./../components/PrivacyPolicy.vue";
 import Connection from "./../components/Connection.vue";
 import Inscription from "./../components/Inscription.vue";
 import CustomerInformation from "./../components/CustomerInformation.vue";
+import CustomerAppoitment from "./../components/CustomerAppoitment.vue";
 import Administration from "./../components/Administration.vue";
 import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./../variable.js";
 
@@ -58,7 +59,7 @@ export default new Router({
       },
     },
     {
-      path: "/customer_information/:idUser?",
+      path: "/customer_information/:userId?",
       name: "customerInformation",
       component: CustomerInformation,
       beforeEnter(to, from, next) {
@@ -70,7 +71,20 @@ export default new Router({
       },
     },
     {
+      path: "/customer_appoitment/:userId?",
+      name: "customerAppoitment",
+      component: CustomerAppoitment,
+      beforeEnter(to, from, next) {
+        if (store.state.api_token) {
+          next();
+        } else {
+          next("/");
+        }
+      },
+    },
+    {
       path: "/administration",
+      name: "administration",
       component: Administration,
       beforeEnter(to, from, next) {
         if (store.state.api_token && store.state.code_role == ADMIN_CODE_ROLE) {

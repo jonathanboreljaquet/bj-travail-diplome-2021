@@ -1,12 +1,12 @@
 <template>
   <div>
     <b-container>
-      <b-row id="title" class="text-center">
+      <b-row class="text-center content">
         <b-col>
-          <h1 class="font-weight-bold">{{ title }}</h1>
+          <h1>{{ title }}</h1>
         </b-col>
       </b-row>
-      <b-row id="title">
+      <b-row class="content">
         <b-col
           md="4"
           style="margin-bottom: 10px"
@@ -35,6 +35,16 @@
               v-b-modal.modal-add-document
             >
               Ajouter un document
+            </b-button>
+            <b-button
+              :to="{
+                name: 'customerAppoitment',
+                params: { userId: $route.params.userId },
+              }"
+              variant="outline-primary"
+              class="btnAdmin"
+              v-if="authAdministrator"
+              >Rendez-vous
             </b-button>
             <b-button
               variant="outline-danger"
@@ -114,6 +124,16 @@
               </b-col>
               <b-col sm="9" class="text-secondary">{{ address }}</b-col>
             </b-row>
+            <div v-if="authAdministrator">
+              <hr />
+              <b-button
+                variant="outline-primary"
+                class="btnAdmin"
+                v-b-modal.modal-update-user
+              >
+                Modifier l'utilisateur
+              </b-button>
+            </div>
           </b-card>
           <b-row>
             <b-col md="6" v-for="dog in dogs" :key="dog.id">
@@ -169,9 +189,24 @@
                 <div v-if="authAdministrator">
                   <hr />
                   <b-button
+                    variant="outline-primary"
+                    class="btnAdmin"
+                    v-b-modal.modal-update-dog
+                    @click="
+                      sendDogId(dog.id);
+                      sendDogInformations(
+                        dog.name,
+                        dog.breed,
+                        dog.sex,
+                        dog.chip_id
+                      );
+                    "
+                  >
+                    Modifier le chien
+                  </b-button>
+                  <b-button
                     variant="outline-danger"
                     class="btnAdmin"
-                    v-if="authAdministrator"
                     v-b-modal.modal-delete-dog
                     @click="sendDogId(dog.id)"
                   >
@@ -197,14 +232,25 @@
           </b-row>
         </b-col>
       </b-row>
-      <b-button v-if="authAdministrator" class="btnReturn" to="/administration">
-        <p class="h4">
-          <b-icon-arrow-return-left></b-icon-arrow-return-left>
-        </p>
-      </b-button>
+      <button-return
+        v-if="authAdministrator"
+        :to="{
+          name: 'administration',
+        }"
+      ></button-return>
+
+      <!-- MODAL ADD DOG-->
       <b-modal id="modal-add-dog" title="Ajouter un chien" :hide-footer="true">
         <b-form
-          @submit.prevent="addDogForCustomerWithUserId($route.params.userId)"
+          @submit.prevent="
+            createDogForCustomerByUserId(
+              $route.params.userId,
+              addDogForm.name,
+              addDogForm.breed,
+              addDogForm.sex,
+              addDogForm.chip_id
+            )
+          "
         >
           <b-form-group
             id="input-group-dog-name"
@@ -266,12 +312,18 @@
           </b-button>
         </b-form>
       </b-modal>
+
+      <!-- MODAL ADD DOG PICTURE-->
       <b-modal
         id="modal-add-picture-dog"
         title="Ajouter une photo de chien"
         :hide-footer="true"
       >
-        <b-form @submit.prevent="uploadDogPictureByDogId(selectedDogId)">
+        <b-form
+          @submit.prevent="
+            uploadDogPictureByDogId(selectedDogId, dogPictureFile)
+          "
+        >
           <b-form-group
             id="input-group-dog-picture-file"
             label="Photo :"
@@ -293,13 +345,25 @@
           </b-button>
         </b-form>
       </b-modal>
+
+      <!-- MODAL ADD DOCUMENT-->
       <b-modal
         id="modal-add-document"
         title="Ajouter un document"
         :hide-footer="true"
         @hidden="resetModalAddDocument"
       >
-        <b-form @submit.prevent="createDocument()">
+        <b-form
+          @submit.prevent="
+            createDocumentForCustomerByUserId(
+              $route.params.userId,
+              addDocumentForm.type,
+              signatureBase64,
+              addDocumentForm.packageNumber,
+              documentFile
+            )
+          "
+        >
           <b-form-group
             id="input-group-document-type"
             label="Type du document :"
@@ -327,8 +391,17 @@
               ></b-form-select>
             </b-form-group>
             <sketchpad @getSignature="saveSignature"></sketchpad>
+            <b-form-checkbox
+              id="checkbox-validation"
+              v-model="checkboxValidationStatus"
+              name="checkbox-validation"
+              @change="refreshStateOfcreateConditionsButton()"
+              style="margin: 10px"
+            >
+              <h5>Lu et approuvé</h5>
+            </b-form-checkbox>
             <b-button
-              :disabled="!signatureIsBlocked"
+              :disabled="createConditionsButtonisDisabled"
               block
               type="submit"
               variant="outline-primary"
@@ -357,6 +430,8 @@
           </div>
         </b-form>
       </b-modal>
+
+      <!-- MODAL DELETE USER-->
       <b-modal
         id="modal-delete-user"
         title="Confirmation de supression d'utilisateur"
@@ -364,7 +439,7 @@
         :hide-header="true"
       >
         <h5 style="text-align: center">Supprimer l'utilisateur ?</h5>
-        <b-form @submit.prevent="deleteUser()">
+        <b-form @submit.prevent="deleteUserByUserId($route.params.userId)">
           <b-row>
             <b-col>
               <b-button
@@ -381,6 +456,8 @@
           </b-row>
         </b-form>
       </b-modal>
+
+      <!-- MODAL DELETE DOCUMENT-->
       <b-modal
         id="modal-delete-document"
         title="Confirmation de supression d'utilisateur"
@@ -388,7 +465,9 @@
         :hide-header="true"
       >
         <h5 style="text-align: center">Supprimer le document ?</h5>
-        <b-form @submit.prevent="deleteDocument(selectedDocumentId)">
+        <b-form
+          @submit.prevent="deleteDocumentByDocumentId(selectedDocumentId)"
+        >
           <b-row>
             <b-col>
               <b-button
@@ -412,6 +491,8 @@
           </b-row>
         </b-form>
       </b-modal>
+
+      <!-- MODAL DELETE DOG-->
       <b-modal
         id="modal-delete-dog"
         title="Confirmation de supression d'utilisateur"
@@ -419,7 +500,7 @@
         :hide-header="true"
       >
         <h5 style="text-align: center">Supprimer le chien ?</h5>
-        <b-form @submit.prevent="deleteDog(selectedDogId)">
+        <b-form @submit.prevent="deleteDogByDogId(selectedDogId)">
           <b-row>
             <b-col>
               <b-button
@@ -443,19 +524,192 @@
           </b-row>
         </b-form>
       </b-modal>
+
+      <!-- MODAL UPDATE USER-->
+      <b-modal
+        id="modal-update-user"
+        title="Modifier l'utilisateur"
+        :hide-footer="true"
+      >
+        <b-form
+          @submit.prevent="
+            updateUserByUserId(
+              $route.params.userId,
+              firstname,
+              lastname,
+              email,
+              phonenumber,
+              address
+            )
+          "
+        >
+          <b-form-group
+            id="input-group-user-firstname"
+            label="Prénom :"
+            label-for="input-user-firstname"
+          >
+            <b-form-input
+              id="input-user-firstname"
+              v-model="firstname"
+              type="text"
+              placeholder="Entrez le prénom de l'utilisateur"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-user-lastname"
+            label="Nom :"
+            label-for="input-user-lastname"
+          >
+            <b-form-input
+              id="input-user-lastname"
+              v-model="lastname"
+              type="text"
+              placeholder="Entrez la nom de l'utilisateur"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-user-email"
+            label="Adresse e-mail :"
+            label-for="input-user-email"
+          >
+            <b-form-input
+              id="input-user-email"
+              v-model="email"
+              type="email"
+              placeholder="Entrez l'adresse e-mail de l'utilisateur"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-user-phonenumber"
+            label="Numéro de téléphone :"
+            label-for="input-user-phonenumber"
+          >
+            <b-form-input
+              id="input-user-phonenumber"
+              v-model="phonenumber"
+              type="text"
+              placeholder="Entrez le numéro de téléphone de l'utilisateur"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-user-address"
+            label="Adresse de domicile :"
+            label-for="input-user-address"
+          >
+            <b-form-input
+              id="input-user-address"
+              v-model="address"
+              type="text"
+              placeholder="Entrez l'adresse de domicile de l'utilisateur"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button block type="submit" variant="outline-primary">
+            Modifier l'utilisateur
+          </b-button>
+        </b-form>
+      </b-modal>
+
+      <!-- MODAL UPDATE DOG-->
+      <b-modal
+        id="modal-update-dog"
+        title="Modifier le chien"
+        :hide-footer="true"
+      >
+        <b-form
+          @submit.prevent="
+            updateDogByDogId(
+              selectedDogId,
+              selectedDogName,
+              selectedDogBreed,
+              selectedDogSex,
+              selectedDogChipId
+            )
+          "
+        >
+          <b-form-group
+            id="input-group-dog-name"
+            label="Nom :"
+            label-for="input-dog-name"
+          >
+            <b-form-input
+              id="input-dog-name"
+              v-model="selectedDogName"
+              type="text"
+              placeholder="Entrez le nom du chien"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-dog-breed"
+            label="Race :"
+            label-for="input-dog-breed"
+          >
+            <b-form-input
+              id="input-dog-breed"
+              v-model="selectedDogBreed"
+              type="text"
+              placeholder="Entrez la race du chien"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-dog-sex"
+            label="Sexe :"
+            label-for="input-dog-sex"
+          >
+            <b-form-select
+              id="input-dog-sex"
+              v-model="selectedDogSex"
+              :options="sex"
+              required
+            ></b-form-select>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-dog-chip-id"
+            label="Numéro de puce :"
+            label-for="input-dog-chip-id"
+          >
+            <b-form-input
+              id="input-dog-chip-id"
+              v-model="selectedDogChipId"
+              type="text"
+              placeholder="Entrez le numéro de puce du chien"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button block type="submit" variant="outline-primary">
+            Modifier le chien
+          </b-button>
+        </b-form>
+      </b-modal>
     </b-container>
   </div>
 </template>
 
 <script>
-import { BIconArrowReturnLeft, BIconDownload } from "bootstrap-vue";
+import { BIconDownload } from "bootstrap-vue";
 import Sketchpad from "./Sketchpad.vue";
+import ButtonReturn from "./ButtonReturn.vue";
 
 export default {
   components: {
-    BIconArrowReturnLeft,
     BIconDownload,
     Sketchpad,
+    ButtonReturn,
   },
   name: "CustomerInformation",
   data() {
@@ -466,6 +720,7 @@ export default {
       firstname: null,
       lastname: null,
       phonenumber: null,
+      api_token: null,
       address: null,
       code_role: null,
       dogs: [],
@@ -477,6 +732,10 @@ export default {
         chip_id: "",
       },
       selectedDogId: null,
+      selectedDogName: null,
+      selectedDogBreed: null,
+      selectedDogSex: null,
+      selectedDogChipId: null,
       selectedDocumentId: null,
       dogPictureFile: null,
       sex: ["Mâle", "Femelle"],
@@ -498,6 +757,8 @@ export default {
       ],
       signatureBase64: "",
       signatureIsBlocked: false,
+      checkboxValidationStatus: false,
+      createConditionsButtonisDisabled: true,
     };
   },
   methods: {
@@ -550,12 +811,12 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    addDogForCustomerWithUserId(userId) {
+    createDogForCustomerByUserId(userId, dogName, dogBreed, dogSex, dogChipId) {
       const params = new URLSearchParams();
-      params.append("name", this.addDogForm.name);
-      params.append("breed", this.addDogForm.breed);
-      params.append("sex", this.addDogForm.sex);
-      params.append("chip_id", this.addDogForm.chip_id);
+      params.append("name", dogName);
+      params.append("breed", dogBreed);
+      params.append("sex", dogSex);
+      params.append("chip_id", dogChipId);
       params.append("user_id", userId);
       const config = {
         headers: {
@@ -576,9 +837,9 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    uploadDogPictureByDogId(dogId) {
+    uploadDogPictureByDogId(dogId, dogPictureFile) {
       let formData = new FormData();
-      formData.append("dog_picture", this.dogPictureFile);
+      formData.append("dog_picture", dogPictureFile);
       formData.append("dog_id", dogId);
       const config = {
         headers: {
@@ -598,20 +859,24 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    createDocument() {
+    createDocumentForCustomerByUserId(
+      userId,
+      documentType,
+      signatureBase64,
+      documentPackageNumber,
+      documentFile
+    ) {
       var params;
       if (this.addDocumentForm.type == "conditions_inscription") {
         params = new URLSearchParams();
-        params.append("type", this.addDocumentForm.type);
-        params.append("signature_base64", this.signatureBase64);
-        params.append("package_number", this.addDocumentForm.packageNumber);
-        params.append("user_id", this.$route.params.userId);
+        params.append("signature_base64", signatureBase64);
+        params.append("package_number", documentPackageNumber);
       } else {
         params = new FormData();
-        params.append("type", this.addDocumentForm.type);
-        params.append("document", this.documentFile);
-        params.append("user_id", this.$route.params.userId);
+        params.append("document", documentFile);
       }
+      params.append("type", documentType);
+      params.append("user_id", userId);
 
       const config = {
         headers: {
@@ -658,7 +923,7 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteUser() {
+    deleteUserByUserId(userId) {
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
@@ -666,7 +931,7 @@ export default {
         },
       };
       this.$http
-        .delete(this.$API_URL + "users/" + this.$route.params.userId, config)
+        .delete(this.$API_URL + "users/" + userId, config)
         .then((response) => {
           this.$alertify.success("Utilisateur supprimé");
           this.$router.push("/administration");
@@ -676,7 +941,7 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteDog(dogId) {
+    deleteDogByDogId(dogId) {
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
@@ -694,7 +959,7 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteDocument(documentId) {
+    deleteDocumentByDocumentId(documentId) {
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
@@ -712,12 +977,82 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    updateUserByUserId(
+      userId,
+      userFirstname,
+      userLastname,
+      userEmail,
+      userPhonenumber,
+      userAddress
+    ) {
+      const params = new URLSearchParams();
+      params.append("firstname", userFirstname);
+      params.append("lastname", userLastname);
+      params.append("email", userEmail);
+      params.append("phonenumber", userPhonenumber);
+      params.append("address", userAddress);
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token,
+        },
+      };
+      this.$http
+        .patch(this.$API_URL + "users/" + userId, params, config)
+        .then((response) => {
+          console.log(response);
+          this.loadCustomerInformationsByUserId(this.$route.params.userId);
+          this.$alertify.success("Utilisateur modifié");
+          this.$bvModal.hide("modal-update-user");
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
+    updateDogByDogId(dogId, dogName, dogBreed, dogSex, dogChipId) {
+      const params = new URLSearchParams();
+      params.append("name", dogName);
+      params.append("breed", dogBreed);
+      params.append("sex", dogSex);
+      params.append("chip_id", dogChipId);
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token,
+        },
+      };
+      this.$http
+        .patch(this.$API_URL + "dogs/" + dogId, params, config)
+        .then((response) => {
+          console.log(response);
+          this.loadCustomerInformationsByUserId(this.$route.params.userId);
+          this.$alertify.success("Chien modifié");
+          this.$bvModal.hide("modal-update-dog");
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
     resetModalAddDocument() {
       this.addDocumentForm.type = "poster";
       this.signatureIsBlocked = false;
+      this.checkboxValidationStatus = false;
+    },
+    refreshStateOfcreateConditionsButton() {
+      if (this.signatureIsBlocked && this.checkboxValidationStatus) {
+        this.createConditionsButtonisDisabled = false;
+      } else {
+        this.createConditionsButtonisDisabled = true;
+      }
     },
     sendDogId(dogId) {
       this.selectedDogId = dogId;
+    },
+    sendDogInformations(dogName, dogBreed, dogSex, dogChipId) {
+      this.selectedDogName = dogName;
+      this.selectedDogBreed = dogBreed;
+      this.selectedDogSex = dogSex;
+      this.selectedDogChipId = dogChipId;
     },
     sendDocumentId(documentId) {
       this.selectedDocumentId = documentId;
@@ -727,6 +1062,11 @@ export default {
       this.signatureBase64 = base64;
       this.signatureIsBlocked = isBlocked;
       console.log(isBlocked);
+    },
+  },
+  watch: {
+    signatureIsBlocked: function () {
+      this.refreshStateOfcreateConditionsButton();
     },
   },
   computed: {
@@ -747,22 +1087,9 @@ export default {
 </script>
 
 <style scoped>
-#title {
+.content {
   margin-top: 20px;
   color: #3ea3d8;
-}
-.btnReturn {
-  padding-top: 18px;
-  position: fixed;
-  bottom: 100px;
-  right: 15px;
-  z-index: 5;
-  display: block;
-  height: 70px;
-  width: 70px;
-  border-radius: 50%;
-  background-color: #008afc;
-  box-shadow: -1px -1px 15px 1px rgba(0, 0, 0, 0.7);
 }
 .btnAdmin {
   width: 100%;

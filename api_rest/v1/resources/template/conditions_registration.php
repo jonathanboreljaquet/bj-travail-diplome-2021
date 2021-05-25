@@ -166,7 +166,7 @@ div.card img.avatar,
     <h3 style="padding-left: 120px;">Lu et approuvé par <?= "$userfirstname $userlastname" ?></h3>
     <p style="padding-left: 120px;">
         <figure>
-            <img src="<?= $signature_base64 ?>" width="200" height="125">
+            <img src="<?= $signature_base64 ?>" width="150" height="150">
             <figcaption><?= $date ?></figcaption>
         </figure>
     </p>

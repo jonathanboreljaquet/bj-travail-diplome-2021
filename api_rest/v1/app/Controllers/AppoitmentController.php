@@ -302,7 +302,7 @@ class AppoitmentController {
             return ResponseController::notFoundResponse();
         }
 
-        $image = file_get_contents(HelperController::getDefaultDirectory()."storage/app/graphical_note/".$serial_id.".png");
+        $image = file_get_contents(HelperController::getDefaultDirectory()."storage/app/graphical_note/".$serial_id.".jpeg");
         
         return ResponseController::successfulRequestWithoutJson('data:image/png;base64, '.base64_encode($image));
     }

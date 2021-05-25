@@ -111,8 +111,10 @@ class UserController {
 
         $dogs = $this->DAODog->findByUserId($user->id);
         $documents = $this->DAODocument->findByUserId($user->id);
+        $appoitments = $this->DAOAppoitment->findByUserIdForAdmin($user->id);
         $user->dogs = $dogs;
         $user->documents = $documents;
+        $user->appoitments = $appoitments;
 
         return ResponseController::successfulRequest($user);
     }
@@ -152,7 +154,7 @@ class UserController {
         $this->DAOUser->insert($user);
 
         if (isset($random_password)) {
-            HelperController::sendMail($random_password,$user->email);
+            //HelperController::sendMail($random_password,$user->email);
         }
 
         $result = array();

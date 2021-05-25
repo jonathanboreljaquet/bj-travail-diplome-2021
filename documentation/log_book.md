@@ -1698,3 +1698,26 @@ Les trois fonctionnalités de suppression fonctionnent de la manière suivante :
 1. Click sur le bouton de suppression
 2. Ouverture de la fenêtre modale de confirmation de suppression
 3. Click sur `Oui` afin de supprimer l'élément avec l'endpoint correspondant `DELETE api/v1/users/{userId} ou DELETE api/v1/dogs/{dogId} ou DELETE api/v1/documents/{documentId}`. Click sur `Non` afin de revenir en arrière
+
+### Mardi 25 mai 2021
+
+Configuration de PHPMailer lors de l'envoie de mail dû à une création avec un template HTML et CSS. L'e-mail avec le document en question en pièce jointe envoyé lors de la création ou l'ajout d'un document PDF ressemble à cela :
+
+ ![dateTestPlanningSecondUser](./img/mailTemplate.PNG)
+
+Rendez-vous GMeet hebdomadaire avec M.Mathieu. Lors de notre discussion, nous avons discuté des points qui étaient intéressant à approfondir comme l'ajout d'un explain de ma requête de génération de planning ou de l'affichage des différentes vues de mon application. Les points que j'ai retenus sont :
+
+* Test de performance de la requête des plannings avec beaucoup de données afin de réaliser un explain
+* Ajouter un formulaire de contact dans le pied de page de mon application
+* Enlever les dates précédentes au jour actuel lors de ma requête de planning
+* Ajouter une timeline dans la vue des rendez-vous
+
+Création du composant `ButtonReturn.vue` contenant le code permettant d'afficher un bouton collant afin de pouvoir le réutiliser plus facilement par la suite.
+
+Modification de la création des conditions d'inscription. L'utilisateur doit maintenant cocher la case "Lu et approuvé" afin de pouvoir créer les conditions d'inscription.
+
+Ajout des fonctionnalités de modification d'utilisateur et de chien. Un bouton "Modifier l'utilisateur" en dessous des informations d'utilisateur est accessible par les éducateurs canins dans l'objectif d'ouvrir une modale afin de modifier les informations de l'utilisateur en utilisant l'endpoint `PATCH api/v1/users`. 
+Même procédé pour la modification du chien, mais avec l'endpoint `PATCH api/v1/dogs`
+
+Début de développement du composant `CustomerAppoitment.vue` qui permettra d'afficher les données des rendez-vous d'un utilisateur. L'objectif de ce composant est d'afficher uniquement les résumés lorsque l'utilisateur est un client et d'afficher les résumés, les notes textuelles et graphique ainsi que les fonctionnalités d'ajout/modification et suppression lorsque que l'utilisateur est un éducateur canin.
+Blocage lors de sa réalisation, car je dois trouver un moyen de charger l'ancienne image de la note graphique afin de permettre une nouvelle édition sur celle-ci. Actuellement avec la librairie `Responsive-Sketchap` il me semble que cela est impossible. Recherche d'une autre lib ou d'un autre moyen de résoudre ce problème. [Source intéressante](https://github.com/szimek/signature_pad)

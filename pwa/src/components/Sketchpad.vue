@@ -44,13 +44,7 @@ export default {
     };
   },
   mounted() {
-    this.pad = new Sketchpad(this.$refs["sketchpad"], {
-      line: {
-        color: "#f44335",
-        size: 5,
-      },
-    });
-    this.pad.setLineColor("#000000");
+    this.pad = new Sketchpad(this.$refs["sketchpad"]);
   },
   methods: {
     getSketchpad() {
