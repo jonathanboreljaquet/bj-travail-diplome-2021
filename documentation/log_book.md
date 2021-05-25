@@ -1542,7 +1542,7 @@ Une fois que mon gestionnaire d'état a été configuré, j'ai pu me servir de c
 
 ### Samedi 15 mai 2021
 
-Rencontre d'un problème très ennuyeux lors de la requête HTTP envoyé à l'API REST. En effet, j'ai appris que pour les requêtes HTTP dites non simples, soit avec un header `Authorization` pour ma part, le navigateur enverra d'abord une requête de "contrôle en amont" (une requête avec la méthode OPTIONS) afin de déterminer si les en-têtes de la requête qui vont être envoyées correspondent bien avec les en-têtes du serveur. Par exemple, si un en-tête que nous souhaitons ne figure pas dans la liste des en-têtes autorisées (`Access-Control-Allow-Header`), le navigateur refusera d'envoyer votre requête. Après 5 heures de recherche et de test, toutes les solutions cherchées sur Internet n'ont mené à rien. Par la suite, j'ai trouvé une réponse permettant de passer outre cette requête de vérification en retournant un code HTTP `200 OK` lors d'une requête avec la méthode OPTIONS. Pour l'instant, je compte laisser cela comme cela en attendant de discuter avec M. Mathieu de ce problème.
+Rencontre d'un problème très ennuyeux lors de la requête HTTP envoyé à l'API REST. En effet, j'ai appris que pour les requêtes HTTP dites non simples, soit avec un header `Authorization` pour ma part, le navigateur enverra d'abord une requête de "contrôle en amont" (une requête avec la méthode OPTIONS) afin de déterminer si les en-têtes de la requête qui vont être envoyées correspondent bien avec les en-têtes du serveur. Par exemple, si un en-tête que nous souhaitons ne figure pas dans la liste des en-têtes autorisées (`Access-Control-Allow-Header`), le navigateur refusera d'envoyer votre requête. Après 5 heures de recherche et de test, toutes les solutions cherchées sur Internet n'ont mené à rien. Par la suite, j'ai trouvé une réponse permettant de passer outre cette requête de vérification en retournant un code HTTP `200 OK` lors d'une requête avec la méthode OPTIONS. Pour l'instant, je compte laisser tel quel en attendant de discuter de ce problème avec M. Mathieu.
 
 ### Lundi 17 mai 2021
 
@@ -1553,7 +1553,7 @@ Réalisation de la page "Administration". La page "Administration" est accessibl
 Actuellement, la page est chargée de la manière suivante :
 
 1. Chargement des données de tous les clients de l'application ainsi que leurs chiens avec l'endpoint `GET api/v1/users`
-2. Chargement des photos de chien en base64 si elle il y en a avec l'endpoint `GET api/v1/dogs/downloadPicture`
+2. Chargement des photos de chiens en base64 s'il y en a avec l'endpoint `GET api/v1/dogs/downloadPicture`
 
 Réalisation de la page "Mes informations". La page "Mes informations" est accessible par les utilisateurs authentifiés. En effet, lors de la connexion d'un client, celui-ci sera directement redirigé sur cette page. L'objectif de la page est d'afficher les informations personnelles de l'utilisateur authentifié (informations personnelles, chiens, documents). Pour l'instant, la page affiche les informations personnelles ainsi que les chiens de l'utilisateur authentifié. Dans le futur, la page permettra également de voir les documents ainsi qu'un affichage avec les informations des différents rendez-vous.
 
@@ -1562,45 +1562,45 @@ Réalisation de la page "Mes informations". La page "Mes informations" est acces
 Actuellement, la page est chargée de la manière suivante :
 
 1. Chargement des données de l'utilisateur authentifié avec l'endpoint `GET api/v1/users/me`
-2. Chargement des photos de chien en base64 si elle il y en a avec l'endpoint `GET api/v1/dogs/downlaodPicture`
+2. Chargement des photos de chiens en base64 s'il y en a avec l'endpoint `GET api/v1/dogs/downlaodPicture`
 
-Lors de la réalisation de ces deux pages, j'ai été confronté au même problème. Exécutant les requête HTTP de récupération de photo de chien avec axios dans le résultat de la requête HTTP de récupération de tous les utilisateurs ou de l'utilisateur authentifié, le DOM se voyait être chargé avec la récupération des photos de chien. Pour palier à ce problème, j'ai stocké toutes mes requêtes de récupération de photo de chien dans une liste de promesse. Une promesse est un objet qui représente l'état d'une opération asynchrone. Une fois la liste de mes promesse chargée, j'ai utilisé la méthode `Promise.all()` permettant de renvoyer une promesse qui est résolue lorsque l'ensemble des promesses contenues dans cette liste ont été résolues. Cette méthode permet donc de charger toutes les photos de chiens au même moment. Par contre, si une des requêtes échoue, la totalité des requêtes ne seront pas exécutées. Je compte poser une question à M. Mathieu lors de notre rendez-vous GMeet hebdomadaire demain afin de lui demander si cela serait pas mieux que mon API REST retourne directement la photo du chien en base64 si elle existe lors des endpoints retournant les informations des chiens. 
+Lors de la réalisation de ces deux pages, j'ai été confronté au même problème. Exécutant les requêtes HTTP de récupération de photo de chien avec axios dans le résultat de la requête HTTP de récupération de tous les utilisateurs ou de l'utilisateur authentifié, le DOM se voyait être chargé avant la récupération des photos de chiens. Pour palier à ce problème, j'ai stocké toutes mes requêtes de récupération de photo de chien dans une liste de promesse. Une promesse est un objet qui représente l'état d'une opération asynchrone. Une fois la liste de mes promesses chargées, j'ai utilisé la méthode `Promise.all()` permettant de renvoyer une promesse qui est résolue lorsque l'ensemble des promesses contenues dans cette liste ont été résolues. Cette méthode permet donc de charger toutes les photos de chiens au même moment. Par contre, si une des requêtes échoue, la totalité des requêtes ne seront pas exécutées. Je compte poser une question à M. Mathieu lors de notre rendez-vous GMeet hebdomadaire demain afin de lui demander si cela ne serait pas mieux que mon API REST retourne directement la photo du chien en base64 si elle existe lors des endpoints retournant les informations des chiens. 
 
 ### Mardi 18 mai 2021
 
 Rendez-vous hebdomadaire GMeet avec M. Mathieu. Au début de notre rendez-vous, j'ai posé des questions par rapport à des problèmes techniques à M. Mathieu. Ces questions étaient :
 
-* Comment résoudre le problème du samedi 15 mai, qui, lors de l'envoie de requêtes HTTP depuis le navigateur envoyait d'abord une requête OPTIONS.
+* Comment résoudre le problème du samedi 15 mai, qui, lors de l'envoi de requêtes HTTP depuis le navigateur envoyait d'abord une requête OPTIONS ?
   * M. Mathieu m'a montré une solution qui lors de la réception de requête de type OPTIONS, retourne un en-tête `Allow: POST`
 * Comment simplifier l'endpoint de récupération de l'image du chien ? En effet, actuellement, l'endpoint `GET api/v1/dogs/downloadPicture` retourne la photo du chien en base64.
-  * M. Mathieu m'a conseillé de retourner directement l'image à la place de retourner l'image en base64 car très lourd. En effet, il m'a proposé de retourner dans les différents endpoints qui me retourne les informations des chiens, l'endpoint de récupération de l'image.
+  * M. Mathieu m'a conseillé de retourner directement l'image à la place de retourner l'image en base64 car très lourd. 
 * Comment gérer les permissions de mon frontend ? En effet, actuellement, j'effectue le contrôle des permissions depuis le code du rôle de l'utilisateur retourné avec l'api token depuis l'endpoint `POST api/v1/connection`.
   * M. Mathieu m'a conseillé de retourner les différentes permissions d'un utilisateur dans un tableau de permission depuis l'endpoint de connexion `POST api/v1/connection`
 
 Ensuite, M. Mathieu m'a fait part de ses commentaires par rapport à la documentation de mon projet. Pour résumé, ses commentaires sont les suivants :
 
-* Passez dans un correcteur orthographique l'abstract en anglais, mais aussi le résumé pour le français.
-* Le persona doit être d'avantage enrichi.
+* Passez dans un correcteur orthographique l'abstract en anglais, mais aussi le résumé pour le français
+* Le persona doit être d'avantage enrichi
 * Revoir la formulation des scénarios 
-* Expliquer la différence entre une application web responsive et une PWA au point 5.5.1.
+* Expliquer la différence entre une application web responsive et une PWA au point 5.5.1
 * Ajouter l'analyse concurrentielle d'agenda.ch
 * Suppression des éléments superflus
-* Exemple de la manière dont j'ai créé les tests unitaires.
+* Exemple de la manière dont j'ai créé les tests unitaires
 * Ajouter un explain pour les requêtes compliquées écrites
 * Ajouter un schéma mindmap de ce que fait l'application
-* Ajouter un schéma qui regroupe les actions par type t'utilisateur
+* Ajouter un schéma qui regroupe les actions par type d'utilisateur
 
 Je vais commencer ma journée avec les points techniques et j'enchainerais sur les points concernant la documentation.
 
-* Modification des fichiers d'entrée des endpoints utilisés jusqu'à là afin de gérer le problème de la requête OPTIONS.
+* Modification des fichiers d'entrée des endpoints utilisés jusque là afin de gérer le problème de la requête OPTIONS.
 * Modification du endpoint `GET api/v1/dogs/downloadPicture` afin que celui-ci retourne maintenant directement l'image et non sa base64.
-  * Modification des vues concerné jusqu'à là ("Mes informations" et "Administration"), dorénavant je n'ai plus besoin d'utiliser une liste de promesse car j'assigne directement la source de l'image avec mon endpoint. Exemple : `:src='https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/downloadPicture/' + dog.picture_serial_id"`
+  * Modification des vues concernées jusque là ("Mes informations" et "Administration"). Dorénavant je n'ai plus besoin d'utiliser une liste de promesses car j'assigne directement la source de l'image avec mon endpoint. Exemple : `:src='https://api-rest-douceur-de-chien.boreljaquet.ch/dogs/downloadPicture/' + dog.picture_serial_id"`
 
-Réalisation de la page "Inscription". La page "Inscription" est accessible par tous les types d'utilisateur. L'objectif de la page est de créer un compte utilisateur pour un client. Pour l'instant, le formulaire d'inscription contient juste une confirmation de mot de passe. Si tout ce passe bien lors de l'inscription, l'utilisateur est automatiquement connecté à l'application et est redirigé vers la page "Mes informations".
+Réalisation de la page "Inscription". La page "Inscription" est accessible par tous les types d'utilisateurs. L'objectif de la page est de créer un compte utilisateur pour un client. Pour l'instant, le formulaire d'inscription contient juste une confirmation de mot de passe. Si tout se passe bien lors de l'inscription, l'utilisateur est automatiquement connecté à l'application et redirigé vers la page "Mes informations".
 
 ![dateTestPlanningSecondUser](./img/vue_inscription.PNG)
 
-Dorénavant, la page "Administration" des éducateurs canins permet d'accéder aux informations d'un client en cliquant sur le bouton "Afficher les détails". L'objectif de cette page est d'afficher les informations du client en utilisant le même composant que la page "Mes informations" mais avec différentes fonctionnalités que seul les éducateurs canins auront accès. Pour l'instant, l'éducateur canin peut ajouter un chien à un utilisateur depuis un fenêtre modale en cliquant sur le bouton "Ajouter un chien" et retourner en arrière sur la page "Administration" depuis un sticky bouton.
+Dorénavant, la page "Administration" des éducateurs canins permet d'accéder aux informations d'un client en cliquant sur le bouton "Afficher les détails". L'objectif de cette page est d'afficher les informations du client en utilisant le même composant que la page "Mes informations" mais avec différentes fonctionnalités que seuls les éducateurs canins auront accès. Pour l'instant, l'éducateur canin peut ajouter un chien à un utilisateur depuis une fenêtre modale en cliquant sur le bouton "Ajouter un chien" et retourner en arrière sur la page "Administration" depuis un sticky bouton.
 
 ![dateTestPlanningSecondUser](./img/vue_adddog.png)
 
@@ -1608,18 +1608,18 @@ Pour ce qui est des points concernant la documentation, je compte les réaliser 
 
 ### Mercredi 19 mai 2021
 
-Création d'un captcha pour l'inscription d'un utilisateur grâce à des camarades de classes qui ont eut la bonne idée de spam ma fonctionnalité d'inscription. Pour ce faire, j'ai commencé par me rendre sur reCAPTCHA qui est le captcha de Google que M. Mathieu m'avait proposé il y a une semaine. J'ai ensuite enregistré les paramètres de configurations du captcha. J'ai pour l'instant choisis la version 2 de reCAPTCHA avec le mode "Je ne suis pas un robot" qui va demander à l'utilisateur de cocher une checkbox, qui si celui-ci est suspect, va également lui demander de remplir un formulaire de vérification. J'ai ensuite eu accès à une clef pour l'intégration côté client. Pour intégrer reCAPTCHA, j'ai utilisé le plugin `vue-recaptcha` avec la commande NPM `npm install --save vue-recaptcha`. J'ai ensuite importé et intégré le composant à mon formulaire d'inscription avec la clef fournit par Google.
+Création d'un captcha pour l'inscription d'un utilisateur grâce à des camarades de classe qui ont eu la bonne idée de spammer ma fonctionnalité d'inscription. Pour ce faire, j'ai commencé par me rendre sur reCAPTCHA qui est le captcha de Google que M. Mathieu m'avait proposé il y a une semaine. J'ai ensuite enregistré les paramètres de configurations du captcha. J'ai pour l'instant choisi la version 2 de reCAPTCHA avec le mode "Je ne suis pas un robot" qui va demander à l'utilisateur de cocher une checkbox, qui si celui-ci est suspect, va également lui demander de remplir un formulaire de vérification. J'ai ensuite eu accès à une clef pour l'intégration côté client. Pour intégrer reCAPTCHA, j'ai utilisé le plugin `vue-recaptcha` avec la commande NPM `npm install --save vue-recaptcha`. J'ai ensuite importé et intégré le composant à mon formulaire d'inscription avec la clef fournie par Google.
 
 Ajout d'une pagination sur le tableau des clients de la page "Administration" et modification de l'affichage des colonnes d'affichages de chiens et d'édition de client.
 
 Début du développement de la fonctionnalité permettant d'ajouter une photo de chien à un chien n'en possédant aucune. La fonctionnalité va fonctionner de la manière suivante :
 
 1. Ajout d'un bouton "Ajouter une photo" en dessous des informations des chiens n'ayant pas encore de photo
-2. Le bouton "Ajouter une photo"  va ouvrir une fenêtre modale permettant de prendre une photo si l'utilisateur à une caméra ou si ce n'est pas le cas, ouvrir le système de fichier
-3. Une fois la photo prise ou sélectionné dans le système de fichier, appel de l'endpoint `POST api/v1/dogs/uploadPicture`
+2. Le bouton "Ajouter une photo"  va ouvrir une fenêtre modale permettant de prendre une photo si l'utilisateur a une caméra ou si ce n'est pas le cas, ouvrir le système de fichier
+3. Une fois la photo prise ou sélectionnée dans le système de fichier, appel de l'endpoint `POST api/v1/dogs/uploadPicture`
 4. Rechargement des données afin d'afficher la nouvelle photo du chien
 
-Recherche sur l'utilisation du plugin `vue-cropperjs` utilisant la librairie `Cropper.js` afin de recadrer la photo à uploadé afin d'obliger celle-ci à être carré pour un meilleur affichage.
+Recherche sur l'utilisation du plugin `vue-cropperjs` utilisant la librairie `Cropper.js` afin de recadrer la photo à uploader afin d'obliger celle-ci à être carrée pour un meilleur affichage.
 
 Lien pour demain :
 
@@ -1638,10 +1638,10 @@ Finalisation de la fonctionnalité d'ajout de photo qui permet d'ajouter une pho
 Développement de la fonctionnalité permettant d'ajouter un document à un client. La fonctionnalité va fonctionner de la manière suivante :
 
 1. Ajout d'un bouton "Ajouter un document" en dessous des informations du client
-2. Le bouton "Ajouter un document" va ouvrir une fenêtre modale permettant en premier lieux de choisir le type de document à ajouter
+2. Le bouton "Ajouter un document" va ouvrir une fenêtre modale permettant en premier lieu de choisir le type de document à ajouter
    1. Le premier type est "Document pdf", il permet d'ajouter un document pdf quelconque
-   2. Le deuxième type est "Conditions d'inscription", il permet de générer une condition d'inscription pour le client. Cette condition d'inscription nécessitera plusieurs informations comme le forfait choisit par le client ainsi que sa signature dans un canevas. Le client pourra effacer sa signature si celle-ci ne lui convient pas. Il devra également charger sa signature afin de la validé avant de créer les conditions d'inscription
-3. Une fois le document pdf ou les conditions d'inscription configurés, appel de l'endpoint `POST api/v1/documents`
+   2. Le deuxième type est "Conditions d'inscription", il permet de générer une condition d'inscription pour le client. Cette condition d'inscription nécessitera plusieurs informations comme le forfait choisi par le client ainsi que sa signature dans un canevas. Le client pourra effacer sa signature si celle-ci ne lui convient pas. Il devra également charger sa signature afin de la valider avant de créer les conditions d'inscription
+3. Une fois le document pdf ou les conditions d'inscription configurées, appel de l'endpoint `POST api/v1/documents`
 
 ![dateTestPlanningSecondUser](./img/vue_adddocument.PNG)
 
@@ -1656,7 +1656,7 @@ Développement de la fonctionnalité d'affichage et de téléchargement des diff
 * Réalisé la fonctionnalité permettant de télécharger un document en cliquant sur celui-ci fonctionnant de la manière suivante :
   1. Appel de l'endpoint `GET api/v1/documents/downloadDocument/{serialId}` afin de récupérer la chaîne binaire (binaryString) du document PDF
   2. Création d'un BLOB (Binary large Object) avec la chaîne binaire
-  3. Création d'une chaine contenant une URL représentant les données passées en paramètre (le BLOB)
+  3. Création d'une chaîne contenant une URL représentant les données passées en paramètre (le BLOB)
   4. Création d'une balise `<a>` en lui attribuant l'URL et le nom du fichier
   5. Ajout de la balise `<a>` au body
   6. Click sur la balise `<a>`
@@ -1673,23 +1673,21 @@ a.click();
 document.body.removeChild(a);
 ```
 
-
-
 Rendez-vous physique hebdomadaire avec M. Mathieu. J'ai montré les fonctionnalités que j'ai développées à M. Mathieu et il en a profité pour me faire part de ses remarques. Pour résumer, ses remarques étaient :
 
-* Faciliter l'interection utilisateur de la fonctionnalité d'ajout de conditions d'inscription
+* Faciliter l'interaction utilisateur de la fonctionnalité d'ajout des conditions d'inscription
 * Rester cohérant dans la réalisation des différentes fonctionnalités
-* Ajouter une variable global contenant l'URL de l'API REST
+* Ajouter une variable globale contenant l'URL de l'API REST
 
-J'en ai également profité pour parler de la taille conséquente des photos prisent par un appareil muni de caméra. En effet, les photos prisent pèsent plus de 1 MO ce qui est assez conséquent. M. Mathieu m'a dit qu'il avait développé une fonctionnalité en PHP pour traiter une image afin de la réduire en taille. M. Mathieu compte m'envoyer un mail afin de me communiquer les sources de cette fonctionnalité afin que je me renseigne sur celles-ci.
+J'en ai également profité pour parler de la taille conséquente des photos prises par un appareil muni de caméra. En effet, les photos prises pèsent plus de 1 MO ce qui est assez conséquent. M. Mathieu m'a dit qu'il avait développé une fonctionnalité en PHP pour traiter une image afin de la réduire en taille. M. Mathieu compte m'envoyer un e-mail afin de me communiquer les sources de cette fonctionnalité afin que je me renseigne sur celles-ci.
 
-Modification de l'interection utilisateur de la fonctionnalité d'ajout de conditions d'inscription afin de bloquer la possibilité de créer une condition sans avoir sauvegardé la signature.
+Modification de l'interaction utilisateur de la fonctionnalité d'ajout de conditions d'inscription afin de bloquer la possibilité de créer une condition sans avoir sauvegardé la signature.
 
 Création de la variable globale accessible par tous les composants `API_URL` : `Vue.prototype.$API_URL = "https://api-rest-douceur-de-chien.boreljaquet.ch/"` et utilisation de celle-ci dans toutes les requêtes HTTP.
 
 Ajout de toutes les fonctionnalités permettant la suppression des différentes informations des utilisateurs :
 
-* Suppression du client (Incluant la suppression de ses chiens et ses documents)
+* Suppression du client (incluant la suppression de ses chiens et ses documents)
 * Suppression d'un chien
 * Suppression d'un document
 

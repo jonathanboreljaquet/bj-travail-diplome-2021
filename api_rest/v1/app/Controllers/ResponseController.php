@@ -135,6 +135,19 @@ class ResponseController {
 
     /**
      * 
+     * Method to return the POST success message.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public static function successfulCreatedRessourceWithJson($result)
+    {
+        $response['status_code_header'] = 'HTTP/1.1 201 Created';
+        $response['body'] = json_encode($result);
+        return $response;
+    }
+
+    /**
+     * 
      * Method to return the error message in case of invalid date format.
      * 
      * @return string The status and the body in JSON format of the response
@@ -342,6 +355,20 @@ class ResponseController {
         $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
         $response['body'] = json_encode([
             'error' => 'Impossible de prendre ce rendez-vous.'
+        ]);
+        return $response;
+    }
+
+    /**
+     * 
+     * Method to return the error message if the email address already exists.
+     * 
+     * @return string The status and the body in JSON format of the response
+     */
+    public static function emailAlreadyExist(){
+        $response['status_code_header'] = 'HTTP/1.1 400 Bad Request';
+        $response['body'] = json_encode([
+            'error' => 'Un compte avec cette adresse e-mail existe déjà.'
         ]);
         return $response;
     }

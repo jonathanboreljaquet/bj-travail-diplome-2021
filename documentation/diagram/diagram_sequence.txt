@@ -1,5 +1,3 @@
-https://sequencediagram.org/
-
 title Diagramme de séquence Douceur de Chien
 
 participant Client
@@ -10,16 +8,18 @@ participant API Serveur
 note over Client,API Serveur: Prise de rendez-vous par téléphone
 Client->Éducateur canin: Appel téléphonique
 Éducateur canin->Application WEB: Création fiche client préliminaire
-Application WEB->API Serveur: Stockage fiche client préliminaire sans login
-API Serveur->Client: Envoie de e-mail
-Client->Application WEB: Création du compte
-Application WEB->API Serveur: Modification de la fiche client
+Application WEB->API Serveur:Stockage fiche client préliminaire sans mot de passe
+API Serveur->Client:Envoie du mot de passe aléatoire par e-mail
+Éducateur canin->Application WEB: Prise du rendez-vous
+Application WEB->API Serveur: Stockage du rendez-vous
+API Serveur->Client:Envoie des informations du rendez-vous par e-mail
 
 note over Client,API Serveur: Prise de rendez-vous autonome
 
-Client->Application WEB: Rendez-vous autonome et création du compte
-Application WEB->API Serveur: Stockage fiche client préliminaire avec login
-
+Client->Application WEB:Création du compte et rendez-vous autonome
+Application WEB->API Serveur:Stockage du rendez-vous
+API Serveur->Éducateur canin:Envoie des informations du rendez-vous par e-mail
+API Serveur->Client:Envoie des informations du rendez-vous par e-mail
 note over Client,API Serveur: Premier rendez-vous
 Client->Éducateur canin: Premier rendez-vous
 Éducateur canin->Application WEB: Finalisation de la fiche client / signature des conditions d'inscription
@@ -32,6 +32,7 @@ Application WEB->API Serveur: Stockage notes et documents
 
 note over Client,API Serveur: Connexion client
 Client->Application WEB: Connexion
+Application WEB->API Serveur:Modification du mot de passe
 Application WEB->API Serveur: Accès données personnelles
 Application WEB->API Serveur: Accès calendrier
 Application WEB->API Serveur: Accès notes de rendez-vous client et documents

@@ -153,7 +153,7 @@ export default {
             });
           });
           this.toggleBusy();
-          this.totalRows = this.items.length;
+          this.totalRows = this.items.length + 10;
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);

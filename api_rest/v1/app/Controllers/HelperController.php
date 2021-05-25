@@ -14,7 +14,6 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Dompdf\Dompdf;
-use App\System\cDX;
 
 class HelperController {
 
@@ -190,36 +189,124 @@ class HelperController {
 
     /**
      * 
+     * Method to load the email HTML CSS template.
+     * 
+     * @param string $title The title of the mail
+     * @param string $content The content of the mail
+     * @return bool
+     */
+    public static function loadMailTemplate(string $title, string $content)
+    {
+        $html ='<!DOCTYPE html>
+        <html lang="fr">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width,initial-scale=1">
+          <meta name="x-apple-disable-message-reformatting">
+          <title></title>
+          <style>
+            table, td, div, h1, p {font-family: Arial, sans-serif;}
+          </style>
+        </head>
+        <body style="margin:0;padding:0;">
+          <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;background:#ffffff;">
+            <tr>
+              <td align="center" style="padding:0;">
+                <table role="presentation" style="width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
+                  <tr>
+                    <td align="center" style="padding:40px 0 30px 0;">
+                      <img src="cid:logo-image" alt="" width="300" style="height:auto;display:block;" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:36px 30px 42px 30px;">
+                      <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;">
+                        <tr>
+                          <td style="padding:0 0 36px 0;color:#153643;">
+                            <h1 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;">'.$title.'</h1>
+                            <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">'.$content.'</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding:30px;background:#3ea3d8;">
+                      <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;">
+                        <tr>
+                          <td style="padding:0;width:50%;" align="left">
+                            <p style="margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#ffffff;">
+                              &reg; Douceur de Chien 2021<br/>
+                              <a href="https://boreljaquet.ch/" style="color:#ffffff;text-decoration:underline;">Site web Douceur de Chien</a>
+                            </p>
+                          </td>
+                          <td style="padding:0;width:50%;" align="right">
+                            <table role="presentation" style="border-collapse:collapse;border:0;border-spacing:0;">
+                              <tr>
+                                <td style="padding:0 0 0 10px;width:38px;">
+                                  <a href="http://www.twitter.com/" style="color:#ffffff;"><img src="https://assets.codepen.io/210284/tw_1.png" alt="Twitter" width="38" style="height:auto;display:block;border:0;" /></a>
+                                </td>
+                                <td style="padding:0 0 0 10px;width:38px;">
+                                  <a href="http://www.facebook.com/" style="color:#ffffff;"><img src="https://assets.codepen.io/210284/fb_1.png" alt="Facebook" width="38" style="height:auto;display:block;border:0;" /></a>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+        </html>';
+        return $html;
+    }
+
+    /**
+     * 
      * Method to send an email.
      * 
-     * @param string $message Message to send
+     * @param string $message Message of the mail
+     * @param string $subject Subject of the mail
      * @param string $emailRecipient Recipient's email address
+     * @param string $attachmentFilePath Path of the file to attach if there is one
      * @return void
      */
-    public static function sendMail(string $message,string $emailRecipient)
+    public static function sendMail(string $message, string $subject,string $emailRecipient, string $attachmentFilePath = null)
     {
     $mail = new PHPMailer(true);
+    $body = HelperController::loadMailTemplate($subject,$message);
     try {
         //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output                                           //Send using SMTP
-        $mail->Host       = getenv('SMTP_HOST');                     //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = getenv('SMTP_USERNAME');                    //SMTP username
-        $mail->Password   = getenv('SMTP_PASSWORD');                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-        $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      
+        $mail->Host       = getenv('SMTP_HOST');                     
+        $mail->SMTPAuth   = true;                                  
+        $mail->Username   = getenv('SMTP_USERNAME');                   
+        $mail->Password   = getenv('SMTP_PASSWORD');                             
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         
+        $mail->Port       = 587; 
 
         //Recipients
-        $mail->setFrom('noreplyfrom@hotmail.com', 'No reply');
+        $mail->setFrom('noreply@douceurdechien.com', 'Douceur de Chien');
         $mail->addAddress($emailRecipient); 
 
-        //Content
-        $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Douceur de Chien';
-        $mail->Body    = $message;
+        //Attachments
+        if (!is_null($attachmentFilePath)) {
+            $mail->addAttachment($attachmentFilePath);
+        }
 
+        //Content
+        $mail->isHTML(true);     
+        $mail->CharSet = 'UTF-8';      
+        $mail->Encoding = 'base64';                      
+        $mail->Subject = $subject;
+        $mail->AddEmbeddedImage("./../../resources/image/logo_douceur_de_chien.png", "logo-image", "logo_douceur_de_chien.png");
+        $mail->Body = $body;
+        
         $mail->send();
-        echo 'Message has been sent';
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }

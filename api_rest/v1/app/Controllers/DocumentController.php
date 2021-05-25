@@ -144,6 +144,8 @@ class DocumentController {
                 $userlastname = $user->lastname;
     
                 HelperController::storeConditionsRegistration($filename,$package_number,$date,$signature_base64,$userfirstname,$userlastname);
+
+                $upload_dir = HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$filename.".pdf";
                 
                 break;
 
@@ -173,6 +175,8 @@ class DocumentController {
         $document->document_serial_id = $filename;
 
         $this->DAODocument->insert($document);
+
+        HelperController::sendMail("Bonjour et merci de faire confiance à la société Douceur de Chien, vous trouverez ci-joint le document qui a été ajouté à votre compte, vous pouvez égalament accéder à ce document depuis votre compte.","Un nouveau document a été ajouté à votre compte",$user->email,$upload_dir);
 
         return ResponseController::successfulCreatedRessource();
     }

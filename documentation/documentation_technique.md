@@ -1,6 +1,6 @@
-# Travail de diplôme - Documentation technique
+# Travail de diplôme Douceur de Chien - Documentation technique
 
-- [Travail de diplôme - Documentation technique](#travail-de-diplôme---documentation-technique)
+- [Travail de diplôme Douceur de Chien - Documentation technique](#travail-de-diplôme-douceur-de-chien---documentation-technique)
   - [API REST](#api-rest)
     - [Arborescence](#arborescence)
       - [app/Models](#appmodels)
@@ -12,13 +12,16 @@
       - [bootstrap.php](#bootstrapphp)
     - [Structure](#structure)
     - [Base de données](#base-de-données)
-    - [Headers](#headers)
     - [Tests unitaires](#tests-unitaires)
+      - [Format de code](#format-de-code)
+      - [Syntaxe](#syntaxe)
     - [Composer](#composer)
     - [Librairies](#librairies)
       - [PHPMailer](#phpmailer)
       - [Dompdf](#dompdf)
     - [Endpoints](#endpoints)
+      - [Headers](#headers)
+      - [Listes des endpoints](#listes-des-endpoints)
   - [PWA](#pwa)
     - [Vuejs](#vuejs)
       - [Arborescence](#arborescence-1)
@@ -106,7 +109,7 @@ Fichier de bootage de l'API REST inclus dans tous les fichiers d'entrées, celui
 
 ### Structure
 
-![dateTestPlanningSecondUser](./diagram/drawio/system.png)
+![dateTestPlanningSecondUser](./diagram/drawio/system.svg)
 
 ### Base de données
 
@@ -541,15 +544,13 @@ La table `absence` contient les informations des vacances des éducateurs canins
 
 La valeur du champ `date_absence_to` peut être `null` si le service est suspendu pour un moment.
 
-### Headers
-
 ### Tests unitaires
 
-Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécuter des scripts de test pour chaque endpoint de mon API REST. Ces tests sont réalisables en JavaScript en utilisant la bibliothèque `pm`. Tous les tests unitaires de mon API REST sont identifiables grâce à un code qui leur est propre dans l'annexe [`unit_tests.md`](./unit_tests.md).
+Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécuter des scripts de test pour chaque endpoint de mon API REST. Ces tests sont réalisables en JavaScript en utilisant la bibliothèque proposé par Postman `pm`. Tous les tests unitaires de mon API REST sont identifiables grâce à un code qui leur est propre dans l'annexe [`unit_tests.md`](./unit_tests.md).
 
-**Format de code**
+#### Format de code
 
-![dateTestPlanningSecondUser](./diagram/drawio/unitTestCodeFormat.png)
+![dateTestPlanningSecondUser](./diagram/drawio/unitTestCodeFormat.svg)
 
 **Définition**
 
@@ -654,24 +655,208 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
         <td>DNG</td>
     </tr>
 </table>
+#### Syntaxe
+
+Postman propose à ses utilisateurs la possibilité d'écrire des scripts de test pour tester les différentes requêtes de leurs API. Afin de rédiger ces tests, j'ai dû utiliser une certaine syntaxe JavaScript proposée par Postman. Lors de la réalisation de mes tests unitaires avec Postman, j'ai utilisé la fonction `pm.test` afin de tester tous les cas d'utilisation et d'exception de mon API REST. La fonction `pm.test` prend en premier paramètre une chaîne de caractères qui apparaîtra dans la sortie des résultats du test afin d'identifier le test. Le deuxième paramètre est une fonction qui doit retourner un booléen pour indiquer si le test a réussi ou échoué. 
+
+Dans tous mes tests unitaires, j'ai utilisé la fonction `pm.test` avec comme fonction `pm.response.to.have.status(status)` afin de tester si le cas d'utilisation de l'endpoint en question retournait le bon code HTTP. En effet, cette ligne retourne `true` si le code d'état de la réponse est identique à son paramètre de fonction et `false` si ce n'est pas le cas.
+Par exemple, afin de tester que l'endpoint de création d'utilisateur `POST api/v1/users` retourne bien le code HTTP `201`, j'ai réalisé le test :
+
+```javascript
+pm.test("Right code for successful created ressource", function () {
+    pm.response.to.have.status(201);
+});
+```
+
+Pour les endpoints nécessitant de retourner un message, j'ai également testé que celui-ci soit correct en utilisant la fonction` pm.expect(element1).to.eql(element2)` qui permet de tester que le premier élément corresponde bien au second. 
+Par exemple, afin de tester que l'endpoint de création d'utilisateur `POST api/v1/users` avec une adresse e-mail ne respectant pas le bon format retourne bien le code HTTP `400` ainsi que le message d'erreur `Format d'adresse email invalide.`, j'ai réalisé les tests :
+
+```javascript
+pm.test("Right code for invalid email format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for for invalid email format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format d'adresse email invalide.");
+});
+```
+
+Pour les tests unitaires nécessitant le test de plusieurs données de corps de requêtes différentes, j'ai utilisé la fonctionnalité d'importation de CSV proposé par Postman. En effet, Postman permet de sélectionner un fichier CSV contenant différentes données afin de procéder à plusieurs itérations de test avec celles-ci. 
+Par exemple, afin de tester que l'endpoint de création de vacances `POST api/v1/absences` avec une date ne respectant pas le bon format retourne bien le code HTTP `400` ainsi que le message d'erreur `Format de date invalide => (YYYY-MM-DD).`, j'ai réalisé les tests :
+
+```javascript
+pm.test("Right code for invalid date_to format", function () {
+    pm.response.to.have.status(400);
+});
+pm.test("Right message for invalid date_to format", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
+});
+```
+
+Ce test est réalisé avec les différentes données du fichier CSV disponibles à la fin de l'annexe [`unit_tests.md`](./unit_tests.md).
+
+Pour les tests unitaires nécessitant un test sur l'en-tête d'autorisation, j'ai utilisé la fonction `pm.request.to.have.header(header)`.
+Par exemple, afin de tester que l'endpoint de suppression d'un document `DELETE api/v1/documents` avec un api token appartenant à un client retourne bien le code HTTP `403` ainsi que le message d'erreur `Vous n'avez pas les permissions.`, j'ai réalisé les tests :
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is false", function () {
+    pm.response.to.have.status(403);
+});
+pm.test("Right message for access without permission", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
+});
+```
+
+Pour les tests unitaires retournant une réponse JSON spécifique, j'ai effectué un test afin de vérifier que sa structure soit respectée avec la fonction `pm.response.to.have.jsonSchema(jsonSchema)`.
+Par exemple, afin de tester que l'endpoint de récupération d'un chien spécifique `GET api/v1/dogs/{dogId}` avec un api token appartenant à un éducateur canin retourne bien le code HTTP `200` ainsi que la réponse JSON au bon format, j'ai réalisé les tests :
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Authorization header is right", function () {
+    pm.response.to.have.status(200);
+});
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "name" : {"type" : "string"},
+              "breed" : {"type" : "string"},
+              "sex" : {"type" : "string"},
+              "picture_serial_id" : {"type" : ["string","null"]},
+              "chip_id" : {"type" : ["string","null"]},
+              "user_id" : {"type" : "integer"}
+          },
+          "required": ["id","name","breed","sex","picture_serial_id","chip_id","user_id"]
+  })
+});
+```
 
 ### Composer
 
-[à compléter]
+Composer permet de gérer les dépendances PHP de mon API REST. En premier lieu, Composer permet de générer un fichier nommé `composer.json`. Ce fichier est un moyen pour Composer de rechercher les différentes dépendances que mon projet PHP doit télécharger. Le fichier `composer.json` vérifie également la compatibilité des versions des dépendances de mon projet. C'est-à-dire que si j'utilise un paquet obsolète, Composer me le fera savoir afin d'éviter tout problème. Afin d'installer un paquet comme Dompdf, j'ai dû exécuter la commande suivante dans mon invite de commandes : 
+
+```bash
+composer require dompdf/dompdf
+```
+
+Après avoir exécuté ce type de commande, mon projet contient maintenant les fichiers `composer.json` et `composer.lock` ainsi que le dossier `vendor`. Comme expliqué auparavant, `composer.json` est comme un guide correspondant aux versions de dépendance que Composer **doit** installer tandis que `composer.lock` est une représentation exact des versions de dépendance qui **ont** été installées. Le dossier `vendor` quant à lui, contient tous les paquets et dépendances installés du projet.
+
+Une fois nos paquets et dépendances installés, il faut maintenant pouvoir les inclure dans un de nos scripts PHP. Pour ce faire, Composer nous facilite la tâche en générant un fichier de chargement automatique nommé `autoload.php`. En incluant ce fichier dans mon fichier `bootstrap.php` qui lui-même étant inclus dans chaque point d'entrées de mon API REST, je peux accéder quand je le souhaite aux différents paquets et dépendance de mon projet. Par exemple, si je souhaite utiliser le paquet Dompdf dans un de mes scripts PHP, je peux écrire la ligne `use Dompdf\Dompdf` afin d'y accéder. 
 
 ### Librairies
 
-[à compléter]
-
 #### PHPMailer
 
-[à compléter]
+Installé avec la commande : 
+
+```bash
+composer require phpmailer/phpmailer
+```
+
+J'ai utilisé PHPMailer dans le contrôleur `HelperController` de la manière suivante :
+
+```php
+public static function sendMail(string $message, string $subject,string $emailRecipient, string $attachmentFilePath = null)
+{
+    // Création d'une instance de la classe PHPMailer en activant les exceptions
+    $mail = new PHPMailer(true);
+    
+    // Chargement du template avec le sujet et le message de l'e-mail
+    $body = HelperController::loadMailTemplate($subject,$message);
+    try {
+        //Paramètres du serveur 
+        $mail->SMTPDebug  = SMTP::DEBUG_SERVER;               
+        $mail->Host       = getenv('SMTP_HOST');                     
+        $mail->SMTPAuth   = true;                                  
+        $mail->Username   = getenv('SMTP_USERNAME');                   
+        $mail->Password   = getenv('SMTP_PASSWORD');                             
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         
+        $mail->Port       = 587; 
+
+        //Destinataire
+        $mail->setFrom('noreply@douceurdechien.com', 'Douceur de Chien');
+        $mail->addAddress($emailRecipient); 
+
+        //Pièce jointe
+        if (!is_null($attachmentFilePath)) {
+            $mail->addAttachment($attachmentFilePath);
+        }
+        
+        //Contenu
+        $mail->isHTML(true);     
+        $mail->CharSet = 'UTF-8';      
+        $mail->Encoding = 'base64';                      
+        $mail->Subject = $subject;
+        $mail->AddEmbeddedImage("./../../resources/image/logo_douceur_de_chien.png", "logo-image", "logo_douceur_de_chien.png");
+        $mail->Body = $body;
+        
+        $mail->send();
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+    }
+```
+
+[*Documentation de PHPMailer*](https://phpmailer.github.io/PHPMailer/namespaces/default.html)
 
 #### Dompdf
 
-Installé avec la commande `composer require dompdf/dompdf/`, Dompdf est un moteur de mise en page et de rendu HTML. Son objectif est de télécharger et lire les feuilles de style externes, les balises de style et les attributs de style des éléments HTML individuels pour convertir le résultat en PDF.  
+Installé avec la commande : 
+
+```bash
+composer require dompdf/dompdf
+```
+
+J'ai utilisé Dompdf afin de créer les conditions d'inscription dans le contrôleur `HelperController` de la manière suivante :
+
+```php
+public static function storeConditionsRegistration(string $filename,int $package_number,string $date, string $signature_base64,string $userfirstname, string $userlastname)
+{
+    $dompdf = new DOMPDF();     
+    
+    ob_start();
+    include HelperController::getDefaultDirectory()."resources/template/conditions_registration.php";
+    $contents = ob_get_clean();
+    
+    $dompdf->loadHtml($contents);
+    dompdf->render();
+    $output = $dompdf->output();
+    file_put_contents(HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$filename.".pdf", $output);
+}
+```
+
+1. Création d'une instance de la classe `DOMPDF`
+2. Début de la temporisation de sortie permettant d'inclure les différentes données dans le template HTML et CSS `conditions_registration.php` 
+3. Récupération du contenu HTML du tampon de sortie et fermeture de sa session
+4. Chargement du contenu HTML avec l'instance `DOMPDF`
+5. Transformation du HTML en PDF
+6. Récupération du PDF sous forme de données
+7. Écriture de ces données dans un fichier PDF stocké sur le serveur
+
+[*Documentation de Dompdf*](https://github.com/dompdf/dompdf/wiki/Usage)
 
 ### Endpoints
+
+#### Headers
+
+Les en-têtes que j'ai utilisé dans les différentes points d'entrés de mon API REST sont :
+
+* [`Access-Control-Allow-Origin`](https://developer.mozilla.org/fr/docs/Web/HTTP/Headers/Access-Control-Allow-Origin)
+* [`Content-Type`](https://developer.mozilla.org/fr/docs/Web/HTTP/Headers/Content-Type)
+* [`Access-Control-Allow-Methods`](https://developer.mozilla.org/fr/docs/Web/HTTP/Headers/Access-Control-Allow-Methods)
+* [`Access-Control-Max-Age`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age)
+* [`Access-Control-Allow-Headers`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Max-Age)
+* [`Content-Length`](https://developer.mozilla.org/fr/docs/Web/HTTP/Headers/Content-Length)
+
+#### Listes des endpoints
 
 * `POST api/v1/users`
 * `GET api/v1/users`
