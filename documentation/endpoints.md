@@ -151,12 +151,40 @@ Cet endpoint permet de récupérer toutes les données de l'utilisateur authenti
 
 ##### Flow chart
 
-<img src="./diagram/drawio/flowchartGetUserAuthdrawio.svg" width="350px"/>
+<img src="./diagram/drawio/flowchartGetUserAuth.svg" width="350px"/>
 
 ##### Tests unitaires
 
 * **[USE-GUA1] Get all user information of the current logged in non-existent user**
 * **[USE-GUA2] Get all user information of the current logged in user**
+
+<div style="page-break-after: always;"></div>
+
+####  PATCH api/v1/users/me/changePassword
+
+##### Objectif
+
+Modifier le mot de passe de l'utilisateur authentifié grâce à son api token dans le header `Authorization`.
+
+##### Utilisation concrète
+
+Cet endpoint permet de modifier le mot de passe de l'utilisateur authentifié.
+Body de la requête :
+
+| Clef     | Définition              | Obligatoire | Format |
+| -------- | ----------------------- | :---------: | ------ |
+| password | Le nouveau mot de passe |             |        |
+
+##### 
+
+##### Flow chart
+
+<img src="./diagram/drawio/flowchartUpdatePasswordUserAuth.svg" width="350px"/>
+
+##### Tests unitaires
+
+* **[USE-UPAU1] Update password of the current logged in non-existent user**
+* **[USE-UPAU2] Update password of the current logged in user without problems**
 
 <div style="page-break-after: always;"></div>
 

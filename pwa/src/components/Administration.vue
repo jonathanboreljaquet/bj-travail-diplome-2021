@@ -8,6 +8,18 @@
       </b-row>
       <b-row>
         <b-col>
+          <b-button
+            style="margin-bottom: 10px; margin-top: 10px"
+            variant="outline-primary"
+            block
+            v-b-modal.modal-add-client
+          >
+            Ajouter un client
+          </b-button>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
           <b-input-group size="sm" style="margin-bottom: 10px">
             <b-form-input
               id="filter-input"
@@ -32,6 +44,7 @@
         :total-rows="totalRows"
       ></b-pagination>
       <b-table
+        ref="tableuser"
         :items="items"
         :busy="isBusy"
         :fields="fields"
@@ -103,6 +116,94 @@
           </b-card>
         </template>
       </b-table>
+
+      <!-- MODAL ADD CLIENT  -->
+      <b-modal
+        id="modal-add-client"
+        title="Ajouter un client"
+        :hide-footer="true"
+      >
+        <b-form
+          @submit.prevent="
+            createUser(
+              form.email,
+              form.firstname,
+              form.lastname,
+              form.phonenumber,
+              form.address
+            )
+          "
+        >
+          <b-form-group
+            id="input-group-client-email"
+            label="Adresse e-mail :"
+            label-for="input-client-email"
+          >
+            <b-form-input
+              id="input-client-email"
+              v-model="form.email"
+              type="email"
+              placeholder="Entrez l'adresse e-mail du client"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            id="input-group-client-firstname"
+            label="Prénom :"
+            label-for="input-client-firstname"
+          >
+            <b-form-input
+              id="input-client-firstname"
+              v-model="form.firstname"
+              type="text"
+              placeholder="Entrez le prénom du client"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            id="input-group-client-lastname"
+            label="Nom de famille :"
+            label-for="input-client-lastname"
+          >
+            <b-form-input
+              id="input-client-lastname"
+              v-model="form.lastname"
+              type="text"
+              placeholder="Entrez le nom de famille du client"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            id="input-group-client-phonenumber"
+            label="Numéro de téléphone :"
+            label-for="input-client-phonenumber"
+          >
+            <b-form-input
+              id="input-client-phonenumber"
+              v-model="form.phonenumber"
+              type="text"
+              placeholder="Entrez le numéro de téléphone du client"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            id="input-group-client-address"
+            label="Adresse :"
+            label-for="input-client-address"
+          >
+            <b-form-input
+              id="input-client-address"
+              v-model="form.address"
+              type="text"
+              placeholder="Entrez l'addresse du client"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-button block type="submit" variant="outline-primary">
+            Ajouter le client
+          </b-button>
+        </b-form>
+      </b-modal>
     </b-container>
   </div>
 </template>
@@ -130,6 +231,13 @@ export default {
       isBusy: true,
       currentPage: 1,
       totalRows: 1,
+      form: {
+        email: "",
+        firstname: "",
+        lastname: "",
+        phonenumber: "",
+        address: "",
+      },
     };
   },
   methods: {
@@ -143,13 +251,13 @@ export default {
       this.$http
         .get(this.$API_URL + "users/", config)
         .then((response) => {
-          const vm = this;
-          this.$jquery.each(response.data, function (index, item) {
-            vm.items.push({
-              id: item.id,
-              prenom: item.firstname,
-              nom: item.lastname,
-              dogs: item.dogs,
+          this.items = [];
+          response.data.forEach((user) => {
+            this.items.push({
+              id: user.id,
+              prenom: user.firstname,
+              nom: user.lastname,
+              dogs: user.dogs,
             });
           });
           this.toggleBusy();
@@ -159,8 +267,33 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    createUser(email, firstname, lastname, phonenumber, address) {
+      const params = new URLSearchParams();
+      params.append("email", email);
+      params.append("firstname", firstname);
+      params.append("lastname", lastname);
+      params.append("phonenumber", phonenumber);
+      params.append("address", address);
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token,
+        },
+      };
+      this.$http
+        .post(this.$API_URL + "users/", params, config)
+        .then((response) => {
+          console.log(response);
+          this.loadCustomersWithDogs();
+          this.$alertify.success("Client ajouté avec succès");
+          this.$bvModal.hide("modal-add-client");
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
     toggleBusy() {
-      this.isBusy = !this.isBusy;
+      this.isBusy = false;
     },
   },
   created() {

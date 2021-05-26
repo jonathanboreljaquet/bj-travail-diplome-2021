@@ -66,8 +66,10 @@ export default {
         events: [],
         eventBackgroundColor: "green",
         eventClick: function (info) {
+          console.log(info.view.type);
           this.gotoDate(info.event.endStr);
           this.changeView("timeGridDay");
+          
         },
       },
       selected: 1,
@@ -84,17 +86,12 @@ export default {
       this.$http
         .get(this.$API_URL + "plannings/" + idEducator)
         .then((response) => {
-          const vm = this;
-          vm.calendarOptions.events = [];
-          this.$jquery.each(response.data, function (index) {
-            vm.calendarOptions.events.push({
+          this.calendarOptions.events = [];
+          response.data.forEach((event) => {
+            this.calendarOptions.events.push({
               title: "Disponible",
-              start:
-                response.data[index].date +
-                " " +
-                response.data[index].time_start,
-              end:
-                response.data[index].date + " " + response.data[index].time_end,
+              start: event.date + " " + event.time_start,
+              end: event.date + " " + event.time_end,
             });
           });
         })

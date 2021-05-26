@@ -251,6 +251,65 @@ class TimeSlotController {
 
     /**
      * 
+     * Method to return all time slots of all weekly schedules of the currently logged in user in JSON format.
+     * 
+     * @return string The status and the body in json format of the response
+     */
+    public function getMyWeeklyScheduleTimeSlots()
+    {
+        $headers = apache_request_headers();
+
+        if (!isset($headers['Authorization'])) {
+            return ResponseController::notFoundAuthorizationHeader();
+        }
+        
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
+
+        if (is_null($userAuth)) {
+            return ResponseController::notFoundResponse();
+        }
+
+        $allWeeklySchedule = $this->DAOWeeklySchedule->findAll(false,$userAuth->id);
+
+        foreach ($allWeeklySchedule as $weeklySchedule) {
+            $weeklySchedule->timeSlots = $this->DAOTimeSlot->findAllByIdWeeklySchedule(false, $userAuth->id, $weeklySchedule->id);
+        }   
+        
+        return ResponseController::successfulRequest($allWeeklySchedule);
+    }
+
+    /**
+     * 
+     * Method to return all time slots of all schedule overrides of the currently logged in user in JSON format.
+     * 
+     * @param int  $idUser The edcuator user identifier
+     * @return string The status and the body in json format of the response
+     */
+    public function getMyScheduleOverridesTimeSlots()
+    {
+        $headers = apache_request_headers();
+
+        if (!isset($headers['Authorization'])) {
+            return ResponseController::notFoundAuthorizationHeader();
+        }
+        
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
+
+        if (is_null($userAuth)) {
+            return ResponseController::notFoundResponse();
+        }
+
+        $allScheduleOverrides = $this->DAOScheduleOverride->findAll(false,$userAuth->id);
+
+        foreach ($allScheduleOverrides as $scheduleOverride) {
+            $scheduleOverride->timeSlots = $this->DAOTimeSlot->findAllByIdScheduleOverride(false, $userAuth->id, $scheduleOverride->id);
+        }   
+        
+        return ResponseController::successfulRequest($allScheduleOverrides);
+    }
+
+    /**
+     * 
      * Method to check if the time slot required fields have been defined for the creation.
      * 
      * @param TimeSlot $timeSlot The timeslot model object

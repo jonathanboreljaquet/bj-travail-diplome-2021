@@ -22,11 +22,8 @@
           <b-nav-item to="/administration" v-if="authAdministrator" href="#">
             Administration
           </b-nav-item>
-          <b-nav-item
-            @click="installer()"
-            :style="{ ' display ': installBtn }"
-            href="#"
-            >Installer
+          <b-nav-item to="/planning" v-if="authAdministrator" href="#">
+            Mon planning
           </b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
@@ -64,29 +61,6 @@ export default {
   data() {
     return {
       logo: { width: 80 },
-      installBtn: "none",
-      installer: undefined,
-    };
-  },
-  created() {
-    let installPrompt;
-
-    window.addEventListener("beforeinstallprompt", (e) => {
-      e.preventDefault();
-      installPrompt = e;
-      this.installBtn = "block";
-    });
-
-    this.installer = () => {
-      this.installBtn = "none";
-      installPrompt.prompt();
-      installPrompt.userChoice.then((result) => {
-        if (result.outcome === "accepted") {
-          console.log("Install accepted!");
-        } else {
-          console.log("Install denied!");
-        }
-      });
     };
   },
 };

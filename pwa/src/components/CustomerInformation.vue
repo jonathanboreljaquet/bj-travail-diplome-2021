@@ -20,40 +20,51 @@
           >
             <p class="text-secondary mb-1" v-if="code_role == '1'">Client</p>
             <p class="text-secondary mb-1">{{ address }}</p>
-            <b-button
-              variant="outline-primary"
-              class="btnAdmin"
-              v-if="authAdministrator"
-              v-b-modal.modal-add-dog
-            >
-              Ajouter un chien
-            </b-button>
-            <b-button
-              variant="outline-primary"
-              class="btnAdmin"
-              v-if="authAdministrator"
-              v-b-modal.modal-add-document
-            >
-              Ajouter un document
-            </b-button>
-            <b-button
-              :to="{
-                name: 'customerAppoitment',
-                params: { userId: $route.params.userId },
-              }"
-              variant="outline-primary"
-              class="btnAdmin"
-              v-if="authAdministrator"
-              >Rendez-vous
-            </b-button>
-            <b-button
-              variant="outline-danger"
-              class="btnAdmin"
-              v-if="authAdministrator"
-              v-b-modal.modal-delete-user
-            >
-              Supprimer l'utilisateur
-            </b-button>
+            <div v-if="authCustomer">
+              <b-button
+                variant="outline-primary"
+                v-b-modal.modal-update-password
+                block
+              >
+                Modifier mon mot de passe
+              </b-button>
+            </div>
+            <div v-if="authAdministrator">
+              <b-button
+                :to="{
+                  name: 'customerAppoitment',
+                  params: { userId: $route.params.userId },
+                }"
+                variant="outline-primary"
+                class="btnAdmin"
+                v-if="authAdministrator"
+                >Rendez-vous
+              </b-button>
+              <b-button
+                variant="outline-primary"
+                class="btnAdmin"
+                v-if="authAdministrator"
+                v-b-modal.modal-add-dog
+              >
+                Ajouter un chien
+              </b-button>
+              <b-button
+                variant="outline-primary"
+                class="btnAdmin"
+                v-if="authAdministrator"
+                v-b-modal.modal-add-document
+              >
+                Ajouter un document
+              </b-button>
+              <b-button
+                variant="outline-danger"
+                class="btnAdmin"
+                v-if="authAdministrator"
+                v-b-modal.modal-delete-user
+              >
+                Supprimer l'utilisateur
+              </b-button>
+            </div>
           </b-card>
 
           <b-card
@@ -205,6 +216,14 @@
                     Modifier le chien
                   </b-button>
                   <b-button
+                    class="btnAdmin"
+                    variant="outline-primary"
+                    v-b-modal.modal-add-picture-dog
+                    @click="sendDogId(dog.id)"
+                  >
+                    Modifier la photo
+                  </b-button>
+                  <b-button
                     variant="outline-danger"
                     class="btnAdmin"
                     v-b-modal.modal-delete-dog
@@ -212,20 +231,6 @@
                   >
                     Supprimer le chien
                   </b-button>
-                  <b-row>
-                    <b-col>
-                      <div v-if="!dog.picture_serial_id">
-                        <b-button
-                          class="btnAdmin"
-                          variant="outline-primary"
-                          v-b-modal.modal-add-picture-dog
-                          @click="sendDogId(dog.id)"
-                        >
-                          Ajouter une photo
-                        </b-button>
-                      </div>
-                    </b-col>
-                  </b-row>
                 </div>
               </b-card>
             </b-col>
@@ -378,6 +383,9 @@
           </b-form-group>
 
           <div v-if="addDocumentForm.type == 'conditions_inscription'">
+            <a href="./pdf/conditionsInscription.pdf" target="_blank">
+              Conditions d'inscription
+            </a>
             <b-form-group
               id="input-group-document-package-number"
               label="Forfait :"
@@ -696,6 +704,48 @@
           </b-button>
         </b-form>
       </b-modal>
+
+      <!-- MODAL UPDATE PASSWORD-->
+      <b-modal
+        id="modal-update-password"
+        title="Modifier le mot de passe"
+        :hide-footer="true"
+      >
+        <b-form
+          @submit.prevent="updateAuthCustomerPassword(password, repeatPassword)"
+        >
+          <b-form-group
+            id="input-group-inscription-password"
+            label="Mot de passe :"
+            label-for="input-inscription-password"
+          >
+            <b-form-input
+              id="input-inscription-password"
+              v-model="password"
+              type="password"
+              placeholder="Entrez le mot de passe"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            id="input-group-inscription-second-password"
+            label="Confirmation du mot de passe :"
+            label-for="input-inscription-second-password"
+          >
+            <b-form-input
+              id="input-inscription-second-password"
+              v-model="repeatPassword"
+              type="password"
+              placeholder="Entrez le mot de passe"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button block type="submit" variant="outline-primary">
+            Modifier le mot de passe
+          </b-button>
+        </b-form>
+      </b-modal>
     </b-container>
   </div>
 </template>
@@ -723,6 +773,8 @@ export default {
       api_token: null,
       address: null,
       code_role: null,
+      password: null,
+      repeatPassword: null,
       dogs: [],
       documents: [],
       addDogForm: {
@@ -822,7 +874,6 @@ export default {
         headers: {
           // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
-          "Content-Type": "application/x-www-form-urlencoded",
         },
       };
       this.$http
@@ -1033,6 +1084,30 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    updateAuthCustomerPassword(password, repeatPassword) {
+      if (password != repeatPassword) {
+        this.$alertify.error("les mots de passes ne corréspondent pas");
+        return;
+      }
+      const params = new URLSearchParams();
+      params.append("password", password);
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token,
+        },
+      };
+      this.$http
+        .patch(this.$API_URL + "users/me/changePassword/", params, config)
+        .then((response) => {
+          console.log(response);
+          this.$alertify.success("Mot de passe modifié");
+          this.$bvModal.hide("modal-update-password");
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
     resetModalAddDocument() {
       this.addDocumentForm.type = "poster";
       this.signatureIsBlocked = false;
@@ -1072,6 +1147,9 @@ export default {
   computed: {
     authAdministrator() {
       return this.$store.getters.ifAdministratorAuthenticated;
+    },
+    authCustomer() {
+      return this.$store.getters.ifCustomerAuthenticated;
     },
   },
   mounted() {

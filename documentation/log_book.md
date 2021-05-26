@@ -1703,7 +1703,7 @@ Les trois fonctionnalités de suppression fonctionnent de la manière suivante :
 
 Configuration de PHPMailer lors de l'envoie de mail dû à une création avec un template HTML et CSS. L'e-mail avec le document en question en pièce jointe envoyé lors de la création ou l'ajout d'un document PDF ressemble à cela :
 
- ![dateTestPlanningSecondUser](./img/mailTemplate.PNG)
+![dateTestPlanningSecondUser](./img/mailTemplate.PNG)
 
 Rendez-vous GMeet hebdomadaire avec M.Mathieu. Lors de notre discussion, nous avons discuté des points qui étaient intéressant à approfondir comme l'ajout d'un explain de ma requête de génération de planning ou de l'affichage des différentes vues de mon application. Les points que j'ai retenus sont :
 
@@ -1721,3 +1721,41 @@ Même procédé pour la modification du chien, mais avec l'endpoint `PATCH api/v
 
 Début de développement du composant `CustomerAppoitment.vue` qui permettra d'afficher les données des rendez-vous d'un utilisateur. L'objectif de ce composant est d'afficher uniquement les résumés lorsque l'utilisateur est un client et d'afficher les résumés, les notes textuelles et graphique ainsi que les fonctionnalités d'ajout/modification et suppression lorsque que l'utilisateur est un éducateur canin.
 Blocage lors de sa réalisation, car je dois trouver un moyen de charger l'ancienne image de la note graphique afin de permettre une nouvelle édition sur celle-ci. Actuellement avec la librairie `Responsive-Sketchap` il me semble que cela est impossible. Recherche d'une autre lib ou d'un autre moyen de résoudre ce problème. [Source intéressante](https://github.com/szimek/signature_pad)
+
+### Mercredi 26 mai 2021
+
+Réalisation de la page "Mes rendez-vous" pour les clients de l'application qui affichera dans une timeline les informations de rendez-vous :
+
+* Heure de début et de fin du rendez-vous
+* Date du rendez-vous
+* Résumé du rendez-vous
+
+Cette même page sera accessible par les éducateurs canins depuis la page des informations du client. Pour l'instant L'éducateur canin a la possibilité de :
+
+* Consulter les mêmes informations de rendez-vous que les clients
+* Consulter les notes textuelles personnelles
+* Consulter les notes graphiques personnelles
+* Modifier les résumés et notes textuelles personnelles 
+
+Affichage de la page pour les administrateurs (éducateurs canins) ![dateTestPlanningSecondUser](./img/vue_mesrendezvous.PNG)
+Ajout d'un lien vers le document original des conditions d'inscriptions dans la fenêtre modale de création de conditions d'inscription afin de permettre au client de pouvoir lire son contenue avant de le signer.
+
+Création de la fonctionnalité permettant à un éducateur canin d'ajouter un nouveau client à l'application. Pour ce faire il aura accès à un bouton sur la page "Administration" afin d'ouvrir la fenêtre modale suivante : 
+
+![dateTestPlanningSecondUser](./img/vue_addclient.PNG)
+
+Une fois les informations remplient et le client ajouté, un mail sera envoyé au client afin de lui donner son mot de passe généré aléatoirement. L'email ressemble à cela :
+
+![dateTestPlanningSecondUser](./img/mailPassword.PNG)
+
+Dorénavant, une fois connecté, l'utilisateur a la possibilité de modifier son mot de passe depuis la page "Mes informations". Pour ce faire, j'ai créé l'endpoint `PATCH api/v1/users/me/changePassword` qui permet de modifier le mot de passe passé dans le body de la requête de l'utilisateur authentifié.
+
+![dateTestPlanningSecondUser](./img/vue_updatepassword.PNG)
+
+Modification de la requête SQL de génération de planning afin que l'endpoint `GET api/v1/planning/{idEducator}` ne retourne pas les dates qui précédent le jour actuelle afin de ne pas créer d'incohérence.
+
+Création du composant `Planning.vue` représentant la page "Mon planning" de l'éducateur canin authentifié afin que celui-ci puisse consulter et modifier son planning.
+
+### Jeudi 27 mai 2021
+
+Afin de faciliter l'affichage des données de planning des éducateurs canins au niveau du frontend. J'ai un endpoint permettant de retourner tous les créneaux horaires pour tous les calendriers hebdomadaires `GET api/v1/users/me/weeklySchedule` et un endpoint permettant de faire pareil mais pour les exceptions d'horaire `GET api/v1/users/me/scheduleOverride`

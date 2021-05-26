@@ -29,13 +29,8 @@ export default new Vuex.Store({
       params.append("phonenumber", authData.phonenumber);
       params.append("address", authData.address);
       params.append("password", authData.password);
-      const config = {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
       Vue.prototype.$http
-        .post(Vue.prototype.$API_URL + "users/", params, config)
+        .post(Vue.prototype.$API_URL + "users/", params)
         .then((res) => {
           console.log(res);
           localStorage.setItem("api_token", res.data.api_token);
@@ -55,13 +50,8 @@ export default new Vuex.Store({
       const params = new URLSearchParams();
       params.append("email", authData.email);
       params.append("password", authData.password);
-      const config = {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      };
       Vue.prototype.$http
-        .post(Vue.prototype.$API_URL + "/connection/", params, config)
+        .post(Vue.prototype.$API_URL + "connection/", params)
         .then((res) => {
           localStorage.setItem("api_token", res.data.api_token);
           localStorage.setItem("code_role", res.data.code_role);
@@ -86,7 +76,7 @@ export default new Vuex.Store({
       localStorage.removeItem("api_token");
       localStorage.removeItem("code_role");
       Vue.prototype.$alertify.success("Vous êtes déconnecté");
-      router.replace("/");
+      router.push("/");
     },
     autoLogin({ commit }) {
       const api_token = localStorage.getItem("api_token");

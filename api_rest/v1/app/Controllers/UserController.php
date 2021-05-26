@@ -154,7 +154,7 @@ class UserController {
         $this->DAOUser->insert($user);
 
         if (isset($random_password)) {
-            //HelperController::sendMail($random_password,$user->email);
+            HelperController::sendMail("Bonjour et merci de faire confiance à la société Douceur de Chien, vous trouverez plus bas votre mot de passe généré aléatoirement afin d'accéder à votre compte. Toutefois, il est fortement conseillé de modifier votre mot de passe une fois connecté.","Création de votre compte Douceur de Chien",$user->email,$random_password);
         }
 
         $result = array();
@@ -347,6 +347,34 @@ class UserController {
         
         
         return ResponseController::successfulRequest($userAuth);
+    }
+
+    /**
+     * 
+     * Method to update the password of the currently logged user.
+     * 
+     * @param User $user The user model object
+     * @return string The status and the body in JSON format of the response
+     */
+    public function updateMyPassword(User $user)
+    {
+        $headers = apache_request_headers();
+
+        if (!isset($headers['Authorization'])) {
+            return ResponseController::notFoundAuthorizationHeader();
+        }
+        
+        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
+
+        if (is_null($userAuth)) {
+            return ResponseController::notFoundResponse();
+        }
+
+        $userAuth->password_hash = password_hash($user->password_hash,PASSWORD_DEFAULT) ?? $userAuth->password_hash;
+
+        $this->DAOUser->update($userAuth);
+
+        return ResponseController::successfulRequest(null);
     }
 
      /**

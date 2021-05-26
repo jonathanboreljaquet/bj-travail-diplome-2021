@@ -128,8 +128,7 @@ div.card img.avatar,
             </ol>
         </li>
     </ol>
-    <p style="padding-left: 40px;"><span style="font-size: 14pt;">Choix du forfait (cochez la case de votre choix
-            pour les abonnements) :</span></p>
+    <p style="padding-left: 40px;"><span style="font-size: 14pt;">Choix du forfait :</span></p>
     <ul>
         <li style="list-style-type: none;">
             <ul>

@@ -27,7 +27,7 @@ class DAOTimeSlot {
 
     /**
      * 
-     * Method to return all the time slot of the database in an array of timeslot objects.
+     * Method to return all the time slot for an educator of the database in an array of timeslot objects.
      * 
      * @param bool $isDeleted  Bool to define whether to search for existing or deleted timeslot
      * @param int $idEducator The educator identifier
@@ -45,6 +45,96 @@ class DAOTimeSlot {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
             $statement->bindParam(':DELETED', $deleted, \PDO::PARAM_BOOL);
+            $statement->execute();
+            $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $timeSlotArray = array();
+            
+            foreach ($results as $result) {
+                $timeSlot = new TimeSlot();
+                $timeSlot->id = $result["id"];
+                $timeSlot->code_day = $result["code_day"];
+                $timeSlot->time_start = $result["time_start"];
+                $timeSlot->time_end = $result["time_end"];
+                $timeSlot->id_weekly_schedule = $result["id_weekly_schedule"];
+                $timeSlot->id_schedule_override = $result["id_schedule_override"];
+                $timeSlot->id_educator = $result["id_educator"];
+                array_push($timeSlotArray,$timeSlot);
+            }
+
+            return $timeSlotArray;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
+    /**
+     * 
+     * Method to return all the time slot of the database in an array of timeslot objects from his weekly schedule identifier.
+     * 
+     * @param bool $isDeleted  Bool to define whether to search for existing or deleted timeslot
+     * @param int $idEducator The educator identifier
+     * @param int $idWeeklySchedule The weekly schedule identifier
+     * @return TimeSlot[] A ScheduleOverride object array
+     */
+    public function findAllByIdWeeklySchedule(bool $deleted,int $idEducator, int $idWeeklySchedule)
+    {
+        $statement ="
+        SELECT id, code_day, time_start, time_end,id_weekly_schedule,id_schedule_override,id_educator
+        FROM time_slot
+        WHERE is_deleted= :DELETED
+        AND id_educator = :ID_EDUCATOR
+        AND id_weekly_schedule = :ID_WEEKLY_SCHEDULE";
+        
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
+            $statement->bindParam(':DELETED', $deleted, \PDO::PARAM_BOOL);
+            $statement->bindParam(':ID_WEEKLY_SCHEDULE', $idWeeklySchedule, \PDO::PARAM_INT);
+            $statement->execute();
+            $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            $timeSlotArray = array();
+            
+            foreach ($results as $result) {
+                $timeSlot = new TimeSlot();
+                $timeSlot->id = $result["id"];
+                $timeSlot->code_day = $result["code_day"];
+                $timeSlot->time_start = $result["time_start"];
+                $timeSlot->time_end = $result["time_end"];
+                $timeSlot->id_weekly_schedule = $result["id_weekly_schedule"];
+                $timeSlot->id_schedule_override = $result["id_schedule_override"];
+                $timeSlot->id_educator = $result["id_educator"];
+                array_push($timeSlotArray,$timeSlot);
+            }
+
+            return $timeSlotArray;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
+
+    /**
+     * 
+     * Method to return all the time slot of the database in an array of timeslot objects from his schedule override identifier.
+     * 
+     * @param bool $isDeleted  Bool to define whether to search for existing or deleted timeslot
+     * @param int $idEducator The educator identifier
+     * @param int $idScheduleOverride The schedule override identifier
+     * @return TimeSlot[] A ScheduleOverride object array
+     */
+    public function findAllByIdScheduleOverride(bool $deleted,int $idEducator, int $idScheduleOverride)
+    {
+        $statement ="
+        SELECT id, code_day, time_start, time_end,id_weekly_schedule,id_schedule_override,id_educator
+        FROM time_slot
+        WHERE is_deleted= :DELETED
+        AND id_educator = :ID_EDUCATOR
+        AND id_schedule_override = :ID_SCHEDULE_OVERRIDE";
+        
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':ID_EDUCATOR', $idEducator, \PDO::PARAM_INT);
+            $statement->bindParam(':DELETED', $deleted, \PDO::PARAM_BOOL);
+            $statement->bindParam(':ID_SCHEDULE_OVERRIDE', $idScheduleOverride, \PDO::PARAM_INT);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
             $timeSlotArray = array();
@@ -343,7 +433,8 @@ class DAOTimeSlot {
         AND DATE(ap.datetime_appoitment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
         AND TIME(ap.datetime_appoitment) = ts.time_start
         AND TIME(ADDTIME(ap.datetime_appoitment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
-
+        AND dates.date > NOW()
+        
         ORDER BY date,time_start;";
 
         try {

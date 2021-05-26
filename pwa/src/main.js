@@ -14,7 +14,6 @@ import Axios from "axios";
 Vue.prototype.$http = Axios;
 
 import store from "./store";
-import "./registerServiceWorker";
 
 import jquery from "jquery";
 Vue.prototype.$jquery = jquery;

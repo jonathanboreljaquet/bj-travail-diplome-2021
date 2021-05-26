@@ -399,6 +399,29 @@ pm.test("The data structure of the response is correct", () => {
 });
 ```
 
+**[USE-UPAU1] Update password of the current logged in non-existent user**
+
+```javascript
+pm.test("User not found", function () {
+    pm.response.to.have.status(404);
+});
+pm.test("Right message for not found response", function () {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
+});
+```
+
+**[USE-UPAU2] Update password of the current logged in user without problems**
+
+```javascript
+pm.test("Authorization header is present", () => {
+  pm.request.to.have.header("Authorization");
+});
+pm.test("Right code for successful updated ressource", function () {
+    pm.response.to.have.status(200);
+});
+```
+
 **[USE-C1] Connect user without email**
 
 ```javascript

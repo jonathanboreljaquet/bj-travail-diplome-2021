@@ -18,25 +18,25 @@
         <b-col lg="6">
           <b-form @submit.prevent="onSubmit">
             <b-form-group
-              id="input-group-1"
-              label="Adresse email :"
-              label-for="input-1"
+              id="input-group-inscription-email"
+              label="Adresse e-mail :"
+              label-for="input-inscription-email"
             >
               <b-form-input
-                id="input-1"
+                id="input-inscription-email"
                 v-model="form.email"
                 type="email"
-                placeholder="Entrez l'adresse email"
+                placeholder="Entrez l'adresse e-mail"
                 required
               ></b-form-input>
             </b-form-group>
             <b-form-group
-              id="input-group-2"
+              id="input-group-inscription-firstname"
               label="Prénom :"
-              label-for="input-2"
+              label-for="input-inscription-firstname"
             >
               <b-form-input
-                id="input-2"
+                id="input-inscription-firstname"
                 v-model="form.firstname"
                 type="text"
                 placeholder="Entrez votre prénom"
@@ -44,12 +44,12 @@
               ></b-form-input>
             </b-form-group>
             <b-form-group
-              id="input-group-3"
+              id="input-group-inscription-lastname"
               label="Nom de famille :"
-              label-for="input-3"
+              label-for="input-inscription-lastname"
             >
               <b-form-input
-                id="input-3"
+                id="input-inscription-lastname"
                 v-model="form.lastname"
                 type="text"
                 placeholder="Entrez votre nom de famille"
@@ -57,12 +57,12 @@
               ></b-form-input>
             </b-form-group>
             <b-form-group
-              id="input-group-4"
+              id="input-group-inscription-phonenumber"
               label="Numéro de téléphone :"
-              label-for="input-4"
+              label-for="input-inscription-phonenumber"
             >
               <b-form-input
-                id="input-4"
+                id="input-inscription-phonenumber"
                 v-model="form.phonenumber"
                 type="text"
                 placeholder="Entrez votre numéro de téléphone"
@@ -70,12 +70,12 @@
               ></b-form-input>
             </b-form-group>
             <b-form-group
-              id="input-group-5"
+              id="input-group-inscription-address"
               label="Adresse :"
-              label-for="input-5"
+              label-for="input-inscription-address"
             >
               <b-form-input
-                id="input-5"
+                id="input-inscription-address"
                 v-model="form.address"
                 type="text"
                 placeholder="Entrez votre addresse"
@@ -83,12 +83,12 @@
               ></b-form-input>
             </b-form-group>
             <b-form-group
-              id="input-group-6"
+              id="input-group-inscription-password"
               label="Mot de passe :"
-              label-for="input-6"
+              label-for="input-inscription-password"
             >
               <b-form-input
-                id="input-6"
+                id="input-inscription-password"
                 v-model="form.password"
                 type="password"
                 placeholder="Entrez le mot de passe"
@@ -96,12 +96,12 @@
               ></b-form-input>
             </b-form-group>
             <b-form-group
-              id="input-group-7"
+              id="input-group-inscription-second-password"
               label="Confirmation du mot de passe :"
-              label-for="input-7"
+              label-for="input-inscription-second-password"
             >
               <b-form-input
-                id="input-7"
+                id="input-inscription-second-password"
                 v-model="form.repeatPassword"
                 type="password"
                 placeholder="Entrez le mot de passe"
@@ -109,9 +109,9 @@
               ></b-form-input>
             </b-form-group>
             <b-form-group
-              id="input-group-8"
+              id="input-group-inscription-captcha"
               label="Captcha :"
-              label-for="input-8"
+              label-for="input-inscription-captcha"
             >
               <label for="robot"></label>
               <vue-recaptcha

@@ -22,16 +22,37 @@
                   >
                     <h4>{{ appoitment.date }}</h4>
                     <h3>Résumé du rendez-vous</h3>
-                    <p>{{ appoitment.summary }}</p>
+                    <p v-if="appoitment.summary != null">
+                      {{ appoitment.summary }}
+                    </p>
+                    <p v-else>Aucune réssumé</p>
                     <div v-if="authAdministrator">
-                      <h3>Notes textuelles du rendez-vous</h3>
-                      <p>{{ appoitment.noteText }}</p>
-                      <div v-if="appoitment.noteGraphicalSerialId">
-                        <!-- <h3>Notes graphiques du rendez-vous</h3>
+                      <h3>Notes textuelles personnelles du rendez-vous</h3>
+                      <p v-if="appoitment.noteText != null">
+                        {{ appoitment.noteText }}
+                      </p>
+                      <p v-else>Aucunes notes textuelles</p>
+                      <!-- <div v-if="appoitment.noteGraphicalSerialId">
+                        <h3>Notes graphiques du rendez-vous</h3>
                         <b-img :src="image" alt="Image"
                           fluid
-                        ></b-img> -->
-                      </div>
+                        ></b-img>
+                      </div> -->
+                      <b-button
+                        variant="outline-primary"
+                        block
+                        v-b-modal.modal-update-appoitment-informations
+                        @click="
+                          sendAppoitmentInformations(
+                            appoitment.id,
+                            appoitment.summary,
+                            appoitment.noteText,
+                            appoitment.noteGraphicalSerialId
+                          )
+                        "
+                      >
+                        Modifier les notes
+                      </b-button>
                     </div>
                   </li>
                 </ul>
@@ -52,6 +73,55 @@
           params: { userId: $route.params.userId },
         }"
       ></button-return>
+
+      <!-- MODAL UPDATE APPOITMENT INFORMATIONS-->
+      <b-modal
+        id="modal-update-appoitment-informations"
+        title="Modifier le notes du rendez-vous"
+        :hide-footer="true"
+      >
+        <b-form
+          @submit.prevent="
+            updateAppoitmentByAppoitmentId(
+              selectedAppoitmentId,
+              selectedAppoitmentSummary,
+              selectedAppoitmentNoteText
+            )
+          "
+        >
+          <b-form-group
+            id="input-group-appoitment-summary"
+            label="Résumé :"
+            label-for="input-appoitment-summary"
+          >
+            <b-form-textarea
+              id="input-appoitment-summary"
+              v-model="selectedAppoitmentSummary"
+              placeholder="Entrer le résumé du cours"
+              rows="8"
+              max-rows="8"
+            ></b-form-textarea>
+          </b-form-group>
+
+          <b-form-group
+            id="input-group-appoitment-note-text"
+            label="Notes textuelles personnelles :"
+            label-for="input-appoitment-note-text"
+          >
+            <b-form-textarea
+              id="input-appoitment-note-text"
+              v-model="selectedAppoitmentNoteText"
+              placeholder="Entrer les notes textuelles du cours"
+              rows="8"
+              max-rows="8"
+            ></b-form-textarea>
+          </b-form-group>
+
+          <b-button block type="submit" variant="outline-primary">
+            Modifier les notes
+          </b-button>
+        </b-form>
+      </b-modal>
     </b-container>
   </div>
 </template>
@@ -67,11 +137,13 @@ export default {
   },
   data() {
     return {
-      pad: null,
       title: "",
       appoitments: [],
       messageNoAppoitments: "Aucun rendez-vous",
-      image: null,
+      selectedAppoitmentId: "",
+      selectedAppoitmentSummary: "",
+      selectedAppoitmentNoteText: "",
+      selectedAppotimentNoteGraphicalSerialId: "",
     };
   },
   methods: {
@@ -104,13 +176,13 @@ export default {
         .then((response) => {
           console.log(response);
           this.loadAppoitmentsData(response.data.appoitments);
-          this.loadNoteGraphicalPicture();
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
     },
     loadAppoitmentsData(appoitments) {
+      this.appoitments = [];
       appoitments.forEach((appoitment) => {
         let date = new Date(appoitment.datetime_appoitment);
         var options = {
@@ -120,6 +192,7 @@ export default {
           day: "numeric",
         };
         this.appoitments.push({
+          id: appoitment.id,
           hourStart: date.getHours() + "h",
           hourEnd: date.getHours() + appoitment.duration_in_hour + "h",
           date: date.toLocaleDateString("fr-CH", options),
@@ -134,7 +207,7 @@ export default {
         headers: {
           // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
-        }
+        },
       };
       this.$http
         .get(
@@ -147,6 +220,45 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    updateAppoitmentByAppoitmentId(
+      appoitmentId,
+      appoitmentSummary,
+      appoitmentNoteText
+    ) {
+      const params = new URLSearchParams();
+      params.append("summary", appoitmentSummary);
+      params.append("note_text", appoitmentNoteText);
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token,
+        },
+      };
+      this.$http
+        .patch(this.$API_URL + "appoitments/" + appoitmentId, params, config)
+        .then((response) => {
+          console.log(response);
+          this.loadCustomerInformationsByUserId(this.$route.params.userId);
+          this.$alertify.success("Informfations de rendez-vous modifiés");
+          this.$bvModal.hide("modal-update-appoitment-informations");
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
+
+    sendAppoitmentInformations(
+      appoitmentId,
+      appoitmentSummary,
+      appoitmentNoteText,
+      appotimentNoteGraphicalSerialId
+    ) {
+      this.selectedAppoitmentId = appoitmentId;
+      this.selectedAppoitmentSummary = appoitmentSummary;
+      this.selectedAppoitmentNoteText = appoitmentNoteText;
+      this.selectedAppotimentNoteGraphicalSerialId =
+        appotimentNoteGraphicalSerialId;
     },
   },
   computed: {

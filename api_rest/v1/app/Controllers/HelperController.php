@@ -193,9 +193,10 @@ class HelperController {
      * 
      * @param string $title The title of the mail
      * @param string $content The content of the mail
+     * @param string $importantContent The important content of the mail
      * @return bool
      */
-    public static function loadMailTemplate(string $title, string $content)
+    public static function loadMailTemplate(string $title, string $content, string $importantContent = null)
     {
         $html ='<!DOCTYPE html>
         <html lang="fr">
@@ -225,6 +226,7 @@ class HelperController {
                           <td style="padding:0 0 36px 0;color:#153643;">
                             <h1 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;">'.$title.'</h1>
                             <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">'.$content.'</p>
+                            <h3 style="font-size:18px;margin:0 0 20px 0;font-family:Arial,sans-serif;">'.$importantContent.'</h3>
                           </td>
                         </tr>
                       </table>
@@ -272,13 +274,14 @@ class HelperController {
      * @param string $message Message of the mail
      * @param string $subject Subject of the mail
      * @param string $emailRecipient Recipient's email address
+     * @param string $importantMessage Important message if there is one
      * @param string $attachmentFilePath Path of the file to attach if there is one
      * @return void
      */
-    public static function sendMail(string $message, string $subject,string $emailRecipient, string $attachmentFilePath = null)
+    public static function sendMail(string $message, string $subject,string $emailRecipient, string $importantMessage = null, string $attachmentFilePath = null)
     {
     $mail = new PHPMailer(true);
-    $body = HelperController::loadMailTemplate($subject,$message);
+    $body = HelperController::loadMailTemplate($subject,$message,$importantMessage);
     try {
         //Server settings
         $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      

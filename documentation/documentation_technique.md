@@ -635,6 +635,10 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
         <td>GUA</td>
     </tr>
     <tr>
+        <td>Update password of the authenticated user</td>
+        <td>UPAU</td>
+    </tr>
+    <tr>
         <td>Upload dog picture</td>
         <td>UDP</td>
     </tr>
@@ -865,6 +869,8 @@ Les en-têtes que j'ai utilisé dans les différentes points d'entrés de mon AP
 * `DELETE api/v1/users/{idUser}`
 * `POST api/v1/connection`
 * `GET api/v1/users/me`
+* `GET api/v1/users/me/agenda`
+* `PATCH api/v1/users/me/changePassword`
 * `GET api/v1/users/educators`
 
 ------

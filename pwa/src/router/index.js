@@ -10,6 +10,7 @@ import Inscription from "./../components/Inscription.vue";
 import CustomerInformation from "./../components/CustomerInformation.vue";
 import CustomerAppoitment from "./../components/CustomerAppoitment.vue";
 import Administration from "./../components/Administration.vue";
+import Planning from "./../components/Planning.vue";
 import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./../variable.js";
 
 Vue.use(Router);
@@ -86,6 +87,18 @@ export default new Router({
       path: "/administration",
       name: "administration",
       component: Administration,
+      beforeEnter(to, from, next) {
+        if (store.state.api_token && store.state.code_role == ADMIN_CODE_ROLE) {
+          next();
+        } else {
+          next("/");
+        }
+      },
+    },
+    {
+      path: "/planning",
+      name: "planning",
+      component: Planning,
       beforeEnter(to, from, next) {
         if (store.state.api_token && store.state.code_role == ADMIN_CODE_ROLE) {
           next();

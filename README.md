@@ -16,6 +16,8 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 * `DELETE api/v1/users/{idUser}`
 * `POST api/v1/connection`
 * `GET api/v1/users/me`
+* `GET api/v1/users/me/agenda`
+* `PATCH api/v1/users/me/changePassword`
 * `GET api/v1/users/educators`
 
 ------
