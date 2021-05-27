@@ -83,7 +83,8 @@ class DAOTimeSlot {
         FROM time_slot
         WHERE is_deleted= :DELETED
         AND id_educator = :ID_EDUCATOR
-        AND id_weekly_schedule = :ID_WEEKLY_SCHEDULE";
+        AND id_weekly_schedule = :ID_WEEKLY_SCHEDULE
+        ORDER BY code_day, time_start;";
         
         try {
             $statement = $this->db->prepare($statement);
@@ -128,7 +129,8 @@ class DAOTimeSlot {
         FROM time_slot
         WHERE is_deleted= :DELETED
         AND id_educator = :ID_EDUCATOR
-        AND id_schedule_override = :ID_SCHEDULE_OVERRIDE";
+        AND id_schedule_override = :ID_SCHEDULE_OVERRIDE
+        ORDER BY time_start;";
         
         try {
             $statement = $this->db->prepare($statement);
@@ -423,6 +425,7 @@ class DAOTimeSlot {
         AND (SELECT COUNT(*) 
         FROM absence AS ab
         WHERE ab.id_educator = :ID_EDUCATOR 
+        AND ab.is_deleted = 0
         AND IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override) BETWEEN ab.date_absence_from AND ab.date_absence_to LIMIT 1) = 0
 
         AND (SELECT COUNT(*)
@@ -433,7 +436,7 @@ class DAOTimeSlot {
         AND DATE(ap.datetime_appoitment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
         AND TIME(ap.datetime_appoitment) = ts.time_start
         AND TIME(ADDTIME(ap.datetime_appoitment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
-        AND dates.date > NOW()
+        AND IF(so.date_schedule_override IS NULL,dates.date > NOW() ,so.date_schedule_override >NOW())
         
         ORDER BY date,time_start;";
 
@@ -493,7 +496,8 @@ class DAOTimeSlot {
         AND DATE(ap.datetime_appoitment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
         AND TIME(ap.datetime_appoitment) = ts.time_start
         AND TIME(ADDTIME(ap.datetime_appoitment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
-
+        AND IF(so.date_schedule_override IS NULL,dates.date > NOW() ,so.date_schedule_override >NOW())
+        
         HAVING DATE = :DATE
         AND time_start = :TIME_START
         AND time_end = :TIME_END

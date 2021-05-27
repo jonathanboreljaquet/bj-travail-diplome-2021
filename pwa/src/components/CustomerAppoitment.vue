@@ -3,7 +3,7 @@
     <b-container>
       <b-row class="text-center">
         <b-col>
-          <h1>{{ title }}</h1>
+          <h1>{{ title }} {{ customerFirstname }} {{ customerLastname }}</h1>
         </b-col>
       </b-row>
       <b-row v-if="appoitments.length > 0" class="content">
@@ -140,6 +140,8 @@ export default {
       title: "",
       appoitments: [],
       messageNoAppoitments: "Aucun rendez-vous",
+      customerFirstname: "",
+      customerLastname: "",
       selectedAppoitmentId: "",
       selectedAppoitmentSummary: "",
       selectedAppoitmentNoteText: "",
@@ -174,7 +176,8 @@ export default {
       this.$http
         .get(this.$API_URL + "users/" + userId, config)
         .then((response) => {
-          console.log(response);
+          this.customerFirstname = response.data.firstname;
+          this.customerLastname = response.data.lastname;
           this.loadAppoitmentsData(response.data.appoitments);
         })
         .catch((error) => {
@@ -184,7 +187,7 @@ export default {
     loadAppoitmentsData(appoitments) {
       this.appoitments = [];
       appoitments.forEach((appoitment) => {
-        let date = new Date(appoitment.datetime_appoitment);
+        var date = new Date(appoitment.datetime_appoitment);
         var options = {
           weekday: "long",
           year: "numeric",

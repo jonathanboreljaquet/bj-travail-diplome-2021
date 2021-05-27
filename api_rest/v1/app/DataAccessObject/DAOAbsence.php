@@ -39,7 +39,8 @@ class DAOAbsence {
         SELECT id, date_absence_from, date_absence_to, description, id_educator
         FROM absence
         WHERE is_deleted= :DELETED
-        AND id_educator = :ID_EDUCATOR";
+        AND id_educator = :ID_EDUCATOR
+        ORDER BY date_absence_from";
         
         try {
             $statement = $this->db->prepare($statement);

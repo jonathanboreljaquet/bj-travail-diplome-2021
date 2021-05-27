@@ -39,7 +39,8 @@ class DAOScheduleOverride {
         SELECT id, date_schedule_override, id_educator
         FROM schedule_override
         WHERE is_deleted= :DELETED
-        AND id_educator = :ID_EDUCATOR";
+        AND id_educator = :ID_EDUCATOR
+        ORDER BY date_schedule_override;";
         
         try {
             $statement = $this->db->prepare($statement);

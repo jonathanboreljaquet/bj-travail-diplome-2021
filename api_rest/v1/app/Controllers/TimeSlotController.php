@@ -265,8 +265,8 @@ class TimeSlotController {
         
         $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
-        if (is_null($userAuth)) {
-            return ResponseController::notFoundResponse();
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
+            return ResponseController::unauthorizedUser();
         }
 
         $allWeeklySchedule = $this->DAOWeeklySchedule->findAll(false,$userAuth->id);
@@ -295,8 +295,8 @@ class TimeSlotController {
         
         $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
-        if (is_null($userAuth)) {
-            return ResponseController::notFoundResponse();
+        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
+            return ResponseController::unauthorizedUser();
         }
 
         $allScheduleOverrides = $this->DAOScheduleOverride->findAll(false,$userAuth->id);

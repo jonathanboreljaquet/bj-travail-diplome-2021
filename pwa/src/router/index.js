@@ -11,6 +11,7 @@ import CustomerInformation from "./../components/CustomerInformation.vue";
 import CustomerAppoitment from "./../components/CustomerAppoitment.vue";
 import Administration from "./../components/Administration.vue";
 import Planning from "./../components/Planning.vue";
+import EducatorCalendar from "./../components/EducatorCalendar.vue";
 import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./../variable.js";
 
 Vue.use(Router);
@@ -99,6 +100,18 @@ export default new Router({
       path: "/planning",
       name: "planning",
       component: Planning,
+      beforeEnter(to, from, next) {
+        if (store.state.api_token && store.state.code_role == ADMIN_CODE_ROLE) {
+          next();
+        } else {
+          next("/");
+        }
+      },
+    },
+    {
+      path: "/educator_calendar",
+      name: "educatorCalendar",
+      component: EducatorCalendar,
       beforeEnter(to, from, next) {
         if (store.state.api_token && store.state.code_role == ADMIN_CODE_ROLE) {
           next();

@@ -447,7 +447,7 @@
         :hide-header="true"
       >
         <h5 style="text-align: center">Supprimer l'utilisateur ?</h5>
-        <b-form @submit.prevent="deleteUserByUserId($route.params.userId)">
+        <b-form @submit.prevent="deleteUserById($route.params.userId)">
           <b-row>
             <b-col>
               <b-button
@@ -473,9 +473,7 @@
         :hide-header="true"
       >
         <h5 style="text-align: center">Supprimer le document ?</h5>
-        <b-form
-          @submit.prevent="deleteDocumentByDocumentId(selectedDocumentId)"
-        >
+        <b-form @submit.prevent="deleteDocumentById(selectedDocumentId)">
           <b-row>
             <b-col>
               <b-button
@@ -508,7 +506,7 @@
         :hide-header="true"
       >
         <h5 style="text-align: center">Supprimer le chien ?</h5>
-        <b-form @submit.prevent="deleteDogByDogId(selectedDogId)">
+        <b-form @submit.prevent="deleteDogById(selectedDogId)">
           <b-row>
             <b-col>
               <b-button
@@ -541,7 +539,7 @@
       >
         <b-form
           @submit.prevent="
-            updateUserByUserId(
+            updateUserById(
               $route.params.userId,
               firstname,
               lastname,
@@ -635,7 +633,7 @@
       >
         <b-form
           @submit.prevent="
-            updateDogByDogId(
+            updateDogById(
               selectedDogId,
               selectedDogName,
               selectedDogBreed,
@@ -974,7 +972,7 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteUserByUserId(userId) {
+    deleteUserById(userId) {
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
@@ -992,7 +990,7 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteDogByDogId(dogId) {
+    deleteDogById(dogId) {
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
@@ -1010,7 +1008,7 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteDocumentByDocumentId(documentId) {
+    deleteDocumentById(documentId) {
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
@@ -1028,7 +1026,7 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    updateUserByUserId(
+    updateUserById(
       userId,
       userFirstname,
       userLastname,
@@ -1060,7 +1058,7 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    updateDogByDogId(dogId, dogName, dogBreed, dogSex, dogChipId) {
+    updateDogById(dogId, dogName, dogBreed, dogSex, dogChipId) {
       const params = new URLSearchParams();
       params.append("name", dogName);
       params.append("breed", dogBreed);

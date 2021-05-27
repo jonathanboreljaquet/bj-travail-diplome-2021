@@ -1758,4 +1758,18 @@ Création du composant `Planning.vue` représentant la page "Mon planning" de l'
 
 ### Jeudi 27 mai 2021
 
-Afin de faciliter l'affichage des données de planning des éducateurs canins au niveau du frontend. J'ai un endpoint permettant de retourner tous les créneaux horaires pour tous les calendriers hebdomadaires `GET api/v1/users/me/weeklySchedule` et un endpoint permettant de faire pareil mais pour les exceptions d'horaire `GET api/v1/users/me/scheduleOverride`
+Afin de faciliter l'affichage des données de planning des éducateurs canins au niveau du frontend. J'ai créé un endpoint permettant de retourner tous les créneaux horaires de tous les calendriers hebdomadaires de l'éducateur canin authentifié `GET api/v1/users/me/weeklySchedule` et un endpoint permettant de faire pareil mais pour les exceptions d'horaire `GET api/v1/users/me/scheduleOverride`
+
+Pour ce faire j'ai donc créé deux fonction dans le DAOTimeSlot `findAllByIdWeeklySchedule(bool $deleted,int $idEducator, int $idWeeklySchedule)` et `findAllByIdScheduleOverride(bool $deleted,int $idEducator, int $idScheduleOverride)` afin de créer les requêtes me permettant d'arriver à ce résultat.
+
+Réalisation de la page "Mon planning" pour les éducateurs canins afin que ceux-ci puissent éditer leur planning :
+
+![dateTestPlanningSecondUser](./img/vue_planning.PNG)
+
+La page charge tous les calendriers hebdomadaires avec leurs créneaux horaires grâce à l'endpoint `GET api/v1/users/me/weeklySchedule`, tous les exceptions d'horaire avec leurs créneaux horaires grâce à l'endpoint `GET api/v1/users/me/scheduleOverride` et toutes les vacances avec l'endpoint `GET api/v1/absences`. L'éducateur peut ajouter un calendrier hebdomadaire avec l'endpoint `POST api/v1/weeklySchedules`, ajouter une exception d'horaire avec l'endpoint `POST api/v1/scheduleOverrides` , ajouter un créneau horaire pour un calendrier hebdomadaire ou pour une exception d'horaire avec l'endpoint `POST api/v1/timeSlots`et ajouter des vacances avec l'endpoint `POST api/v1/absences`. Il peut également supprimer un calendrier hebdomadaire avec l'endpoint `DELETE api/v1/weeklySchedules{idWeeklySchedule}`, supprimer une exception d'horaire avec l'endpoint `DELETE api/v1/scheduleOverrides{idScheduleOverride}`, supprimer un créneau horaire d'un calendrier hebdomadaire ou d'une exception d'horaire avec l'endpoint `DELETE api/v1/timeSlots{idTimeSlot}`et supprimer des vacances avec l'endpoint `DELETE api/v1/absences{idAbsence}`.
+
+Réalisation de la page "Mes rendez-vous" pour les éducateurs canins afin que ceux-ci puissent éditer leur planning :
+
+![dateTestPlanningSecondUser](./img/vue_educator_calendar.PNG)
+
+La page charge tout les rendez-vous de l'éducateur canin authentifié avec l'endpoint `GET api/v1/appoitments` et les affiches dans un calendrier. Lors du click sur l'un des rendez-vous du calendrier, l'éducateur canin sera redirigé vers la page du rendez-vous en question correspondant à la page "Mes rendez-vous" du client.

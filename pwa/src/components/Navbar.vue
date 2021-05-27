@@ -25,6 +25,9 @@
           <b-nav-item to="/planning" v-if="authAdministrator" href="#">
             Mon planning
           </b-nav-item>
+          <b-nav-item to="/educator_calendar" v-if="authAdministrator" href="#">
+            Mes rendez-vous
+          </b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item v-if="auth" @click="logout()" href="#">

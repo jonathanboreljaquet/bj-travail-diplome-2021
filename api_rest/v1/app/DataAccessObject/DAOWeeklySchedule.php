@@ -39,7 +39,8 @@ class DAOWeeklySchedule {
         SELECT id, date_valid_from, date_valid_to, id_educator
         FROM weekly_schedule
         WHERE is_deleted= :DELETED
-        AND id_educator = :ID_EDUCATOR;";
+        AND id_educator = :ID_EDUCATOR
+        ORDER BY date_valid_from;";
         
         try {
             $statement = $this->db->prepare($statement);

@@ -253,13 +253,12 @@ export default {
         .then((response) => {
           this.items = [];
           response.data.forEach((user) => {
-            this.items.push({
-              id: user.id,
-              prenom: user.firstname,
-              nom: user.lastname,
-              dogs: user.dogs,
-            });
+            user["prenom"] = user["firstname"];
+            delete user["firstname"];
+            user["nom"] = user["lastname"];
+            delete user["lastname"];
           });
+          this.items = response.data;
           this.toggleBusy();
           this.totalRows = this.items.length + 10;
         })
