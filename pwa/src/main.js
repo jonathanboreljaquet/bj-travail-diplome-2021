@@ -18,6 +18,10 @@ import store from "./store";
 import jquery from "jquery";
 Vue.prototype.$jquery = jquery;
 
+import VueSignaturePad from "vue-signature-pad";
+
+Vue.use(VueSignaturePad);
+
 Vue.prototype.$API_URL = "https://api-rest-douceur-de-chien.boreljaquet.ch/";
 
 Vue.config.productionTip = false;

@@ -251,16 +251,23 @@ class AppointmentController {
             return ResponseController::notFoundResponse();
         }
 
-        if ($_FILES["note_graphical"]["type"] != Constants::IMAGE_TYPE_PNG) {
-            return ResponseController::imageFileFormatProblem();
+        switch ($_FILES["note_graphical"]["type"]) {
+            case Constants::IMAGE_TYPE_PNG:
+                HelperController::pngTojpegConverter($_FILES["note_graphical"]["tmp_name"]);
+                break;   
+            case Constants::IMAGE_TYPE_JPEG:
+                break;    
+            default:
+                return ResponseController::imageFileFormatProblem();
+                break;
         }
 
         $tmp_file = $_FILES["note_graphical"]["tmp_name"];
         $img_name = HelperController::generateRandomString();
-        $upload_dir = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$img_name.".png";
+        $upload_dir = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$img_name.".jpeg";
 
         if (!is_null($appointment->note_graphical_serial_id)) {
-            $filename = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$appointment->note_graphical_serial_id.".png";
+            $filename = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$appointment->note_graphical_serial_id.".jpeg";
             if (file_exists($filename)) {
                 unlink($filename);
             }

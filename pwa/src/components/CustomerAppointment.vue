@@ -32,12 +32,21 @@
                         {{ appointment.noteText }}
                       </p>
                       <p v-else>Aucunes notes textuelles</p>
-                      <!-- <div v-if="appointment.noteGraphicalSerialId">
-                        <h3>Notes graphiques du rendez-vous</h3>
-                        <b-img :src="'data:image/jpeg;base64,'+arrayimg['oshAZXL']" alt="Image"
-                          fluid
-                        ></b-img>
-                      </div> -->
+                      <b-button
+                        variant="outline-primary"
+                        block
+                        v-b-modal.modal-graphical-note
+                        @click="
+                          sendAppointmentInformations(
+                            appointment.id,
+                            appointment.summary,
+                            appointment.noteText,
+                            appointment.noteGraphicalSerialId
+                          )
+                        "
+                      >
+                        Notes graphiques
+                      </b-button>
                       <b-button
                         variant="outline-primary"
                         block
@@ -51,7 +60,7 @@
                           )
                         "
                       >
-                        Modifier les notes
+                        Notes textuelles
                       </b-button>
                     </div>
                   </li>
@@ -122,6 +131,53 @@
           </b-button>
         </b-form>
       </b-modal>
+
+      <!-- MODAL GRAPHICAL NOTE-->
+      <b-modal
+        id="modal-graphical-note"
+        modal-class="modal-fullscreen"
+        title="Notes graphiques"
+        :hide-footer="true"
+        @shown="
+          $refs.signaturePad.resizeCanvas();
+          loadNoteGraphicalPicture(selectedAppointmentNoteGraphicalSerialId);
+        "
+      >
+        <b-form
+          style="width: 100%"
+          @submit.prevent="
+            uploadNoteGraphicalByAppointmentId(
+              selectedAppointmentId,
+              $refs.signaturePad.saveSignature('image/jpeg').data
+            )
+          "
+        >
+          <VueSignaturePad
+            id="signature"
+            width="100%"
+            height="80%"
+            :customStyle="customStyle"
+            ref="signaturePad"
+            :options="{ backgroundColor: 'rgb(255, 255, 255)' }"
+          />
+          <b-row style="margin-top: 10px">
+            <b-col>
+              <b-button
+                block
+                @click="clearNoteGraphical"
+                variant="outline-danger"
+              >
+                Effacer
+              </b-button>
+            </b-col>
+            <b-col>
+              <b-button block type="submit" variant="outline-success">
+                Sauvegarder
+              </b-button>
+            </b-col>
+          </b-row>
+        </b-form>
+      </b-modal>
     </b-container>
   </div>
 </template>
@@ -145,8 +201,8 @@ export default {
       selectedAppointmentId: "",
       selectedAppointmentSummary: "",
       selectedAppointmentNoteText: "",
-      selectedAppotimentNoteGraphicalSerialId: "",
-      arrayimg: {},
+      selectedAppointmentNoteGraphicalSerialId: "",
+      customStyle: { border: "#c2c2c2 3px solid" },
     };
   },
   methods: {
@@ -205,9 +261,6 @@ export default {
           noteText: appointment.note_text,
           noteGraphicalSerialId: appointment.note_graphical_serial_id,
         });
-        if (appointment.note_graphical_serial_id) {
-          this.loadNoteGraphicalPicture(appointment.note_graphical_serial_id);
-        }
       });
     },
     loadNoteGraphicalPicture(noteGraphicalSerialId) {
@@ -220,12 +273,16 @@ export default {
       };
       this.$http
         .get(
-          this.$API_URL + "appointments/downloadNoteGraphical/" + noteGraphicalSerialId,
+          this.$API_URL +
+            "appointments/downloadNoteGraphical/" +
+            noteGraphicalSerialId,
           config
         )
         .then((response) => {
-          var base64 = Buffer.from(response.data, "binary").toString("base64");
-          this.arrayimg[noteGraphicalSerialId] = base64;
+          var base64 =
+            "data:image/png;base64," +
+            Buffer.from(response.data, "binary").toString("base64");
+          this.$refs.signaturePad.fromDataURL(base64);
         })
         .catch((error) => {
           console.log(error);
@@ -250,7 +307,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.loadCustomerInformationsByUserId(this.$route.params.userId);
-          this.$alertify.success("Informfations de rendez-vous modifiés");
+          this.$alertify.success("Notes graphiques modifiées");
           this.$bvModal.hide("modal-update-appointment-informations");
         })
         .catch((error) => {
@@ -267,8 +324,42 @@ export default {
       this.selectedAppointmentId = appointmentId;
       this.selectedAppointmentSummary = appointmentSummary;
       this.selectedAppointmentNoteText = appointmentNoteText;
-      this.selectedAppotimentNoteGraphicalSerialId =
+      this.selectedAppointmentNoteGraphicalSerialId =
         appotimentNoteGraphicalSerialId;
+    },
+    uploadNoteGraphicalByAppointmentId(appointmentId, noteGraphicalBase64) {
+      fetch(noteGraphicalBase64)
+        .then((res) => res.blob())
+        .then((blob) => {
+          var file = new File([blob], "note", { type: "image/jpeg" });
+          let formData = new FormData();
+          formData.append("note_graphical", file);
+          formData.append("appointment_id", appointmentId);
+          const config = {
+            headers: {
+              // eslint-disable-next-line prettier/prettier
+              "Authorization" : this.$store.state.api_token
+            },
+          };
+          this.$http
+            .post(
+              this.$API_URL + "appointments/uploadNoteGraphical/",
+              formData,
+              config
+            )
+            .then((response) => {
+              console.log(response);
+              this.loadCustomerInformationsByUserId(this.$route.params.userId);
+              this.$alertify.success("Notes graphiques ajoutées avec succès");
+              this.$bvModal.hide("modal-graphical-note");
+            })
+            .catch((error) => {
+              this.$alertify.error(error.response.data.error);
+            });
+        });
+    },
+    clearNoteGraphical() {
+      this.$refs.signaturePad.clearSignature();
     },
   },
   computed: {

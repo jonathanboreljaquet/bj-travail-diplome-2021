@@ -1794,3 +1794,11 @@ Réalisation des modification concernant le point 2 de la discussion avec M. Mat
 Réalisation des modification concernant le point 5 de la discussion avec M. Mathieu en supprimant les endpoints `PATCH api/v1/weeklySchedules{idWeeklySchedule}`, `PATCH api/v1/scheduleOverrides{idScheduleOverride}` et `PATCH api/v1/weeklySchedules{idWeeklySchedule}` ainsi que leurs documentations.
 
 Modification de TOUTES les occurrences de `appoitment` en `appointment`.......
+
+Utilisation du plugin [Vue Signature Pad](https://github.com/neighborhood999/vue-signature-pad#readme) utilisant la librairie [Signature Pad](https://github.com/szimek/signature_pad). Pour ce faire, j'ai exécuté la commande `npm install vue-signature-pad`.
+J'ai utilisé cette librairie afin de permettre à l'éducateur canin de dessiner des notes graphiques. J'ai utilisé cette librairie et non la librairie Responsive Sketchpad car celle-ci ne permettait pas d'importer dans son canevas une image en format base64. La fonctionnalité d'ajout de notes graphiques pour l'éducateur canin authentifié fonctionne de la manière suivante :
+
+* Click sur le bouton "Notes graphiques" afin d'ouvrir une fenêtre modale
+* Lors de l'ouverture de cette fenêtre, appel de l'endpoint `GET api/v1/appointments/downloadNoteGraphical/{serial_id}` afin de charger l'image des notes graphiques si elle est déjà existante dans le composant `VueSignaturePad`
+* Édition ou suppression des notes graphiques
+* Appel de l'endpoint `POST api/v1/appointments/uploadNoteGraphical` afin d'uploadé cette nouvelle version des notes graphiques
