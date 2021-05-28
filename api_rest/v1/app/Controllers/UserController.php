@@ -12,7 +12,7 @@ namespace App\Controllers;
 use App\DataAccessObject\DAOUser;
 use App\DataAccessObject\DAODog;
 use App\DataAccessObject\DAODocument;
-use App\DataAccessObject\DAOAppoitment;
+use App\DataAccessObject\DAOAppointment;
 use app\Models\User;
 use App\Controllers\ResponseController;
 use App\System\Constants;
@@ -22,7 +22,7 @@ class UserController {
     private DAOUser $DAOUser;
     private DAODog $DAODog;
     private DAODocument $DAODocument;
-    private DAOAppoitment $DAOAppoitment;
+    private DAOAppointment $DAOAppointment;
 
     /**
      * 
@@ -35,7 +35,7 @@ class UserController {
         $this->DAOUser = new DAOUser($db);
         $this->DAODog = new DAODog($db);
         $this->DAODocument = new DAODocument($db);
-        $this->DAOAppoitment = new DAOAppoitment($db);
+        $this->DAOAppointment = new DAOAppointment($db);
     }
 
     /**
@@ -111,10 +111,10 @@ class UserController {
 
         $dogs = $this->DAODog->findByUserId($user->id);
         $documents = $this->DAODocument->findByUserId($user->id);
-        $appoitments = $this->DAOAppoitment->findByUserIdForAdmin($user->id);
+        $appointments = $this->DAOAppointment->findByUserIdForAdmin($user->id);
         $user->dogs = $dogs;
         $user->documents = $documents;
-        $user->appoitments = $appoitments;
+        $user->appointments = $appointments;
 
         return ResponseController::successfulRequest($user);
     }
@@ -267,13 +267,13 @@ class UserController {
             }
         }
 
-        $appoitments = $this->DAOAppoitment->findByUserId($user->id);
+        $appointments = $this->DAOAppointment->findByUserId($user->id);
 
-        foreach ($appoitments as $appoitment) {
+        foreach ($appointments as $appointment) {
 
-            if (!is_null($appoitment->note_graphical_serial_id)) {
+            if (!is_null($appointment->note_graphical_serial_id)) {
 
-                $filename = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$appoitment->note_graphical_serial_id.".png";
+                $filename = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$appointment->note_graphical_serial_id.".png";
 
                 if (file_exists($filename)) {
                     unlink($filename);
@@ -340,10 +340,10 @@ class UserController {
         }
         $dogs = $this->DAODog->findByUserId($userAuth->id);
         $documents = $this->DAODocument->findByUserId($userAuth->id);
-        $appoitments = $this->DAOAppoitment->findByUserId($userAuth->id);
+        $appointments = $this->DAOAppointment->findByUserId($userAuth->id);
         $userAuth->dogs = $dogs;
         $userAuth->documents = $documents;
-        $userAuth->appoitments = $appoitments;
+        $userAuth->appointments = $appointments;
         
         
         return ResponseController::successfulRequest($userAuth);

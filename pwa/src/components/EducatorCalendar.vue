@@ -50,7 +50,7 @@ export default {
         eventBorderColor: "#e08f25",
         eventClick: (info) => {
           this.$router.push({
-            name: "customerAppoitment",
+            name: "customerAppointment",
             params: { userId: info.event.extendedProps.customerId },
           });
         },
@@ -66,21 +66,21 @@ export default {
         },
       };
       this.$http
-        .get(this.$API_URL + "appoitments/", config)
+        .get(this.$API_URL + "appointments/", config)
         .then((response) => {
           console.log(response.data);
           this.calendarOptions.events = [];
-          response.data.forEach((appoitment) => {
+          response.data.forEach((appointment) => {
             this.calendarOptions.events.push({
               title: "Disponible",
-              start: moment(appoitment.datetime_appoitment).format(
+              start: moment(appointment.datetime_appointment).format(
                 "YYYY-MM-DD HH:mm:ss"
               ),
-              end: moment(appoitment.datetime_appoitment)
-                .add(appoitment.duration_in_hour, "hour")
+              end: moment(appointment.datetime_appointment)
+                .add(appointment.duration_in_hour, "hour")
                 .format("YYYY-MM-DD HH:mm:ss"),
               extendedProps: {
-                customerId: appoitment.user_id_customer,
+                customerId: appointment.user_id_customer,
               },
             });
           });

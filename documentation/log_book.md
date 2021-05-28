@@ -1773,3 +1773,24 @@ Réalisation de la page "Mes rendez-vous" pour les éducateurs canins afin que c
 ![dateTestPlanningSecondUser](./img/vue_educator_calendar.PNG)
 
 La page charge tout les rendez-vous de l'éducateur canin authentifié avec l'endpoint `GET api/v1/appoitments` et les affiches dans un calendrier. Lors du click sur l'un des rendez-vous du calendrier, l'éducateur canin sera redirigé vers la page du rendez-vous en question correspondant à la page "Mes rendez-vous" du client.
+
+### Vendredi 27 mai 2021
+
+Rendez-vous hebdomadaire physique avec M. Mathieu, lors de cette discussion, j'ai posé les question suivantes :
+
+1. Dois-je documenter toutes les fonctions de mon frontend dans la documentation technique de mon travail de diplôme ?
+   * Pas besoin si les fonctions de mon frontend ont des nom et des paramètres implicite. Dans le cas d'un traitement complexe, des commentaires sont nécessaires.
+2. La création des endpoints `GET api/v1/users/me/scheduleOverride` permettant de retourner les exceptions d'horaire de l'éducateur canin authentifié AINSI que les créneaux horaires correspondant et  `GET api/v1/users/me/weeklySchedule`permettant de retourner les calendriers hebdomadaires de l'éducateur canin AINSI que les créneaux horaires correspondant est une bonne approche ?
+   * Non, il est préférable de modifier les endpoints `GET api/v1/weeklySchedules` et `GET api/v1/scheduleOverrides` afin qu'ils retournent le même résultat.
+3. Comment afficher les notes graphiques des rendez-vous du client ? En effet, comparé à l'affichage des photos de chien depuis l'endpoint `GET api/v1/dogs/downloadPicture{serial_id}`, l'endpoint `GET api/v1/appoitments/downloadNoteGraphical{serial_id}`  nécessite un header d'autorisation afin que seul les éducateurs canins puissent y accéder.
+   * Essayer de convertir l'image en base64 au niveau du frontend puis attribuer la base64 à une balise image dynamiquement. M. Mathieu m'a envoyé un e-mail avec un code trouvé sur internet.
+4. Est-ce que la suppression d'un calendrier hebdomadaire ou d'une exception d'horaire devrait également supprimer les créneaux horaires correspondant ?
+   * Non car de toute façon, la génération de planning ne prend pas en compte les créneaux horaires de calendrier hebdomadaire ou d'exception d'horaire supprimé. De plus, imaginons qu'un client me demande récupérer un calendrier hebdomadaire ou une exception d'horaire supprimé car il a effectué une mauvaise manipulation, il suffira uniquement de récupérer le calendrier hebdomadaire ou l'exception d'horaire et non tous les créneaux horaires correspondant
+5. Faut-il permettre la modification des calendriers hebdomadaires, des exceptions d'horaire et des créneaux horaires ?
+   * Non, car cela créé trop de problème de vérification de chevauchement lors de la modification. M. Mathieu me conseille même de supprimer les endpoints `PATCH api/v1/weeklySchedules{idWeeklySchedule}`, `PATCH api/v1/scheduleOverrides{idScheduleOverride}` et `PATCH api/v1/timeSlots{idTimeSlot}` afin de ne pas permettre cette fonctionnalité.
+
+Réalisation des modification concernant le point 2 de la discussion avec M. Mathieu en supprimant les endpoints `GET api/v1/users/me/scheduleOverride`  et ` GET api/v1/users/me/weekylSchedule` et en modifiant le résultat des endpoints `GET api/v1/scheduleOverrides` et `GET api/v1/weeklySchedules`. Modification de la documentation des endpoints concernés.
+
+Réalisation des modification concernant le point 5 de la discussion avec M. Mathieu en supprimant les endpoints `PATCH api/v1/weeklySchedules{idWeeklySchedule}`, `PATCH api/v1/scheduleOverrides{idScheduleOverride}` et `PATCH api/v1/weeklySchedules{idWeeklySchedule}` ainsi que leurs documentations.
+
+Modification de TOUTES les occurrences de `appoitment` en `appointment`.......

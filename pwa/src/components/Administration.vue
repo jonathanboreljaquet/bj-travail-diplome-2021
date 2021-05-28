@@ -81,7 +81,6 @@
             <b-icon-pencil-square></b-icon-pencil-square>
           </b-button>
         </template>
-
         <template #row-details="row">
           <div v-if="row.item.dogs.length > 0">
             <b-card

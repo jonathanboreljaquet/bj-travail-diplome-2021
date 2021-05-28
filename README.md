@@ -10,15 +10,14 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 ### Endpoints de l'API REST
 
 * `POST api/v1/users`
-* `GET api/v1/users`
-* `GET api/v1/users/{idUser}`
-* `PATCH api/v1/users/{idUser}`
-* `DELETE api/v1/users/{idUser}`
 * `POST api/v1/connection`
-* `GET api/v1/users/me`
-* `GET api/v1/users/me/agenda`
-* `PATCH api/v1/users/me/changePassword`
+* `GET api/v1/users`
 * `GET api/v1/users/educators`
+* `GET api/v1/users/{idUser}`
+* `GET api/v1/users/me`
+* `PATCH api/v1/users/{idUser}`
+* `PATCH api/v1/users/me/changePassword`
+* `DELETE api/v1/users/{idUser}`
 
 ------
 
@@ -52,7 +51,6 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 * `POST api/v1/weeklySchedules`
 * `GET api/v1/weeklySchedules`
 * `GET api/v1/weeklySchedules/{idWeeklySchedule}`
-* `PATCH api/v1/weeklySchedules/{idWeeklySchedule}`
 * `DELETE api/v1/weeklySchedules/{idWeeklySchedule}`
 
 ------
@@ -60,7 +58,6 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 * `POST api/v1/scheduleOverrides`
 * `GET api/v1/scheduleOverrides`
 * `GET api/v1/scheduleOverrides/{idScheduleOverride}`
-* `PATCH api/v1/scheduleOverrides/{idScheduleOverride}`
 * `DELETE api/v1/scheduleOverrides/{idScheduleOverride}`
 
 ------
@@ -68,18 +65,17 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 * `POST api/v1/timeSlots`
 * `GET api/v1/timeSlots`
 * `GET api/v1/timeSlots/{idTimeSlot}`
-* `PATCH api/v1/timeSlots/{idTimeSlot}`
 * `DELETE api/v1/timeSlots/{idTimeSlot}`
 
 ------
 
-* `POST api/v1/appoitments`
-* `GET api/v1/appoitments`
-* `GET api/v1/appoitments/{idTimeSlot}`
-* `PATCH api/v1/appoitments/{idTimeSlot}`
-* `DELETE api/v1/appoitments/{idTimeSlot}`
-* `POST api/v1/appoitments/uploadNoteGraphical`
-* `POST api/v1/appoitments/downloadNoteGraphical/{serial_number}`
+* `POST api/v1/appointments`
+* `GET api/v1/appointments`
+* `GET api/v1/appointments/{idTimeSlot}`
+* `PATCH api/v1/appointments/{idTimeSlot}`
+* `DELETE api/v1/appointments/{idTimeSlot}`
+* `POST api/v1/appointments/uploadNoteGraphical`
+* `POST api/v1/appointments/downloadNoteGraphical/{serial_number}`
 * `GET api/v1/plannings/{idEducator}`
 
 Pour plus d'informations, dirigez-vous sur la [documentation technique](./documentation/documentation_technique.md).

@@ -379,11 +379,11 @@ pm.test("The data structure of the response is correct", () => {
                   },
                   "required": ["id","document_serial_id","type","user_id"]
               },
-              "appoitments" : {
+              "appointments" : {
                   "type" : "array",
                   "properties" : {
                       "id" : {"type" : "integer"},
-                      "datetime_appoitment" : {"type" : "string"},
+                      "datetime_appointment" : {"type" : "string"},
                       "duration_in_hour" : {"type" : "string"},
                       "note_text" : {"type" : "null"},
                       "note_graphical_serial_id" : {"type" : ["null","string"]},
@@ -391,10 +391,10 @@ pm.test("The data structure of the response is correct", () => {
                       "user_id_customer" : {"type" : "integer"},
                       "user_id_educator" : {"type" : "integer"}
                   },
-                  "required": ["id","datetime_appoitment","duration_in_hour","note_text","note_graphical_serial_id","summary","user_id_customer","user_id_educator"]
+                  "required": ["id","datetime_appointment","duration_in_hour","note_text","note_graphical_serial_id","summary","user_id_customer","user_id_educator"]
               }
           },
-          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash","dogs","documents","appoitments"]
+          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash","dogs","documents","appointments"]
   })
 });
 ```
@@ -2362,7 +2362,7 @@ pm.test("Right code for successful updated ressource", function () {
 });
 ```
 
-**[APP-CO1] Create one appoitment with unauthorized user**
+**[APP-CO1] Create one appointment with unauthorized user**
 
 ```javascript
 pm.test("Authorization header is present", () => {
@@ -2377,19 +2377,19 @@ pm.test("Right message for access without permission", function () {
 });
 ```
 
-**[APP-CO2] Create one appoitment without datetime_appoitment**
+**[APP-CO2] Create one appointment without datetime_appointment**
 
 ```javascript
 pm.test("Right code for invalid attributes", function () {
     pm.response.to.have.status(400);
 });
-pm.test("Right message for request without datetime_appoitment", function () {
+pm.test("Right message for request without datetime_appointment", function () {
     const responseJson = pm.response.json();
     pm.expect(responseJson.error).to.eql("Attributs invalides.");
 });
 ```
 
-**[APP-CO3] Create one appoitment without duration_in_hour**
+**[APP-CO3] Create one appointment without duration_in_hour**
 
 ```javascript
 pm.test("Right code for invalid attributes", function () {
@@ -2401,7 +2401,7 @@ pm.test("Right message for request without duration_in_hour", function () {
 });
 ```
 
-**[APP-C04] Create one appoitment without user_id_customer**
+**[APP-C04] Create one appointment without user_id_customer**
 
 ```javascript
 pm.test("Right code for invalid attributes", function () {
@@ -2413,7 +2413,7 @@ pm.test("Right message for request without user_id_customer", function () {
 });
 ```
 
-**[APP-C05] Create one appoitment without user_id_educator**
+**[APP-C05] Create one appointment without user_id_educator**
 
 ```javascript
 pm.test("Right code for invalid attributes", function () {
@@ -2425,7 +2425,7 @@ pm.test("Right message for request without user_id_educator", function () {
 });
 ```
 
-**[APP-C06] Create one appoitment for non-existent customer user**
+**[APP-C06] Create one appointment for non-existent customer user**
 
 ```javascript
 pm.test("User not found", function () {
@@ -2438,7 +2438,7 @@ pm.test("Right message for not found response", function () {
 });
 ```
 
-**[APP-C07] Create one appoitment for non-existent educator user**
+**[APP-C07] Create one appointment for non-existent educator user**
 
 ```javascript
 pm.test("User not found", function () {
@@ -2450,31 +2450,31 @@ pm.test("Right message for not found response", function () {
 });
 ```
 
-**[APP-CO8] Create one appoitment with invalid datetime_appoitment format (dateAndTimeTestData.csv)**
+**[APP-CO8] Create one appointment with invalid datetime_appointment format (dateAndTimeTestData.csv)**
 
 ```javascript
-pm.test("Right code for invalid datetime_appoitment format", function () {
+pm.test("Right code for invalid datetime_appointment format", function () {
     pm.response.to.have.status(400);
 });
-pm.test("Right message for invalid datetime_appoitment format", function () {
+pm.test("Right message for invalid datetime_appointment format", function () {
     const responseJson = pm.response.json();
     pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD HH:MM:SS).");
 });
 ```
 
-**[APP-CO9] Create one appoitment for invalid appoitment slot**
+**[APP-CO9] Create one appointment for invalid appointment slot**
 
 ```javascript
-pm.test("Right code for invalid datetime_appoitment format", function () {
+pm.test("Right code for invalid datetime_appointment format", function () {
     pm.response.to.have.status(400);
 });
-pm.test("Right message for invalid datetime_appoitment format", function () {
+pm.test("Right message for invalid datetime_appointment format", function () {
     const responseJson = pm.response.json();
     pm.expect(responseJson.error).to.eql("Impossible de prendre ce rendez-vous.");
 });
 ```
 
-**[APP-CO10] Create one appoitment without problems**
+**[APP-CO10] Create one appointment without problems**
 
 ```javascript
 pm.test("Right code for successful created ressource", function () {
@@ -2482,7 +2482,7 @@ pm.test("Right code for successful created ressource", function () {
 });
 ```
 
-**[APP-GA1] Get all appoitments with unauthorized user**
+**[APP-GA1] Get all appointments with unauthorized user**
 
 ```javascript
 pm.test("Authorization header is present", () => {
@@ -2497,7 +2497,7 @@ pm.test("Right message for access without permission", function () {
 });
 ```
 
-**[APP-GA2] Get right appoitments for customer or educator**
+**[APP-GA2] Get right appointments for customer or educator**
 
 ```javascript
 pm.test("Authorization header is present", () => {
@@ -2513,7 +2513,7 @@ pm.test("The data structure of the response is correct", () => {
           "type": "object",
           "properties": {
               "id" : {"type" : "integer"},
-              "datetime_appoitment" : {"type" : "string"},
+              "datetime_appointment" : {"type" : "string"},
               "duration_in_hour" : {"type" : "integer"},
               "note_text" : {"type" : "null"},
               "note_graphical_serial_id" : {"type" : "null"},
@@ -2521,13 +2521,13 @@ pm.test("The data structure of the response is correct", () => {
               "user_id_customer" : {"type" : "integer"},
               "user_id_educator" : {"type" : "integer"}
           },
-          "required": ["id","datetime_appoitment","duration_in_hour","note_text","note_graphical_serial_id","summary","user_id_customer","user_id_educator"]
+          "required": ["id","datetime_appointment","duration_in_hour","note_text","note_graphical_serial_id","summary","user_id_customer","user_id_educator"]
       }]
   })
 });
 ```
 
-**[APP-GA3] Get right appoitments for educator**
+**[APP-GA3] Get right appointments for educator**
 
 ```javascript
 pm.test("Authorization header is present", () => {
@@ -2543,7 +2543,7 @@ pm.test("The data structure of the response is correct", () => {
           "type": "object",
           "properties": {
               "id" : {"type" : "integer"},
-              "datetime_appoitment" : {"type" : "string"},
+              "datetime_appointment" : {"type" : "string"},
               "duration_in_hour" : {"type" : "integer"},
               "note_text" : {"type" : ["string","null"]},
               "note_graphical_serial_id" : {"type" : ["string","null"]},
@@ -2551,13 +2551,13 @@ pm.test("The data structure of the response is correct", () => {
               "user_id_customer" : {"type" : "integer"},
               "user_id_educator" : {"type" : "integer"}
           },
-          "required": ["id","datetime_appoitment","duration_in_hour","note_text","note_graphical_serial_id","summary","user_id_customer","user_id_educator"]
+          "required": ["id","datetime_appointment","duration_in_hour","note_text","note_graphical_serial_id","summary","user_id_customer","user_id_educator"]
       }]
   })
 });
 ```
 
-**[APP-UO1] Update one appoitment with a user api token**
+**[APP-UO1] Update one appointment with a user api token**
 
 ```javascript
 pm.test("Authorization header is present", () => {
@@ -2572,10 +2572,10 @@ pm.test("Right message for access without permission", function () {
 });
 ```
 
-**[APP-UO2] Update one non-existent appoitment**
+**[APP-UO2] Update one non-existent appointment**
 
 ```javascript
-pm.test("Appoitment not found", function () {
+pm.test("Appointment not found", function () {
     pm.response.to.have.status(404);
 });
 pm.test("Right message for not found response", function () {
@@ -2584,7 +2584,7 @@ pm.test("Right message for not found response", function () {
 });
 ```
 
-**[APP-UO3] Update one appoitment without problems**
+**[APP-UO3] Update one appointment without problems**
 
 ```javascript
 pm.test("Right code for successful updated ressource", function () {
@@ -2592,7 +2592,7 @@ pm.test("Right code for successful updated ressource", function () {
 });
 ```
 
-**[APP-DO1] Delete one appoitment with unauthorized user**
+**[APP-DO1] Delete one appointment with unauthorized user**
 
 ```javascript
 pm.test("Authorization header is present", () => {
@@ -2607,10 +2607,10 @@ pm.test("Right message for access without permission", function () {
 });
 ```
 
-**[APP-DO2] Delete one non-existent appoitment**
+**[APP-DO2] Delete one non-existent appointment**
 
 ```javascript
-pm.test("Appoitment not found", function () {
+pm.test("Appointment not found", function () {
     pm.response.to.have.status(404);
 });
 pm.test("Right message for not found response", function () {
@@ -2619,7 +2619,7 @@ pm.test("Right message for not found response", function () {
 });
 ```
 
-**[APP-DO3] Delete one appoitment with unauthorized customer or educator**
+**[APP-DO3] Delete one appointment with unauthorized customer or educator**
 
 ```javascript
 pm.test("Authorization header is present", () => {
@@ -2634,7 +2634,7 @@ pm.test("Right message for access without permission", function () {
 });
 ```
 
-**[APP-DO4] Delete one appoitment without problems**
+**[APP-DO4] Delete one appointment without problems**
 
 ```javascript
 pm.test("Right code for successful updated ressource", function () {
@@ -2670,7 +2670,7 @@ pm.test("Right message for request without dog_picture", function () {
 });
 ```
 
-**[APP-UNG3] Upload note graphical without appoitment_id**
+**[APP-UNG3] Upload note graphical without appointment_id**
 
 ```javascript
 pm.test("Right code for invalid attributes", function () {
@@ -2682,10 +2682,10 @@ pm.test("Right message for request without dog_id", function () {
 });
 ```
 
-**[APP-UNG4] Upload note graphical for non-existant appoitment**
+**[APP-UNG4] Upload note graphical for non-existant appointment**
 
 ```javascript
-pm.test("Appoitment not found", function () {
+pm.test("Appointment not found", function () {
     pm.response.to.have.status(404);
 });
 

@@ -707,11 +707,11 @@ Body de la requête :
 
 ##### Objectif
 
-Récupérer tous les calendriers hebdomadaires de l'utilisateur authentifié de la base de données.
+Récupérer tous les calendriers hebdomadaires ainsi que leurs créneaux horaires de l'utilisateur authentifié de la base de données.
 
 ##### Utilisation concrète
 
-Cet endpoint permet de récupérer tous les calendriers hebdomadaires existants de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet de récupérer tous les calendriers hebdomadaires existants ainsi que leurs créneaux horaires de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
 ##### Flow chart
 
@@ -745,39 +745,6 @@ Cet endpoint permet de récupérer un calendrier hebdomadaire spécifique de l'�
 * **[WEE-GO3] Get right weekly schedule with admin api token**
 
 <div style="page-break-after: always;"></div>
-
-####  PATCH api/v1/weeklySchedules/{idWeeklySchedule}
-
-##### Objectif
-
-Modifier un calendrier hebdomadaire de l'utilisateur authentifié dans la base de données.
-
-##### Utilisation concrète
-
-Cet endpoint permet la modification des informations d'un calendrier hebdomadaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
-Body de la requête :
-
-| Clef            | Définition                                  | Obligatoire | Format                                                       |
-| --------------- | ------------------------------------------- | :---------: | ------------------------------------------------------------ |
-| date_valid_from | La date de début du calendrier hebdomadaire |             | La date doit respecter le format de date (YYYY-MM-DD)        |
-| date_valid_to   | La date de fin du calendrier hebdomadaire   |             | La date doit respecter le format de date (YYYY-MM-DD) et ne pas être située avant la date de début du calendrier hebdomadaire |
-
-<div style="page-break-after: always;"></div>
-
-##### Flow chart
-
-<img src="./diagram/drawio/flowchartUpdateOneWeeklySchedule.svg" width="420px"/>
-
-##### Tests unitaires
-
-* **[WEE-UO1] Update one weekly schedule with a user api token**
-* **[WEE-UO2] Update one non-existent weekly schedule**
-* **[WEE-UO3] Update one weekly schedule with invalid date_from format (dateAndTimeTestData.csv)**
-* **[WEE-UO4] Update one weekly schedule with invalid date_to format (dateAndTimeTestData.csv)**
-* **[WEE-UO5] Update one weekly schedule with chronological date problem**
-* **[WEE-UO6] Update one weekly schedule permanant when one already exists**
-* **[WEE-UO7] Update one weekly schedule with overlap problem**
-* **[WEE-UO8] Update one weekly schedule without problems**
 
 ####  DELETE api/v1/weeklySchedules/{idWeeklySchedule}
 
@@ -832,11 +799,11 @@ Body de la requête :
 
 ##### Objectif
 
-Récupérer toutes les exceptions d'horaires de l'utilisateur authentifié de la base de données.
+Récupérer toutes les exceptions d'horaires ainsi que leurs créneaux horaires de l'utilisateur authentifié de la base de données.
 
 ##### Utilisation concrète
 
-Cet endpoint permet de récupérer toutes les exceptions d'horaires existantes de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet de récupérer toutes les exceptions d'horaires existantes ainsi que leurs créneaux horaires de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
 ##### Flow chart
 
@@ -870,35 +837,6 @@ Cet endpoint permet de récupérer une exception d'horaire spécifique de l'édu
 * **[SCH-GO3] Get right schedule override with admin api token**
 
 <div style="page-break-after: always;"></div>
-
-####  PATCH api/v1/scheduleOverrides/{idScheduleOverride}
-
-##### Objectif
-
-Modifier une exception d'horaire de l'utilisateur authentifié dans la base de données.
-
-##### Utilisation concrète
-
-Cet endpoint permet la modification des informations d'une exception d'horaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
-Body de la requête :
-
-| Clef                   | Définition                       | Obligatoire | Format                                                |
-| ---------------------- | -------------------------------- | :---------: | ----------------------------------------------------- |
-| date_schedule_override | La date de l'exception d'horaire |             | La date doit respecter le format de date (YYYY-MM-DD) |
-
-<div style="page-break-after: always;"></div>
-
-##### Flow chart
-
-<img src="./diagram/drawio/flowchartUpdateOneScheduleOverride.svg" width="340px"/>
-
-##### Tests unitaires
-
-* **[SCH-UO1] Update one schedule override with a user api token**
-* **[SCH-UO2] Update one non-existent schedule override**
-* **[SCH-UO3] Update one schedule override with invalid date format (dateAndTimeTestData.csv)**
-* **[SCH-UO4] Update one schedule override with overlap problem**
-* **[SCH-UO5] Update one schedule override without problems**
 
 ####  DELETE api/v1/scheduleOverrides/{idScheduleOverride}
 
@@ -1008,43 +946,6 @@ Cet endpoint permet de récupérer un créneau horaire spécifique de l'éducate
 
 <div style="page-break-after: always;"></div>
 
-####  PATCH api/v1/timeSlots/{idTimeSlot}
-
-##### Objectif
-
-Modifier un créneau horaire de l'utilisateur authentifié dans la base de données.
-
-##### Utilisation concrète
-
-Cet endpoint permet la modification des informations d'un créneau horaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
-Body de la requête :
-
-| Clef       | Définition                          | Obligatoire | Format                                                       |
-| ---------- | ----------------------------------- | :---------: | ------------------------------------------------------------ |
-| code_day   | Le code du jour de la semaine       |             | Le code doit être entre 1 et 7 (1 = Dimanche, 2 = Lundi, 3 = Mardi, 4 = Mercredi, 5 = Jeudi, 6 = Vendredi, 7 = Samedi) |
-| time_start | L'heure de début du créneau horaire |             | L'heure doit respecter le format d'heure (HH-MM-SS)          |
-| time_end   | L'heure de fin du créneau horaire   |             | L'heure doit respecter le format d'heure (HH-MM-SS) et ne pas être située avant l'heure de début du créneau horaire |
-
-<div style="page-break-after: always;"></div>
-
-##### Flow chart
-
-<img src="./diagram/drawio/flowchartUpdateOneTimeSlot.svg" width="320px"/>
-
-##### Tests unitaires
-
-* **[TIM-UO1] Update one time slot with a user api token**
-* **[TIM-UO2] Update one non-existent time slot**
-* **[TIM-UO3] Update one time slot with invalid code_day format**
-* **[TIM-UO4] Update one time slot with invalid time_start format (dateAndTimeTestData.csv)**
-* **[TIM-UO5] Update one time slot with invalid time_end format (dateAndTimeTestData.csv)**
-* **[TIM-UO6] Update one time slot with chronological time problem**
-* **[TIM-UO7] Update one time slot with time slot overlap in the same weekly schedule problem**
-* **[TIM-UO8] Update one time slot with time slot overlap in the same schedule override problem**
-* **[TIM-UO9] Update one time slot without problems**
-
-<div style="page-break-after: always;"></div>
-
 ####  DELETE api/v1/timeSlots/{idTimeSlot}
 
 ##### Objectif
@@ -1065,7 +966,7 @@ Cet endpoint permet la suppression non définitive d'un créneau horaire de l'é
 * **[TIM-DO2] Delete one non-existent time slot**
 * **[TIM-DO3] Delete one time slot without problems**
 
-####  POST api/v1/appoitments
+####  POST api/v1/appointments
 
 ##### Objectif
 
@@ -1078,7 +979,7 @@ Body de la requête :
 
 | Clef                | Définition                         | Obligatoire | Format                                                       |
 | ------------------- | ---------------------------------- | :---------: | ------------------------------------------------------------ |
-| datetime_appoitment | La date et l'heure du rendez-vous  |      X      | La date et l'heure doivent respecter le format  <br />(YYYY-MM-DD HH:MM:SS) |
+| datetime_appointment | La date et l'heure du rendez-vous  |      X      | La date et l'heure doivent respecter le format  <br />(YYYY-MM-DD HH:MM:SS) |
 | duration_in_hour    | La durée en heure du rendez-vous   |      X      |                                                              |
 | user_id_customer    | L'identifiant du client            |      X      |                                                              |
 | user_id_educator    | L'identifiant de l'éducateur canin |      X      |                                                              |
@@ -1087,24 +988,24 @@ Body de la requête :
 
 ##### Flow chart
 
-<img src="./diagram/drawio/flowchartPostAppoitment.svg" width="260px"/>
+<img src="./diagram/drawio/flowchartPostAppointment.svg" width="260px"/>
 
 ##### Tests unitaires
 
-* **[APP-CO1] Create one appoitment with unauthorized user**
-* **[APP-CO2] Create one appoitment without datetime_appoitment**
-* **[APP-CO3] Create one appoitment without duration_in_hour**
-* **[APP-C04] Create one appoitment without user_id_customer**
-* **[APP-C05] Create one appoitment without user_id_educator**
-* **[APP-C06] Create one appoitment for non-existent customer user**
-* **[APP-C07] Create one appoitment for non-existent educator user**
-* **[APP-CO8] Create one appoitment with invalid datetime_appoitment format (dateAndTimeTestData.csv)**
-* **[APP-CO9] Create one appoitment for invalid appoitment slot**
-* **[APP-CO10] Create one appoitment without problems**
+* **[APP-CO1] Create one appointment with unauthorized user**
+* **[APP-CO2] Create one appointment without datetime_appointment**
+* **[APP-CO3] Create one appointment without duration_in_hour**
+* **[APP-C04] Create one appointment without user_id_customer**
+* **[APP-C05] Create one appointment without user_id_educator**
+* **[APP-C06] Create one appointment for non-existent customer user**
+* **[APP-C07] Create one appointment for non-existent educator user**
+* **[APP-CO8] Create one appointment with invalid datetime_appointment format (dateAndTimeTestData.csv)**
+* **[APP-CO9] Create one appointment for invalid appointment slot**
+* **[APP-CO10] Create one appointment without problems**
 
 <div style="page-break-after: always;"></div>
 
-####  GET api/v1/appoitments
+####  GET api/v1/appointments
 
 ##### Objectif
 
@@ -1116,17 +1017,17 @@ Cet endpoint permet de récupérer toutes les informations des rendez-vous de l'
 
 ##### Flow chart
 
-<img src="./diagram/drawio/flowchartGetAllAppoitment.svg"/>
+<img src="./diagram/drawio/flowchartGetAllAppointment.svg"/>
 
 ##### Tests unitaires
 
-* **[APP-GA1] Get all appoitments with unauthorized user**
-* **[APP-GA2] Get right appoitments for customer**
-* **[APP-GA3] Get right appoitments for educator**
+* **[APP-GA1] Get all appointments with unauthorized user**
+* **[APP-GA2] Get right appointments for customer**
+* **[APP-GA3] Get right appointments for educator**
 
 <div style="page-break-after: always;"></div>
 
-####  GET api/v1/appoitments/{idAppoitment}
+####  GET api/v1/appointments/{idAppointment}
 
 ##### Objectif
 
@@ -1138,17 +1039,17 @@ Cet endpoint permet de récupérer un rendez-vous spécifique. L'endpoint est ac
 
 ##### Flow chart
 
-<img src="./diagram/drawio/flowchartGetOneAppoitment.svg"/>
+<img src="./diagram/drawio/flowchartGetOneAppointment.svg"/>
 
 ##### Tests unitaires
 
-* **[APP-GO1] Get one appoitment with a user api token**
-* **[APP-GO2] Get one non-existent appoitment**
-* **[APP-GO3] Get right appoitment**
+* **[APP-GO1] Get one appointment with a user api token**
+* **[APP-GO2] Get one non-existent appointment**
+* **[APP-GO3] Get right appointment**
 
 <div style="page-break-after: always;"></div>
 
-####  PATCH api/v1/appoitments/{idAppoitment}
+####  PATCH api/v1/appointments/{idAppointment}
 
 ##### Objectif
 
@@ -1166,15 +1067,15 @@ Body de la requête :
 
 ##### Flow chart
 
-<img src="./diagram/drawio/flowchartUpdateOneAppoitment.svg" width="280px"/>
+<img src="./diagram/drawio/flowchartUpdateOneAppointment.svg" width="280px"/>
 
 ##### Tests unitaires
 
-* **[APP-UO1] Update one appoitment with a user api token**
-* **[APP-UO2] Update one non-existent appoitment**
-* **[APP-UO3] Update one appoitment without problems**
+* **[APP-UO1] Update one appointment with a user api token**
+* **[APP-UO2] Update one non-existent appointment**
+* **[APP-UO3] Update one appointment without problems**
 
-####  DELETE api/v1/appoitments/{idAppoitment}
+####  DELETE api/v1/appointments/{idAppointment}
 
 ##### Objectif
 
@@ -1186,16 +1087,16 @@ Cet endpoint permet la suppression non définitive d'un rendez-vous. Cette suppr
 
 ##### Flow chart
 
-<img src="./diagram/drawio/flowchartDeleteOneAppoitment.svg"/>
+<img src="./diagram/drawio/flowchartDeleteOneAppointment.svg"/>
 
 ##### Tests unitaires
 
-* **[APP-DO1] Delete one appoitment with unauthorized user**
-* **[APP-DO2] Delete one non-existent appoitment**
-* **[APP-DO3] Delete one appoitment with unauthorized customer or educator**
-* **[APP-DO4] Delete one appoitment without problems**
+* **[APP-DO1] Delete one appointment with unauthorized user**
+* **[APP-DO2] Delete one non-existent appointment**
+* **[APP-DO3] Delete one appointment with unauthorized customer or educator**
+* **[APP-DO4] Delete one appointment without problems**
 
-####  POST api/v1/appoitments/uploadNoteGraphical
+####  POST api/v1/appointments/uploadNoteGraphical
 
 ##### Objectif
 
@@ -1209,7 +1110,7 @@ Body de la requête :
 | Clef           | Définition                   | Obligatoire | Format |
 | -------------- | ---------------------------- | :---------: | ------ |
 | note_graphical | La note graphique            |      X      | PNG    |
-| appoitment_id  | L'identifiant du rendez-vous |      X      |        |
+| appointment_id  | L'identifiant du rendez-vous |      X      |        |
 
 <div style="page-break-after: always;"></div>
 
@@ -1221,12 +1122,12 @@ Body de la requête :
 
 * **[APP-UNG1] Upload note graphical with a user api token**
 * **[APP-UNG2] Upload note graphical without note_graphical**
-* **[APP-UNG3] Upload note graphical without appoitment_id**
-* **[APP-UNG4] Upload note graphical for non-existant appoitment**
+* **[APP-UNG3] Upload note graphical without appointment_id**
+* **[APP-UNG4] Upload note graphical for non-existant appointment**
 * **[APP-UNG5] Upload note graphical with invalid image format**
 * **[APP-UNG6] Upload note graphical without problems**
 
-####  GET api/v1/appoitments/downloadNoteGraphical/{serial_id}
+####  GET api/v1/appointments/downloadNoteGraphical/{serial_id}
 
 ##### Objectif
 

@@ -1,17 +1,17 @@
 <?php
 /**
- * Appoitment.php
+ * Appointment.php
  *
- * Appoitment model.
+ * Appointment model.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 namespace App\Models;
 
-class Appoitment {
+class Appointment {
 
     public ?int $id;
-    public ?string $datetime_appoitment;
+    public ?string $datetime_appointment;
     public ?int $duration_in_hour;
     public ?string $note_text;
     public ?string $note_graphical_serial_id;
@@ -21,21 +21,21 @@ class Appoitment {
 
     /**
      * 
-     * Constructor of the Appoitment model object.
+     * Constructor of the Appointment model object.
      * 
-     * @param int $id The Appoitment identifier
-     * @param string $datetime_appoitment The date of the appoitment
-     * @param int $duration_in_hour The duration of the appoitment in hours
-     * @param string $note_text The text note of the appoitment
+     * @param int $id The Appointment identifier
+     * @param string $datetime_appointment The date of the appointment
+     * @param int $duration_in_hour The duration of the appointment in hours
+     * @param string $note_text The text note of the appointment
      * @param string $note_graphical_serial_id The serial id of the graphical note
      * @param string $summary The educator identifier
      * @param int $user_id_customer The customer identifier
      * @param int $user_id_educator The educator identifier
      */
-    public function __construct(int $id = null, string $datetime_appoitment = null, int $duration_in_hour = null,string $note_text = null,string $note_graphical_serial_id = null,string $summary = null, int $user_id_customer = null, int $user_id_educator = null)
+    public function __construct(int $id = null, string $datetime_appointment = null, int $duration_in_hour = null,string $note_text = null,string $note_graphical_serial_id = null,string $summary = null, int $user_id_customer = null, int $user_id_educator = null)
     {
         $this->id = $id;
-        $this->datetime_appoitment = $datetime_appoitment;
+        $this->datetime_appointment = $datetime_appointment;
         $this->duration_in_hour = $duration_in_hour;
         $this->note_text = $note_text;
         $this->note_graphical_serial_id = $note_graphical_serial_id;

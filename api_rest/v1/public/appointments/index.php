@@ -2,13 +2,13 @@
 /**
  * index.php
  *
- * File being the front controller of the API and allowing to process appoitment requests.
+ * File being the front controller of the API and allowing to process appointment requests.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
-use App\Controllers\AppoitmentController;
-use App\Models\Appoitment;
+use App\Controllers\AppointmentController;
+use App\Models\Appointment;
 
 require "../../bootstrap.php";
 
@@ -25,7 +25,7 @@ if (strcmp("OPTIONS", $requestMethod) == 0) {
 	return;
 }
 
-$controller = new AppoitmentController($dbConnection);
+$controller = new AppointmentController($dbConnection);
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $pathFragments = explode('/', $path);
@@ -33,29 +33,29 @@ $id = intval(end($pathFragments));
 
 parse_str(file_get_contents('php://input'), $input);
 
-$appoitment = new Appoitment();
-$appoitment->id = $id ?? null;
-$appoitment->datetime_appoitment = $input["datetime_appoitment"] ?? null;
-$appoitment->duration_in_hour = $input["duration_in_hour"] ?? null;
-$appoitment->note_text = $input["note_text"] ?? null;
-$appoitment->note_graphical_serial_id = $input["note_graphical_serial_id"] ?? null;
-$appoitment->summary = $input["summary"] ?? null;
-$appoitment->user_id_customer = $input["user_id_customer"] ?? null;
-$appoitment->user_id_educator = $input["user_id_educator"] ?? null;
+$appointment = new Appointment();
+$appointment->id = $id ?? null;
+$appointment->datetime_appointment = $input["datetime_appointment"] ?? null;
+$appointment->duration_in_hour = $input["duration_in_hour"] ?? null;
+$appointment->note_text = $input["note_text"] ?? null;
+$appointment->note_graphical_serial_id = $input["note_graphical_serial_id"] ?? null;
+$appointment->summary = $input["summary"] ?? null;
+$appointment->user_id_customer = $input["user_id_customer"] ?? null;
+$appointment->user_id_educator = $input["user_id_educator"] ?? null;
 
 
 switch ($requestMethod) {
     case 'GET':
         if (empty($id) || !is_numeric($id)) {
-            $response = $controller->getAllAppoitments();
+            $response = $controller->getAllAppointments();
         }
         else{
-            $response = $controller->getAppoitment($id);
+            $response = $controller->getAppointment($id);
         }
         break;
 
     case 'POST':
-        $response = $controller->createAppoitment($appoitment);
+        $response = $controller->createAppointment($appointment);
         break;
 
     case 'PATCH':
@@ -63,7 +63,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->updateAppoitment($appoitment);
+        $response = $controller->updateAppointment($appointment);
         break;
 
     case 'DELETE':
@@ -71,7 +71,7 @@ switch ($requestMethod) {
             header("HTTP/1.1 404 Not Found");
             exit();
         }
-        $response = $controller->deleteAppoitment($id);
+        $response = $controller->deleteAppointment($id);
         break;
         
     default:

@@ -48,6 +48,7 @@
             </b-table>
             <b-button
               variant="primary"
+              class="bg-light text-primary"
               v-b-modal.modal-add-timeslot-weeklyschedule
               block
               @click="sendWeeklyScheduleId(row.item.id)"
@@ -115,6 +116,7 @@
             </b-table>
             <b-button
               variant="primary"
+              class="bg-light text-primary"
               v-b-modal.modal-add-timeslot-scheduleoverride
               block
               @click="sendScheduleOverrideId(row.item.id)"
@@ -661,7 +663,7 @@ export default {
         },
       };
       this.$http
-        .get(this.$API_URL + "users/me/weeklySchedule/", config)
+        .get(this.$API_URL + "weeklySchedules/", config)
         .then((response) => {
           this.weeklySchedules = [];
           response.data.forEach((weeklySchedule) => {
@@ -700,7 +702,7 @@ export default {
         },
       };
       this.$http
-        .get(this.$API_URL + "users/me/scheduleOverride/", config)
+        .get(this.$API_URL + "scheduleOverrides/", config)
         .then((response) => {
           this.scheduleOverrides = [];
           response.data.forEach((scheduleOverride) => {

@@ -146,59 +146,6 @@ class TimeSlotController {
 
     /**
      * 
-     * Method to update a time slot.
-     * 
-     * @param TimeSlot $timeSlot The timeSlot model object
-     * @return string The status and the body in JSON format of the response
-     */
-    public function updateTimeSlot(TimeSlot $timeSlot)
-    {
-        $headers = apache_request_headers();
-
-        if (!isset($headers['Authorization'])) {
-            return ResponseController::notFoundAuthorizationHeader();
-        }
-
-        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
-
-        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
-            return ResponseController::unauthorizedUser();
-        }
-
-        $actualTimeSlot = $this->DAOTimeSlot->find($timeSlot->id,$userAuth->id);
-
-        if (is_null($actualTimeSlot)) {
-            return ResponseController::notFoundResponse();
-        }
-
-        $actualTimeSlot->code_day = $timeSlot->code_day ?? $actualTimeSlot->code_day;
-        $actualTimeSlot->time_start = $timeSlot->time_start ?? $actualTimeSlot->time_start;
-        $actualTimeSlot->time_end = $timeSlot->time_end ?? $actualTimeSlot->time_end;
-
-        if (!HelperController::validateTimeFormat($actualTimeSlot->time_start) || !HelperController::validateTimeFormat($actualTimeSlot->time_end) ) {
-            return ResponseController::invalidTimeFormat();
-        }
-
-        if (!HelperController::validateCodeDayFormat($actualTimeSlot->code_day)) {
-            return ResponseController::invalidCodeDayFormat();
-        }
-
-        if (!HelperController::validateChornologicalTime($actualTimeSlot->time_start,$actualTimeSlot->time_end)) {
-            return ResponseController::chronologicalDateProblem();
-        }
-
-        if ($this->DAOTimeSlot->findOverlapInWeeklySchedule($actualTimeSlot) || $this->DAOTimeSlot->findOverlapInScheduleOverride($actualTimeSlot))
-        {
-            return ResponseController::timeOverlapProblem();
-        }
-
-        $this->DAOTimeSlot->update($actualTimeSlot);
-
-        return ResponseController::successfulRequest(null);
-    }
-
-    /**
-     * 
      * Method to delete a time slot.
      * 
      * @param int  $id The time slot identifier
@@ -247,65 +194,6 @@ class TimeSlotController {
         $planning = $this->DAOTimeSlot->findPlanningForEducator($idUser);        
         
         return ResponseController::successfulRequest($planning);  
-    }
-
-    /**
-     * 
-     * Method to return all time slots of all weekly schedules of the currently logged in user in JSON format.
-     * 
-     * @return string The status and the body in json format of the response
-     */
-    public function getMyWeeklyScheduleTimeSlots()
-    {
-        $headers = apache_request_headers();
-
-        if (!isset($headers['Authorization'])) {
-            return ResponseController::notFoundAuthorizationHeader();
-        }
-        
-        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
-
-        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
-            return ResponseController::unauthorizedUser();
-        }
-
-        $allWeeklySchedule = $this->DAOWeeklySchedule->findAll(false,$userAuth->id);
-
-        foreach ($allWeeklySchedule as $weeklySchedule) {
-            $weeklySchedule->timeSlots = $this->DAOTimeSlot->findAllByIdWeeklySchedule(false, $userAuth->id, $weeklySchedule->id);
-        }   
-        
-        return ResponseController::successfulRequest($allWeeklySchedule);
-    }
-
-    /**
-     * 
-     * Method to return all time slots of all schedule overrides of the currently logged in user in JSON format.
-     * 
-     * @param int  $idUser The edcuator user identifier
-     * @return string The status and the body in json format of the response
-     */
-    public function getMyScheduleOverridesTimeSlots()
-    {
-        $headers = apache_request_headers();
-
-        if (!isset($headers['Authorization'])) {
-            return ResponseController::notFoundAuthorizationHeader();
-        }
-        
-        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
-
-        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
-            return ResponseController::unauthorizedUser();
-        }
-
-        $allScheduleOverrides = $this->DAOScheduleOverride->findAll(false,$userAuth->id);
-
-        foreach ($allScheduleOverrides as $scheduleOverride) {
-            $scheduleOverride->timeSlots = $this->DAOTimeSlot->findAllByIdScheduleOverride(false, $userAuth->id, $scheduleOverride->id);
-        }   
-        
-        return ResponseController::successfulRequest($allScheduleOverrides);
     }
 
     /**

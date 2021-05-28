@@ -45,9 +45,9 @@ VALUES
     (3, 'V9CUouI8.pdf', 'poster', 6),
     (4, 'mASE47FP', 'conditions_inscription', 4)";
 
-$appoitmentStatement = "
-INSERT INTO `api_rest_douceur_de_chien`.`appoitment`
-    (id, datetime_appoitment, duration_in_hour, note_text, note_graphical_serial_id,summary,datetime_deletion,user_id_customer,user_id_educator,user_id_deletion)
+$appointmentStatement = "
+INSERT INTO `api_rest_douceur_de_chien`.`appointment`
+    (id, datetime_appointment, duration_in_hour, note_text, note_graphical_serial_id,summary,datetime_deletion,user_id_customer,user_id_educator,user_id_deletion)
 VALUES
     (1, '2020-04-02 09:00:00',2, null, 'JQ5LD72g', null, null, 4, 1, null),
     (2, '2020-05-12 10:00:00',3 ,null, null, null, null, 5, 2, null),
@@ -131,8 +131,8 @@ try {
 }
 
 try {
-    $dbConnection->exec($appoitmentStatement);
-    echo "Table appoitment success ";
+    $dbConnection->exec($appointmentStatement);
+    echo "Table appointment success ";
 } catch (PDOException $e) {
     exit($e->getMessage());
 }

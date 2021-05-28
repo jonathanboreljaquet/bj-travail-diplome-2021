@@ -16,7 +16,7 @@
           <b-nav-item to="/customer_information" v-if="authCustomer" href="#">
             Mes informations
           </b-nav-item>
-          <b-nav-item to="/customer_appoitment" v-if="authCustomer" href="#">
+          <b-nav-item to="/customer_appointment" v-if="authCustomer" href="#">
             Mes rendez-vous
           </b-nav-item>
           <b-nav-item to="/administration" v-if="authAdministrator" href="#">

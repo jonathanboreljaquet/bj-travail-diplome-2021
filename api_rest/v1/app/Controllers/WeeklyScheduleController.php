@@ -13,12 +13,14 @@ use App\DataAccessObject\DAOWeeklySchedule;
 use App\DataAccessObject\DAOUser;
 use App\Controllers\ResponseController;
 use App\Controllers\HelperController;
+use App\DataAccessObject\DAOTimeSlot;
 use App\Models\WeeklySchedule;
 use App\System\Constants;
 
 class WeeklyScheduleController {
 
     private DAOWeeklySchedule $DAOWeeklySchedule;
+    private DAOTimeSlot $DAOTimeSlot;
     private DAOUser $DAOUser;
 
     /**
@@ -30,12 +32,13 @@ class WeeklyScheduleController {
     public function __construct(\PDO $db)
     {
         $this->DAOWeeklySchedule = new DAOWeeklySchedule($db);
+        $this->DAOTimeSlot = new DAOTimeSlot($db);
         $this->DAOUser = new DAOUser($db);
     }
 
     /**
      * 
-     * Method to return all weekly schedules in JSON format.
+     * Method to return all weekly schedules and their time slots in JSON format.
      * 
      * @return string The status and the body in json format of the response
      */
@@ -46,16 +49,20 @@ class WeeklyScheduleController {
         if (!isset($headers['Authorization'])) {
             return ResponseController::notFoundAuthorizationHeader();
         }
-
+        
         $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
-        
-        $allWeeklySchedules = $this->DAOWeeklySchedule->findAll(false,$userAuth->id);
 
-        return ResponseController::successfulRequest($allWeeklySchedules);   
+        $allWeeklySchedule = $this->DAOWeeklySchedule->findAll(false,$userAuth->id);
+
+        foreach ($allWeeklySchedule as $weeklySchedule) {
+            $weeklySchedule->timeSlots = $this->DAOTimeSlot->findAllByIdWeeklySchedule(false, $userAuth->id, $weeklySchedule->id);
+        }   
+        
+        return ResponseController::successfulRequest($allWeeklySchedule);  
     }
 
     /**
@@ -140,64 +147,6 @@ class WeeklyScheduleController {
         $this->DAOWeeklySchedule->insert($weeklySchedule);
 
         return ResponseController::successfulCreatedRessource();
-    }
-
-    /**
-     * 
-     * Method to update a weekly schedule.
-     * 
-     * @param WeeklySchedule $weeklySchedule The weeklyschedule model object
-     * @return string The status and the body in JSON format of the response
-     */
-    public function updateWeeklySchedule(WeeklySchedule $weeklySchedule)
-    {
-        $headers = apache_request_headers();
-
-        if (!isset($headers['Authorization'])) {
-            return ResponseController::notFoundAuthorizationHeader();
-        }
-
-        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
-
-        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
-            return ResponseController::unauthorizedUser();
-        }
-
-        $actualWeeklySchedule = $this->DAOWeeklySchedule->find($weeklySchedule->id,$userAuth->id);
-
-        if (is_null($actualWeeklySchedule)) {
-            return ResponseController::notFoundResponse();
-        }
-
-        $actualWeeklySchedule->date_valid_from = $weeklySchedule->date_valid_from ?? $actualWeeklySchedule->date_valid_from;
-        $actualWeeklySchedule->date_valid_to = $weeklySchedule->date_valid_to;
-
-
-        if (!HelperController::validateDateFormat($actualWeeklySchedule->date_valid_from)) {
-            return ResponseController::invalidDateFormat();
-        }
-
-        if (!is_null($actualWeeklySchedule->date_valid_to)) {
-            if (!HelperController::validateDateFormat($actualWeeklySchedule->date_valid_to)) {
-                return ResponseController::invalidDateFormat();
-            }
-            if (!HelperController::validateChornologicalTime($actualWeeklySchedule->date_valid_from,$actualWeeklySchedule->date_valid_to)) {
-                return ResponseController::chronologicalDateProblem();
-            }
-        }
-        else{
-            if ($this->DAOWeeklySchedule->findActifPermanentSchedule($actualWeeklySchedule)) {
-                return ResponseController::permanentScheduleAlreadyExist();
-            }
-        }  
-
-        if ($this->DAOWeeklySchedule->findOverlap($actualWeeklySchedule)) {
-            return ResponseController::dateOverlapProblem();
-        }
-
-        $this->DAOWeeklySchedule->update($actualWeeklySchedule);
-
-        return ResponseController::successfulRequest(null);
     }
 
     /**

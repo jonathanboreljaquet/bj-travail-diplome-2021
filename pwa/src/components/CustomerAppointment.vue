@@ -6,7 +6,7 @@
           <h1>{{ title }} {{ customerFirstname }} {{ customerLastname }}</h1>
         </b-col>
       </b-row>
-      <b-row v-if="appoitments.length > 0" class="content">
+      <b-row v-if="appointments.length > 0" class="content">
         <b-col>
           <div class="card">
             <div class="card-body">
@@ -14,40 +14,40 @@
                 <ul class="timeline">
                   <li
                     class="event"
-                    v-for="appoitment in appoitments"
-                    :key="appoitment.id"
+                    v-for="appointment in appointments"
+                    :key="appointment.id"
                     :data-date="
-                      appoitment.hourStart + ' - ' + appoitment.hourEnd
+                      appointment.hourStart + ' - ' + appointment.hourEnd
                     "
                   >
-                    <h4>{{ appoitment.date }}</h4>
+                    <h4>{{ appointment.date }}</h4>
                     <h3>Résumé du rendez-vous</h3>
-                    <p v-if="appoitment.summary != null">
-                      {{ appoitment.summary }}
+                    <p v-if="appointment.summary != null">
+                      {{ appointment.summary }}
                     </p>
                     <p v-else>Aucune réssumé</p>
                     <div v-if="authAdministrator">
                       <h3>Notes textuelles personnelles du rendez-vous</h3>
-                      <p v-if="appoitment.noteText != null">
-                        {{ appoitment.noteText }}
+                      <p v-if="appointment.noteText != null">
+                        {{ appointment.noteText }}
                       </p>
                       <p v-else>Aucunes notes textuelles</p>
-                      <!-- <div v-if="appoitment.noteGraphicalSerialId">
+                      <!-- <div v-if="appointment.noteGraphicalSerialId">
                         <h3>Notes graphiques du rendez-vous</h3>
-                        <b-img :src="image" alt="Image"
+                        <b-img :src="'data:image/jpeg;base64,'+arrayimg['oshAZXL']" alt="Image"
                           fluid
                         ></b-img>
                       </div> -->
                       <b-button
                         variant="outline-primary"
                         block
-                        v-b-modal.modal-update-appoitment-informations
+                        v-b-modal.modal-update-appointment-informations
                         @click="
-                          sendAppoitmentInformations(
-                            appoitment.id,
-                            appoitment.summary,
-                            appoitment.noteText,
-                            appoitment.noteGraphicalSerialId
+                          sendAppointmentInformations(
+                            appointment.id,
+                            appointment.summary,
+                            appointment.noteText,
+                            appointment.noteGraphicalSerialId
                           )
                         "
                       >
@@ -63,7 +63,7 @@
       </b-row>
       <b-row v-else class="content">
         <b-col>
-          {{ messageNoAppoitments }}
+          {{ messageNoAppointments }}
         </b-col>
       </b-row>
       <button-return
@@ -74,29 +74,29 @@
         }"
       ></button-return>
 
-      <!-- MODAL UPDATE APPOITMENT INFORMATIONS-->
+      <!-- MODAL UPDATE APPOINTMENT INFORMATIONS-->
       <b-modal
-        id="modal-update-appoitment-informations"
+        id="modal-update-appointment-informations"
         title="Modifier le notes du rendez-vous"
         :hide-footer="true"
       >
         <b-form
           @submit.prevent="
-            updateAppoitmentByAppoitmentId(
-              selectedAppoitmentId,
-              selectedAppoitmentSummary,
-              selectedAppoitmentNoteText
+            updateAppointmentByAppointmentId(
+              selectedAppointmentId,
+              selectedAppointmentSummary,
+              selectedAppointmentNoteText
             )
           "
         >
           <b-form-group
-            id="input-group-appoitment-summary"
+            id="input-group-appointment-summary"
             label="Résumé :"
-            label-for="input-appoitment-summary"
+            label-for="input-appointment-summary"
           >
             <b-form-textarea
-              id="input-appoitment-summary"
-              v-model="selectedAppoitmentSummary"
+              id="input-appointment-summary"
+              v-model="selectedAppointmentSummary"
               placeholder="Entrer le résumé du cours"
               rows="8"
               max-rows="8"
@@ -104,13 +104,13 @@
           </b-form-group>
 
           <b-form-group
-            id="input-group-appoitment-note-text"
+            id="input-group-appointment-note-text"
             label="Notes textuelles personnelles :"
-            label-for="input-appoitment-note-text"
+            label-for="input-appointment-note-text"
           >
             <b-form-textarea
-              id="input-appoitment-note-text"
-              v-model="selectedAppoitmentNoteText"
+              id="input-appointment-note-text"
+              v-model="selectedAppointmentNoteText"
               placeholder="Entrer les notes textuelles du cours"
               rows="8"
               max-rows="8"
@@ -131,25 +131,26 @@ import ButtonReturn from "./ButtonReturn.vue";
 import "@/assets/css/timeline.css";
 
 export default {
-  name: "CustomerAppoitment",
+  name: "CustomerAppointment",
   components: {
     ButtonReturn,
   },
   data() {
     return {
       title: "",
-      appoitments: [],
-      messageNoAppoitments: "Aucun rendez-vous",
+      appointments: [],
+      messageNoAppointments: "Aucun rendez-vous",
       customerFirstname: "",
       customerLastname: "",
-      selectedAppoitmentId: "",
-      selectedAppoitmentSummary: "",
-      selectedAppoitmentNoteText: "",
+      selectedAppointmentId: "",
+      selectedAppointmentSummary: "",
+      selectedAppointmentNoteText: "",
       selectedAppotimentNoteGraphicalSerialId: "",
+      arrayimg: {},
     };
   },
   methods: {
-    loadAuthCustomerAppoitment() {
+    loadAuthCustomerAppointment() {
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
@@ -157,10 +158,10 @@ export default {
         },
       };
       this.$http
-        .get(this.$API_URL + "appoitments/", config)
+        .get(this.$API_URL + "appointments/", config)
         .then((response) => {
           console.log(response);
-          this.loadAppoitmentsData(response.data);
+          this.loadAppointmentsData(response.data);
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
@@ -178,60 +179,66 @@ export default {
         .then((response) => {
           this.customerFirstname = response.data.firstname;
           this.customerLastname = response.data.lastname;
-          this.loadAppoitmentsData(response.data.appoitments);
+
+          this.loadAppointmentsData(response.data.appointments);
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
     },
-    loadAppoitmentsData(appoitments) {
-      this.appoitments = [];
-      appoitments.forEach((appoitment) => {
-        var date = new Date(appoitment.datetime_appoitment);
+    loadAppointmentsData(appointments) {
+      this.appointments = [];
+      appointments.forEach((appointment) => {
+        var date = new Date(appointment.datetime_appointment);
         var options = {
           weekday: "long",
           year: "numeric",
           month: "long",
           day: "numeric",
         };
-        this.appoitments.push({
-          id: appoitment.id,
+        this.appointments.push({
+          id: appointment.id,
           hourStart: date.getHours() + "h",
-          hourEnd: date.getHours() + appoitment.duration_in_hour + "h",
+          hourEnd: date.getHours() + appointment.duration_in_hour + "h",
           date: date.toLocaleDateString("fr-CH", options),
-          summary: appoitment.summary,
-          noteText: appoitment.note_text,
-          noteGraphicalSerialId: appoitment.note_graphical_serial_id,
+          summary: appointment.summary,
+          noteText: appointment.note_text,
+          noteGraphicalSerialId: appointment.note_graphical_serial_id,
         });
+        if (appointment.note_graphical_serial_id) {
+          this.loadNoteGraphicalPicture(appointment.note_graphical_serial_id);
+        }
       });
     },
-    loadNoteGraphicalPicture() {
+    loadNoteGraphicalPicture(noteGraphicalSerialId) {
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
+        responseType: "arraybuffer",
       };
       this.$http
         .get(
-          this.$API_URL + "appoitments/downloadNoteGraphical/oshAZXLb",
+          this.$API_URL + "appointments/downloadNoteGraphical/" + noteGraphicalSerialId,
           config
         )
         .then((response) => {
-          this.image = response.data;
+          var base64 = Buffer.from(response.data, "binary").toString("base64");
+          this.arrayimg[noteGraphicalSerialId] = base64;
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    updateAppoitmentByAppoitmentId(
-      appoitmentId,
-      appoitmentSummary,
-      appoitmentNoteText
+    updateAppointmentByAppointmentId(
+      appointmentId,
+      appointmentSummary,
+      appointmentNoteText
     ) {
       const params = new URLSearchParams();
-      params.append("summary", appoitmentSummary);
-      params.append("note_text", appoitmentNoteText);
+      params.append("summary", appointmentSummary);
+      params.append("note_text", appointmentNoteText);
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
@@ -239,27 +246,27 @@ export default {
         },
       };
       this.$http
-        .patch(this.$API_URL + "appoitments/" + appoitmentId, params, config)
+        .patch(this.$API_URL + "appointments/" + appointmentId, params, config)
         .then((response) => {
           console.log(response);
           this.loadCustomerInformationsByUserId(this.$route.params.userId);
           this.$alertify.success("Informfations de rendez-vous modifiés");
-          this.$bvModal.hide("modal-update-appoitment-informations");
+          this.$bvModal.hide("modal-update-appointment-informations");
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
     },
 
-    sendAppoitmentInformations(
-      appoitmentId,
-      appoitmentSummary,
-      appoitmentNoteText,
+    sendAppointmentInformations(
+      appointmentId,
+      appointmentSummary,
+      appointmentNoteText,
       appotimentNoteGraphicalSerialId
     ) {
-      this.selectedAppoitmentId = appoitmentId;
-      this.selectedAppoitmentSummary = appoitmentSummary;
-      this.selectedAppoitmentNoteText = appoitmentNoteText;
+      this.selectedAppointmentId = appointmentId;
+      this.selectedAppointmentSummary = appointmentSummary;
+      this.selectedAppointmentNoteText = appointmentNoteText;
       this.selectedAppotimentNoteGraphicalSerialId =
         appotimentNoteGraphicalSerialId;
     },
@@ -270,13 +277,12 @@ export default {
     },
   },
   mounted() {
-    //this.loadNoteGraphicalPicture();
     if (this.authAdministrator && this.$route.params.userId) {
       this.title = "Rendez-vous du client";
       this.loadCustomerInformationsByUserId(this.$route.params.userId);
     } else {
       this.title = "Mes rendez-vous";
-      this.loadAuthCustomerAppoitment();
+      this.loadAuthCustomerAppointment();
     }
   },
 };

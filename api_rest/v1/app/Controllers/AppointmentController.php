@@ -1,50 +1,50 @@
 <?php
 /**
- * AppoitmentController.php
+ * AppointmentController.php
  *
- * Controller of the Appoitment model.
+ * Controller of the Appointment model.
  *
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
 namespace App\Controllers;
 
-use App\DataAccessObject\DAOAppoitment;
+use App\DataAccessObject\DAOAppointment;
 use App\DataAccessObject\DAOTimeSlot;
 use App\DataAccessObject\DAOUser;
 use App\Controllers\ResponseController;
 use App\Controllers\HelperController;
-use App\Models\Appoitment;
+use App\Models\Appointment;
 use App\System\Constants;
 use DateTime;
 
-class AppoitmentController {
+class AppointmentController {
 
-    private DAOAppoitment $DAOAppoitment;
+    private DAOAppointment $DAOAppointment;
     private DAOTimeSlot $DAOTimeSlot;
     private DAOUser $DAOUser;
 
 
     /**
      * 
-     * Constructor of the AppoitmentController object.
+     * Constructor of the AppointmentController object.
      * 
      * @param PDO $db The database connection
      */
     public function __construct(\PDO $db)
     {
-        $this->DAOAppoitment = new DAOAppoitment($db);
+        $this->DAOAppointment = new DAOAppointment($db);
         $this->DAOTimeSlot = new DAOTimeSlot($db);
         $this->DAOUser = new DAOUser($db);
     }
 
     /**
      * 
-     * Method to return all Appoitments in JSON format.
+     * Method to return all Appointments in JSON format.
      * 
      * @return string The status and the body in json format of the response
      */
-    public function getAllAppoitments()
+    public function getAllAppointments()
     {
         $headers = apache_request_headers();
 
@@ -59,23 +59,23 @@ class AppoitmentController {
         }
 
         if($userAuth->code_role == Constants::ADMIN_CODE_ROLE){
-            $allAppoitments = $this->DAOAppoitment->findAll(null,$userAuth->id);
+            $allAppointments = $this->DAOAppointment->findAll(null,$userAuth->id);
         }
         else{
-            $allAppoitments = $this->DAOAppoitment->findByUserId($userAuth->id);
+            $allAppointments = $this->DAOAppointment->findByUserId($userAuth->id);
         }
         
-        return ResponseController::successfulRequest($allAppoitments);   
+        return ResponseController::successfulRequest($allAppointments);   
     }
 
     /**
      * 
-     * Method to return a appoitment in JSON format.
+     * Method to return a appointment in JSON format.
      * 
-     * @param int $id The appoitment identifier
+     * @param int $id The appointment identifier
      * @return string The status and the body in JSON format of the response
      */
-    public function getAppoitment(int $id)
+    public function getAppointment(int $id)
     {
         $headers = apache_request_headers();
 
@@ -89,23 +89,23 @@ class AppoitmentController {
             return ResponseController::unauthorizedUser();
         }
 
-        $appoitment = $this->DAOAppoitment->find($id);
+        $appointment = $this->DAOAppointment->find($id);
 
-        if (is_null($appoitment)) {
+        if (is_null($appointment)) {
             return ResponseController::notFoundResponse();
         }
 
-        return ResponseController::successfulRequest($appoitment);
+        return ResponseController::successfulRequest($appointment);
     }
 
     /**
      * 
-     * Method to create a appoitment.
+     * Method to create a appointment.
      * 
-     * @param Appoitment $appoitment The appoitment model object
+     * @param Appointment $appointment The appointment model object
      * @return string The status and the body in JSON format of the response
      */
-    public function createAppoitment(Appoitment $appoitment)
+    public function createAppointment(Appointment $appointment)
     {
         $headers = apache_request_headers();
 
@@ -119,45 +119,45 @@ class AppoitmentController {
             return ResponseController::unauthorizedUser();
         }
 
-        if (!$this->validateAppoitment($appoitment)) {
+        if (!$this->validateAppointment($appointment)) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        $userCustomer = $this->DAOUser->find($appoitment->user_id_customer);
-        $userEducator = $this->DAOUser->find($appoitment->user_id_educator);
+        $userCustomer = $this->DAOUser->find($appointment->user_id_customer);
+        $userEducator = $this->DAOUser->find($appointment->user_id_educator);
 
         if (is_null($userCustomer) || is_null($userEducator) || $userCustomer->code_role != Constants::USER_CODE_ROLE || $userEducator->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::notFoundResponse();
         }
 
-        if (!HelperController::validateDateTimeFormat($appoitment->datetime_appoitment)) {
+        if (!HelperController::validateDateTimeFormat($appointment->datetime_appointment)) {
             return ResponseController::invalidDateTimeFormat();
         }
 
-        $elements = explode(" ",$appoitment->datetime_appoitment);
+        $elements = explode(" ",$appointment->datetime_appointment);
         $date = $elements[0];
         $time_start = $elements[1];
         $datetime = new DateTime($time_start);
-        $datetime->modify('+'.$appoitment->duration_in_hour.' hours');
+        $datetime->modify('+'.$appointment->duration_in_hour.' hours');
         $time_end = $datetime->format("H:i:s");
         
-        if (!$this->DAOTimeSlot->findAppoitmentSlotsForEducator($date,$time_start,$time_end,$appoitment->user_id_educator)) {
+        if (!$this->DAOTimeSlot->findAppointmentSlotsForEducator($date,$time_start,$time_end,$appointment->user_id_educator)) {
             return ResponseController::invalidAppointment();
         }
         
-        $this->DAOAppoitment->insert($appoitment);
+        $this->DAOAppointment->insert($appointment);
 
         return ResponseController::successfulCreatedRessource();
     }
 
     /**
      * 
-     * Method to update a appoitment.
+     * Method to update a appointment.
      * 
-     * @param int  $id The appoitment identifier
+     * @param int  $id The appointment identifier
      * @return string The status and the body in JSON format of the response
      */
-    public function updateAppoitment(Appoitment $appoitment)
+    public function updateAppointment(Appointment $appointment)
     {
         $headers = apache_request_headers();
 
@@ -171,28 +171,28 @@ class AppoitmentController {
             return ResponseController::unauthorizedUser();
         }
 
-        $actualAppoitment = $this->DAOAppoitment->find($appoitment->id);
+        $actualAppointment = $this->DAOAppointment->find($appointment->id);
 
-        if (is_null($actualAppoitment)) {
+        if (is_null($actualAppointment)) {
             return ResponseController::notFoundResponse();
         }
 
-        $actualAppoitment->note_text = $appoitment->note_text ?? $actualAppoitment->note_text;
-        $actualAppoitment->summary = $appoitment->summary ?? $actualAppoitment->summary;
+        $actualAppointment->note_text = $appointment->note_text ?? $actualAppointment->note_text;
+        $actualAppointment->summary = $appointment->summary ?? $actualAppointment->summary;
 
-        $this->DAOAppoitment->update($actualAppoitment);
+        $this->DAOAppointment->update($actualAppointment);
 
         return ResponseController::successfulRequest(null);
     }
 
     /**
      * 
-     * Method to delete a appoitment.
+     * Method to delete a appointment.
      * 
-     * @param int  $id The appoitment identifier
+     * @param int  $id The appointment identifier
      * @return string The status and the body in JSON format of the response
      */
-    public function deleteAppoitment(int $id)
+    public function deleteAppointment(int $id)
     {
         $headers = apache_request_headers();
 
@@ -206,17 +206,17 @@ class AppoitmentController {
             return ResponseController::unauthorizedUser();
         }
 
-        $appoitment = $this->DAOAppoitment->find($id);
+        $appointment = $this->DAOAppointment->find($id);
 
-        if (is_null($appoitment)) {
+        if (is_null($appointment)) {
             return ResponseController::notFoundResponse();
         }
 
-        if ($userAuth->id == $appoitment->user_id_educator xor $userAuth->id !=$appoitment->user_id_customer ) {
+        if ($userAuth->id == $appointment->user_id_educator xor $userAuth->id !=$appointment->user_id_customer ) {
             return ResponseController::unauthorizedUser();
         }
 
-        $this->DAOAppoitment->delete($appoitment->id,$userAuth->id);
+        $this->DAOAppointment->delete($appointment->id,$userAuth->id);
 
         return ResponseController::successfulRequest(null);
     }
@@ -241,13 +241,13 @@ class AppoitmentController {
             return ResponseController::unauthorizedUser();
         }
 
-        if (!isset($_FILES["note_graphical"]) || !is_uploaded_file($_FILES["note_graphical"]["tmp_name"]) || !isset($_POST["appoitment_id"])) {
+        if (!isset($_FILES["note_graphical"]) || !is_uploaded_file($_FILES["note_graphical"]["tmp_name"]) || !isset($_POST["appointment_id"])) {
             return ResponseController::unprocessableEntityResponse();
         }
 
-        $appoitment = $this->DAOAppoitment->find($_POST["appoitment_id"]);
+        $appointment = $this->DAOAppointment->find($_POST["appointment_id"]);
 
-        if (is_null($appoitment)) {
+        if (is_null($appointment)) {
             return ResponseController::notFoundResponse();
         }
 
@@ -259,8 +259,8 @@ class AppoitmentController {
         $img_name = HelperController::generateRandomString();
         $upload_dir = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$img_name.".png";
 
-        if (!is_null($appoitment->note_graphical_serial_id)) {
-            $filename = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$appoitment->note_graphical_serial_id.".png";
+        if (!is_null($appointment->note_graphical_serial_id)) {
+            $filename = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$appointment->note_graphical_serial_id.".png";
             if (file_exists($filename)) {
                 unlink($filename);
             }
@@ -270,9 +270,9 @@ class AppoitmentController {
             return ResponseController::uploadFailed();
         }
         
-        $appoitment->note_graphical_serial_id = $img_name;
+        $appointment->note_graphical_serial_id = $img_name;
 
-        $this->DAOAppoitment->update($appoitment);
+        $this->DAOAppointment->update($appointment);
         
         return ResponseController::successfulRequest();
     }
@@ -298,37 +298,43 @@ class AppoitmentController {
             return ResponseController::unauthorizedUser();
         }
 
-        if(is_null($this->DAOAppoitment->findBySerialId($serial_id))){
+        if(is_null($this->DAOAppointment->findBySerialId($serial_id))){
             return ResponseController::notFoundResponse();
         }
 
-        $image = file_get_contents(HelperController::getDefaultDirectory()."storage/app/graphical_note/".$serial_id.".jpeg");
+        $image = HelperController::getDefaultDirectory()."storage/app/graphical_note/".$serial_id.".jpeg";
         
-        return ResponseController::successfulRequestWithoutJson('data:image/png;base64, '.base64_encode($image));
+        $imageInfo = getimagesize($image);
+
+        header("Content-Type: " . $imageInfo["mime"]);
+        header("Content-Length: " . filesize($image));
+        readfile($image);
+
+        return ResponseController::successfulRequest();
     }
 
      /**
      * 
-     * Method to check if the appoitment required fields have been defined for the creation.
+     * Method to check if the appointment required fields have been defined for the creation.
      * 
-     * @param Appoitment $appoitment The appoitment model object
+     * @param Appointment $appointment The appointment model object
      * @return bool
      */
-    private function validateAppoitment(Appoitment $appoitment)
+    private function validateAppointment(Appointment $appointment)
     {
-        if ($appoitment->datetime_appoitment == null) {
+        if ($appointment->datetime_appointment == null) {
             return false;
         }
 
-        if ($appoitment->duration_in_hour == null) {
+        if ($appointment->duration_in_hour == null) {
             return false;
         }
 
-        if ($appoitment->user_id_customer == null) {
+        if ($appointment->user_id_customer == null) {
             return false;
         }
 
-        if ($appoitment->user_id_educator == null) {
+        if ($appointment->user_id_educator == null) {
             return false;
         }
 

@@ -116,14 +116,14 @@ Fichier de bootage de l'API REST inclus dans tous les fichiers d'entrées, celui
 ![dateTestPlanningSecondUser](./img/database.png)
 
 La base de données que j'ai développé et utilisé se décompose en deux parties.
-La partie supérieure, donc les tables : `appoitment`, `user`, `document` et `dog` concernent toutes les données en lien avec les clients de l'application.
+La partie supérieure, donc les tables : `appointment`, `user`, `document` et `dog` concernent toutes les données en lien avec les clients de l'application.
 Tandis que la partie inférieure, donc les tables : `weekly_schedule`,`time_slot`, `schedule_override` et `absence` concernent les données de planning des éducateurs canins de la société.
 
-La table `appoitment` contient les informations des rendez-vous entre un éducateur canin et un client :
+La table `appointment` contient les informations des rendez-vous entre un éducateur canin et un client :
 
 <table>
     <tr>
-    	<th  style="text-align:center;" COLSPAN="5">appoitment</th>
+    	<th  style="text-align:center;" COLSPAN="5">appointment</th>
     </tr>
     <tr>
         <th style="text-align:center;">NOM</th>
@@ -132,7 +132,7 @@ La table `appoitment` contient les informations des rendez-vous entre un éducat
         <th style="text-align:center;">DESCRIPTION</th>
     </tr>
     <tr>
-        <td>datetime_appoitment</td>
+        <td>datetime_appointment</td>
         <td>DATETIME</td>
         <td style="text-align:center;">X</td>
         <td>la date ainsi que l'heure du rendez-vous entre un client et un éducateur canin.</td>
@@ -591,10 +591,11 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
         <td>TIM</td>
     </tr>
     <tr>
-        <td>Appoitment</td>
+        <td>Appointment</td>
         <td>APP</td>
     </tr>
 </table>
+
 
 ---
 
@@ -863,15 +864,14 @@ Les en-têtes que j'ai utilisé dans les différentes points d'entrés de mon AP
 #### Listes des endpoints
 
 * `POST api/v1/users`
-* `GET api/v1/users`
-* `GET api/v1/users/{idUser}`
-* `PATCH api/v1/users/{idUser}`
-* `DELETE api/v1/users/{idUser}`
 * `POST api/v1/connection`
-* `GET api/v1/users/me`
-* `GET api/v1/users/me/agenda`
-* `PATCH api/v1/users/me/changePassword`
+* `GET api/v1/users`
 * `GET api/v1/users/educators`
+* `GET api/v1/users/{idUser}`
+* `GET api/v1/users/me`
+* `PATCH api/v1/users/{idUser}`
+* `PATCH api/v1/users/me/changePassword`
+* `DELETE api/v1/users/{idUser}`
 
 ------
 
@@ -905,7 +905,6 @@ Les en-têtes que j'ai utilisé dans les différentes points d'entrés de mon AP
 * `POST api/v1/weeklySchedules`
 * `GET api/v1/weeklySchedules`
 * `GET api/v1/weeklySchedules/{idWeeklySchedule}`
-* `PATCH api/v1/weeklySchedules/{idWeeklySchedule}`
 * `DELETE api/v1/weeklySchedules/{idWeeklySchedule}`
 
 ------
@@ -913,7 +912,6 @@ Les en-têtes que j'ai utilisé dans les différentes points d'entrés de mon AP
 * `POST api/v1/scheduleOverrides`
 * `GET api/v1/scheduleOverrides`
 * `GET api/v1/scheduleOverrides/{idScheduleOverride}`
-* `PATCH api/v1/scheduleOverrides/{idScheduleOverride}`
 * `DELETE api/v1/scheduleOverrides/{idScheduleOverride}`
 
 ------
@@ -921,18 +919,17 @@ Les en-têtes que j'ai utilisé dans les différentes points d'entrés de mon AP
 * `POST api/v1/timeSlots`
 * `GET api/v1/timeSlots`
 * `GET api/v1/timeSlots/{idTimeSlot}`
-* `PATCH api/v1/timeSlots/{idTimeSlot}`
 * `DELETE api/v1/timeSlots/{idTimeSlot}`
 
 ------
 
-* `POST api/v1/appoitments`
-* `GET api/v1/appoitments`
-* `GET api/v1/appoitments/{idTimeSlot}`
-* `PATCH api/v1/appoitments/{idTimeSlot}`
-* `DELETE api/v1/appoitments/{idTimeSlot}`
-* `POST api/v1/appoitments/uploadNoteGraphical`
-* `POST api/v1/appoitments/downloadNoteGraphical/{serial_number}`
+* `POST api/v1/appointments`
+* `GET api/v1/appointments`
+* `GET api/v1/appointments/{idTimeSlot}`
+* `PATCH api/v1/appointments/{idTimeSlot}`
+* `DELETE api/v1/appointments/{idTimeSlot}`
+* `POST api/v1/appointments/uploadNoteGraphical`
+* `POST api/v1/appointments/downloadNoteGraphical/{serial_number}`
 * `GET api/v1/plannings/{idEducator}`
 
 Pour plus d'informations, rendez-vous dans l'annexe [`endpoints.md`](./endpoints.md).

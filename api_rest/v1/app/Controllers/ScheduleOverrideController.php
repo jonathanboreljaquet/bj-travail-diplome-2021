@@ -13,12 +13,14 @@ use App\DataAccessObject\DAOScheduleOverride;
 use App\DataAccessObject\DAOUser;
 use App\Controllers\ResponseController;
 use App\Controllers\HelperController;
+use App\DataAccessObject\DAOTimeSlot;
 use App\Models\ScheduleOverride;
 use App\System\Constants;
 
 class ScheduleOverrideController {
 
     private DAOScheduleOverride $DAOScheduleOverride;
+    private DAOTimeSlot $DAOTimeSlot;
     private DAOUser $DAOUser;
 
     /**
@@ -30,12 +32,13 @@ class ScheduleOverrideController {
     public function __construct(\PDO $db)
     {
         $this->DAOScheduleOverride = new DAOScheduleOverride($db);
+        $this->DAOTimeSlot = new DAOTimeSlot($db);
         $this->DAOUser = new DAOUser($db);
     }
 
     /**
      * 
-     * Method to return all schedule overrides in JSON format.
+     * Method to return all schedule overrides and their time slots in JSON format.
      * 
      * @return string The status and the body in json format of the response
      */
@@ -46,16 +49,20 @@ class ScheduleOverrideController {
         if (!isset($headers['Authorization'])) {
             return ResponseController::notFoundAuthorizationHeader();
         }
-
+        
         $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
 
         if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
             return ResponseController::unauthorizedUser();
         }
-        
+
         $allScheduleOverrides = $this->DAOScheduleOverride->findAll(false,$userAuth->id);
 
-        return ResponseController::successfulRequest($allScheduleOverrides);  
+        foreach ($allScheduleOverrides as $scheduleOverride) {
+            $scheduleOverride->timeSlots = $this->DAOTimeSlot->findAllByIdScheduleOverride(false, $userAuth->id, $scheduleOverride->id);
+        }   
+        
+        return ResponseController::successfulRequest($allScheduleOverrides);
     }
 
     /**
@@ -126,48 +133,6 @@ class ScheduleOverrideController {
         $this->DAOScheduleOverride->insert($scheduleOverride);
 
         return ResponseController::successfulCreatedRessource();
-    }
-
-    /**
-     * 
-     * Method to update a schedule override.
-     * 
-     * @param ScheduleOverride $scheduleOverride The scheduleoverride model object
-     * @return string The status and the body in JSON format of the response
-     */
-    public function updateScheduleOverride(ScheduleOverride $scheduleOverride)
-    {
-        $headers = apache_request_headers();
-
-        if (!isset($headers['Authorization'])) {
-            return ResponseController::notFoundAuthorizationHeader();
-        }
-
-        $userAuth = $this->DAOUser->findByApiToken($headers['Authorization']);
-
-        if (is_null($userAuth) || $userAuth->code_role != Constants::ADMIN_CODE_ROLE) {
-            return ResponseController::unauthorizedUser();
-        }
-
-        $actualScheduleOverride = $this->DAOScheduleOverride->find($scheduleOverride->id,$userAuth->id);
-
-        if (is_null($actualScheduleOverride)) {
-            return ResponseController::notFoundResponse();
-        }
-
-        $actualScheduleOverride->date_schedule_override = $scheduleOverride->date_schedule_override ?? $actualScheduleOverride->date_schedule_override;
-
-        if (!HelperController::validateDateFormat($scheduleOverride->date_schedule_override)) {
-            return ResponseController::invalidDateFormat();
-        }
-
-        if ($this->DAOScheduleOverride->findExistence($actualScheduleOverride)) {
-            return ResponseController::dateOverlapProblem();
-        }
-
-        $this->DAOScheduleOverride->update($actualScheduleOverride);
-
-        return ResponseController::successfulRequest(null);
     }
 
     /**

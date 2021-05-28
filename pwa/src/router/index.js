@@ -8,7 +8,7 @@ import PrivacyPolicy from "./../components/PrivacyPolicy.vue";
 import Connection from "./../components/Connection.vue";
 import Inscription from "./../components/Inscription.vue";
 import CustomerInformation from "./../components/CustomerInformation.vue";
-import CustomerAppoitment from "./../components/CustomerAppoitment.vue";
+import CustomerAppointment from "./../components/CustomerAppointment.vue";
 import Administration from "./../components/Administration.vue";
 import Planning from "./../components/Planning.vue";
 import EducatorCalendar from "./../components/EducatorCalendar.vue";
@@ -73,9 +73,9 @@ export default new Router({
       },
     },
     {
-      path: "/customer_appoitment/:userId?",
-      name: "customerAppoitment",
-      component: CustomerAppoitment,
+      path: "/customer_appointment/:userId?",
+      name: "customerAppointment",
+      component: CustomerAppointment,
       beforeEnter(to, from, next) {
         if (store.state.api_token) {
           next();

@@ -429,13 +429,13 @@ class DAOTimeSlot {
         AND IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override) BETWEEN ab.date_absence_from AND ab.date_absence_to LIMIT 1) = 0
 
         AND (SELECT COUNT(*)
-        FROM appoitment AS ap
+        FROM appointment AS ap
         WHERE ap.user_id_educator = :ID_EDUCATOR
         AND datetime_deletion IS NULL
         AND user_id_deletion IS NULL
-        AND DATE(ap.datetime_appoitment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
-        AND TIME(ap.datetime_appoitment) = ts.time_start
-        AND TIME(ADDTIME(ap.datetime_appoitment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
+        AND DATE(ap.datetime_appointment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
+        AND TIME(ap.datetime_appointment) = ts.time_start
+        AND TIME(ADDTIME(ap.datetime_appointment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
         AND IF(so.date_schedule_override IS NULL,dates.date > NOW() ,so.date_schedule_override >NOW())
         
         ORDER BY date,time_start;";
@@ -455,13 +455,13 @@ class DAOTimeSlot {
      * 
      * Method to check if appointment data is valid in an educator's planning. 
      * 
-     * @param string $date The date of the appoitment
-     * @param string $time_start The start time of the appoitment
-     * @param string $time_end The end time of the appoitment
+     * @param string $date The date of the appointment
+     * @param string $time_start The start time of the appointment
+     * @param string $time_end The end time of the appointment
      * @param int $idEducator The educator identifier
      * @return array The associative array containing all the result rows of the query 
      */
-    public function findAppoitmentSlotsForEducator(string $date,string $time_start, string $time_end,int $idEducator)
+    public function findAppointmentSlotsForEducator(string $date,string $time_start, string $time_end,int $idEducator)
     {
         $this->generateViews();
         $statement = "        
@@ -489,13 +489,13 @@ class DAOTimeSlot {
         AND IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override) BETWEEN ab.date_absence_from AND ab.date_absence_to LIMIT 1) = 0
 
         AND (SELECT COUNT(*)
-        FROM appoitment AS ap
+        FROM appointment AS ap
         WHERE ap.user_id_educator = :ID_EDUCATOR
         AND ap.user_id_deletion IS NULL
         AND ap.datetime_deletion IS NULL
-        AND DATE(ap.datetime_appoitment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
-        AND TIME(ap.datetime_appoitment) = ts.time_start
-        AND TIME(ADDTIME(ap.datetime_appoitment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
+        AND DATE(ap.datetime_appointment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
+        AND TIME(ap.datetime_appointment) = ts.time_start
+        AND TIME(ADDTIME(ap.datetime_appointment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
         AND IF(so.date_schedule_override IS NULL,dates.date > NOW() ,so.date_schedule_override >NOW())
         
         HAVING DATE = :DATE

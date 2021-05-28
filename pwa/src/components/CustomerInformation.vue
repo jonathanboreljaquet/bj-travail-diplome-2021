@@ -32,7 +32,7 @@
             <div v-if="authAdministrator">
               <b-button
                 :to="{
-                  name: 'customerAppoitment',
+                  name: 'customerAppointment',
                   params: { userId: $route.params.userId },
                 }"
                 variant="outline-primary"

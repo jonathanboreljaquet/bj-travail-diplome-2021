@@ -7,7 +7,7 @@
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
-use App\Controllers\AppoitmentController;
+use App\Controllers\AppointmentController;
 
 require "../../../bootstrap.php";
 
@@ -28,7 +28,7 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $pathFragments = explode('/', $path);
 $serial_id = end($pathFragments);
 
-$controller = new AppoitmentController($dbConnection);
+$controller = new AppointmentController($dbConnection);
 
 switch ($requestMethod) {
     case 'GET':

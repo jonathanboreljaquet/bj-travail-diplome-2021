@@ -9,6 +9,6 @@ RewriteRule ^public/absences/([0-9a-zA-Z_-]*)$ public/absences/index.php/$1 [NC,
 RewriteRule ^public/weeklySchedules/([0-9a-zA-Z_-]*)$ public/weeklySchedules/index.php/$1 [NC,L]
 RewriteRule ^public/scheduleOverrides/([0-9a-zA-Z_-]*)$ public/scheduleOverrides/index.php/$1 [NC,L]
 RewriteRule ^public/timeSlots/([0-9a-zA-Z_-]*)$ public/timeSlots/index.php/$1 [NC,L]
-RewriteRule ^public/appoitments/([0-9a-zA-Z_-]*)$ public/appoitments/index.php/$1 [NC,L]
-RewriteRule ^public/appoitments/downloadNoteGraphical/([0-9a-zA-Z_-]*)$ public/appoitments/downloadNoteGraphical/index.php/$1 [NC,L]
+RewriteRule ^public/appointments/([0-9a-zA-Z_-]*)$ public/appointments/index.php/$1 [NC,L]
+RewriteRule ^public/appointments/downloadNoteGraphical/([0-9a-zA-Z_-]*)$ public/appointments/downloadNoteGraphical/index.php/$1 [NC,L]
 RewriteRule ^public/plannings/([0-9a-zA-Z_-]*)$ public/plannings/index.php/$1 [NC,L]
