@@ -5,12 +5,13 @@
         src="../assets/img/logoblancblanc.png"
         v-bind="logo"
         fluid
+        @click="$router.push('/')"
         alt="Responsive image"
       ></b-img>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item class="navbar-style" to="/" href="#">Accueil</b-nav-item>
+          <b-nav-item to="/" href="#">Accueil</b-nav-item>
           <b-nav-item to="/about" href="#">À propos</b-nav-item>
           <b-nav-item to="/calendar" href="#">Agenda</b-nav-item>
           <b-nav-item to="/customer_information" v-if="authCustomer" href="#">

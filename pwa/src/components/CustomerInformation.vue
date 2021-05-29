@@ -398,7 +398,7 @@
                 required
               ></b-form-select>
             </b-form-group>
-            <sketchpad @getSignature="saveSignature"></sketchpad>
+            <signature-pad @getSignaturePad="saveSignature"></signature-pad>
             <b-form-checkbox
               id="checkbox-validation"
               v-model="checkboxValidationStatus"
@@ -750,13 +750,13 @@
 
 <script>
 import { BIconDownload } from "bootstrap-vue";
-import Sketchpad from "./Sketchpad.vue";
+import SignaturePad from "./SignaturePad.vue";
 import ButtonReturn from "./ButtonReturn.vue";
 
 export default {
   components: {
     BIconDownload,
-    Sketchpad,
+    SignaturePad,
     ButtonReturn,
   },
   name: "CustomerInformation",
@@ -1134,7 +1134,6 @@ export default {
       const [base64, isBlocked] = args;
       this.signatureBase64 = base64;
       this.signatureIsBlocked = isBlocked;
-      console.log(isBlocked);
     },
   },
   watch: {
