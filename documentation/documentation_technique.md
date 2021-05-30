@@ -950,6 +950,8 @@ Pour plus d'informations, rendez-vous dans l'annexe [`endpoints.md`](./endpoints
 
 [à compléter]
 
+### NPM
+
 #### Librairies
 
 ##### Vue Router

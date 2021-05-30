@@ -1701,11 +1701,11 @@ Les trois fonctionnalités de suppression fonctionnent de la manière suivante :
 
 ### Mardi 25 mai 2021
 
-Configuration de PHPMailer lors de l'envoie de mail dû à une création avec un template HTML et CSS. L'e-mail avec le document en question en pièce jointe envoyé lors de la création ou l'ajout d'un document PDF ressemble à cela :
+Configuration de PHPMailer afin d'envoyer un e-mail. Création du template HTML et CSS. Le e-mail avec le document en question en pièce jointe envoyé lors de la création ou l'ajout d'un document PDF ressemble à cela 
 
 ![dateTestPlanningSecondUser](./img/mailTemplate.PNG)
 
-Rendez-vous GMeet hebdomadaire avec M.Mathieu. Lors de notre discussion, nous avons discuté des points qui étaient intéressant à approfondir comme l'ajout d'un explain de ma requête de génération de planning ou de l'affichage des différentes vues de mon application. Les points que j'ai retenus sont :
+Rendez-vous GMeet hebdomadaire avec M. Mathieu. Lors de notre entretien, nous avons discuté des points qui étaient intéressants à approfondir comme l'ajout d'un explain de ma requête de génération de planning ou de l'affichage des différentes vues de mon application. Les points que j'ai retenus sont :
 
 * Test de performance de la requête des plannings avec beaucoup de données afin de réaliser un explain
 * Ajouter un formulaire de contact dans le pied de page de mon application
@@ -1719,7 +1719,7 @@ Modification de la création des conditions d'inscription. L'utilisateur doit ma
 Ajout des fonctionnalités de modification d'utilisateur et de chien. Un bouton "Modifier l'utilisateur" en dessous des informations d'utilisateur est accessible par les éducateurs canins dans l'objectif d'ouvrir une modale afin de modifier les informations de l'utilisateur en utilisant l'endpoint `PATCH api/v1/users`. 
 Même procédé pour la modification du chien, mais avec l'endpoint `PATCH api/v1/dogs`
 
-Début de développement du composant `CustomerAppoitment.vue` qui permettra d'afficher les données des rendez-vous d'un utilisateur. L'objectif de ce composant est d'afficher uniquement les résumés lorsque l'utilisateur est un client et d'afficher les résumés, les notes textuelles et graphique ainsi que les fonctionnalités d'ajout/modification et suppression lorsque que l'utilisateur est un éducateur canin.
+Début de développement du composant `CustomerAppoitment.vue` qui permettra d'afficher les données des rendez-vous d'un utilisateur. L'objectif de ce composant est d'afficher uniquement les résumés lorsque l'utilisateur est un client et d'afficher les résumés, les notes textuelles et graphique ainsi que les fonctionnalités d'ajout/modification et suppression lorsque l'utilisateur est un éducateur canin.
 Blocage lors de sa réalisation, car je dois trouver un moyen de charger l'ancienne image de la note graphique afin de permettre une nouvelle édition sur celle-ci. Actuellement avec la librairie `Responsive-Sketchap` il me semble que cela est impossible. Recherche d'une autre lib ou d'un autre moyen de résoudre ce problème. [Source intéressante](https://github.com/szimek/signature_pad)
 
 ### Mercredi 26 mai 2021
@@ -1730,7 +1730,7 @@ Réalisation de la page "Mes rendez-vous" pour les clients de l'application qui 
 * Date du rendez-vous
 * Résumé du rendez-vous
 
-Cette même page sera accessible par les éducateurs canins depuis la page des informations du client. Pour l'instant L'éducateur canin a la possibilité de :
+Cette même page sera accessible par les éducateurs canins depuis la page des informations du client. Pour l'instant l'éducateur canin a la possibilité de :
 
 * Consulter les mêmes informations de rendez-vous que les clients
 * Consulter les notes textuelles personnelles
@@ -1738,13 +1738,13 @@ Cette même page sera accessible par les éducateurs canins depuis la page des i
 * Modifier les résumés et notes textuelles personnelles 
 
 Affichage de la page pour les administrateurs (éducateurs canins) ![dateTestPlanningSecondUser](./img/vue_mesrendezvous.PNG)
-Ajout d'un lien vers le document original des conditions d'inscriptions dans la fenêtre modale de création de conditions d'inscription afin de permettre au client de pouvoir lire son contenue avant de le signer.
+Ajout d'un lien vers le document original des conditions d'inscription dans la fenêtre modale de création de conditions d'inscription afin de permettre au client de pouvoir lire son contenu avant de le signer.
 
-Création de la fonctionnalité permettant à un éducateur canin d'ajouter un nouveau client à l'application. Pour ce faire il aura accès à un bouton sur la page "Administration" afin d'ouvrir la fenêtre modale suivante : 
+Création de la fonctionnalité permettant à un éducateur canin d'ajouter un nouveau client à l'application. Pour ce faire, il aura accès à un bouton sur la page "Administration" afin d'ouvrir la fenêtre modale suivante : 
 
 ![dateTestPlanningSecondUser](./img/vue_addclient.PNG)
 
-Une fois les informations remplient et le client ajouté, un mail sera envoyé au client afin de lui donner son mot de passe généré aléatoirement. L'email ressemble à cela :
+Une fois les informations remplies et le client ajouté, un e-mail sera envoyé au client afin de lui donner son mot de passe généré aléatoirement. L'e-mail ressemble à cela :
 
 ![dateTestPlanningSecondUser](./img/mailPassword.PNG)
 
@@ -1752,46 +1752,46 @@ Dorénavant, une fois connecté, l'utilisateur a la possibilité de modifier son
 
 ![dateTestPlanningSecondUser](./img/vue_updatepassword.PNG)
 
-Modification de la requête SQL de génération de planning afin que l'endpoint `GET api/v1/planning/{idEducator}` ne retourne pas les dates qui précédent le jour actuelle afin de ne pas créer d'incohérence.
+Modification de la requête SQL de génération de planning afin que l'endpoint `GET api/v1/planning/{idEducator}` ne retourne pas les dates qui précédent le jour actuel afin de ne pas créer d'incohérence.
 
 Création du composant `Planning.vue` représentant la page "Mon planning" de l'éducateur canin authentifié afin que celui-ci puisse consulter et modifier son planning.
 
 ### Jeudi 27 mai 2021
 
-Afin de faciliter l'affichage des données de planning des éducateurs canins au niveau du frontend. J'ai créé un endpoint permettant de retourner tous les créneaux horaires de tous les calendriers hebdomadaires de l'éducateur canin authentifié `GET api/v1/users/me/weeklySchedule` et un endpoint permettant de faire pareil mais pour les exceptions d'horaire `GET api/v1/users/me/scheduleOverride`
+Afin de faciliter l'affichage des données de planning des éducateurs canins au niveau du frontend,  j'ai créé un endpoint permettant de retourner tous les créneaux horaires de tous les calendriers hebdomadaires de l'éducateur canin authentifié `GET api/v1/users/me/weeklySchedule` et un endpoint permettant de faire pareil mais pour les exceptions d'horaire `GET api/v1/users/me/scheduleOverride`.
 
-Pour ce faire j'ai donc créé deux fonction dans le DAOTimeSlot `findAllByIdWeeklySchedule(bool $deleted,int $idEducator, int $idWeeklySchedule)` et `findAllByIdScheduleOverride(bool $deleted,int $idEducator, int $idScheduleOverride)` afin de créer les requêtes me permettant d'arriver à ce résultat.
+Pour ce faire, j'ai donc créé deux fonctions dans le DAOTimeSlot `findAllByIdWeeklySchedule(bool $deleted,int $idEducator, int $idWeeklySchedule)` et `findAllByIdScheduleOverride(bool $deleted,int $idEducator, int $idScheduleOverride)` afin de créer les requêtes me permettant d'arriver à ce résultat.
 
 Réalisation de la page "Mon planning" pour les éducateurs canins afin que ceux-ci puissent éditer leur planning :
 
 ![dateTestPlanningSecondUser](./img/vue_planning.PNG)
 
-La page charge tous les calendriers hebdomadaires avec leurs créneaux horaires grâce à l'endpoint `GET api/v1/users/me/weeklySchedule`, tous les exceptions d'horaire avec leurs créneaux horaires grâce à l'endpoint `GET api/v1/users/me/scheduleOverride` et toutes les vacances avec l'endpoint `GET api/v1/absences`. L'éducateur peut ajouter un calendrier hebdomadaire avec l'endpoint `POST api/v1/weeklySchedules`, ajouter une exception d'horaire avec l'endpoint `POST api/v1/scheduleOverrides` , ajouter un créneau horaire pour un calendrier hebdomadaire ou pour une exception d'horaire avec l'endpoint `POST api/v1/timeSlots`et ajouter des vacances avec l'endpoint `POST api/v1/absences`. Il peut également supprimer un calendrier hebdomadaire avec l'endpoint `DELETE api/v1/weeklySchedules{idWeeklySchedule}`, supprimer une exception d'horaire avec l'endpoint `DELETE api/v1/scheduleOverrides{idScheduleOverride}`, supprimer un créneau horaire d'un calendrier hebdomadaire ou d'une exception d'horaire avec l'endpoint `DELETE api/v1/timeSlots{idTimeSlot}`et supprimer des vacances avec l'endpoint `DELETE api/v1/absences{idAbsence}`.
+La page charge tous les calendriers hebdomadaires avec leurs créneaux horaires grâce à l'endpoint `GET api/v1/users/me/weeklySchedule`, toutes les exceptions d'horaire avec leurs créneaux horaires grâce à l'endpoint `GET api/v1/users/me/scheduleOverride` et toutes les vacances avec l'endpoint `GET api/v1/absences`. L'éducateur peut ajouter un calendrier hebdomadaire avec l'endpoint `POST api/v1/weeklySchedules`, ajouter une exception d'horaire avec l'endpoint `POST api/v1/scheduleOverrides` , ajouter un créneau horaire pour un calendrier hebdomadaire ou pour une exception d'horaire avec l'endpoint `POST api/v1/timeSlots`et ajouter des vacances avec l'endpoint `POST api/v1/absences`. Il peut également supprimer un calendrier hebdomadaire avec l'endpoint `DELETE api/v1/weeklySchedules{idWeeklySchedule}`, supprimer une exception d'horaire avec l'endpoint `DELETE api/v1/scheduleOverrides{idScheduleOverride}`, supprimer un créneau horaire d'un calendrier hebdomadaire ou d'une exception d'horaire avec l'endpoint `DELETE api/v1/timeSlots{idTimeSlot}`et supprimer des vacances avec l'endpoint `DELETE api/v1/absences{idAbsence}`.
 
 Réalisation de la page "Mes rendez-vous" pour les éducateurs canins afin que ceux-ci puissent éditer leur planning :
 
 ![dateTestPlanningSecondUser](./img/vue_educator_calendar.PNG)
 
-La page charge tout les rendez-vous de l'éducateur canin authentifié avec l'endpoint `GET api/v1/appoitments` et les affiches dans un calendrier. Lors du click sur l'un des rendez-vous du calendrier, l'éducateur canin sera redirigé vers la page du rendez-vous en question correspondant à la page "Mes rendez-vous" du client.
+La page charge tous les rendez-vous de l'éducateur canin authentifié avec l'endpoint `GET api/v1/appoitments` et les affiches dans un calendrier. Lors du click sur l'un des rendez-vous du calendrier, l'éducateur canin sera redirigé vers la page du rendez-vous en question correspondant à la page "Mes rendez-vous" du client.
 
 ### Vendredi 27 mai 2021
 
-Rendez-vous hebdomadaire physique avec M. Mathieu, lors de cette discussion, j'ai posé les question suivantes :
+Rendez-vous hebdomadaire physique avec M. Mathieu. Lors de cette discussion, j'ai posé les questions suivantes :
 
 1. Dois-je documenter toutes les fonctions de mon frontend dans la documentation technique de mon travail de diplôme ?
-   * Pas besoin si les fonctions de mon frontend ont des nom et des paramètres implicite. Dans le cas d'un traitement complexe, des commentaires sont nécessaires.
-2. La création des endpoints `GET api/v1/users/me/scheduleOverride` permettant de retourner les exceptions d'horaire de l'éducateur canin authentifié AINSI que les créneaux horaires correspondant et  `GET api/v1/users/me/weeklySchedule`permettant de retourner les calendriers hebdomadaires de l'éducateur canin AINSI que les créneaux horaires correspondant est une bonne approche ?
+   * Pas besoin si les fonctions de mon frontend ont des noms et des paramètres implicites. Dans le cas d'un traitement complexe, des commentaires sont nécessaires.
+2. La création des endpoints `GET api/v1/users/me/scheduleOverride` permettant de retourner les exceptions d'horaire de l'éducateur canin authentifié AINSI que les créneaux horaires correspondant et  `GET api/v1/users/me/weeklySchedule`permettant de retourner les calendriers hebdomadaires de l'éducateur canin AINSI que les créneaux horaires correspondant est-elle une bonne approche ?
    * Non, il est préférable de modifier les endpoints `GET api/v1/weeklySchedules` et `GET api/v1/scheduleOverrides` afin qu'ils retournent le même résultat.
-3. Comment afficher les notes graphiques des rendez-vous du client ? En effet, comparé à l'affichage des photos de chien depuis l'endpoint `GET api/v1/dogs/downloadPicture{serial_id}`, l'endpoint `GET api/v1/appoitments/downloadNoteGraphical{serial_id}`  nécessite un header d'autorisation afin que seul les éducateurs canins puissent y accéder.
+3. Comment afficher les notes graphiques des rendez-vous du client ? En fait, comparé à l'affichage de photo de chien depuis l'endpoint `GET api/v1/dogs/downloadPicture{serial_id}`, l'endpoint `GET api/v1/appoitments/downloadNoteGraphical{serial_id}`  nécessite un header d'autorisation afin que seuls les éducateurs canins puissent y accéder.
    * Essayer de convertir l'image en base64 au niveau du frontend puis attribuer la base64 à une balise image dynamiquement. M. Mathieu m'a envoyé un e-mail avec un code trouvé sur internet.
 4. Est-ce que la suppression d'un calendrier hebdomadaire ou d'une exception d'horaire devrait également supprimer les créneaux horaires correspondant ?
-   * Non car de toute façon, la génération de planning ne prend pas en compte les créneaux horaires de calendrier hebdomadaire ou d'exception d'horaire supprimé. De plus, imaginons qu'un client me demande récupérer un calendrier hebdomadaire ou une exception d'horaire supprimé car il a effectué une mauvaise manipulation, il suffira uniquement de récupérer le calendrier hebdomadaire ou l'exception d'horaire et non tous les créneaux horaires correspondant
+   * Non car de toute façon, la génération de planning ne prend pas en compte les créneaux horaires de calendrier hebdomadaire ou d'exception d'horaire supprimé. De plus, imaginons qu'un client me demande de récupérer un calendrier hebdomadaire ou une exception d'horaire supprimé car il a effectué une mauvaise manipulation, il suffira uniquement de récupérer le calendrier hebdomadaire ou l'exception d'horaire et non tous les créneaux horaires correspondants.
 5. Faut-il permettre la modification des calendriers hebdomadaires, des exceptions d'horaire et des créneaux horaires ?
    * Non, car cela créé trop de problème de vérification de chevauchement lors de la modification. M. Mathieu me conseille même de supprimer les endpoints `PATCH api/v1/weeklySchedules{idWeeklySchedule}`, `PATCH api/v1/scheduleOverrides{idScheduleOverride}` et `PATCH api/v1/timeSlots{idTimeSlot}` afin de ne pas permettre cette fonctionnalité.
 
-Réalisation des modification concernant le point 2 de la discussion avec M. Mathieu en supprimant les endpoints `GET api/v1/users/me/scheduleOverride`  et ` GET api/v1/users/me/weekylSchedule` et en modifiant le résultat des endpoints `GET api/v1/scheduleOverrides` et `GET api/v1/weeklySchedules`. Modification de la documentation des endpoints concernés.
+Réalisation des modifications concernant le point 2 de la discussion avec M. Mathieu en supprimant les endpoints `GET api/v1/users/me/scheduleOverride`  et ` GET api/v1/users/me/weekylSchedule` et en modifiant le résultat des endpoints `GET api/v1/scheduleOverrides` et `GET api/v1/weeklySchedules`. Modification de la documentation des endpoints concernés.
 
-Réalisation des modification concernant le point 5 de la discussion avec M. Mathieu en supprimant les endpoints `PATCH api/v1/weeklySchedules{idWeeklySchedule}`, `PATCH api/v1/scheduleOverrides{idScheduleOverride}` et `PATCH api/v1/weeklySchedules{idWeeklySchedule}` ainsi que leurs documentations.
+Réalisation des modifications concernant le point 5 de la discussion avec M. Mathieu en supprimant les endpoints `PATCH api/v1/weeklySchedules{idWeeklySchedule}`, `PATCH api/v1/scheduleOverrides{idScheduleOverride}` et `PATCH api/v1/weeklySchedules{idWeeklySchedule}` ainsi que leurs documentations.
 
 Modification de TOUTES les occurrences de `appoitment` en `appointment`.......
 
@@ -1801,4 +1801,8 @@ J'ai utilisé cette librairie afin de permettre à l'éducateur canin de dessine
 * Click sur le bouton "Notes graphiques" afin d'ouvrir une fenêtre modale
 * Lors de l'ouverture de cette fenêtre, appel de l'endpoint `GET api/v1/appointments/downloadNoteGraphical/{serial_id}` afin de charger l'image des notes graphiques si elle est déjà existante dans le composant `VueSignaturePad`
 * Édition ou suppression des notes graphiques
-* Appel de l'endpoint `POST api/v1/appointments/uploadNoteGraphical` afin d'uploadé cette nouvelle version des notes graphiques
+* Appel de l'endpoint `POST api/v1/appointments/uploadNoteGraphical` afin d'uploader cette nouvelle version des notes graphiques
+
+### Samedi 28 mai 2021
+
+Modification du composant  `Sketchpad.vue` en `SignaturePad.vue` afin de pouvoir intégrer la nouvelle librairie de signature à la fonctionnalité permettant de créer les conditions d'inscription signées.
