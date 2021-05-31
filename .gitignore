@@ -1,13 +1,13 @@
-api_rest/v1/.env
-api_rest/v1/vendor/*
+api_rest/.env
+api_rest/vendor/*
 pwa2/*
 pwa/node_modules/*
 
-api_rest/v1/storage/app/dog_picture/*
-!api_rest/v1/storage/app/dog_picture/fYPxlcOc.jpeg
-api_rest/v1/storage/app/conditions_registration/*
-!api_rest/v1/storage/app/conditions_registration/mASE47FP.pdf
-api_rest/v1/storage/app/pdf/*
-!api_rest/v1/storage/app/pdf/V9CUouI8.pdf
-api_rest/v1/storage/app/graphical_note/*
-!api_rest/v1/storage/app/graphical_note/JQ5LD72g.png
+api_rest/storage/app/dog_picture/*
+!api_rest/storage/app/dog_picture/fYPxlcOc.jpeg
+api_rest/storage/app/conditions_registration/*
+!api_rest/storage/app/conditions_registration/mASE47FP.pdf
+api_rest/storage/app/pdf/*
+!api_rest/storage/app/pdf/V9CUouI8.pdf
+api_rest/storage/app/graphical_note/*
+!api_rest/storage/app/graphical_note/JQ5LD72g.png
