@@ -1806,3 +1806,35 @@ J'ai utilisé cette librairie afin de permettre à l'éducateur canin de dessine
 ### Samedi 28 mai 2021
 
 Modification du composant  `Sketchpad.vue` en `SignaturePad.vue` afin de pouvoir intégrer la nouvelle librairie de signature à la fonctionnalité permettant de créer les conditions d'inscription signées.
+
+### Lundi 31 mai 2021
+
+Documentation des points suivants dans le rapport :
+
+* PWA
+  * Vue
+    * Description
+  * Librairies utilisées
+    * BootstrapVue
+    * Vue Router
+    * Vuex
+    * Axios
+    * Signature Pad
+    * FullCalendar
+    * Moment.js
+    * AlertifyJS
+    * reCAPTCHA
+
+Implémentation de la vérification d'inscription avec le système de détection automatisé d'utilisateurs reCAPTCHA de Google du côté serveur. En effet, c'est en réalisant la documentation technique de mon projet que je me suis rendu compte que je vérifier le captcha uniquement du côté client. De ce fait, la protection fournit pas reCAPTCHA n'était pas optimale. Pour ce faire, j'ai ajouté dans mon l'endpoint `POST api/v1/users` la possibilité de rajouter dans le body `reCAPTCHAuserResponseToken`. Celui-ci est maintenant obligatoire si un mot de passe est spécifié dans le body de la requête. Fonctionnement de reCAPTCHA :
+
+* Cocher le captcha du composant vue reCAPTCHA au niveau du frontend
+* Réaliser s'il le faut, le test de validation 
+* Une fois réalisé, le reCAPTCHA retourne un token de réponse
+* Envoie de ce token avec les autres informations d'inscription
+* Validation du token en appelant l'api `https://www.google.com/recaptcha/api/siteverify` avec comme champs de body :
+  * La clé secrète fournit par Google
+  * Le token de réponse utilisateur 
+* Retourne true si c'est bon et false si il y a un problème
+
+[Source](https://developers.google.com/recaptcha/docs/verify)
+

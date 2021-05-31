@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import router from "./router";
-import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./variable.js";
+import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./constants.js";
 
 Vue.use(Vuex);
 
@@ -29,6 +29,10 @@ export default new Vuex.Store({
       params.append("phonenumber", authData.phonenumber);
       params.append("address", authData.address);
       params.append("password", authData.password);
+      params.append(
+        "reCAPTCHAuserResponseToken",
+        authData.reCAPTCHAuserResponseToken
+      );
       Vue.prototype.$http
         .post(Vue.prototype.$API_URL + "users/", params)
         .then((res) => {

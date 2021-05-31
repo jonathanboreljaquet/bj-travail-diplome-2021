@@ -150,13 +150,16 @@ export default {
         password: "",
         repeatPassword: "",
         robot: false,
+        reCAPTCHAresponse: "",
       },
     };
   },
   methods: {
     onVerify(response) {
+      console.log(response);
       if (response) {
         this.form.robot = true;
+        this.form.reCAPTCHAresponse = response;
       }
     },
     onSubmit() {
@@ -177,6 +180,7 @@ export default {
         phonenumber: this.form.phonenumber,
         address: this.form.address,
         password: this.form.password,
+        reCAPTCHAuserResponseToken: this.form.reCAPTCHAresponse,
       });
     },
   },

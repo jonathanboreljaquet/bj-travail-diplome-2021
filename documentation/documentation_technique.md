@@ -36,13 +36,14 @@
         - [Responsive-Sketchpad](#responsive-sketchpad)
         - [FullCalendar](#fullcalendar)
         - [Webpack](#webpack)
+  - [Table des figures](#table-des-figures)
 
 ## API REST
 
 ### Arborescence
 
 ```
-api/v1
+api
 │
 └── app
 │   └── Models
@@ -61,35 +62,65 @@ api/v1
 Le dossier Models contient les modèles de l'API REST. Chaque modèle est une représentation objet de sa table de base de données correspondante. La création de ces modèles me permet d'utiliser les données de ma base de données de manière objet.
 Exemple de la classe `Dog` représentant la table `dog` de la base de données :
 
-![dateTestPlanningSecondUser](./diagram/umletino/dogModel.png)
+<figure>
+   <center>
+  	<img id="tableDog" src="./diagram/umletino/dogModel.png" alt="dogModel">      
+  	<figcaption>Fig.1 - Dog Model </figcaption>
+  </center>
+</figure>
 
-![dateTestPlanningSecondUser](./diagram/dogTable.PNG)
+<figure>
+   <center>
+  	<img src="./diagram/dogTable.PNG" alt="dogTable">      
+  	<figcaption>Fig.2 - Table dog </figcaption>
+  </center>
+</figure>
 
 #### app/DataAccessObject
 
 Le dossier DataAccessObject contient les data access object (DAO) de l'API REST. Ces DAO contiennent toutes les méthodes permettant un CRUD sur sa table de base de données correspondante. Les méthodes des DAO fonctionnent de manière à créer ou récupérer des modèles afin de respecter un maximum la structure objet de l'API REST.
 Exemple de la classe `DAODog` :
 
-![dateTestPlanningSecondUser](./diagram/umletino/dogDAO.png)
+<figure>
+   <center>
+  	<img src="./diagram/umletino/dogDAO.png" alt="DAODog">      
+  	<figcaption>Fig.3 - Data Access Object Dog </figcaption>
+  </center>
+</figure>
 
 #### app/Controllers
 
-Le dossier Controllers contient les contrôleurs de l'API REST, comme leur nom l'indique. Le but des contrôleurs est de contrôler les différents cas d'utilisation et d'autorisation d'accès en utilisant, s'il le faut, les DAO afin de communiquer avec la base de données et en retournant les différents codes HTTP et messages en format JSON. 
+Le dossier Controllers contient les contrôleurs de l'API REST. Comme leurs nom l'indique, le but des contrôleurs est de contrôler les différents cas d'utilisation et d'autorisation d'accès en utilisant, s'il le faut, les DAO afin de communiquer avec la base de données et en retournant les différents codes HTTP et messages en format JSON. 
 Exemple de la classe `DogController` :
 
-![dateTestPlanningSecondUser](./diagram/umletino/dogController.png)
+<figure>
+   <center>
+  	<img src="./diagram/umletino/dogController.png" alt="dogController">      
+  	<figcaption>Fig.4 - Dog Controller </figcaption>
+  </center>
+</figure>
 
 Dans ce dossier résident également les contrôleurs `ResponseController` et `HelperController`. Le `ResponseController` permet de retourner toutes les différentes réponses HTTP. Le `HelperController` permet l'utilisation de méthode dite d'aide et qui n'aurait pas leur place dans un contrôleur basique.
 Classes `ResponseController` et `HelperController` :
 
-![dateTestPlanningSecondUser](./diagram/umletino/ResponseHelperController.png)
+<figure>
+   <center>
+  	<img src="./diagram/umletino/ResponseHelperController.png" alt="responseHelperController">      
+  	<figcaption>Fig.5 - ResponseController et HelperController </figcaption>
+  </center>
+</figure>
 
 #### app/System
 
 Le dossier System contient la classe `DatabaseConnector` qui permet la connexion à la base de données en récupérant les variables d'environnements *PHP dotenv* et la classe `Constants` permettant de stocker les différentes constantes de l'API REST.
 Classes `DatabaseConnector` et `Constants` :
 
-![dateTestPlanningSecondUser](./diagram/umletino/databaseConnectorConstants.png)
+<figure>
+   <center>
+  	<img src="./diagram/umletino/databaseConnectorConstants.png" alt="databaseConnectorConstants">      
+  	<figcaption>Fig.6 - Classes DatabaseConnector et Constants </figcaption>
+  </center>
+</figure>
 
 #### public
 
@@ -109,11 +140,21 @@ Fichier de bootage de l'API REST inclus dans tous les fichiers d'entrées, celui
 
 ### Structure
 
-![dateTestPlanningSecondUser](./diagram/drawio/system.svg)
+<figure>
+   <center>
+  	<img src="./diagram/drawio/system.svg" alt="system">      
+  	<figcaption>Fig.7 - Structure de l'API REST </figcaption>
+  </center>
+</figure>
 
 ### Base de données
 
-![dateTestPlanningSecondUser](./img/database.png)
+<figure>
+   <center>
+  	<img src="./img/database.png" alt="database">      
+  	<figcaption>Fig.8 - Base de de données de l'API REST </figcaption>
+  </center>
+</figure>
 
 La base de données que j'ai développé et utilisé se décompose en deux parties.
 La partie supérieure, donc les tables : `appointment`, `user`, `document` et `dog` concernent toutes les données en lien avec les clients de l'application.
@@ -550,7 +591,12 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
 
 #### Format de code
 
-![dateTestPlanningSecondUser](./diagram/drawio/unitTestCodeFormat.svg)
+<figure>
+   <center>
+  	<img src="./diagram/drawio/unitTestCodeFormat.svg" alt="testCodeFormat">      
+  	<figcaption>Fig.9 - Format de code des tests unitaires </figcaption>
+  </center>
+</figure>
 
 **Définition**
 
@@ -754,7 +800,7 @@ composer require dompdf/dompdf
 
 Après avoir exécuté ce type de commande, mon projet contient maintenant les fichiers `composer.json` et `composer.lock` ainsi que le dossier `vendor`. Comme expliqué auparavant, `composer.json` est comme un guide correspondant aux versions de dépendance que Composer **doit** installer tandis que `composer.lock` est une représentation exact des versions de dépendance qui **ont** été installées. Le dossier `vendor` quant à lui, contient tous les paquets et dépendances installés du projet.
 
-Une fois nos paquets et dépendances installés, il faut maintenant pouvoir les inclure dans un de nos scripts PHP. Pour ce faire, Composer nous facilite la tâche en générant un fichier de chargement automatique nommé `autoload.php`. En incluant ce fichier dans mon fichier `bootstrap.php` qui lui-même étant inclus dans chaque point d'entrées de mon API REST, je peux accéder quand je le souhaite aux différents paquets et dépendance de mon projet. Par exemple, si je souhaite utiliser le paquet Dompdf dans un de mes scripts PHP, je peux écrire la ligne `use Dompdf\Dompdf` afin d'y accéder. 
+Une fois nos paquets et dépendances installés, il faut maintenant pouvoir les inclure dans un de nos scripts PHP. Pour ce faire, Composer nous facilite la tâche en générant un fichier de chargement automatique nommé `autoload.php`. En incluant ce fichier dans mon fichier `bootstrap.php` qui lui-même étant inclus dans chaque point d'entrées de mon API REST, je peux accéder quand je le souhaite aux différents paquets et dépendance de mon projet. Par exemple, si je souhaite utiliser le paquet Dompdf dans un de mes scripts PHP, il me suffit d'écrire la ligne `use Dompdf\Dompdf` afin d'y accéder. 
 
 ### Librairies
 
@@ -940,7 +986,21 @@ Pour plus d'informations, rendez-vous dans l'annexe [`endpoints.md`](./endpoints
 
 #### Arborescence
 
-[à compléter]
+```
+pwa
+│
+└── node_modules
+└── public
+└── src
+│   └── assets
+│   └── components
+│   └── plugins
+│   └── router
+│   └── App.vue
+│   └── main.js
+│   └── store.js
+│   └── constants.js
+```
 
 #### Structure
 
@@ -986,5 +1046,17 @@ Pour plus d'informations, rendez-vous dans l'annexe [`endpoints.md`](./endpoints
 
 [à compléter]
 
+## Table des figures
 
+| Numéro de figure | Figure                                 |
+| ---------------- | -------------------------------------- |
+| 1                | Dog Model                              |
+| 2                | Table dog                              |
+| 3                | Data Access Object Dog                 |
+| 4                | Dog Controller                         |
+| 5                | ResponseController et HelperController |
+| 6                | Classes DatabaseConnector et Constants |
+| 7                | Structure de l'API REST                |
+| 8                | Base de de données de l'API REST       |
+| 9                | Format de code des tests unitaires     |
 

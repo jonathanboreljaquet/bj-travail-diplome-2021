@@ -9,28 +9,31 @@ Créer un utilisateur dans la base de données et retourner son code de rôle ai
 Cet endpoint permet l'inscription d'un client de deux manières différentes afin que celui-ci puisse accéder aux fonctionnalités de l'application :
 
 * Inscription client de manière autonome
-* Inscription client par l'éducateur canin lors d'un appel téléphonique, un e-mail contenant un mot de passe généré aléatoirement est également envoyé par e-mail
+* Inscription client par l'éducateur canin lors d'un appel téléphonique, un e-mail contenant un mot de passe généré aléatoirement est envoyé par e-mail
 
 Body de la requête :
 
-| Clef        | Définition                              | Obligatoire | Format                            |
-| ----------- | --------------------------------------- | :---------: | --------------------------------- |
-| email       | L'adresse e-mail de l'utilisateur       |      X      | L'adresse e-mail doit être valide |
-| firstname   | Le prénom de l'utilisateur              |      X      |                                   |
-| lastname    | Le nom de l'utilisateur                 |      X      |                                   |
-| phonenumber | Le numéro de téléphone de l'utilisateur |      X      |                                   |
-| address     | L'adresse de l'utilisateur              |      X      |                                   |
-| password    | Le mot de passe de l'utilisateur        |             |                                   |
+| Clef                       | Définition                                                   |          Obligatoire          | Format                            |
+| -------------------------- | ------------------------------------------------------------ | :---------------------------: | --------------------------------- |
+| email                      | L'adresse e-mail de l'utilisateur                            |               X               | L'adresse e-mail doit être valide |
+| firstname                  | Le prénom de l'utilisateur                                   |               X               |                                   |
+| lastname                   | Le nom de l'utilisateur                                      |               X               |                                   |
+| phonenumber                | Le numéro de téléphone de l'utilisateur                      |               X               |                                   |
+| address                    | L'adresse de l'utilisateur                                   |               X               |                                   |
+| password                   | Le mot de passe de l'utilisateur                             |                               |                                   |
+| reCAPTCHAuserResponseToken | Le token de réponse fournit par le système de détection automatisé d'utilisateurs reCAPTCHA de Google | X si le password est spécifié |                                   |
+
+<div style="page-break-after: always;"></div>
 
 ##### Use case
 
-<img src="./diagram/useCaseInscription.svg" width="450px" />
+<img src="./diagram/useCaseInscription.svg" width="500px" />
 
 <div style="page-break-after: always;"></div>
 
 ##### Flow chart
 
-<img src="./diagram/drawio/flowchartPostUser.svg" width="350px"/>
+<img src="./diagram/drawio/flowchartPostUser.svg" width="470px"/>
 
 ##### Tests unitaires
 

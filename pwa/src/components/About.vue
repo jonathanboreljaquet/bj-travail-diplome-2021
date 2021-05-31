@@ -25,7 +25,7 @@
 
 <script>
 import LeftSectionContent from "./LeftSectionContent.vue";
-import BorisEducator from "../assets/img/boriseducateurcanin.webp";
+import BorisEducator from "../assets/img/boriseducateurcanin.png";
 import RightSectionContent from "./RightSectionContent.vue";
 import BorisWithHyron from "../assets/img/boriswithhyron.png";
 

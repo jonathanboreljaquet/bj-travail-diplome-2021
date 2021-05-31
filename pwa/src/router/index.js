@@ -12,7 +12,7 @@ import CustomerAppointment from "./../components/CustomerAppointment.vue";
 import Administration from "./../components/Administration.vue";
 import Planning from "./../components/Planning.vue";
 import EducatorCalendar from "./../components/EducatorCalendar.vue";
-import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./../variable.js";
+import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "../constants.js";
 
 Vue.use(Router);
 

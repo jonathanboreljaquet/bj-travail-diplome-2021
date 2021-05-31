@@ -6,25 +6,20 @@ import "./assets/css/main.css";
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-
-import VueAlertify from "vue-alertify";
-Vue.use(VueAlertify);
+import store from "./store";
 
 import Axios from "axios";
 Vue.prototype.$http = Axios;
-
-import store from "./store";
+Vue.prototype.$API_URL = "https://api-rest-douceur-de-chien.boreljaquet.ch/v1/";
 
 import jquery from "jquery";
 Vue.prototype.$jquery = jquery;
 
+import VueAlertify from "vue-alertify";
+Vue.use(VueAlertify);
+
 import VueSignaturePad from "vue-signature-pad";
-
 Vue.use(VueSignaturePad);
-
-Vue.prototype.$API_URL = "https://api-rest-douceur-de-chien.boreljaquet.ch/";
-
-Vue.config.productionTip = false;
 
 new Vue({
   router,
