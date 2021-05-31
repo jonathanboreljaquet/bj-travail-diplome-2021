@@ -337,7 +337,7 @@
             <b-form-file
               required
               v-model="dogPictureFile"
-              :capture="true"
+              accept="image/jpeg, image/png"
               placeholder="Aucun fichier choisi"
               browse-text="Ajouter"
               id="input-dog-picture-file"

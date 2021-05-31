@@ -80,12 +80,46 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 
 Pour plus d'informations, dirigez-vous sur la [documentation technique](./documentation/documentation_technique.md).
 
+### Fonctionnalités de l'application WEB
+
+**Invité**
+
+* Consultation des informations de la société
+* Consultation des créneaux horaires disponibles des éducateurs canins de la société
+* Inscription
+* Connexion
+
+**(Utilisateur authentifié) Client**
+
+* Consultation des informations personnelles
+* Modification du mot de passe
+* Téléchargement de document
+* Consultation des contenus séances
+* Prise de rendez-vous autonome
+* Déconnexion
+
+**(Utilisateur authentifié) Éducateur canin**
+
+* Consultation de tous les clients de la société
+* Ajout d'un client
+* Création, édition et suppression des informations personnelles des clients
+* Création, édition et suppression des informations des chiens des clients
+* Création et suppression des conditions d'inscription signées numériquement des clients
+* Ajout et suppression des documents PDF d'informations des clients
+* Modification de photo de chien depuis caméra ou fichier existant
+* Consultation des rendez-vous à venir
+* Prise de rendez-vous avec un client
+* Création et édition des contenus séances
+* Prise de notes graphiques concernant un rendez-vous
+* Déconnexion
+
 ## Pré-requis
 
 * PHP 7.4
 * Composer
+* npm
 
-## Libraires
+## Librairies
 
 ### PHP - API REST
 
@@ -93,17 +127,28 @@ Pour plus d'informations, dirigez-vous sur la [documentation technique](./docume
 * [PHPMailer](https://github.com/PHPMailer/PHPMailer)
 * [Dompdf](https://github.com/dompdf/dompdf)
 
-### JAVASCRIPT - APPLICATION
+### VUE.JS - APPLICATION
+
+* [BootstrapVue](https://bootstrap-vue.org/)
+* [Vue router](https://router.vuejs.org/)
+* [Vuex](https://vuex.vuejs.org/)
+* [Axios](https://github.com/axios/axios)
+* [JQuery](https://jquery.com/)
+* [Moment.js](https://momentjs.com/)
+* [Alertify](https://alertifyjs.com/) avec le composant Vue développé par la communauté [vue-alertify](https://github.com/sj82516/vue-alertify)
+* [Recaptcha](https://www.google.com/recaptcha/about/) avec le composant Vue développé par la communauté [vue-recaptcha](https://www.npmjs.com/package/vue-recaptcha)
+* [Signature Pad](https://github.com/szimek/signature_pad) avec le composant Vue développé par la communauté [vue-signature-pad](https://github.com/neighborhood999/vue-signature-pad#readme)
 
 ## Installation
 
 ### PHP - API REST
 
 1. Télécharger le projet
-2. Exécuter la commande ``composer install``
-3. Copiez le contenu du fichier **.env.example** dans un nouveau fichier nommé **.env**
-4. Renseignez les valeurs des variables d'environnement dans le fichier **.env**
-5. Exécuter la commande `php dbseed.php` pour générer les données de test
+2. Déplacer le dossier `api_rest` à la racine de votre serveur HTTP
+3. Exécuter la commande ``composer install`` dans ce dossier
+4. Copiez le contenu du fichier **.env.example** dans un nouveau fichier nommé **.env**
+5. Renseignez les valeurs des variables d'environnement dans le fichier **.env**
+6. Exécuter la commande `php dbseed.php` pour générer les données de test
 
 ### JAVASCRIPT - APPLICATION
 

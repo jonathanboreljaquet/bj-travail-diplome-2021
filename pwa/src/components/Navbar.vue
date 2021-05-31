@@ -32,7 +32,7 @@
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item v-if="auth" @click="logout()" href="#">
-            Deconnexion
+            Déconnexion
           </b-nav-item>
           <b-nav-item v-if="!auth" to="/connection" href="#">
             Connexion
