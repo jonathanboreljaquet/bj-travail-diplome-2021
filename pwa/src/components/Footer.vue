@@ -14,8 +14,8 @@
         <b-col cols="12" sm="4">
           <h5>Email</h5>
           <h6>
-            <a href="mailto:douceurdechien@gmail.com"
-              >douceurdechien@gmail.com</a
+            <a href="mailto:douceurdechien@douceurdechien.com"
+              >contact@douceurdechien.com</a
             >
           </h6>
         </b-col>

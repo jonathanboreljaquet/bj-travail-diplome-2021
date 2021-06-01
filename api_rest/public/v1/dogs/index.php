@@ -39,7 +39,7 @@ $dog->name = $input["name"] ?? null;
 $dog->breed = $input["breed"] ?? null;
 $dog->sex = $input["sex"] ?? null;
 $dog->chip_id = $input["chip_id"] ?? null;
-$dog->user_id = $input["user_id"] ?? null;
+$dog->user_id = isset($input["user_id"]) && is_numeric($input["user_id"]) ? $input["user_id"] : null;
 
 switch ($requestMethod) {
     case 'GET':

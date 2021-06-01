@@ -16,7 +16,7 @@
       </b-row>
       <b-row id="title" class="justify-content-center">
         <b-col lg="6">
-          <b-form @submit.prevent="onSubmit">
+          <b-form @submit.prevent="onSubmit" autocomplete="on">
             <b-form-group
               id="input-group-1"
               label="Adresse email:"
@@ -27,6 +27,7 @@
                 v-model="form.email"
                 type="email"
                 placeholder="Entrez l'adresse email"
+                autocomplete="email"
                 required
               ></b-form-input>
             </b-form-group>
@@ -40,6 +41,7 @@
                 v-model="form.password"
                 type="password"
                 placeholder="Entrez le mot de passe"
+                autocomplete="current-password"
                 required
               ></b-form-input>
             </b-form-group>

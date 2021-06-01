@@ -35,11 +35,11 @@ parse_str(file_get_contents('php://input'), $input);
 
 $timeSlot = new TimeSlot();
 $timeSlot->id = $id ?? null;
-$timeSlot->code_day = $input["code_day"] ?? null;
+$timeSlot->code_day = isset($input["code_day"]) && is_numeric($input["code_day"]) ? $input["code_day"] : null;
 $timeSlot->time_start = $input["time_start"] ?? null;
 $timeSlot->time_end = $input["time_end"] ?? null;
-$timeSlot->id_weekly_schedule = $input["id_weekly_schedule"] ?? null;
-$timeSlot->id_schedule_override = $input["id_schedule_override"] ?? null;
+$timeSlot->id_weekly_schedule = isset($input["id_weekly_schedule"]) && is_numeric($input["id_weekly_schedule"]) ? $input["id_weekly_schedule"] : null;
+$timeSlot->id_schedule_override = isset($input["id_schedule_override"]) && is_numeric($input["id_schedule_override"]) ? $input["id_schedule_override"] : null;
 
 
 switch ($requestMethod) {

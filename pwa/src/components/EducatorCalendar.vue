@@ -68,7 +68,6 @@ export default {
       this.$http
         .get(this.$API_URL + "appointments/", config)
         .then((response) => {
-          console.log(response.data);
           this.calendarOptions.events = [];
           response.data.forEach((appointment) => {
             this.calendarOptions.events.push({
@@ -84,7 +83,6 @@ export default {
               },
             });
           });
-          console.log(this.calendarOptions.events);
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);

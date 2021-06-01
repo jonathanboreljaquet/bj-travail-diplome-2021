@@ -17,9 +17,12 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-
-
 $requestMethod = $_SERVER["REQUEST_METHOD"];
+
+if (strcmp("OPTIONS", $requestMethod) == 0) {
+	header('Allow: GET,POST,PATCH,DELETE');
+	return;
+}
 
 $controller = new AppointmentController($dbConnection);
 

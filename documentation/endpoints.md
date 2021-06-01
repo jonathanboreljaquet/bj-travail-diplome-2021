@@ -195,11 +195,11 @@ Body de la requête :
 
 ##### Objectif
 
-Récupérer l'api token d'un utilisateur dans la base de données grâce à son adresse e-mail ainsi que son mot de passe.
+Récupérer l'api token, l'identifiant et le code du rôle d'un utilisateur dans la base de données grâce à son adresse e-mail ainsi que son mot de passe.
 
 ##### Utilisation concrète
 
-Cet endpoint permet la récupération de l'api token afin de permettre à l'utilisateur d'accéder aux différentes fonctionnalités de l'application. 
+Cet endpoint permet la récupération de l'api token, l'identifiant et le code du rôle afin de permettre à l'utilisateur d'accéder aux différentes fonctionnalités de l'application. 
 Body de la requête :
 
 | Clef     | Définition                        | Obligatoire | Format |

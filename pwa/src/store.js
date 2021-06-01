@@ -9,15 +9,18 @@ export default new Vuex.Store({
   state: {
     api_token: null,
     code_role: null,
+    user_id: null,
   },
   mutations: {
     authUser(state, userData) {
       state.api_token = userData.api_token;
       state.code_role = userData.code_role;
+      state.user_id = userData.user_id;
     },
     clearAuth(state) {
       state.api_token = null;
       state.code_role = null;
+      state.user_id = null;
     },
   },
   actions: {
@@ -39,9 +42,11 @@ export default new Vuex.Store({
           console.log(res);
           localStorage.setItem("api_token", res.data.api_token);
           localStorage.setItem("code_role", res.data.code_role);
+          localStorage.setItem("user_id", res.data.user_id);
           commit("authUser", {
             api_token: res.data.api_token,
             code_role: res.data.code_role,
+            user_id: res.data.user_id,
           });
           Vue.prototype.$alertify.success("Vous êtes inscrit");
           router.push("/customer_information");
@@ -59,9 +64,11 @@ export default new Vuex.Store({
         .then((res) => {
           localStorage.setItem("api_token", res.data.api_token);
           localStorage.setItem("code_role", res.data.code_role);
+          localStorage.setItem("user_id", res.data.user_id);
           commit("authUser", {
             api_token: res.data.api_token,
             code_role: res.data.code_role,
+            user_id: res.data.user_id,
           });
           Vue.prototype.$alertify.success("Vous êtes connecté");
           if (this.state.code_role == ADMIN_CODE_ROLE) {
@@ -79,18 +86,21 @@ export default new Vuex.Store({
       commit("clearAuth");
       localStorage.removeItem("api_token");
       localStorage.removeItem("code_role");
+      localStorage.removeItem("user_id");
       Vue.prototype.$alertify.success("Vous êtes déconnecté");
       router.push("/");
     },
     autoLogin({ commit }) {
       const api_token = localStorage.getItem("api_token");
       const code_role = localStorage.getItem("code_role");
-      if (!api_token || !code_role) {
+      const user_id = localStorage.getItem("user_id");
+      if (!api_token || !code_role || !user_id) {
         return;
       }
       commit("authUser", {
         api_token: api_token,
         code_role: code_role,
+        user_id: user_id,
       });
     },
   },

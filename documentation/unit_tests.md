@@ -465,9 +465,11 @@ pm.test("The data structure of the response is correct", () => {
   pm.response.to.have.jsonSchema({
           "type": "object",
           "properties": {
-              "api_token" : {"type" : "string"}
+            "api_token" : {"type" : "string"},
+            "user_id" : {"type" : "integer"},
+            "code_role" : {"type" : "string"}
           },
-          "required": ["api_token"]
+          "required": ["api_token","user_id","code_role"]
   })
 });
 ```

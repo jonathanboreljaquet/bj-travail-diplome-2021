@@ -25,8 +25,24 @@
                     <p v-if="appointment.summary != null">
                       {{ appointment.summary }}
                     </p>
-                    <p v-else>Aucune réssumé</p>
+                    <p v-else>Aucune résumé</p>
                     <div v-if="authAdministrator">
+                      <div style="position: absolute; top: 5px; right: 5px">
+                        <b-button
+                          variant="danger"
+                          v-b-modal.modal-delete-appointment
+                          @click="
+                            sendAppointmentInformations(
+                              appointment.id,
+                              appointment.summary,
+                              appointment.noteText,
+                              appointment.noteGraphicalSerialId
+                            )
+                          "
+                        >
+                          <b-icon-trash></b-icon-trash>
+                        </b-button>
+                      </div>
                       <h3>Notes textuelles personnelles du rendez-vous</h3>
                       <p v-if="appointment.noteText != null">
                         {{ appointment.noteText }}
@@ -178,6 +194,39 @@
           </b-row>
         </b-form>
       </b-modal>
+
+      <!-- MODAL DELETE APPOINTMENT-->
+      <b-modal
+        id="modal-delete-appointment"
+        title="Confirmation de supression d'un rendez-vous"
+        :hide-footer="true"
+        :hide-header="true"
+      >
+        <h5 style="text-align: center">Supprimer le rendez-vous ?</h5>
+        <b-form @submit.prevent="deleteAppointment(selectedAppointmentId)">
+          <b-row>
+            <b-col>
+              <b-button
+                block
+                variant="danger"
+                @click="$bvModal.hide('modal-delete-appointment')"
+              >
+                Non
+              </b-button>
+            </b-col>
+            <b-col>
+              <b-button
+                block
+                type="submit"
+                variant="success"
+                @click="$bvModal.hide('modal-delete-appointment')"
+              >
+                Oui
+              </b-button>
+            </b-col>
+          </b-row>
+        </b-form>
+      </b-modal>
     </b-container>
   </div>
 </template>
@@ -185,11 +234,12 @@
 <script>
 import ButtonReturn from "./ButtonReturn.vue";
 import "@/assets/css/timeline.css";
-
+import { BIconTrash } from "bootstrap-vue";
 export default {
   name: "CustomerAppointment",
   components: {
     ButtonReturn,
+    BIconTrash,
   },
   data() {
     return {
@@ -216,14 +266,13 @@ export default {
       this.$http
         .get(this.$API_URL + "appointments/", config)
         .then((response) => {
-          console.log(response);
           this.loadAppointmentsData(response.data);
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
     },
-    loadCustomerInformationsByUserId(userId) {
+    loadCustomerAppointmentsByUserId(userId) {
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
@@ -285,7 +334,7 @@ export default {
           this.$refs.signaturePad.fromDataURL(base64);
         })
         .catch((error) => {
-          console.log(error);
+          this.$alertify.error(error.response.data.error);
         });
     },
     updateAppointmentByAppointmentId(
@@ -306,7 +355,7 @@ export default {
         .patch(this.$API_URL + "appointments/" + appointmentId, params, config)
         .then((response) => {
           console.log(response);
-          this.loadCustomerInformationsByUserId(this.$route.params.userId);
+          this.loadCustomerAppointmentsByUserId(this.$route.params.userId);
           this.$alertify.success("Notes graphiques modifiées");
           this.$bvModal.hide("modal-update-appointment-informations");
         })
@@ -349,13 +398,31 @@ export default {
             )
             .then((response) => {
               console.log(response);
-              this.loadCustomerInformationsByUserId(this.$route.params.userId);
+              this.loadCustomerAppointmentsByUserId(this.$route.params.userId);
               this.$alertify.success("Notes graphiques ajoutées avec succès");
               this.$bvModal.hide("modal-graphical-note");
             })
             .catch((error) => {
               this.$alertify.error(error.response.data.error);
             });
+        });
+    },
+    deleteAppointment(appointmentId) {
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token,
+        },
+      };
+      this.$http
+        .delete(this.$API_URL + "appointments/" + appointmentId, config)
+        .then((response) => {
+          this.loadCustomerAppointmentsByUserId(this.$route.params.userId);
+          this.$alertify.success("Rendez-vous supprimé");
+          console.log(response);
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
         });
     },
     clearNoteGraphical() {
@@ -370,7 +437,7 @@ export default {
   mounted() {
     if (this.authAdministrator && this.$route.params.userId) {
       this.title = "Rendez-vous du client";
-      this.loadCustomerInformationsByUserId(this.$route.params.userId);
+      this.loadCustomerAppointmentsByUserId(this.$route.params.userId);
     } else {
       this.title = "Mes rendez-vous";
       this.loadAuthCustomerAppointment();

@@ -1838,3 +1838,26 @@ Implémentation de la vérification d'inscription avec le système de détection
 
 [Source](https://developers.google.com/recaptcha/docs/verify)
 
+### Mardi 1 juin 2021
+
+Modification des points d'entrées de l'API REST qui nécessitait un contrôle en amont afin de vérifier si les champs de type integer l'était bien. En effet, auparavant, ces endpoints retournait une erreur PHP car la variable d'instance du modèle était de type integer tandis que le champ du body lui, pouvait être de type string et de ce fait, lors de l'Initialisation de la variable d'instance du modèle avec cette valeur, retournait une erreur. J'ai donc vérifier dans chaque points d'entrées de mon API REST nécessitant des données numériques, que si elles existent et qu'elles sont numérique, alors je peux les insérer dans le modèle, sinon j'insère null.
+
+Modification de l'endpoint `POST api/v1/connection` afin que celui-ci retourne également l'identifiant de l'utilisateur authentifié.
+
+Modification du gestionnaire d'état Vue afin pouvoir désormais manipuler l'identifiant de l'utilisateur authentifié de manière globale.
+
+Création de la fonctionnalité permettant la prise de rendez-vous autonome pour les clients. En effet, une fois sur la page "Agenda", le client authentifié peut sélectionner un créneau horaire afin de réserver un rendez-vous.
+
+![dateTestPlanningSecondUser](./img/vue_addappointment.PNG)
+
+La fonctionnalité fonctionne de la manière suivante :
+
+1. Click sur le créneau horaire depuis l'affichage mensuelle
+2. Click sur le créneau horaire depuis l'affichage journalier ou hebdomadaire
+3. Si le client est authentifié, affichage de la fenêtre modale si-dessus, si se n'est pas le cas, une erreur est affiché afin de signaler à l'utilisateur qu'il doit se connecter
+4. Affichage des informations du rendez-vous dans la fenêtre modale
+5. Click sur le bouton "Réserver le rendez-vous" afin de valider la création et appeler l'endpoint `POST api/v1/appointments`
+
+Ajout de la fonctionnalité permettant aux éducateurs canins de supprimer des rendez-vous depuis la page affichant les rendez-vous d'un client en utilisant l'endpoint `DELETE api/v1/appointments/{idAppointment}.
+
+Ajout d'une fonctionnalité permettant de supprimer la date de fin d'un calendrier hebdomadaire lors de sa création afin de permettre la création d'un calendrier hebdomadaire permanant.

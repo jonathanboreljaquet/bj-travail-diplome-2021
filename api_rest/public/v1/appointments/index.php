@@ -36,12 +36,12 @@ parse_str(file_get_contents('php://input'), $input);
 $appointment = new Appointment();
 $appointment->id = $id ?? null;
 $appointment->datetime_appointment = $input["datetime_appointment"] ?? null;
-$appointment->duration_in_hour = $input["duration_in_hour"] ?? null;
+$appointment->duration_in_hour = isset($input["duration_in_hour"]) && is_numeric($input["duration_in_hour"]) ? $input["duration_in_hour"] : null;
 $appointment->note_text = $input["note_text"] ?? null;
 $appointment->note_graphical_serial_id = $input["note_graphical_serial_id"] ?? null;
 $appointment->summary = $input["summary"] ?? null;
-$appointment->user_id_customer = $input["user_id_customer"] ?? null;
-$appointment->user_id_educator = $input["user_id_educator"] ?? null;
+$appointment->user_id_customer = isset($input["user_id_customer"]) && is_numeric($input["user_id_customer"]) ? $input["user_id_customer"] : null;
+$appointment->user_id_educator = isset($input["user_id_educator"]) && is_numeric($input["user_id_educator"]) ? $input["user_id_educator"] : null;
 
 
 switch ($requestMethod) {

@@ -204,6 +204,7 @@
               menu-class="w-100"
               label-no-date-selected="Aucune date selectionnée"
               calendar-width="100%"
+              label-help=""
               class="mb-2"
             >
             </b-form-datepicker>
@@ -219,9 +220,18 @@
               menu-class="w-100"
               label-no-date-selected="Aucune date selectionnée"
               calendar-width="100%"
+              label-help=""
               class="mb-2"
             >
             </b-form-datepicker>
+            <b-button
+              size="sm"
+              variant="outline-danger"
+              v-if="formWeeklySchedule.date_valid_to"
+              @click="clearWeeklyScheduleDateValidTo"
+            >
+              Effacer la date
+            </b-button>
           </b-form-group>
 
           <b-button block type="submit" variant="outline-primary">
@@ -252,6 +262,7 @@
               menu-class="w-100"
               label-no-date-selected="Aucune date selectionnée"
               calendar-width="100%"
+              label-help=""
               class="mb-2"
             >
             </b-form-datepicker>
@@ -288,6 +299,7 @@
               menu-class="w-100"
               label-no-date-selected="Aucune date selectionnée"
               calendar-width="100%"
+              label-help=""
               class="mb-2"
             >
             </b-form-datepicker>
@@ -807,7 +819,9 @@ export default {
     createWeeklySchedule(dateValidFrom, dateValidTo) {
       const params = new URLSearchParams();
       params.append("date_valid_from", dateValidFrom);
-      params.append("date_valid_to", dateValidTo);
+      if (dateValidTo != null) {
+        params.append("date_valid_to", dateValidTo);
+      }
       const config = {
         headers: {
           // eslint-disable-next-line prettier/prettier
@@ -966,6 +980,9 @@ export default {
       if (value) {
         return moment("1970-01-01 " + value).format("HH[h]");
       }
+    },
+    clearWeeklyScheduleDateValidTo() {
+      this.formWeeklySchedule.date_valid_to = null;
     },
   },
   mounted() {
