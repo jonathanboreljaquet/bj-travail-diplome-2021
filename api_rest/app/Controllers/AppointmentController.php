@@ -134,18 +134,33 @@ class AppointmentController {
             return ResponseController::invalidDateTimeFormat();
         }
 
-        $elements = explode(" ",$appointment->datetime_appointment);
-        $date = $elements[0];
-        $time_start = $elements[1];
-        $datetime = new DateTime($time_start);
-        $datetime->modify('+'.$appointment->duration_in_hour.' hours');
-        $time_end = $datetime->format("H:i:s");
+        $datetime_start = new DateTime($appointment->datetime_appointment);
+        $datetime_end = clone $datetime_start;
+        $datetime_end->modify('+'.$appointment->duration_in_hour.' hours');
         
+        $date = $datetime_start->format("Y-m-d");
+        $time_start = $datetime_start->format("H:i:s");
+        $time_end = $datetime_end->format("H:i:s");
+
         if (!$this->DAOTimeSlot->findAppointmentSlotsForEducator($date,$time_start,$time_end,$appointment->user_id_educator)) {
             return ResponseController::invalidAppointment();
         }
-        
+
         $this->DAOAppointment->insert($appointment);
+
+        $filename =  "iCal-" . $datetime_start->format("Ymd"). ".ics";
+        
+        $upload_file = HelperController::generateTmpICSFile($datetime_start,$datetime_end, "Rendez-vous Douceur de Chien", $filename);
+
+        $message = "Bonjour et merci de faire confiance à la société Douceur de Chien, 
+        vous venez de prendre un rendez-vous le ".$datetime_start->format("d-m-Y")."
+        de ".$datetime_start->format("H\h")." à ".$datetime_end->format("H\h")." avec l'éducateur canin ".$userEducator->firstname." ".$userEducator->lastname.". Vous trouverez ci-joint un fichier
+        ICS permettant de planifier le rendez-vous dans votre calendrier personelle. 
+        Vous pouvez égalament accéder aux informations de ce rendez-vous depuis votre compte.";
+
+        HelperController::sendMail($message,"Un nouveau rendez-vous a été planifié",$userCustomer->email,null,$upload_file);
+
+        unlink($upload_file);
 
         return ResponseController::successfulCreatedRessource();
     }

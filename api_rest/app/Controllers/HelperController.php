@@ -354,7 +354,6 @@ class HelperController {
         file_put_contents(HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$filename.".pdf", $output);
     }
 
-
     /**
      * 
      * Method to check if the client-side Google reCAPTCHA is valid or not 
@@ -379,7 +378,18 @@ class HelperController {
       return $response->success;
     }
 
-    
+    public static function generateTmpICSFile($datetime_start, $datetime_end, $title, $filename)
+    {
+      ob_start();
+      include HelperController::getDefaultDirectory()."resources/template/ICS_appointment.php";
+      $contents = ob_get_clean();
+      $temp = tmpfile();
+      $tmpfile_path = stream_get_meta_data($temp)['uri'];
+      fwrite($temp, $contents);
+      rename($tmpfile_path, sys_get_temp_dir(). '\\' . $filename);
+      return sys_get_temp_dir(). "\\" . $filename;
+    }
+
     /**
      * 
      * Method to return the default directory of the API.

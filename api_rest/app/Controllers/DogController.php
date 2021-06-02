@@ -245,7 +245,7 @@ class DogController {
 
         $tmp_file = $_FILES["dog_picture"]["tmp_name"];
         $img_name = HelperController::generateRandomString();
-        $upload_dir = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$img_name.".jpeg";
+        $upload_file = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$img_name.".jpeg";
 
         if (!is_null($dog->picture_serial_id)) {
             $filename = HelperController::getDefaultDirectory()."storage/app/dog_picture/".$dog->picture_serial_id.".jpeg";
@@ -254,7 +254,7 @@ class DogController {
             }
         }
         
-        if (!move_uploaded_file($tmp_file,$upload_dir)) {
+        if (!move_uploaded_file($tmp_file,$upload_file)) {
             return ResponseController::uploadFailed();
         }
         

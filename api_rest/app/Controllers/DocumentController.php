@@ -145,7 +145,7 @@ class DocumentController {
     
                 HelperController::storeConditionsRegistration($filename,$package_number,$date,$signature_base64,$userfirstname,$userlastname);
 
-                $upload_dir = HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$filename.".pdf";
+                $upload_file = HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$filename.".pdf";
                 
                 break;
 
@@ -160,9 +160,9 @@ class DocumentController {
                 }
 
                 $tmp_file = $_FILES["document"]["tmp_name"];
-                $upload_dir = HelperController::getDefaultDirectory()."storage/app/pdf/".$filename.".pdf";
+                $upload_file = HelperController::getDefaultDirectory()."storage/app/pdf/".$filename.".pdf";
 
-                if (!move_uploaded_file($tmp_file,$upload_dir)) {
+                if (!move_uploaded_file($tmp_file,$upload_file)) {
                     return ResponseController::uploadFailed();
                 }
 
@@ -176,7 +176,7 @@ class DocumentController {
 
         $this->DAODocument->insert($document);
 
-        HelperController::sendMail("Bonjour et merci de faire confiance à la société Douceur de Chien, vous trouverez ci-joint le document qui a été ajouté à votre compte, vous pouvez égalament accéder à ce document depuis votre compte.","Un nouveau document a été ajouté à votre compte",$user->email,null,$upload_dir);
+        HelperController::sendMail("Bonjour et merci de faire confiance à la société Douceur de Chien, vous trouverez ci-joint le document qui a été ajouté à votre compte, vous pouvez égalament accéder à ce document depuis votre compte.","Un nouveau document a été ajouté à votre compte",$user->email,null,$upload_file);
 
         return ResponseController::successfulCreatedRessource();
     }
