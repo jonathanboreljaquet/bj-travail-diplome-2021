@@ -225,7 +225,7 @@ class HelperController {
                         <tr>
                           <td style="padding:0 0 36px 0;color:#153643;">
                             <h1 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;">'.$title.'</h1>
-                            <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">'.$content.'</p>
+                            <p style="text-align: justify;margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">'.$content.'</p>
                             <h3 style="font-size:18px;margin:0 0 20px 0;font-family:Arial,sans-serif;">'.$importantContent.'</h3>
                           </td>
                         </tr>
@@ -343,7 +343,8 @@ class HelperController {
      */
     public static function storeConditionsRegistration(string $filename,int $package_number,string $date, string $signature_base64,string $userfirstname, string $userlastname)
     {
-        $dompdf = new DOMPDF();        
+        $dompdf = new DOMPDF();  
+              
         ob_start();
         include HelperController::getDefaultDirectory()."resources/template/conditions_registration.php";
         $contents = ob_get_clean();
@@ -378,16 +379,43 @@ class HelperController {
       return $response->success;
     }
 
-    public static function generateTmpICSFile($datetime_start, $datetime_end, $title, $filename)
+    /**
+     * 
+     * Method to send an email with the appointment information and an ics file (iCalendar) as an attachment.
+     * 
+     * @param Datetime $start_datetime Start date of the appointment in an Datetime instance
+     * @param Datetime $end_datetime End date of the appointment in an Datetime instance
+     * @param string $educator_fullname The first and last name of the educator
+     * @param string $customer_email The customer's email address
+     * @param string $filename The name of the ics file to send
+     * @link https://datatracker.ietf.org/doc/html/rfc5545
+     * 
+     * @return void
+     */
+    public static function sendMailWithICSFile($start_datetime, $end_datetime, $educator_fullname, $customer_email , $filename)
     {
       ob_start();
-      include HelperController::getDefaultDirectory()."resources/template/ICS_appointment.php";
+      include HelperController::getDefaultDirectory()."resources/template/iCalendar_appointment.php";
       $contents = ob_get_clean();
+
       $temp = tmpfile();
-      $tmpfile_path = stream_get_meta_data($temp)['uri'];
       fwrite($temp, $contents);
-      rename($tmpfile_path, sys_get_temp_dir(). '\\' . $filename);
-      return sys_get_temp_dir(). "\\" . $filename;
+
+      $tmpfile_path = stream_get_meta_data($temp)['uri'];
+      $new_tmpfile_path = sys_get_temp_dir(). '\\' . $filename;
+      rename($tmpfile_path, $new_tmpfile_path);
+
+      $message = "Bonjour et merci de faire confiance à la société Douceur de Chien,
+      vous venez de prendre un rendez-vous le ".$start_datetime->format("d-m-Y")."
+      de ".$start_datetime->format("H\h")." à ".$end_datetime->format("H\h")." avec
+      l'éducateur canin ".$educator_fullname.".
+      Vous trouverez ci-joint un fichier ICS permettant de planifier le rendez-vous
+      dans votre calendrier Microsoft, Google ou Apple. Vous pouvez égalament accéder aux informations
+      de ce rendez-vous depuis votre compte.";
+
+      HelperController::sendMail($message,"Un nouveau rendez-vous a été planifié",$customer_email,null,$new_tmpfile_path);
+
+      unlink($new_tmpfile_path);
     }
 
     /**

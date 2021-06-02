@@ -1861,3 +1861,60 @@ La fonctionnalité fonctionne de la manière suivante :
 Ajout de la fonctionnalité permettant aux éducateurs canins de supprimer des rendez-vous depuis la page affichant les rendez-vous d'un client en utilisant l'endpoint `DELETE api/v1/appointments/{idAppointment}.
 
 Ajout d'une fonctionnalité permettant de supprimer la date de fin d'un calendrier hebdomadaire lors de sa création afin de permettre la création d'un calendrier hebdomadaire permanant.
+
+### Mercredi 2 juin 2021
+
+Création de la fonctionnalité permettant de générer un fichier ICS afin de l'envoyer dans l'e-mail d'avertissement de création de rendez-vous. Un fichier ICS est une format de fichier pour iCalendar. Ces fichiers ayant comme extension `.ics` permettent d'importer dans un calendrier des données de calendrier. Ce format étant une norme internationale, de nombreux calendrier numériques telle que les calendriers de Microsoft, Google et Apple sont capable de supporter ce format de fichier.
+
+Pour générer ce fichier, je procède de la même manière que la création de conditions d'inscription avec Dompdf. C'est à dire qu'une fois la création du rendez-vous effectué, je vais effectuer les étapes suivantes : 
+
+1. Générer le template PHP `ICS_appointment.php` ci-dessous grâce à une temporisation de sortie afin d'y rentrer les différentes variables du rendez-vous.
+   Les explications de de chaque propriétés sont disponible dans le [RFC2445](https://www.ietf.org/rfc/rfc2445.txt)
+```php
+header('Content-type: text/calendar; charset=utf-8');
+header('Content-Disposition: attachment; filename=' . $filename);
+
+
+echo 'BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//douceurdechien/handcal//NONSGML v1.0//FR
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Europe/Berlin
+X-LIC-LOCATION:Europe/Berlin
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:' . md5(date_format($datetime_start, 'Ymd\This')) . '
+DTSTAMP:' . time() . '
+LOCATION:' . addslashes('701 Avenue de la Bigorre, 31210 Montréjeau, France') . '
+SUMMARY:' . addslashes($title) . '
+DTSTART;TZID=Europe/Berlin:' . date_format($datetime_start, 'Ymd\This') . '
+DTEND;TZID=Europe/Berlin:' . date_format($datetime_end, 'Ymd\This') . '
+END:VEVENT
+END:VCALENDAR';
+```
+2. Récupération du contenu de la temporisation
+3. Création d'un fichier temporaire `.ics` avec le contenu du tampon
+4. Envoie de ce fichier par e-mail au client avec PHPMailer
+5. Suppression du fichier temporaire
+
+Rendez-vous GMeet avec le client du projet, soit M. Gourdoux, afin de réaliser une démonstration et récolter ses remarques ou commentaires.
+Dans l'ensemble, M. Gourdoux est satisfait du projet, il est très content que celui-ci représente bien les éléments présent dans le cahier des charges. Il trouve également que l'application WEB est très épurée et que celle-ci va droit au but. En effet, d'après lui, l'application n'affiche pas plein d'éléments superflus mais affiche uniquement les éléments essentiels rendant celle-ci sobre et efficace. Ces commentaires m'ont fait énormément plaisir !
+
+Il en tout de même profité pour me faire deux commentaires. Le premier est par rapport à l'interface utilisateur. En effet. M. Gourdoux ma demander si il était possible de mieux guider l'utilisateur non authentifié lors de la prise de rendez-vous autonome. En effet, jusqu'à là, l'application affiche uniquement une notification afin de prévenir l'utilisateur qu'il doit se connecter. M. Gourdoux souhaiterez qu'un message et une redirection soit disponible afin de permettre à l'utilisateur non authentifié de se connecter ou s'inscrire.
+
+Le deuxième est par rapport à la fonctionnalité de prise de rendez-vous pour l'éducateur canin en cours de développement. En effet, lors de la démonstration, M. Gourdoux m'a posé une question très pertinente : Est-il possible que l'éducateur canin puisse planifier un rendez-vous avec un client quant-il le souhaite sans passer par la vérification du planning ? En effet, la question est intéressante car la vérification de planning sert principalement pour la prise de rendez-vous autonome et non pour l'éducateur canin. Car comme expliqué par M.Gourdoux, il est très fréquent que lors des rendez-vous entre le client et l'éducateur canin, ceux-ci planifie le ou les futurs rendez-vous ensemble. N'ayant pas penser à cette possibilité lors du développement de mon backend, je compte me pencher sur la problématique dans le but de réaliser ou modifier un endpoint afin de permettre aux éducateurs canins de planifier leurs rendez-vous quant-ils le désire.
