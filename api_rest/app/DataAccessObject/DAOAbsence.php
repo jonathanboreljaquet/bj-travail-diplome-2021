@@ -48,6 +48,7 @@ class DAOAbsence {
             $statement->bindParam(':DELETED', $isDeleted, \PDO::PARAM_BOOL);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
             $absenceArray = array();
             
             foreach ($results as $result) {
@@ -81,7 +82,7 @@ class DAOAbsence {
         FROM absence
         WHERE id = :ID_ABSENCE
         AND is_deleted = 0
-        AND id_educator = :ID_EDUCATOR;";
+        AND id_educator = :ID_EDUCATOR";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -120,7 +121,7 @@ class DAOAbsence {
     {
         $statement = "
         INSERT INTO absence (date_absence_from, date_absence_to, description,id_educator ,is_deleted) 
-        VALUES(STR_TO_DATE(:DATE_ABSENCE_FROM, \"%Y-%m-%d\"), STR_TO_DATE(:DATE_ABSENCE_TO, \"%Y-%m-%d\"), :DESCRIPTION,:ID_EDUCATOR ,0);";
+        VALUES(STR_TO_DATE(:DATE_ABSENCE_FROM, \"%Y-%m-%d\"), STR_TO_DATE(:DATE_ABSENCE_TO, \"%Y-%m-%d\"), :DESCRIPTION,:ID_EDUCATOR ,0)";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -146,8 +147,10 @@ class DAOAbsence {
     {
         $statement = "
         UPDATE absence
-        SET date_absence_from = STR_TO_DATE(:DATE_ABSENCE_FROM, \"%Y-%m-%d\"), date_absence_to = STR_TO_DATE(:DATE_ABSENCE_TO, \"%Y-%m-%d\"), description = :DESCRIPTION
-        WHERE id = :ID_ABSENCE;";
+        SET date_absence_from = STR_TO_DATE(:DATE_ABSENCE_FROM, \"%Y-%m-%d\"), 
+        date_absence_to = STR_TO_DATE(:DATE_ABSENCE_TO, \"%Y-%m-%d\"), 
+        description = :DESCRIPTION
+        WHERE id = :ID_ABSENCE";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -174,7 +177,7 @@ class DAOAbsence {
         $statement = "
         UPDATE absence
         SET is_deleted = 1
-        WHERE id = :ID_ABSENCE;";
+        WHERE id = :ID_ABSENCE";
 
         try {
             $statement = $this->db->prepare($statement);

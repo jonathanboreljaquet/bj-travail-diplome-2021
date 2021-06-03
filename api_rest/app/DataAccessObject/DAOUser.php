@@ -36,13 +36,14 @@ class DAOUser {
         $statement = "
         SELECT id, email, firstname, lastname, phonenumber, address
         FROM user
-        WHERE code_role = :CODE_ROLE;";
+        WHERE code_role = :CODE_ROLE";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':CODE_ROLE', $code_role, \PDO::PARAM_INT);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
             $userArray = array();
             
             foreach ($results as $result) {
@@ -74,12 +75,13 @@ class DAOUser {
         $statement = "
         SELECT id,email, firstname, lastname, phonenumber, address,api_token, code_role, password_hash
         FROM user
-        WHERE id = :ID_USER;";
+        WHERE id = :ID_USER";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_USER', $id, \PDO::PARAM_INT);
             $statement->execute();
+
             $user = new User();
 
             if ($statement->rowCount()==1) {
@@ -115,7 +117,7 @@ class DAOUser {
     {
         $statement = "
         INSERT INTO user (email, firstname, lastname, phonenumber, address, api_token, code_role, password_hash) 
-        VALUES(:EMAIL, :FIRSTNAME, :LASTNAME, :PHONENUMBER, :ADDRESS, :API_TOKEN, :CODE_ROLE, :PASSWORD_HASH);";
+        VALUES(:EMAIL, :FIRSTNAME, :LASTNAME, :PHONENUMBER, :ADDRESS, :API_TOKEN, :CODE_ROLE, :PASSWORD_HASH)";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -153,7 +155,7 @@ class DAOUser {
         api_token = :API_TOKEN,
         code_role = :CODE_ROLE,
         password_hash = :PASSWORD_HASH
-        WHERE id = :ID_USER;";
+        WHERE id = :ID_USER";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -184,7 +186,7 @@ class DAOUser {
     {
         $statement = "
         DELETE FROM user
-        WHERE id = :ID_USER;";
+        WHERE id = :ID_USER";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -215,6 +217,7 @@ class DAOUser {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':API_TOKEN', $api_token, \PDO::PARAM_STR);
             $statement->execute();
+            
             $user = new User();
 
             if ($statement->rowCount()==1) {

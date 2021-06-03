@@ -69,7 +69,12 @@
       </b-row>
       <b-row>
         <b-col>
-          <b-button v-b-modal.modal-add-weeklyschedule variant="primary" block>
+          <b-button
+            id="btnAddWeeklySchedule"
+            v-b-modal.modal-add-weeklyschedule
+            variant="primary"
+            block
+          >
             Ajouter un calendrier hebdomadaire
           </b-button>
         </b-col>
@@ -138,6 +143,7 @@
       <b-row>
         <b-col>
           <b-button
+            id="btnAddScheduleOverride"
             v-b-modal.modal-add-scheduleoverride
             variant="primary"
             block
@@ -173,7 +179,12 @@
       </b-row>
       <b-row>
         <b-col>
-          <b-button v-b-modal.modal-add-absence variant="primary" block>
+          <b-button
+            id="btnAddAbsence"
+            v-b-modal.modal-add-absence
+            variant="primary"
+            block
+          >
             Ajouter des vacances
           </b-button>
         </b-col>

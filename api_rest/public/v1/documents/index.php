@@ -33,6 +33,11 @@ $id = intval(end($pathFragments));
 
 $document = new Document();
 $document->id = $id ?? null;
+$document->document_serial_id = $_POST["document_serial_id"] ?? null;
+$document->type = $_POST["type"] ?? null;
+$document->user_id = isset($_POST["user_id"]) && is_numeric($_POST["user_id"]) ? $_POST["user_id"] : null;
+$document->package_number =  isset($_POST["package_number"]) && is_numeric($_POST["package_number"]) ? $_POST["package_number"] : null;
+$document->signature_base64 = $_POST["signature_base64"] ?? null;
 
 switch ($requestMethod) {
     case 'GET':
@@ -45,20 +50,7 @@ switch ($requestMethod) {
         break;
 
     case 'POST':
-        $document->document_serial_id = $_POST["document_serial_id"] ?? null;
-        $document->type = $_POST["type"] ?? null;
-        $document->user_id = isset($_POST["user_id"]) && is_numeric($_POST["user_id"]) ? $_POST["user_id"] : null;
-        $document->package_number =  isset($_POST["package_number"]) && is_numeric($_POST["package_number"]) ? $_POST["package_number"] : null;
-        $document->signature_base64 = $_POST["signature_base64"] ?? null;
         $response = $controller->createDocument($document);
-        break;
-
-    case 'PATCH':
-        if (empty($id) || !is_numeric($id)) {
-            header("HTTP/1.1 404 Not Found");
-            exit();
-        }
-        $response = $controller->updateDocument($document);
         break;
 
     case 'DELETE':

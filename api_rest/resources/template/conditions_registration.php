@@ -1,3 +1,11 @@
+<!-- 
+    conditions_registration.php
+
+    Template of the registration conditions content used in the HelperController with the storeConditionsRegistration function.
+
+    @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+ -->
+
 <!DOCTYPE html>
 <html>
 

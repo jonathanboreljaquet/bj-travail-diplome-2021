@@ -36,12 +36,13 @@ class DAODog {
     {
         $statement = "
         SELECT id, name, breed, sex, picture_serial_id, chip_id, user_id
-        FROM dog;";
+        FROM dog";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
             $dogArray = array();
             
             foreach ($results as $result) {
@@ -76,7 +77,7 @@ class DAODog {
         $statement = "
         SELECT id, name, breed, sex, picture_serial_id, chip_id, user_id
         FROM dog
-        WHERE id = :ID_DOG;";
+        WHERE id = :ID_DOG";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -117,7 +118,7 @@ class DAODog {
         $statement = "
         SELECT id, name, breed, sex, picture_serial_id, chip_id, user_id
         FROM dog
-        WHERE user_id = :ID_USER;";
+        WHERE user_id = :ID_USER";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -158,7 +159,7 @@ class DAODog {
         $statement = "
         SELECT id, name, breed, sex, picture_serial_id, chip_id, user_id 
         FROM dog
-        WHERE picture_serial_id = :SERIAL_ID;";
+        WHERE picture_serial_id = :SERIAL_ID";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -199,7 +200,7 @@ class DAODog {
     {
         $statement = "
         INSERT INTO dog (name, breed, sex, picture_serial_id, chip_id, user_id) 
-        VALUES(:NAME, :BREED, :SEX, :PICTURE_SERIAL_ID, :CHIP_ID, :USER_ID);";
+        VALUES(:NAME, :BREED, :SEX, :PICTURE_SERIAL_ID, :CHIP_ID, :USER_ID)";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -232,7 +233,8 @@ class DAODog {
         sex = :SEX, 
         picture_serial_id = :PICTURE_SERIAL_ID, 
         chip_id = :CHIP_ID
-        WHERE id = :ID_DOG;";
+        WHERE id = :ID_DOG";
+
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':NAME', $dog->name, \PDO::PARAM_STR);
@@ -259,7 +261,7 @@ class DAODog {
     {
         $statement = "
         DELETE FROM dog
-        WHERE id = :ID_DOG;";
+        WHERE id = :ID_DOG";
 
         try {
             $statement = $this->db->prepare($statement);

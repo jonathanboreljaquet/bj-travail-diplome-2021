@@ -4,7 +4,6 @@
  *
  * Controller allowing the use of help functions.
  *
- * @link https://developer.mozilla.org/fr/docs/Web/HTTP/Status
  * @author  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
  */
 
@@ -352,6 +351,7 @@ class HelperController {
         $dompdf->loadHtml($contents);
         $dompdf->render();
         $output = $dompdf->output();
+        
         file_put_contents(HelperController::getDefaultDirectory()."storage/app/conditions_registration/".$filename.".pdf", $output);
     }
 
@@ -371,7 +371,6 @@ class HelperController {
       curl_setopt($curl,CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
       curl_setopt($curl, CURLOPT_POST,1);
       curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(array('secret' => getenv('GOOGLE_RECAPTCHA_SECRET_KEY'),'response' => $userResponseToken)));
-
       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
       
       $response = json_decode(curl_exec($curl));

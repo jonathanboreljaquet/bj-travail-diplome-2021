@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<title>DouceurDeChien Customer</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Connexion</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/<datalist><option>http://localhost:8080/#/</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=Connexion<datalist><option>link=Connexion</option><option>//a[contains(text(),'Connexion')]</option><option>//div[@id='nav-collapse']/ul[2]/li/a</option><option>xpath=(//a[contains(@href, '#')])[4]</option><option>//ul[2]/li/a</option><option>css=ul.navbar-nav.ml-auto &gt; li.nav-item &gt; a.nav-link</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-connection-email<datalist><option>id=input-connection-email</option><option>//input[@id='input-connection-email']</option><option>//div[@id='input-group-connection-email']/div/input</option><option>//input</option><option>css=#input-connection-email</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-connection-email<datalist><option>id=input-connection-email</option><option>//input[@id='input-connection-email']</option><option>//div[@id='input-group-connection-email']/div/input</option><option>//input</option><option>css=#input-connection-email</option></datalist></td><td>jonathan.borel-jaquet@hotmail.com</td>
+</tr>
+<tr><td>click</td><td>id=input-connection-password<datalist><option>id=input-connection-password</option><option>//input[@id='input-connection-password']</option><option>//div[@id='input-group-connection-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-connection-password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-connection-password<datalist><option>id=input-connection-password</option><option>//input[@id='input-connection-password']</option><option>//div[@id='input-group-connection-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-connection-password</option></datalist></td><td>pomme12345</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='title']/div/form/button</option><option>//form/button</option><option>css=button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[4]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[4]/div[2]</option><option>//div/div[4]/div[2]</option></datalist></td><td>Route de Frontenex 100, 1208 Genève</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div/div[2]</option><option>//div[2]/div[2]/div/div/div/div[2]</option><option>css=div.text-secondary.col-sm-9</option></datalist></td><td>Jonathan Borel-Jaquet</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div/div/div/p<datalist><option>//div[@id='content']/div[2]/div/div[2]/div/div/div/p</option></datalist></td><td>Client</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[3]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[3]/div[2]</option><option>//div/div[3]/div[2]</option></datalist></td><td>077412909</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[2]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[2]/div[2]</option></datalist></td><td>jonathan.borel-jaquet@hotmail.com</td>
+</tr>
+<tr><td>waitForText</td><td>link=Mes informations<datalist><option>link=Mes informations</option><option>//a[contains(text(),'Mes informations')]</option><option>//div[@id='nav-collapse']/ul/li[4]/a</option><option>xpath=(//a[contains(@href, '#')])[4]</option><option>//li[4]/a</option><option>css=a.nav-link.router-link-exact-active.router-link-active</option></datalist></td><td>Mes informations</td>
+</tr>
+<tr><td>waitForText</td><td>link=Mes rendez-vous<datalist><option>link=Mes rendez-vous</option></datalist></td><td>Mes rendez-vous</td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Modification of password</td></tr>
+</thead>
+<tbody>
+<tr><td>click</td><td>id=btnUpdatePassword<datalist><option>id=btnUpdatePassword</option><option>//button[@id='btnUpdatePassword']</option><option>//div[@id='content']/div[2]/div/div[2]/div/div/div/div/button</option><option>//div/button</option><option>css=#btnUpdatePassword</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-inscription-password<datalist><option>id=input-inscription-password</option><option>//input[@id='input-inscription-password']</option><option>//div[@id='input-group-inscription-password']/div/input</option><option>//input</option><option>css=#input-inscription-password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-inscription-password<datalist><option>id=input-inscription-password</option><option>//input[@id='input-inscription-password']</option><option>//div[@id='input-group-inscription-password']/div/input</option><option>//input</option><option>css=#input-inscription-password</option></datalist></td><td>pomme123456</td>
+</tr>
+<tr><td>type</td><td>id=input-inscription-second-password<datalist><option>id=input-inscription-second-password</option><option>//input[@id='input-inscription-second-password']</option><option>//div[@id='input-group-inscription-second-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-inscription-second-password</option></datalist></td><td>pomme123456</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-update-password___BV_modal_body_']/form/button</option><option>//form/button</option><option>css=form &gt; button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=Déconnexion<datalist><option>link=Déconnexion</option><option>//a[contains(text(),'Déconnexion')]</option><option>//div[@id='nav-collapse']/ul[2]/li/a</option><option>xpath=(//a[contains(@href, '#')])[6]</option><option>//ul[2]/li/a</option><option>css=ul.navbar-nav.ml-auto &gt; li.nav-item &gt; a.nav-link</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-connection-email<datalist><option>id=input-connection-email</option><option>//input[@id='input-connection-email']</option><option>//div[@id='input-group-connection-email']/div/input</option><option>//input</option><option>css=#input-connection-email</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-connection-email<datalist><option>id=input-connection-email</option><option>//input[@id='input-connection-email']</option><option>//div[@id='input-group-connection-email']/div/input</option><option>//input</option><option>css=#input-connection-email</option></datalist></td><td>jonathan.borel-jaquet@hotmail.com</td>
+</tr>
+<tr><td>click</td><td>id=input-connection-password<datalist><option>id=input-connection-password</option><option>//input[@id='input-connection-password']</option><option>//div[@id='input-group-connection-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-connection-password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-connection-password<datalist><option>id=input-connection-password</option><option>//input[@id='input-connection-password']</option><option>//div[@id='input-group-connection-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-connection-password</option></datalist></td><td>pomme123456</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='title']/div/form/button</option><option>//form/button</option><option>css=button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[4]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[4]/div[2]</option><option>//div/div[4]/div[2]</option></datalist></td><td>Route de Frontenex 100, 1208 Genève</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div/div[2]</option><option>//div[2]/div[2]/div/div/div/div[2]</option><option>css=div.text-secondary.col-sm-9</option></datalist></td><td>Jonathan Borel-Jaquet</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div/div/div/p<datalist><option>//div[@id='content']/div[2]/div/div[2]/div/div/div/p</option></datalist></td><td>Client</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[3]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[3]/div[2]</option><option>//div/div[3]/div[2]</option></datalist></td><td>077412909</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[2]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[2]/div[2]</option></datalist></td><td>jonathan.borel-jaquet@hotmail.com</td>
+</tr>
+<tr><td>click</td><td>id=btnUpdatePassword<datalist><option>id=btnUpdatePassword</option><option>//button[@id='btnUpdatePassword']</option><option>//div[@id='content']/div[2]/div/div[2]/div/div/div/div/button</option><option>//div/button</option><option>css=#btnUpdatePassword</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-inscription-password<datalist><option>id=input-inscription-password</option><option>//input[@id='input-inscription-password']</option><option>//div[@id='input-group-inscription-password']/div/input</option><option>//input</option><option>css=#input-inscription-password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-inscription-password<datalist><option>id=input-inscription-password</option><option>//input[@id='input-inscription-password']</option><option>//div[@id='input-group-inscription-password']/div/input</option><option>//input</option><option>css=#input-inscription-password</option></datalist></td><td>pomme123456</td>
+</tr>
+<tr><td>type</td><td>id=input-inscription-second-password<datalist><option>id=input-inscription-second-password</option><option>//input[@id='input-inscription-second-password']</option><option>//div[@id='input-group-inscription-second-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-inscription-second-password</option></datalist></td><td>pomme123456</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-update-password___BV_modal_body_']/form/button</option><option>//form/button</option><option>css=form &gt; button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Schedule an appointment</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/calendar<datalist><option>http://localhost:8080/#/calendar</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=educatorSelect<datalist><option>id=educatorSelect</option><option>//select[@id='educatorSelect']</option><option>//fieldset[@id='__BVID__288']/div/select</option><option>//select</option><option>css=#educatorSelect</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=educatorSelect<datalist><option>id=educatorSelect</option><option>//select[@id='educatorSelect']</option><option>//fieldset[@id='__BVID__288']/div/select</option><option>//select</option><option>css=#educatorSelect</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='content']/div[2]/div/div[5]/div/div/div[2]/div/table/tbody/tr/td/div/div/div/table/tbody/tr[4]/td[4]/div/div[2]/div/a/div<datalist><option>//div[@id='content']/div[2]/div/div[5]/div/div/div[2]/div/table/tbody/tr/td/div/div/div/table/tbody/tr[2]/td[2]/div/div[2]/div/a/div</option><option>//a/div</option><option>css=div.fc-event-main</option><option>//div[@id='content']/div[2]/div/div[5]/div/div/div[2]/div/table/tbody/tr/td/div/div/div/table/tbody/tr[4]/td[4]/div/div[2]/div/a/div</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='content']/div[2]/div/div[5]/div/div/div[2]/div/table/tbody/tr/td/div/div/div/div[2]/table/tbody/tr/td[2]/div/div[2]/div/a/div<datalist><option>//div[@id='content']/div[2]/div/div[5]/div/div/div[2]/div/table/tbody/tr/td/div/div/div/div[2]/table/tbody/tr/td[2]/div/div[2]/div/a/div</option><option>//a/div</option><option>css=div.fc-event-main</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-create-appointment___BV_modal_body_']/div/form/button</option><option>//form/button</option><option>css=button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=Mes rendez-vous<datalist><option>link=Mes rendez-vous</option><option>//a[contains(text(),'Mes rendez-vous')]</option><option>//div[@id='nav-collapse']/ul/li[5]/a</option><option>xpath=(//a[contains(@href, '#')])[5]</option><option>//li[5]/a</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForElementPresent</td><td>//div[@id='content']/ul/li<datalist><option>//div[@id='content']/ul/li</option><option>//div/div/ul/li</option><option>css=li.event</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

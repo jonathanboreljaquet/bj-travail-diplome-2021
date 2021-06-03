@@ -118,6 +118,7 @@
                 ref="recaptcha"
                 @verify="onVerify"
                 sitekey="6LdDq9saAAAAAG7jxON5LMecQiHSpHXddkE6-Jek"
+                :loadRecaptchaScript="true"
               >
               </vue-recaptcha>
             </b-form-group>
@@ -156,7 +157,6 @@ export default {
   },
   methods: {
     onVerify(response) {
-      console.log(response);
       if (response) {
         this.form.robot = true;
         this.form.reCAPTCHAresponse = response;
@@ -183,14 +183,6 @@ export default {
         reCAPTCHAuserResponseToken: this.form.reCAPTCHAresponse,
       });
     },
-  },
-  mounted() {
-    let recaptchaScript = document.createElement("script");
-    recaptchaScript.setAttribute(
-      "src",
-      "https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit"
-    );
-    document.head.appendChild(recaptchaScript);
   },
 };
 </script>

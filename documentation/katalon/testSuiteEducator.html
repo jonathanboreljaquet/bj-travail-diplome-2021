@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<title>DouceurDeChien Educator</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Connexion</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/<datalist><option>http://localhost:8080/#/</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=Connexion<datalist><option>link=Connexion</option><option>//a[contains(text(),'Connexion')]</option><option>//div[@id='nav-collapse']/ul[2]/li/a</option><option>xpath=(//a[contains(@href, '#')])[4]</option><option>//ul[2]/li/a</option><option>css=ul.navbar-nav.ml-auto &gt; li.nav-item &gt; a.nav-link</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-connection-email<datalist><option>id=input-connection-email</option><option>//input[@id='input-connection-email']</option><option>//div[@id='input-group-connection-email']/div/input</option><option>//input</option><option>css=#input-connection-email</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-connection-email<datalist><option>id=input-connection-email</option><option>//input[@id='input-connection-email']</option><option>//div[@id='input-group-connection-email']/div/input</option><option>//input</option><option>css=#input-connection-email</option></datalist></td><td>borel@eduge.ch</td>
+</tr>
+<tr><td>click</td><td>id=input-connection-password<datalist><option>id=input-connection-password</option><option>//input[@id='input-connection-password']</option><option>//div[@id='input-group-connection-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-connection-password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-connection-password<datalist><option>id=input-connection-password</option><option>//input[@id='input-connection-password']</option><option>//div[@id='input-group-connection-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-connection-password</option></datalist></td><td>pomme12345</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='title']/div/form/button</option><option>//form/button</option><option>css=button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='title']/div/h1<datalist><option>//div[@id='title']/div/h1</option><option>//h1</option><option>css=h1</option></datalist></td><td>Administration</td>
+</tr>
+<tr><td>waitForText</td><td>link=Administration<datalist><option>link=Administration</option><option>//a[contains(text(),'Administration')]</option><option>//div[@id='nav-collapse']/ul/li[4]/a</option><option>xpath=(//a[contains(@href, '#')])[4]</option><option>//li[4]/a</option><option>css=a.nav-link.router-link-exact-active.router-link-active</option></datalist></td><td>Administration</td>
+</tr>
+<tr><td>waitForText</td><td>link=Mon planning<datalist><option>link=Administration</option><option>//a[contains(text(),'Administration')]</option><option>//div[@id='nav-collapse']/ul/li[4]/a</option><option>xpath=(//a[contains(@href, '#')])[4]</option><option>//li[4]/a</option><option>css=a.nav-link.router-link-exact-active.router-link-active</option><option>link=Mon planning</option></datalist></td><td>Mon planning</td>
+</tr>
+<tr><td>waitForText</td><td>link=Mes rendez-vous<datalist><option>link=Administration</option><option>//a[contains(text(),'Administration')]</option><option>//div[@id='nav-collapse']/ul/li[4]/a</option><option>xpath=(//a[contains(@href, '#')])[4]</option><option>//li[4]/a</option><option>css=a.nav-link.router-link-exact-active.router-link-active</option><option>link=Mes rendez-vous</option></datalist></td><td>Mes rendez-vous</td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Modification of password</td></tr>
+</thead>
+<tbody>
+<tr><td>click</td><td>id=btnUpdatePassword<datalist><option>id=btnUpdatePassword</option><option>//button[@id='btnUpdatePassword']</option><option>//div[@id='content']/div[2]/div/div[2]/div/button</option><option>//div/button</option><option>css=#btnUpdatePassword</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-inscription-password<datalist><option>id=input-inscription-password</option><option>//input[@id='input-inscription-password']</option><option>//div[@id='input-group-inscription-password']/div/input</option><option>//form/div/div/input</option><option>css=#input-inscription-password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-inscription-password<datalist><option>id=input-inscription-password</option><option>//input[@id='input-inscription-password']</option><option>//div[@id='input-group-inscription-password']/div/input</option><option>//form/div/div/input</option><option>css=#input-inscription-password</option></datalist></td><td>pomme123456</td>
+</tr>
+<tr><td>click</td><td>id=input-inscription-second-password<datalist><option>id=input-inscription-second-password</option><option>//input[@id='input-inscription-second-password']</option><option>//div[@id='input-group-inscription-second-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-inscription-second-password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-inscription-second-password<datalist><option>id=input-inscription-second-password</option><option>//input[@id='input-inscription-second-password']</option><option>//div[@id='input-group-inscription-second-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-inscription-second-password</option></datalist></td><td>pomme123456</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-update-password___BV_modal_body_']/form/button</option><option>//form/button</option><option>css=form &gt; button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>link=Déconnexion<datalist><option>link=Déconnexion</option><option>//a[contains(text(),'Déconnexion')]</option><option>//div[@id='nav-collapse']/ul[2]/li/a</option><option>xpath=(//a[contains(@href, '#')])[7]</option><option>//ul[2]/li/a</option><option>css=ul.navbar-nav.ml-auto &gt; li.nav-item &gt; a.nav-link</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-connection-email<datalist><option>id=input-connection-email</option><option>//input[@id='input-connection-email']</option><option>//div[@id='input-group-connection-email']/div/input</option><option>//input</option><option>css=#input-connection-email</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-connection-email<datalist><option>id=input-connection-email</option><option>//input[@id='input-connection-email']</option><option>//div[@id='input-group-connection-email']/div/input</option><option>//input</option><option>css=#input-connection-email</option></datalist></td><td>borel@eduge.ch</td>
+</tr>
+<tr><td>click</td><td>id=input-connection-password<datalist><option>id=input-connection-password</option><option>//input[@id='input-connection-password']</option><option>//div[@id='input-group-connection-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-connection-password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-connection-password<datalist><option>id=input-connection-password</option><option>//input[@id='input-connection-password']</option><option>//div[@id='input-group-connection-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-connection-password</option></datalist></td><td>pomme123456</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='title']/div/form/button</option><option>//form/button</option><option>css=button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='title']/div/h1<datalist><option>//div[@id='title']/div/h1</option><option>//h1</option><option>css=h1</option></datalist></td><td>Administration</td>
+</tr>
+<tr><td>waitForText</td><td>link=Administration<datalist><option>link=Administration</option><option>//a[contains(text(),'Administration')]</option><option>//div[@id='nav-collapse']/ul/li[4]/a</option><option>xpath=(//a[contains(@href, '#')])[4]</option><option>//li[4]/a</option><option>css=a.nav-link.router-link-exact-active.router-link-active</option></datalist></td><td>Administration</td>
+</tr>
+<tr><td>waitForText</td><td>link=Mon planning<datalist><option>link=Mon planning</option><option>link=Administration</option><option>//a[contains(text(),'Administration')]</option><option>//div[@id='nav-collapse']/ul/li[4]/a</option><option>xpath=(//a[contains(@href, '#')])[4]</option><option>//li[4]/a</option><option>css=a.nav-link.router-link-exact-active.router-link-active</option></datalist></td><td>Mon planning</td>
+</tr>
+<tr><td>waitForText</td><td>link=Mes rendez-vous<datalist><option>link=Mes rendez-vous</option><option>link=Administration</option><option>//a[contains(text(),'Administration')]</option><option>//div[@id='nav-collapse']/ul/li[4]/a</option><option>xpath=(//a[contains(@href, '#')])[4]</option><option>//li[4]/a</option><option>css=a.nav-link.router-link-exact-active.router-link-active</option></datalist></td><td>Mes rendez-vous</td>
+</tr>
+<tr><td>click</td><td>id=btnUpdatePassword<datalist><option>id=btnUpdatePassword</option><option>//button[@id='btnUpdatePassword']</option><option>//div[@id='content']/div[2]/div/div[2]/div/button</option><option>//div/button</option><option>css=#btnUpdatePassword</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-inscription-password<datalist><option>id=input-inscription-password</option><option>//input[@id='input-inscription-password']</option><option>//div[@id='input-group-inscription-password']/div/input</option><option>//form/div/div/input</option><option>css=#input-inscription-password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-inscription-password<datalist><option>id=input-inscription-password</option><option>//input[@id='input-inscription-password']</option><option>//div[@id='input-group-inscription-password']/div/input</option><option>//form/div/div/input</option><option>css=#input-inscription-password</option></datalist></td><td>pomme12345</td>
+</tr>
+<tr><td>click</td><td>id=input-inscription-second-password<datalist><option>id=input-inscription-second-password</option><option>//input[@id='input-inscription-second-password']</option><option>//div[@id='input-group-inscription-second-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-inscription-second-password</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-inscription-second-password<datalist><option>id=input-inscription-second-password</option><option>//input[@id='input-inscription-second-password']</option><option>//div[@id='input-group-inscription-second-password']/div/input</option><option>//div[2]/div/input</option><option>css=#input-inscription-second-password</option></datalist></td><td>pomme12345</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-update-password___BV_modal_body_']/form/button</option><option>//form/button</option><option>css=form &gt; button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Add a client</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/administration<datalist><option>http://localhost:8080/#/administration</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnAddClient<datalist><option>id=btnAddClient</option><option>//button[@id='btnAddClient']</option><option>//div[@id='content']/div[2]/div/div[2]/div/button[2]</option><option>//button[2]</option><option>css=#btnAddClient</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-client-email<datalist><option>id=input-client-email</option><option>//input[@id='input-client-email']</option><option>//div[@id='input-group-client-email']/div/input</option><option>//form/div/div/input</option><option>css=#input-client-email</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-client-email<datalist><option>id=input-client-email</option><option>//input[@id='input-client-email']</option><option>//div[@id='input-group-client-email']/div/input</option><option>//form/div/div/input</option><option>css=#input-client-email</option></datalist></td><td>thierryboreljaquet@gmail.com</td>
+</tr>
+<tr><td>click</td><td>id=input-client-firstname<datalist><option>id=input-client-firstname</option><option>//input[@id='input-client-firstname']</option><option>//div[@id='input-group-client-firstname']/div/input</option><option>//div[2]/div/input</option><option>css=#input-client-firstname</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-client-firstname<datalist><option>id=input-client-firstname</option><option>//input[@id='input-client-firstname']</option><option>//div[@id='input-group-client-firstname']/div/input</option><option>//div[2]/div/input</option><option>css=#input-client-firstname</option></datalist></td><td>Thierry</td>
+</tr>
+<tr><td>click</td><td>id=input-client-lastname<datalist><option>id=input-client-lastname</option><option>//input[@id='input-client-lastname']</option><option>//div[@id='input-group-client-lastname']/div/input</option><option>//div[3]/div/input</option><option>css=#input-client-lastname</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-client-lastname<datalist><option>id=input-client-lastname</option><option>//input[@id='input-client-lastname']</option><option>//div[@id='input-group-client-lastname']/div/input</option><option>//div[3]/div/input</option><option>css=#input-client-lastname</option></datalist></td><td>Borel-Jaquet</td>
+</tr>
+<tr><td>click</td><td>id=input-client-phonenumber<datalist><option>id=input-client-phonenumber</option><option>//input[@id='input-client-phonenumber']</option><option>//div[@id='input-group-client-phonenumber']/div/input</option><option>//div[4]/div/input</option><option>css=#input-client-phonenumber</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-client-phonenumber<datalist><option>id=input-client-phonenumber</option><option>//input[@id='input-client-phonenumber']</option><option>//div[@id='input-group-client-phonenumber']/div/input</option><option>//div[4]/div/input</option><option>css=#input-client-phonenumber</option></datalist></td><td>0794568232</td>
+</tr>
+<tr><td>click</td><td>id=input-client-address<datalist><option>id=input-client-address</option><option>//input[@id='input-client-address']</option><option>//div[@id='input-group-client-address']/div/input</option><option>//div[5]/div/input</option><option>css=#input-client-address</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-client-address<datalist><option>id=input-client-address</option><option>//input[@id='input-client-address']</option><option>//div[@id='input-group-client-address']/div/input</option><option>//div[5]/div/input</option><option>css=#input-client-address</option></datalist></td><td>Rue de Fremis 78, 1241 Puplinge</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-add-client___BV_modal_body_']/form/button</option><option>//form/button</option><option>css=form &gt; button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Modification of user informations</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/customer_information/6<datalist><option>http://localhost:8080/#/customer_information/6</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnUpdateUser<datalist><option>id=btnUpdateUser</option><option>//button[@id='btnUpdateUser']</option><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[5]/button</option><option>//div[5]/button</option><option>css=#btnUpdateUser</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-user-firstname<datalist><option>id=input-user-firstname</option><option>//input[@id='input-user-firstname']</option><option>//div[@id='input-group-user-firstname']/div/input</option><option>//input</option><option>css=#input-user-firstname</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-user-firstname<datalist><option>id=input-user-firstname</option><option>//input[@id='input-user-firstname']</option><option>//div[@id='input-group-user-firstname']/div/input</option><option>//input</option><option>css=#input-user-firstname</option></datalist></td><td>Alana</td>
+</tr>
+<tr><td>click</td><td>id=input-user-lastname<datalist><option>id=input-user-lastname</option><option>//input[@id='input-user-lastname']</option><option>//div[@id='input-group-user-lastname']/div/input</option><option>//div[2]/div/input</option><option>css=#input-user-lastname</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-user-lastname<datalist><option>id=input-user-lastname</option><option>//input[@id='input-user-lastname']</option><option>//div[@id='input-group-user-lastname']/div/input</option><option>//div[2]/div/input</option><option>css=#input-user-lastname</option></datalist></td><td>Alfiari</td>
+</tr>
+<tr><td>click</td><td>id=input-user-email<datalist><option>id=input-user-email</option><option>//input[@id='input-user-email']</option><option>//div[@id='input-group-user-email']/div/input</option><option>//div[3]/div/input</option><option>css=#input-user-email</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-user-email<datalist><option>id=input-user-email</option><option>//input[@id='input-user-email']</option><option>//div[@id='input-group-user-email']/div/input</option><option>//div[3]/div/input</option><option>css=#input-user-email</option></datalist></td><td>Alfiari@eduge.ch</td>
+</tr>
+<tr><td>click</td><td>id=input-user-phonenumber<datalist><option>id=input-user-phonenumber</option><option>//input[@id='input-user-phonenumber']</option><option>//div[@id='input-group-user-phonenumber']/div/input</option><option>//div[4]/div/input</option><option>css=#input-user-phonenumber</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-user-phonenumber<datalist><option>id=input-user-phonenumber</option><option>//input[@id='input-user-phonenumber']</option><option>//div[@id='input-group-user-phonenumber']/div/input</option><option>//div[4]/div/input</option><option>css=#input-user-phonenumber</option></datalist></td><td>0761167812</td>
+</tr>
+<tr><td>click</td><td>id=input-user-address<datalist><option>id=input-user-address</option><option>//input[@id='input-user-address']</option><option>//div[@id='input-group-user-address']/div/input</option><option>//div[5]/div/input</option><option>css=#input-user-address</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-user-address<datalist><option>id=input-user-address</option><option>//input[@id='input-user-address']</option><option>//div[@id='input-group-user-address']/div/input</option><option>//div[5]/div/input</option><option>css=#input-user-address</option></datalist></td><td>Route de Frontenex 100 1208 Genève</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-update-user___BV_modal_body_']/form/button</option><option>//form/button</option><option>css=form &gt; button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[4]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[4]/div[2]</option><option>//div[4]/div[2]</option></datalist></td><td>Route de Frontenex 100 1208 Genève</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div/div[2]</option><option>//div[2]/div[2]/div/div/div/div[2]</option><option>css=div.text-secondary.col-sm-9</option></datalist></td><td>Alana Alfiari</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div/div/div/p<datalist><option>//div[@id='content']/div[2]/div/div[2]/div/div/div/p</option></datalist></td><td>Client</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[3]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[3]/div[2]</option><option>//div/div[3]/div[2]</option></datalist></td><td>0761167812</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[2]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[2]/div[2]</option></datalist></td><td>Alfiari@eduge.ch</td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Add dog for a client</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/customer_information/6<datalist><option>http://localhost:8080/#/customer_information/6</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnAddDog<datalist><option>id=btnAddDog</option><option>//button[@id='btnAddDog']</option><option>//div[@id='content']/div[2]/div/div[2]/div/div/div/div/button</option><option>//div/button</option><option>css=#btnAddDog</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-dog-name<datalist><option>id=input-dog-name</option><option>//input[@id='input-dog-name']</option><option>//div[@id='input-group-dog-name']/div/input</option><option>//input</option><option>css=#input-dog-name</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-dog-name<datalist><option>id=input-dog-name</option><option>//input[@id='input-dog-name']</option><option>//div[@id='input-group-dog-name']/div/input</option><option>//input</option><option>css=#input-dog-name</option></datalist></td><td>Rex</td>
+</tr>
+<tr><td>click</td><td>id=input-dog-breed<datalist><option>id=input-dog-breed</option><option>//input[@id='input-dog-breed']</option><option>//div[@id='input-group-dog-breed']/div/input</option><option>//div[2]/div/input</option><option>css=#input-dog-breed</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-dog-breed<datalist><option>id=input-dog-breed</option><option>//input[@id='input-dog-breed']</option><option>//div[@id='input-group-dog-breed']/div/input</option><option>//div[2]/div/input</option><option>css=#input-dog-breed</option></datalist></td><td>Berger</td>
+</tr>
+<tr><td>click</td><td>id=input-dog-sex<datalist><option>id=input-dog-sex</option><option>//select[@id='input-dog-sex']</option><option>//div[@id='input-group-dog-sex']/div/select</option><option>//select</option><option>css=#input-dog-sex</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-dog-sex<datalist><option>id=input-dog-sex</option><option>//select[@id='input-dog-sex']</option><option>//div[@id='input-group-dog-sex']/div/select</option><option>//select</option><option>css=#input-dog-sex</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-dog-chip-id<datalist><option>id=input-dog-chip-id</option><option>//input[@id='input-dog-chip-id']</option><option>//div[@id='input-group-dog-chip-id']/div/input</option><option>//div[4]/div/input</option><option>css=#input-dog-chip-id</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-dog-chip-id<datalist><option>id=input-dog-chip-id</option><option>//input[@id='input-dog-chip-id']</option><option>//div[@id='input-group-dog-chip-id']/div/input</option><option>//div[4]/div/input</option><option>css=#input-dog-chip-id</option></datalist></td><td>12345678901234</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-add-dog___BV_modal_body_']/form/button</option><option>//form/button</option><option>css=form &gt; button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[2]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[2]/div[2]</option><option>//div[2]/div[2]/div/div/div/div[2]/div[2]</option><option>css=div.text-secondary.col-sm-8</option></datalist></td><td>Rex</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[3]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[3]/div[2]</option><option>//div[2]/div[2]/div/div/div/div[3]/div[2]</option></datalist></td><td>Berger</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[4]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[4]/div[2]</option><option>//div[2]/div[2]/div/div/div/div[4]/div[2]</option></datalist></td><td>Mâle</td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[5]/div[2]<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[5]/div[2]</option><option>//div[5]/div[2]</option></datalist></td><td>12345678901234</td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Add picture for a dog</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/customer_information/6<datalist><option>http://localhost:8080/#/customer_information/6</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnAddPictureDog<datalist><option>id=btnAddPictureDog</option><option>//button[@id='btnAddPictureDog']</option><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[6]/button[2]</option><option>//div[6]/button[2]</option><option>css=#btnAddPictureDog</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>css=input[id="input-dog-picture-file"]<datalist><option>css=input[id="input-dog-picture-file"]</option></datalist></td><td>C:\laragon\www\bj-travail-diplome-2021\documentation\katalon\photochien.jpg</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-add-picture-dog___BV_modal_body_']/form/button</option><option>//form/button</option><option>css=form &gt; button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Delete dog for a client</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/customer_information/6<datalist><option>http://localhost:8080/#/customer_information/6</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnDeleteDog<datalist><option>id=btnDeleteDog</option><option>//button[@id='btnDeleteDog']</option><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div/div[6]/button[3]</option><option>//div[6]/button[3]</option><option>css=#btnDeleteDog</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-delete-dog___BV_modal_body_']/form/div/div[2]/button</option><option>//div[2]/button</option><option>css=button.btn.btn-success.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForElementNotPresent</td><td>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div<datalist><option>//div[@id='content']/div[2]/div/div[2]/div[2]/div[2]/div/div/div</option><option>//div[2]/div[2]/div[2]/div/div/div</option><option>css=div.col-md-6 &gt; div.card &gt; div.card-body</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Add document PDF for a client</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/customer_information/6<datalist><option>http://localhost:8080/#/customer_information/6</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnAddDocument<datalist><option>id=btnAddDocument</option><option>//button[@id='btnAddDocument']</option><option>//div[@id='content']/div[2]/div/div[2]/div/div/div/div/button[2]</option><option>//button[2]</option><option>css=#btnAddDocument</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>css=input[id="input-document-file"]<datalist><option>css=input[id="input-dog-picture-file"]</option><option>css=input[id="input-document-file"]</option></datalist></td><td>C:\laragon\www\bj-travail-diplome-2021\documentation\katalon\documentpdf.pdf</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-add-document___BV_modal_body_']/form/div[2]/button</option><option>//div[2]/button</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForElementPresent</td><td>//div[@id='content']/div[2]/div/div[2]/div/div[2]/div/div[2]/div/div<datalist><option>//div[@id='content']/div[2]/div/div[2]/div/div[2]/div/div[2]/div/div</option><option>//div[2]/div/div[2]/div/div[2]/div/div[2]/div/div</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Delete document PDF for a client</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/customer_information/6<datalist><option>http://localhost:8080/#/customer_information/6</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>xpath=(//button[@type='button'])[8]<datalist><option>xpath=(//button[@type='button'])[8]</option><option>//div[@id='content']/div[2]/div/div[2]/div/div[2]/div/div[2]/div/div/button[2]</option><option>//div[2]/div/div/button[2]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-delete-document___BV_modal_body_']/form/div/div[2]/button</option><option>//div[2]/button</option><option>css=button.btn.btn-success.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForElementNotPresent</td><td>//div[@id='content']/div[2]/div/div[2]/div/div[2]/div/div[3]/div/div<datalist><option>//div[@id='content']/div[2]/div/div[2]/div/div[2]/div/div[3]/div/div</option><option>//div[3]/div/div</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Add conditions of registration for a client</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/customer_information/6<datalist><option>http://localhost:8080/#/customer_information/6</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnAddDocument<datalist><option>id=btnAddDocument</option><option>//button[@id='btnAddDocument']</option><option>//div[@id='content']/div[2]/div/div[2]/div/div/div/div/button[2]</option><option>//button[2]</option><option>css=#btnAddDocument</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-document-type<datalist><option>id=input-document-type</option><option>//select[@id='input-document-type']</option><option>//div[@id='input-group-document-type']/div/select</option><option>//select</option><option>css=#input-document-type</option></datalist></td><td></td>
+</tr>
+<tr><td>select</td><td>id=input-document-type<datalist><option>id=input-document-type</option><option>//select[@id='input-document-type']</option><option>//div[@id='input-group-document-type']/div/select</option><option>//select</option><option>css=#input-document-type</option></datalist></td><td>label=Conditions d'inscription</td>
+</tr>
+<tr><td>click</td><td>id=input-document-type<datalist><option>id=input-document-type</option><option>//select[@id='input-document-type']</option><option>//div[@id='input-group-document-type']/div/select</option><option>//select</option><option>css=#input-document-type</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-document-package-number<datalist><option>id=input-document-package-number</option><option>//select[@id='input-document-package-number']</option><option>//div[@id='input-group-document-package-number']/div/select</option><option>//div[2]/div/div/select</option><option>css=#input-document-package-number</option></datalist></td><td></td>
+</tr>
+<tr><td>select</td><td>id=input-document-package-number<datalist><option>id=input-document-package-number</option><option>//select[@id='input-document-package-number']</option><option>//div[@id='input-group-document-package-number']/div/select</option><option>//div[2]/div/div/select</option><option>css=#input-document-package-number</option></datalist></td><td>label=Forfait bilan + 3 séances : 230 € / 250 CHF</td>
+</tr>
+<tr><td>click</td><td>id=input-document-package-number<datalist><option>id=input-document-package-number</option><option>//select[@id='input-document-package-number']</option><option>//div[@id='input-group-document-package-number']/div/select</option><option>//div[2]/div/div/select</option><option>css=#input-document-package-number</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='pad']/canvas<datalist><option>//div[@id='pad']/canvas</option><option>//canvas</option><option>css=canvas</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnValidateSignature<datalist><option>id=btnValidateSignature</option><option>//button[@id='btnValidateSignature']</option><option>//div[@id='buttonRow']/div[2]/button</option><option>//div[2]/div[2]/button</option><option>css=#btnValidateSignature</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='modal-add-document___BV_modal_body_']/form/div[2]/div[3]/label<datalist><option>//div[@id='modal-add-document___BV_modal_body_']/form/div[2]/div[3]/label</option><option>//div[3]/label</option><option>css=label.custom-control-label</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-add-document___BV_modal_body_']/form/div[2]/button</option><option>//div[2]/button</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForElementPresent</td><td>//div[@id='content']/div[2]/div/div[2]/div/div[2]/div/div[2]/div/div<datalist><option>//div[@id='content']/div[2]/div/div[2]/div/div[2]/div/div[2]/div/div</option><option>//div/div[2]/div/div[2]/div/div[2]/div/div[2]/div/div</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Delete conditions of registration for a client</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/customer_information/6<datalist><option>http://localhost:8080/#/customer_information/6</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>xpath=(//button[@type='button'])[8]<datalist><option>xpath=(//button[@type='button'])[8]</option><option>//div[@id='content']/div[2]/div/div[2]/div/div[2]/div/div[2]/div/div/button[2]</option><option>//div[2]/div/div/button[2]</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-delete-document___BV_modal_body_']/form/div/div[2]/button</option><option>//div[2]/button</option><option>css=button.btn.btn-success.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForElementNotPresent</td><td>//div[@id='content']/div[2]/div/div[2]/div/div[2]/div/div[2]/div/div<datalist><option>//div[@id='content']/div[2]/div/div[2]/div/div[2]/div/div[2]/div/div</option><option>//div/div[2]/div/div[2]/div/div[2]/div/div[2]/div/div</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Schedule an appointment</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/educator_calendar<datalist><option>http://localhost:8080/#/educator_calendar</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnCreateAppointment<datalist><option>id=btnCreateAppointment</option><option>//button[@id='btnCreateAppointment']</option><option>//div[@id='content']/div[2]/div/div[2]/div/button</option><option>//div/button</option><option>css=#btnCreateAppointment</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=customerSelect<datalist><option>id=customerSelect</option><option>//select[@id='customerSelect']</option><option>//fieldset[@id='__BVID__33']/div/select</option><option>//select</option><option>css=#customerSelect</option></datalist></td><td></td>
+</tr>
+<tr><td>select</td><td>id=customerSelect<datalist><option>id=customerSelect</option><option>//select[@id='customerSelect']</option><option>//fieldset[@id='__BVID__33']/div/select</option><option>//select</option><option>css=#customerSelect</option></datalist></td><td>label=Alana Alfiari</td>
+</tr>
+<tr><td>click</td><td>id=customerSelect<datalist><option>id=customerSelect</option><option>//select[@id='customerSelect']</option><option>//fieldset[@id='__BVID__33']/div/select</option><option>//select</option><option>css=#customerSelect</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='date-calendar__cell-2021-06-29_']/span<datalist><option>//div[@id='date-calendar__cell-2021-06-29_']/span</option><option>//div[5]/div[3]/span</option><option>css=#date-calendar__cell-2021-06-29_ &gt; span.btn.border-0.rounded-circle.text-nowrap.btn-outline-light.text-dark.font-weight-bold</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-timeslot-timestart<datalist><option>id=input-timeslot-timestart</option><option>//select[@id='input-timeslot-timestart']</option><option>//div[@id='input-group-timeslot-timestart']/div/select</option><option>//div/div/select</option><option>css=#input-timeslot-timestart</option></datalist></td><td></td>
+</tr>
+<tr><td>select</td><td>id=input-timeslot-timestart<datalist><option>id=input-timeslot-timestart</option><option>//select[@id='input-timeslot-timestart']</option><option>//div[@id='input-group-timeslot-timestart']/div/select</option><option>//div/div/select</option><option>css=#input-timeslot-timestart</option></datalist></td><td>label=08h</td>
+</tr>
+<tr><td>click</td><td>id=input-timeslot-timestart<datalist><option>id=input-timeslot-timestart</option><option>//select[@id='input-timeslot-timestart']</option><option>//div[@id='input-group-timeslot-timestart']/div/select</option><option>//div/div/select</option><option>css=#input-timeslot-timestart</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-timeslot-timeend<datalist><option>id=input-timeslot-timeend</option><option>//select[@id='input-timeslot-timeend']</option><option>//div[@id='input-group-timeslot-timeend']/div/select</option><option>//div[5]/div/div/div/select</option><option>css=#input-timeslot-timeend</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-timeslot-timeend<datalist><option>id=input-timeslot-timeend</option><option>//select[@id='input-timeslot-timeend']</option><option>//div[@id='input-group-timeslot-timeend']/div/select</option><option>//div[5]/div/div/div/select</option><option>css=#input-timeslot-timeend</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-create-appointment___BV_modal_body_']/form/button</option><option>//form/button</option><option>css=form &gt; button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForElementPresent</td><td>//div[@id='content']/div[2]/div/div[3]/div/div/div[2]/div/table/tbody/tr/td/div/div/div/table/tbody/tr[5]/td[2]/div/div[2]/div/a/div<datalist><option>//div[@id='content']/div[2]/div/div[3]/div/div/div[2]/div/table/tbody/tr/td/div/div/div/table/tbody/tr[5]/td[2]/div/div[2]/div/a/div</option><option>//a/div</option><option>css=div.fc-event-main</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Add textual notes ans summary for client's appointment</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/customer_appointment/6<datalist><option>http://localhost:8080/#/customer_appointment/6</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=btnTextualNote<datalist><option>id=btnTextualNote</option><option>//button[@id='btnTextualNote']</option><option>//div[@id='content']/ul/li/div/button[2]</option><option>//button[2]</option><option>css=#btnTextualNote</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>id=input-appointment-summary<datalist><option>id=input-appointment-summary</option><option>//textarea[@id='input-appointment-summary']</option><option>//div[@id='input-group-appointment-summary']/div/textarea</option><option>//textarea</option><option>css=#input-appointment-summary</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-appointment-summary<datalist><option>id=input-appointment-summary</option><option>//textarea[@id='input-appointment-summary']</option><option>//div[@id='input-group-appointment-summary']/div/textarea</option><option>//textarea</option><option>css=#input-appointment-summary</option></datalist></td><td>Super rendez-vous, Rex a bien appris</td>
+</tr>
+<tr><td>click</td><td>id=input-appointment-note-text<datalist><option>id=input-appointment-note-text</option><option>//textarea[@id='input-appointment-note-text']</option><option>//div[@id='input-group-appointment-note-text']/div/textarea</option><option>//div[2]/div/textarea</option><option>css=#input-appointment-note-text</option></datalist></td><td></td>
+</tr>
+<tr><td>type</td><td>id=input-appointment-note-text<datalist><option>id=input-appointment-note-text</option><option>//textarea[@id='input-appointment-note-text']</option><option>//div[@id='input-group-appointment-note-text']/div/textarea</option><option>//div[2]/div/textarea</option><option>css=#input-appointment-note-text</option></datalist></td><td>Il faudra que je sois plus indulgent avec Rex la prochaine fois</td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-update-appointment-informations___BV_modal_body_']/form/button</option><option>//form/button</option><option>css=form &gt; button.btn.btn-outline-primary.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//div[@id='content']/ul/li/p[2]<datalist><option>//div[@id='content']/ul/li/p[2]</option><option>//p[2]</option></datalist></td><td>Super rendez-vous, Rex a bien appris</td>
+</tr>
+<tr><td>click</td><td>//div[@id='content']/ul/li/div/p<datalist><option>//div[@id='content']/ul/li/div/p</option><option>//div/p</option><option>css=div &gt; p</option></datalist></td><td>Il faudra que je sois plus indulgent avec Rex la prochaine fois</td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Delete an appointment</td></tr>
+</thead>
+<tbody>
+<tr><td>open</td><td>http://localhost:8080/#/customer_appointment/6<datalist><option>http://localhost:8080/#/customer_appointment/6</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>css=path<datalist><option>css=path</option></datalist></td><td></td>
+</tr>
+<tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-delete-appointment___BV_modal_body_']/form/div/div[2]/button</option><option>//div[2]/button</option><option>css=button.btn.btn-success.btn-block</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForElementPresent</td><td>//div[@id='content']/ul/li<datalist><option>//div[@id='content']/ul/li</option><option>//div/div/ul/li</option><option>css=li.event</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

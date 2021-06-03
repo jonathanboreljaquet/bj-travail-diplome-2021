@@ -47,6 +47,7 @@ class DAOTimeSlot {
             $statement->bindParam(':DELETED', $deleted, \PDO::PARAM_BOOL);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
             $timeSlotArray = array();
             
             foreach ($results as $result) {
@@ -84,7 +85,7 @@ class DAOTimeSlot {
         WHERE is_deleted= :DELETED
         AND id_educator = :ID_EDUCATOR
         AND id_weekly_schedule = :ID_WEEKLY_SCHEDULE
-        ORDER BY code_day, time_start;";
+        ORDER BY code_day, time_start";
         
         try {
             $statement = $this->db->prepare($statement);
@@ -93,6 +94,7 @@ class DAOTimeSlot {
             $statement->bindParam(':ID_WEEKLY_SCHEDULE', $idWeeklySchedule, \PDO::PARAM_INT);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
             $timeSlotArray = array();
             
             foreach ($results as $result) {
@@ -130,7 +132,7 @@ class DAOTimeSlot {
         WHERE is_deleted= :DELETED
         AND id_educator = :ID_EDUCATOR
         AND id_schedule_override = :ID_SCHEDULE_OVERRIDE
-        ORDER BY time_start;";
+        ORDER BY time_start";
         
         try {
             $statement = $this->db->prepare($statement);
@@ -139,6 +141,7 @@ class DAOTimeSlot {
             $statement->bindParam(':ID_SCHEDULE_OVERRIDE', $idScheduleOverride, \PDO::PARAM_INT);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
             $timeSlotArray = array();
             
             foreach ($results as $result) {
@@ -174,7 +177,7 @@ class DAOTimeSlot {
         FROM time_slot
         WHERE id = :ID_TIMESLOT
         AND is_deleted = 0
-        AND id_educator = :ID_EDUCATOR;";
+        AND id_educator = :ID_EDUCATOR";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -215,7 +218,7 @@ class DAOTimeSlot {
     {
         $statement = "
         INSERT INTO time_slot (code_day, time_start, time_end, is_deleted, id_weekly_schedule, id_schedule_override, id_educator) 
-        VALUES(:CODE_DAY, :TIME_START, :TIME_END, 0, :ID_WEEKLY_SCHEDULE, :ID_SCHEDULE_OVERRIDE,:ID_EDUCATOR);";
+        VALUES(:CODE_DAY, :TIME_START, :TIME_END, 0, :ID_WEEKLY_SCHEDULE, :ID_SCHEDULE_OVERRIDE,:ID_EDUCATOR)";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -244,7 +247,7 @@ class DAOTimeSlot {
         $statement = "
         UPDATE time_slot
         SET code_day = :CODE_DAY, time_start = :TIME_START, time_end = :TIME_END, id_weekly_schedule = :ID_WEEKLY_SCHEDULE, id_schedule_override = :ID_SCHEDULE_OVERRIDE
-        WHERE id = :ID_TIMESLOT;";
+        WHERE id = :ID_TIMESLOT";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -273,7 +276,7 @@ class DAOTimeSlot {
         $statement = "
         UPDATE time_slot
         SET is_deleted = 1
-        WHERE id = :ID_TIMESLOT;";
+        WHERE id = :ID_TIMESLOT";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -305,7 +308,7 @@ class DAOTimeSlot {
         AND :TIME_START < time_end
         AND :TIME_END > time_start
         AND code_day = :CODE_DAY
-        AND ts.id_educator = :ID_EDUCATOR;";
+        AND ts.id_educator = :ID_EDUCATOR";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -342,7 +345,7 @@ class DAOTimeSlot {
         AND :TIME_START < time_end
         AND :TIME_END > time_start
         AND code_day = :CODE_DAY
-        AND ts.id_educator = :ID_EDUCATOR;";
+        AND ts.id_educator = :ID_EDUCATOR";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -389,7 +392,7 @@ class DAOTimeSlot {
 
         CREATE OR REPLACE VIEW dates AS
         SELECT SUBDATE(ADDDATE(CURRENT_DATE(),365), number) AS date
-        FROM numbers;";
+        FROM numbers";
 
         $this->db->exec($statement);
     }
@@ -404,6 +407,7 @@ class DAOTimeSlot {
     public function findPlanningForEducator(int $idEducator)
     {
         $this->generateViews();
+
         $statement = "   
         SELECT IF(dates.date IS NOT NULL, dates.date, so.date_schedule_override) AS date,time_start,time_end 
 
@@ -438,7 +442,7 @@ class DAOTimeSlot {
         AND TIME(ADDTIME(ap.datetime_appointment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
         AND IF(so.date_schedule_override IS NULL,dates.date > NOW() ,so.date_schedule_override >NOW())
         
-        ORDER BY date,time_start;";
+        ORDER BY date,time_start";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -464,6 +468,7 @@ class DAOTimeSlot {
     public function findAppointmentSlotsForEducator(string $date,string $time_start, string $time_end,int $idEducator)
     {
         $this->generateViews();
+        
         $statement = "        
         SELECT IF(dates.date IS NOT NULL, dates.date, so.date_schedule_override) AS date,time_start,time_end 
 
@@ -502,7 +507,7 @@ class DAOTimeSlot {
         AND time_start = :TIME_START
         AND time_end = :TIME_END
  
-        ORDER BY date,time_start;";
+        ORDER BY date,time_start";
 
         try {
             $statement = $this->db->prepare($statement);

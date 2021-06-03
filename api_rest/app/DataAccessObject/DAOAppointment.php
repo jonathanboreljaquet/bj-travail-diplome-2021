@@ -42,7 +42,7 @@ class DAOAppointment {
         FROM appointment
 		WHERE (user_id_customer = :ID_USER_CUSTOMER OR user_id_educator = :ID_USER_EDUCATOR)
 		AND datetime_deletion IS NULL
-		AND user_id_deletion IS NULL;";
+		AND user_id_deletion IS NULL";
  
         try {
             $statement = $this->db->prepare($statement);
@@ -50,6 +50,7 @@ class DAOAppointment {
             $statement->bindParam(':ID_USER_EDUCATOR', $userEducatorId, \PDO::PARAM_INT);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
             $appointmentArray = array();    
 
             foreach ($results as $result) {
@@ -86,12 +87,13 @@ class DAOAppointment {
         note_graphical_serial_id, summary, datetime_deletion,
         user_id_customer,user_id_educator,user_id_deletion
         FROM appointment
-        WHERE id = :ID_APPOINTMENT;";
+        WHERE id = :ID_APPOINTMENT";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_APPOINTMENT', $id, \PDO::PARAM_INT);
             $statement->execute();
+            
             $appointment = new Appointment();
 
             if ($statement->rowCount()==1) {
@@ -131,13 +133,14 @@ class DAOAppointment {
         WHERE user_id_customer = :ID_USER
         AND datetime_deletion IS NULL
         AND user_id_deletion IS NULL
-        ORDER BY datetime_appointment DESC;";
+        ORDER BY datetime_appointment DESC";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_USER', $userId, \PDO::PARAM_INT);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
             $appointmentArray = array();    
 
             foreach ($results as $result) {
@@ -173,13 +176,14 @@ class DAOAppointment {
         WHERE user_id_customer = :ID_USER
         AND datetime_deletion IS NULL
         AND user_id_deletion IS NULL
-        ORDER BY datetime_appointment DESC;";
+        ORDER BY datetime_appointment DESC";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':ID_USER', $userId, \PDO::PARAM_INT);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
             $appointmentArray = array();    
 
             foreach ($results as $result) {
@@ -215,7 +219,7 @@ class DAOAppointment {
         note_graphical_serial_id, summary, datetime_deletion,
         user_id_customer,user_id_educator,user_id_deletion
         FROM appointment
-        WHERE note_graphical_serial_id = :SERIAL_ID;";
+        WHERE note_graphical_serial_id = :SERIAL_ID";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -260,7 +264,7 @@ class DAOAppointment {
         user_id_customer,user_id_educator) 
 
         VALUES(:DATETIME_APPOINTMENT, :DURATION_IN_HOUR,
-        :USER_ID_CUSTOMER,:USER_ID_EDUCATOR);";
+        :USER_ID_CUSTOMER,:USER_ID_EDUCATOR)";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -289,7 +293,8 @@ class DAOAppointment {
         SET note_text = :NOTE_TEXT, 
         note_graphical_serial_id = :NOTE_GRAPHICAL_SERIAL_ID,
         summary = :SUMMARY
-        WHERE id = :ID_APPOINTMENT;";
+        WHERE id = :ID_APPOINTMENT";
+
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':NOTE_TEXT', $appointment->note_text, \PDO::PARAM_STR);
@@ -317,7 +322,7 @@ class DAOAppointment {
         UPDATE appointment
         SET datetime_deletion = NOW(), 
         user_id_deletion = :ID_USER
-        WHERE id = :ID_APPOINTMENT;";
+        WHERE id = :ID_APPOINTMENT";
 
         try {
             $statement = $this->db->prepare($statement);

@@ -1874,38 +1874,23 @@ Pour générer ce fichier, je procède de la même manière que la création de 
 header('Content-type: text/calendar; charset=utf-8');
 header('Content-Disposition: attachment; filename=' . $filename);
 
+$now = new DateTime('NOW');
 
-echo 'BEGIN:VCALENDAR
+echo "BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//douceurdechien/handcal//NONSGML v1.0//FR
 CALSCALE:GREGORIAN
-BEGIN:VTIMEZONE
-TZID:Europe/Berlin
-X-LIC-LOCATION:Europe/Berlin
-BEGIN:DAYLIGHT
-TZOFFSETFROM:+0100
-TZOFFSETTO:+0200
-TZNAME:CEST
-DTSTART:19700329T020000
-RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
-END:DAYLIGHT
-BEGIN:STANDARD
-TZOFFSETFROM:+0200
-TZOFFSETTO:+0100
-TZNAME:CET
-DTSTART:19701025T030000
-RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
-END:STANDARD
-END:VTIMEZONE
+METHOD:PUBLISH
 BEGIN:VEVENT
-UID:' . md5(date_format($datetime_start, 'Ymd\This')) . '
-DTSTAMP:' . time() . '
-LOCATION:' . addslashes('701 Avenue de la Bigorre, 31210 Montréjeau, France') . '
-SUMMARY:' . addslashes($title) . '
-DTSTART;TZID=Europe/Berlin:' . date_format($datetime_start, 'Ymd\This') . '
-DTEND;TZID=Europe/Berlin:' . date_format($datetime_end, 'Ymd\This') . '
+UID:" . md5(time()) . "
+DTSTAMP;TZID=/Europe/Berlin:" . gmdate("Ymd\THis",$now->getTimestamp() + 60*60*2) . "
+DTSTART;TZID=/Europe/Berlin:".gmdate("Ymd\THis",$start_datetime->getTimestamp() + 60*60*2)."
+DTEND;TZID=/Europe/Berlin:".gmdate("Ymd\THis",$end_datetime->getTimestamp() + 60*60*2)."
+SUMMARY:Rendez-vous Douceur de Chien
+LOCATION:701 Avenue de la Bigorre, 31210 Montréjeau, France
+ORGANIZER:MAILTO:douceurdechien@douceurdechien.com
 END:VEVENT
-END:VCALENDAR';
+END:VCALENDAR";
 ```
 2. Récupération du contenu de la temporisation
 3. Création d'un fichier temporaire `.ics` avec le contenu du tampon
@@ -1918,3 +1903,37 @@ Dans l'ensemble, M. Gourdoux est satisfait du projet, il est très content que c
 Il en tout de même profité pour me faire deux commentaires. Le premier est par rapport à l'interface utilisateur. En effet. M. Gourdoux ma demander si il était possible de mieux guider l'utilisateur non authentifié lors de la prise de rendez-vous autonome. En effet, jusqu'à là, l'application affiche uniquement une notification afin de prévenir l'utilisateur qu'il doit se connecter. M. Gourdoux souhaiterez qu'un message et une redirection soit disponible afin de permettre à l'utilisateur non authentifié de se connecter ou s'inscrire.
 
 Le deuxième est par rapport à la fonctionnalité de prise de rendez-vous pour l'éducateur canin en cours de développement. En effet, lors de la démonstration, M. Gourdoux m'a posé une question très pertinente : Est-il possible que l'éducateur canin puisse planifier un rendez-vous avec un client quant-il le souhaite sans passer par la vérification du planning ? En effet, la question est intéressante car la vérification de planning sert principalement pour la prise de rendez-vous autonome et non pour l'éducateur canin. Car comme expliqué par M.Gourdoux, il est très fréquent que lors des rendez-vous entre le client et l'éducateur canin, ceux-ci planifie le ou les futurs rendez-vous ensemble. N'ayant pas penser à cette possibilité lors du développement de mon backend, je compte me pencher sur la problématique dans le but de réaliser ou modifier un endpoint afin de permettre aux éducateurs canins de planifier leurs rendez-vous quant-ils le désire.
+
+### Jeudi 3 juin 2021
+
+Modification de l'interface utilisateur de la prise de rendez-vous autonome afin de répondre à la demande du client.
+
+Modification de l'endpoint `POST api/v1/appointments` afin que son contrôleur effectue la vérification de planning uniquement quand l'utilisateur utilisant l'endpoint est un client et non un éducateur canin. Cette modification permet maintenant aux éducateurs canins de planifier des rendez-vous quant il le désire.
+
+Création de la fonctionnalité de planification de rendez-vous pour l'éducateur canin authentifié. Dorénavant, celui-ci peut planifier un rendez-vous avec un client de la société depuis la page "Mes rendez-vous". Pour ce faire, appel de l'endpoint `POST api/v1/appointments` précédemment modifié afin de ne pas passer par la vérification de planning lorsque c'est un éducateur canin qui planifie le rendez-vous.
+
+![dateTestPlanningSecondUser](./img/vue_addappointmentforeducator.PNG)
+
+Exécution de tous les tests unitaires de l'API REST et réglage d'un petit problème lors de l'endpoint `POST api/v1/weeklySchedules` qui vérifiait le chevauchement  de tous les calendriers hebdomadaire de tous les éducateurs canins et non seulement ceux de l'éducateur canin authentifié. Il y avait en effet un problème dans la requête SQL de vérification de chevauchement.
+
+Ajout d'un plugin pour le gestionnaire d'état de vue `Vuex` permettant de faire persister l'état de l'application lors de rafraichissement de page.
+Plugin : [vuex-persistedstate](https://github.com/robinvdvleuten/vuex-persistedstate)
+
+Réalisation des test unitaires réalisable avec Katalon Recorder. Katalon Recorder est une extension chrome permettant d'enregistrer des actions utilisateurs dans des applications WEB afin de générer des scripts de test. Katalon Recorder permet de lancer séquentiellement une suite d'action, comme des click, des saisies de données, etc... Par exemple, pour tester que la fonctionnalité de connexion d'un client fonctionne bien, j'ai réalisé les étapes suivante dans mon script de test : 
+
+| Connexion   |                                                              |                                     |
+| ----------- | ------------------------------------------------------------ | ----------------------------------- |
+| open        | http://localhost:8080/#/                                     |                                     |
+| click       | link=Connexion                                               |                                     |
+| click       | id=input-connection-email                                    |                                     |
+| type        | id=input-connection-email                                    | jonathan.borel-jaquet@hotmail.com   |
+| click       | id=input-connection-password                                 |                                     |
+| type        | id=input-connection-password                                 | pomme12345                          |
+| click       | //button[@type='submit']                                     |                                     |
+| waitForText | //div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[4]/div[2] | Route de Frontenex 100, 1208 Genève |
+| waitForText | //div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div/div[2] | Jonathan Borel-Jaquet               |
+| waitForText | //div[@id='content']/div[2]/div/div[2]/div/div/div/p         | Client                              |
+| waitForText | //div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[3]/div[2] | 077412909                           |
+| waitForText | //div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[2]/div[2] | jonathan.borel-jaquet@hotmail.com   |
+| waitForText | link=Mes informations                                        | Mes informations                    |
+| waitForText | link=Mes rendez-vous                                         | Mes rendez-vous                     |

@@ -10,6 +10,7 @@
       <b-row id="buttonRow" class="text-center">
         <b-col>
           <b-button
+            id="btnClearSignature"
             block
             type="button"
             @click="clearSignaturePad"
@@ -20,6 +21,7 @@
         </b-col>
         <b-col>
           <b-button
+            id="btnValidateSignature"
             :disabled="isBlocked"
             block
             type="button"

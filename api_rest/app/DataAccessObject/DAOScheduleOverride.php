@@ -40,7 +40,7 @@ class DAOScheduleOverride {
         FROM schedule_override
         WHERE is_deleted= :DELETED
         AND id_educator = :ID_EDUCATOR
-        ORDER BY date_schedule_override;";
+        ORDER BY date_schedule_override";
         
         try {
             $statement = $this->db->prepare($statement);
@@ -48,6 +48,7 @@ class DAOScheduleOverride {
             $statement->bindParam(':DELETED', $deleted, \PDO::PARAM_BOOL);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+            
             $scheduleOverrideArray = array();
             
             foreach ($results as $result) {
@@ -79,7 +80,7 @@ class DAOScheduleOverride {
         FROM schedule_override
         WHERE id = :ID_SCHEDULE_OVERRIDE
         AND is_deleted = 0
-        AND id_educator = :ID_EDUCATOR;";
+        AND id_educator = :ID_EDUCATOR";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -116,7 +117,7 @@ class DAOScheduleOverride {
     {
         $statement = "
         INSERT INTO schedule_override (date_schedule_override, id_educator,is_deleted) 
-        VALUES(STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%Y-%m-%d\"), :ID_EDUCATOR, 0);";
+        VALUES(STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%Y-%m-%d\"), :ID_EDUCATOR, 0)";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -141,7 +142,7 @@ class DAOScheduleOverride {
         $statement = "
         UPDATE schedule_override
         SET date_schedule_override = STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%Y-%m-%d\")
-        WHERE id = :ID_SCHEDULE_OVERRIDE;";
+        WHERE id = :ID_SCHEDULE_OVERRIDE";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -166,7 +167,7 @@ class DAOScheduleOverride {
         $statement = "
         UPDATE schedule_override
         SET is_deleted = 1
-        WHERE id = :ID_SCHEDULE_OVERRIDE;";
+        WHERE id = :ID_SCHEDULE_OVERRIDE";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -192,7 +193,7 @@ class DAOScheduleOverride {
         FROM schedule_override
         WHERE date_schedule_override = STR_TO_DATE(:DATE_SCHEDULE_OVERRIDE, \"%Y-%m-%d\")
         AND is_deleted = 0
-        AND id_educator = :ID_EDUCATOR;";
+        AND id_educator = :ID_EDUCATOR";
 
         try {
             $statement = $this->db->prepare($statement);

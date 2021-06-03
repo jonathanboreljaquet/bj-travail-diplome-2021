@@ -40,7 +40,7 @@ class DAOWeeklySchedule {
         FROM weekly_schedule
         WHERE is_deleted= :DELETED
         AND id_educator = :ID_EDUCATOR
-        ORDER BY date_valid_from;";
+        ORDER BY date_valid_from";
         
         try {
             $statement = $this->db->prepare($statement);
@@ -48,6 +48,7 @@ class DAOWeeklySchedule {
             $statement->bindParam(':DELETED', $deleted, \PDO::PARAM_BOOL);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
             $weeklyScheduleArray = array();
             
             foreach ($results as $result) {
@@ -80,7 +81,7 @@ class DAOWeeklySchedule {
         FROM weekly_schedule
         WHERE id = :ID_WEEKLY_SCHEDULE
         AND is_deleted = 0
-        AND id_educator = :ID_EDUCATOR;";
+        AND id_educator = :ID_EDUCATOR";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -118,7 +119,7 @@ class DAOWeeklySchedule {
     {
         $statement = "
         INSERT INTO weekly_schedule (date_valid_from, date_valid_to,id_educator, is_deleted) 
-        VALUES(STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\"),STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\"),:ID_EDUCATOR, 0);";
+        VALUES(STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\"),STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\"),:ID_EDUCATOR, 0)";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -143,8 +144,9 @@ class DAOWeeklySchedule {
     {
         $statement = "
         UPDATE weekly_schedule
-        SET date_valid_from = STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\"), date_valid_to = STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\")
-        WHERE id = :ID_WEEKLY_SCHEDULE;";
+        SET date_valid_from = STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\"), 
+        date_valid_to = STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\")
+        WHERE id = :ID_WEEKLY_SCHEDULE";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -170,7 +172,7 @@ class DAOWeeklySchedule {
         $statement = "
         UPDATE weekly_schedule
         SET is_deleted = 1
-        WHERE id = :ID_WEEKLY_SCHEDULE;";
+        WHERE id = :ID_WEEKLY_SCHEDULE";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -194,22 +196,21 @@ class DAOWeeklySchedule {
         $statement = "
         SELECT *
         FROM weekly_schedule
-        WHERE is_deleted = 0
+        WHERE (STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\") < date_valid_to OR date_valid_to IS NULL)
+        AND (STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\") > date_valid_from
+        OR (STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\") IS NULL AND (STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\") < date_valid_to)))
         AND id_educator = :ID_EDUCATOR
-        AND id != :ID_HIMSELF
-        AND (STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\") < date_valid_to OR date_valid_to IS NULL)
-        AND STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\") > date_valid_from
-        OR (STR_TO_DATE(:DATE_VALID_TO, \"%Y-%m-%d\") IS NULL AND (STR_TO_DATE(:DATE_VALID_FROM, \"%Y-%m-%d\") < date_valid_to))";
+        AND is_deleted = 0";
 
         if (!isset($input['date_valid_to'])) {
             $input['date_valid_to'] = null;
         }
+
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':DATE_VALID_FROM', $weeklySchedule->date_valid_from, \PDO::PARAM_STR);
             $statement->bindParam(':DATE_VALID_TO', $weeklySchedule->date_valid_to, \PDO::PARAM_STR);
-            $statement->bindParam(':ID_EDUCATOR', $weeklySchedule->id_educator, \PDO::PARAM_INT);      
-            $statement->bindParam(':ID_HIMSELF', $weeklySchedule->id, \PDO::PARAM_INT);      
+            $statement->bindParam(':ID_EDUCATOR', $weeklySchedule->id_educator, \PDO::PARAM_INT);         
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
             return $result;
@@ -233,7 +234,7 @@ class DAOWeeklySchedule {
         WHERE date_valid_to IS NULL
         AND is_deleted = 0
         AND id != :ID_HIMSELF
-		AND id_educator = :ID_EDUCATOR;";
+		AND id_educator = :ID_EDUCATOR";
 
         try {
             $statement = $this->db->prepare($statement);

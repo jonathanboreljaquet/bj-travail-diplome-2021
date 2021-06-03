@@ -50,61 +50,67 @@
         title="Réserver un rendez-vous"
         :hide-footer="true"
       >
-        <b-form
-          @submit.prevent="
-            createAppointment(
-              selectedAppointment.datetime,
-              selectedAppointment.durationInHour,
-              $store.state.user_id,
-              selectedAppointment.idEducator
-            )
-          "
-        >
-          <b-row>
-            <b-col class="d-flex justify-content-center">
-              <h5>Éducateur canin</h5>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col class="d-flex justify-content-center">
-              <p>
-                {{ this.$jquery("#educatorSelect option:selected").text() }}
-              </p>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col class="d-flex justify-content-center">
-              <h5>Date</h5>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col>
-              <b-calendar
-                block
-                id="date-calendar"
-                label-help=""
-                :readonly="true"
-                :value="selectedAppointment.datetime"
-              ></b-calendar>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col class="d-flex justify-content-center">
-              <h5>Créneau horaire</h5>
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col class="d-flex justify-content-center">
-              <p>
-                {{ selectedAppointment.startHour }}h à
-                {{ selectedAppointment.endHour }}h
-              </p>
-            </b-col>
-          </b-row>
-          <b-button block type="submit" variant="outline-primary">
-            Réserver le rendez-vous
-          </b-button>
-        </b-form>
+        <div v-if="auth">
+          <b-form
+            @submit.prevent="
+              createAppointment(
+                selectedAppointment.datetime,
+                selectedAppointment.durationInHour,
+                $store.state.user_id,
+                selectedAppointment.idEducator
+              )
+            "
+          >
+            <b-row>
+              <b-col class="d-flex justify-content-center">
+                <h5>Éducateur canin</h5>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col class="d-flex justify-content-center">
+                <p>
+                  {{ this.$jquery("#educatorSelect option:selected").text() }}
+                </p>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col class="d-flex justify-content-center">
+                <h5>Date</h5>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
+                <b-calendar
+                  block
+                  id="date-calendar"
+                  label-help=""
+                  :readonly="true"
+                  :value="selectedAppointment.datetime"
+                ></b-calendar>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col class="d-flex justify-content-center">
+                <h5>Créneau horaire</h5>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col class="d-flex justify-content-center">
+                <p>
+                  {{ selectedAppointment.startHour }}h à
+                  {{ selectedAppointment.endHour }}h
+                </p>
+              </b-col>
+            </b-row>
+            <b-button block type="submit" variant="outline-primary">
+              Réserver le rendez-vous
+            </b-button>
+          </b-form>
+        </div>
+        <div v-else>
+          <p>Connectez-vous afin de pouvoir planifier votre rendez-vous.</p>
+          <b-button to="/connection" variant="primary">Se connecter</b-button>
+        </div>
       </b-modal>
     </b-container>
   </div>
@@ -151,17 +157,19 @@ export default {
         durationInHour: null,
         idEducator: null,
       },
-      selected: 1,
+      selected: null,
       educators: [],
     };
   },
   methods: {
     loadEducators() {
-      this.$http
-        .get(this.$API_URL + "users/educators/")
-        .then((response) => (this.educators = response.data));
+      this.$http.get(this.$API_URL + "users/educators/").then((response) => {
+        this.educators = response.data;
+        this.selected = this.educators[0].id;
+        this.loadEducatorPlanning(this.selected);
+      });
     },
-    loadEducatorEvents(idEducator) {
+    loadEducatorPlanning(idEducator) {
       this.$http
         .get(this.$API_URL + "plannings/" + idEducator)
         .then((response) => {
@@ -192,29 +200,28 @@ export default {
           info.view.type == "timeGridWeek" ||
           info.view.type == "timeGridDay"
         ) {
-          if (this.auth()) {
-            var startDate = moment(info.event.start);
-            var endDate = moment(info.event.end);
-            var datetime = startDate.format("YYYY-MM-DD HH:mm:ss");
-            var startHour = startDate.format("HH");
-            var endHour = endDate.format("HH");
-            var durationDifference = moment.duration(
-              moment(info.event.end).diff(moment(info.event.start))
-            );
-            var durationInHour = durationDifference.asHours();
-            this.sendAppointmentInformations(
-              datetime,
-              startHour,
-              endHour,
-              durationInHour,
-              info.event.extendedProps.idEducator
-            );
-            this.$bvModal.show("modal-create-appointment");
-          } else {
-            this.$alertify.error(
-              "Connectez-vous afin de planifier votre rendez-vous"
-            );
-          }
+          var startDate = moment(info.event.start);
+          var endDate = moment(info.event.end);
+          var datetime = startDate.format("YYYY-MM-DD HH:mm:ss");
+          var startHour = startDate.format("HH");
+          var endHour = endDate.format("HH");
+          var durationDifference = moment.duration(
+            moment(info.event.end).diff(moment(info.event.start))
+          );
+          var durationInHour = durationDifference.asHours();
+          this.sendAppointmentInformations(
+            datetime,
+            startHour,
+            endHour,
+            durationInHour,
+            info.event.extendedProps.idEducator
+          );
+          this.$bvModal.show("modal-create-appointment");
+          //else {
+          //   this.$alertify.error(
+          //     "Connectez-vous afin de planifier votre rendez-vous"
+          //   );
+          // }
         }
       }
     },
@@ -241,14 +248,14 @@ export default {
           console.log(response);
           this.$alertify.success("Rendez-vous reservé avec succès");
           this.$bvModal.hide("modal-create-appointment");
-          this.loadEducatorEvents(this.selected);
+          this.loadEducatorPlanning(this.selected);
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
     },
     onChange() {
-      this.loadEducatorEvents(this.selected);
+      this.loadEducatorPlanning(this.selected);
     },
     sendAppointmentInformations(
       appointmentdatetime,
@@ -263,13 +270,14 @@ export default {
       this.selectedAppointment.durationInHour = appointmentDurationInHour;
       this.selectedAppointment.idEducator = appointmentIdEducator;
     },
-    auth() {
-      return this.$store.getters.ifAuthenticated;
-    },
   },
   mounted() {
     this.loadEducators();
-    this.loadEducatorEvents(this.selected);
+  },
+  computed: {
+    auth() {
+      return this.$store.getters.ifAuthenticated;
+    },
   },
 };
 </script>

@@ -22,6 +22,7 @@
             <p class="text-secondary mb-1">{{ address }}</p>
             <div v-if="authCustomer">
               <b-button
+                id="btnUpdatePassword"
                 variant="outline-primary"
                 v-b-modal.modal-update-password
                 block
@@ -31,6 +32,7 @@
             </div>
             <div v-if="authAdministrator">
               <b-button
+                id="btnGoToAppointment"
                 :to="{
                   name: 'customerAppointment',
                   params: { userId: $route.params.userId },
@@ -41,6 +43,7 @@
                 >Rendez-vous
               </b-button>
               <b-button
+                id="btnAddDog"
                 variant="outline-primary"
                 class="btnAdmin"
                 v-if="authAdministrator"
@@ -49,6 +52,7 @@
                 Ajouter un chien
               </b-button>
               <b-button
+                id="btnAddDocument"
                 variant="outline-primary"
                 class="btnAdmin"
                 v-if="authAdministrator"
@@ -57,6 +61,7 @@
                 Ajouter un document
               </b-button>
               <b-button
+                id="btnDeleteUser"
                 variant="outline-danger"
                 class="btnAdmin"
                 v-if="authAdministrator"
@@ -138,6 +143,7 @@
             <div v-if="authAdministrator">
               <hr />
               <b-button
+                id="btnUpdateUser"
                 variant="outline-primary"
                 class="btnAdmin"
                 v-b-modal.modal-update-user
@@ -200,6 +206,7 @@
                 <div v-if="authAdministrator">
                   <hr />
                   <b-button
+                    id="btnUpdateDog"
                     variant="outline-primary"
                     class="btnAdmin"
                     v-b-modal.modal-update-dog
@@ -216,6 +223,7 @@
                     Modifier le chien
                   </b-button>
                   <b-button
+                    id="btnAddPictureDog"
                     class="btnAdmin"
                     variant="outline-primary"
                     v-b-modal.modal-add-picture-dog
@@ -224,6 +232,7 @@
                     Modifier la photo
                   </b-button>
                   <b-button
+                    id="btnDeleteDog"
                     variant="outline-danger"
                     class="btnAdmin"
                     v-b-modal.modal-delete-dog

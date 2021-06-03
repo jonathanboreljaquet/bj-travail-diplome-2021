@@ -18,12 +18,12 @@
         <b-col lg="6">
           <b-form @submit.prevent="onSubmit" autocomplete="on">
             <b-form-group
-              id="input-group-1"
+              id="input-group-connection-email"
               label="Adresse email:"
-              label-for="input-1"
+              label-for="input-connection-email"
             >
               <b-form-input
-                id="input-1"
+                id="input-connection-email"
                 v-model="form.email"
                 type="email"
                 placeholder="Entrez l'adresse email"
@@ -32,12 +32,12 @@
               ></b-form-input>
             </b-form-group>
             <b-form-group
-              id="input-group-2"
+              id="input-group-connection-password"
               label="Mot de passe :"
-              label-for="input-2"
+              label-for="input-connection-password"
             >
               <b-form-input
-                id="input-2"
+                id="input-connection-password"
                 v-model="form.password"
                 type="password"
                 placeholder="Entrez le mot de passe"

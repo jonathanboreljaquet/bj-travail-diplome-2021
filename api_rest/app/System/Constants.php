@@ -17,5 +17,4 @@ class Constants
     const IMAGE_TYPE_JPEG = "image/jpeg";
     const IMAGE_TYPE_PNG = "image/png";
     const TYPE_DOCUMENT_PDF = "application/pdf";
-    
 }

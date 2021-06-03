@@ -21,6 +21,8 @@
                     "
                   >
                     <h4>{{ appointment.date }}</h4>
+                    <h3>Éducateur canin</h3>
+                    <p>{{ appointment.educatorFullname }}</p>
                     <h3>Résumé du rendez-vous</h3>
                     <p v-if="appointment.summary != null">
                       {{ appointment.summary }}
@@ -49,6 +51,7 @@
                       </p>
                       <p v-else>Aucunes notes textuelles</p>
                       <b-button
+                        id="btnGraphicalNote"
                         variant="outline-primary"
                         block
                         v-b-modal.modal-graphical-note
@@ -64,6 +67,7 @@
                         Notes graphiques
                       </b-button>
                       <b-button
+                        id="btnTextualNote"
                         variant="outline-primary"
                         block
                         v-b-modal.modal-update-appointment-informations
@@ -253,9 +257,15 @@ export default {
       selectedAppointmentNoteText: "",
       selectedAppointmentNoteGraphicalSerialId: "",
       customStyle: { border: "#c2c2c2 3px solid" },
+      educators: null,
     };
   },
   methods: {
+    loadEducators() {
+      this.$http.get(this.$API_URL + "users/educators/").then((response) => {
+        this.educators = response.data;
+      });
+    },
     loadAuthCustomerAppointment() {
       const config = {
         headers: {
@@ -301,6 +311,10 @@ export default {
           month: "long",
           day: "numeric",
         };
+        var educator = this.educators.find(
+          (x) => x.id === appointment.user_id_educator
+        );
+        var educatorFullname = educator.firstname + " " + educator.lastname;
         this.appointments.push({
           id: appointment.id,
           hourStart: date.getHours() + "h",
@@ -309,6 +323,7 @@ export default {
           summary: appointment.summary,
           noteText: appointment.note_text,
           noteGraphicalSerialId: appointment.note_graphical_serial_id,
+          educatorFullname: educatorFullname,
         });
       });
     },
@@ -356,7 +371,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.loadCustomerAppointmentsByUserId(this.$route.params.userId);
-          this.$alertify.success("Notes graphiques modifiées");
+          this.$alertify.success("Notes textuelles modifiées");
           this.$bvModal.hide("modal-update-appointment-informations");
         })
         .catch((error) => {
@@ -435,6 +450,7 @@ export default {
     },
   },
   mounted() {
+    this.loadEducators();
     if (this.authAdministrator && this.$route.params.userId) {
       this.title = "Rendez-vous du client";
       this.loadCustomerAppointmentsByUserId(this.$route.params.userId);

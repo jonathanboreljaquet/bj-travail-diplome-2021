@@ -35,12 +35,13 @@ class DAODocument {
     {
         $statement = "
         SELECT id, document_serial_id, type, user_id
-        FROM document;";
+        FROM document";
 
         try {
             $statement = $this->db->prepare($statement);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
             $documentArray = array();
             
             foreach ($results as $result) {
@@ -71,7 +72,7 @@ class DAODocument {
         $statement = "
         SELECT id, document_serial_id, type, user_id
         FROM document
-        WHERE id = :ID_DOCUMENT;";
+        WHERE id = :ID_DOCUMENT";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -109,7 +110,7 @@ class DAODocument {
         $statement = "
         SELECT id, document_serial_id, type, user_id 
         FROM document
-        WHERE user_id = :ID_USER;";
+        WHERE user_id = :ID_USER";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -147,7 +148,7 @@ class DAODocument {
         $statement = "
         SELECT id, document_serial_id, type, user_id 
         FROM document
-        WHERE document_serial_id= :SERIAL_ID;";
+        WHERE document_serial_id= :SERIAL_ID";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -188,7 +189,7 @@ class DAODocument {
         SELECT id, document_serial_id, type, user_id 
         FROM document
         WHERE user_id = :ID_USER
-        AND document_serial_id= :SERIAL_ID;";
+        AND document_serial_id= :SERIAL_ID";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -227,7 +228,7 @@ class DAODocument {
     {
         $statement = "
         INSERT INTO document (document_serial_id, type,user_id) 
-        VALUES(:DOCUMENT_SERIAL_ID, :TYPE, :USER_ID);";
+        VALUES(:DOCUMENT_SERIAL_ID, :TYPE, :USER_ID)";
 
         try {
             $statement = $this->db->prepare($statement);
@@ -255,7 +256,8 @@ class DAODocument {
         SET document_serial_id = :DOCUMENT_SERIAL_ID, 
         type = :TYPE,
         user_id = :USER_ID
-        WHERE id = :ID_DOCUMENT;";
+        WHERE id = :ID_DOCUMENT";
+
         try {
             $statement = $this->db->prepare($statement);
             $statement->bindParam(':DOCUMENT_SERIAL_ID', $document->document_serial_id, \PDO::PARAM_STR);
@@ -280,7 +282,7 @@ class DAODocument {
     {
         $statement = "
         DELETE FROM document
-        WHERE id = :ID_DOCUMENT;";
+        WHERE id = :ID_DOCUMENT";
 
         try {
             $statement = $this->db->prepare($statement);

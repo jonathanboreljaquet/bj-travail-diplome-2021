@@ -1,11 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 import router from "./router";
 import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./constants.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     api_token: null,
     code_role: null,
@@ -88,7 +90,7 @@ export default new Vuex.Store({
       localStorage.removeItem("code_role");
       localStorage.removeItem("user_id");
       Vue.prototype.$alertify.success("Vous êtes déconnecté");
-      router.push("/");
+      router.push("/connection");
     },
     autoLogin({ commit }) {
       const api_token = localStorage.getItem("api_token");

@@ -141,19 +141,21 @@ class AppointmentController {
         $time_start = $datetime_start->format("H:i:s");
         $time_end = $datetime_end->format("H:i:s");
 
+        if ($userAuth->code_role == Constants::USER_CODE_ROLE) {
+            
+            if (!$this->DAOTimeSlot->findAppointmentSlotsForEducator($date,$time_start,$time_end,$appointment->user_id_educator)) {
+                return ResponseController::invalidAppointment();
+            }
+            
+        }
+
+        $this->DAOAppointment->insert($appointment);
+
         $filename =  "iCal-" . $datetime_start->format("Ymd"). ".ics";
 
         $educator_fullname = $userEducator->firstname . " " . $userEducator->lastname;
 
         HelperController::sendMailWithICSFile($datetime_start, $datetime_end, $educator_fullname, $userCustomer->email, $filename);
-
-        if (!$this->DAOTimeSlot->findAppointmentSlotsForEducator($date,$time_start,$time_end,$appointment->user_id_educator)) {
-            return ResponseController::invalidAppointment();
-        }
-
-        $this->DAOAppointment->insert($appointment);
-
-        
 
         return ResponseController::successfulCreatedRessource();
     }

@@ -9,6 +9,15 @@
       <b-row>
         <b-col>
           <b-button
+            id="btnUpdatePassword"
+            variant="outline-primary"
+            v-b-modal.modal-update-password
+            block
+          >
+            Modifier mon mot de passe
+          </b-button>
+          <b-button
+            id="btnAddClient"
             style="margin-bottom: 10px; margin-top: 10px"
             variant="outline-primary"
             block
@@ -203,6 +212,48 @@
           </b-button>
         </b-form>
       </b-modal>
+
+      <!-- MODAL UPDATE PASSWORD-->
+      <b-modal
+        id="modal-update-password"
+        title="Modifier le mot de passe"
+        :hide-footer="true"
+      >
+        <b-form
+          @submit.prevent="updateAuthCustomerPassword(password, repeatPassword)"
+        >
+          <b-form-group
+            id="input-group-inscription-password"
+            label="Mot de passe :"
+            label-for="input-inscription-password"
+          >
+            <b-form-input
+              id="input-inscription-password"
+              v-model="password"
+              type="password"
+              placeholder="Entrez le mot de passe"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            id="input-group-inscription-second-password"
+            label="Confirmation du mot de passe :"
+            label-for="input-inscription-second-password"
+          >
+            <b-form-input
+              id="input-inscription-second-password"
+              v-model="repeatPassword"
+              type="password"
+              placeholder="Entrez le mot de passe"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-button block type="submit" variant="outline-primary">
+            Modifier le mot de passe
+          </b-button>
+        </b-form>
+      </b-modal>
     </b-container>
   </div>
 </template>
@@ -237,6 +288,8 @@ export default {
         phonenumber: "",
         address: "",
       },
+      password: "",
+      repeatPassword: "",
     };
   },
   methods: {
@@ -285,6 +338,30 @@ export default {
           this.loadCustomersWithDogs();
           this.$alertify.success("Client ajouté avec succès");
           this.$bvModal.hide("modal-add-client");
+        })
+        .catch((error) => {
+          this.$alertify.error(error.response.data.error);
+        });
+    },
+    updateAuthCustomerPassword(password, repeatPassword) {
+      if (password != repeatPassword) {
+        this.$alertify.error("les mots de passes ne corréspondent pas");
+        return;
+      }
+      const params = new URLSearchParams();
+      params.append("password", password);
+      const config = {
+        headers: {
+          // eslint-disable-next-line prettier/prettier
+          "Authorization" : this.$store.state.api_token,
+        },
+      };
+      this.$http
+        .patch(this.$API_URL + "users/me/changePassword/", params, config)
+        .then((response) => {
+          console.log(response);
+          this.$alertify.success("Mot de passe modifié");
+          this.$bvModal.hide("modal-update-password");
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
