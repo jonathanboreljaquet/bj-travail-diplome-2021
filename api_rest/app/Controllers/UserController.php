@@ -71,13 +71,13 @@ class UserController {
 
     /**
      * 
-     * Method to return all users in JSON format.
+     * Method to return all educator users in JSON format.
      * 
      * @return string The status and the body in json format of the response
      */
     public function getAllEducatorUsers()
     { 
-        $allEducatorUsers = $this->DAOUser->findAll(Constants::ADMIN_CODE_ROLE);
+        $allEducatorUsers = $this->DAOUser->findAllEducators();
 
         return ResponseController::successfulRequest($allEducatorUsers);  
     }

@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-	<title>DouceurDeChien Educator</title>
+	<title>testSuiteEducator</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
@@ -332,7 +332,7 @@
 </tbody></table>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Add textual notes ans summary for client's appointment</td></tr>
+<tr><td rowspan="1" colspan="3">Add textual notes and summary for client's appointment</td></tr>
 </thead>
 <tbody>
 <tr><td>open</td><td>http://localhost:8080/#/customer_appointment/6<datalist><option>http://localhost:8080/#/customer_appointment/6</option></datalist></td><td></td>
@@ -366,6 +366,16 @@
 <tr><td>click</td><td>//button[@type='submit']<datalist><option>//button[@type='submit']</option><option>//div[@id='modal-delete-appointment___BV_modal_body_']/form/div/div[2]/button</option><option>//div[2]/button</option><option>css=button.btn.btn-success.btn-block</option></datalist></td><td></td>
 </tr>
 <tr><td>waitForElementPresent</td><td>//div[@id='content']/ul/li<datalist><option>//div[@id='content']/ul/li</option><option>//div/div/ul/li</option><option>css=li.event</option></datalist></td><td></td>
+</tr>
+</tbody></table>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Deconnexion</td></tr>
+</thead>
+<tbody>
+<tr><td>click</td><td>link=Déconnexion<datalist><option>link=Déconnexion</option><option>//a[contains(text(),'Déconnexion')]</option><option>//div[@id='nav-collapse']/ul[2]/li/a</option><option>xpath=(//a[contains(@href, '#')])[7]</option><option>//ul[2]/li/a</option><option>css=ul.navbar-nav.ml-auto &gt; li.nav-item &gt; a.nav-link</option></datalist></td><td></td>
+</tr>
+<tr><td>waitForText</td><td>//div[@id='title']/div/h1<datalist><option>//div[@id='title']/div/h1</option><option>//h1</option><option>css=h1</option></datalist></td><td>Se connecter</td>
 </tr>
 </tbody></table>
 </body>

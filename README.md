@@ -152,9 +152,16 @@ Pour plus d'informations, dirigez-vous sur la [documentation technique](./docume
 
 ### JAVASCRIPT - APPLICATION
 
-1. 
+1. Télécharger le projet
+2. Accéder au répertoire pwa en ligne de commande
+3. Exécuter la commande `npm install`
+4. Exécuter la commande `npm run serve`
+5. Ouvrir l'url `http://localhost:8080/`
 
 ## Commandes
 
 ``composer install`` : Installe toutes les dépendances PHP du projet
 `php dbseed.php` : Exécute le script PHP `dbseed.php` afin d'insérer dans la base de données des données de test.
+`npm install` : Installe toutes les dépendances Javascript
+`npm run serve` : Démarre un serveur de développement basé sur [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+

@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-container>
-      <b-row id="title" class="text-center">
+      <b-row class="title text-center">
         <b-col>
           <h1>Administration</h1>
         </b-col>
@@ -29,7 +29,7 @@
       </b-row>
       <b-row>
         <b-col>
-          <b-input-group size="sm" style="margin-bottom: 10px">
+          <b-input-group style="margin-bottom: 10px">
             <b-form-input
               id="filter-input"
               v-model="filter"
@@ -134,11 +134,11 @@
         <b-form
           @submit.prevent="
             createUser(
-              form.email,
-              form.firstname,
-              form.lastname,
-              form.phonenumber,
-              form.address
+              formAddClient.email,
+              formAddClient.firstname,
+              formAddClient.lastname,
+              formAddClient.phonenumber,
+              formAddClient.address
             )
           "
         >
@@ -149,7 +149,7 @@
           >
             <b-form-input
               id="input-client-email"
-              v-model="form.email"
+              v-model="formAddClient.email"
               type="email"
               placeholder="Entrez l'adresse e-mail du client"
               required
@@ -162,7 +162,7 @@
           >
             <b-form-input
               id="input-client-firstname"
-              v-model="form.firstname"
+              v-model="formAddClient.firstname"
               type="text"
               placeholder="Entrez le prénom du client"
               required
@@ -175,7 +175,7 @@
           >
             <b-form-input
               id="input-client-lastname"
-              v-model="form.lastname"
+              v-model="formAddClient.lastname"
               type="text"
               placeholder="Entrez le nom de famille du client"
               required
@@ -188,7 +188,7 @@
           >
             <b-form-input
               id="input-client-phonenumber"
-              v-model="form.phonenumber"
+              v-model="formAddClient.phonenumber"
               type="text"
               placeholder="Entrez le numéro de téléphone du client"
               required
@@ -201,7 +201,7 @@
           >
             <b-form-input
               id="input-client-address"
-              v-model="form.address"
+              v-model="formAddClient.address"
               type="text"
               placeholder="Entrez l'addresse du client"
               required
@@ -229,7 +229,7 @@
           >
             <b-form-input
               id="input-inscription-password"
-              v-model="password"
+              v-model="formChangePassword.password"
               type="password"
               placeholder="Entrez le mot de passe"
               required
@@ -242,7 +242,7 @@
           >
             <b-form-input
               id="input-inscription-second-password"
-              v-model="repeatPassword"
+              v-model="formChangePassword.repeatPassword"
               type="password"
               placeholder="Entrez le mot de passe"
               required
@@ -281,15 +281,17 @@ export default {
       isBusy: true,
       currentPage: 1,
       totalRows: 1,
-      form: {
+      formAddClient: {
         email: "",
         firstname: "",
         lastname: "",
         phonenumber: "",
         address: "",
       },
-      password: "",
-      repeatPassword: "",
+      formChangePassword: {
+        password: "",
+        repeatPassword: "",
+      },
     };
   },
   methods: {
@@ -378,10 +380,6 @@ export default {
 </script>
 
 <style scoped>
-#title {
-  margin-top: 20px;
-  color: #3ea3d8;
-}
 .tableBtn {
   background-color: #3ea3d8;
 }

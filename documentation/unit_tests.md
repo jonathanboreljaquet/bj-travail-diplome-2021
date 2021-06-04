@@ -160,6 +160,31 @@ pm.test("The data structure of the response is correct", () => {
 });
 ```
 
+**[USEE-GA1] Get right educator users**
+
+```javascript
+pm.test("The data structure of the response is correct", () => {
+  pm.response.to.have.jsonSchema({
+      "type": "array",
+      "items": [{
+          "type": "object",
+          "properties": {
+              "id" : {"type" : "integer"},
+              "email" : {"type" : "null"},
+              "firstname" : {"type" : "string"},
+              "lastname" : {"type" : "string"},
+              "phonenumber" : {"type" : "null"},
+              "address" : {"type" : "null"},
+              "api_token" : {"type" : "null"},
+              "code_role" : {"type" : "null"},
+              "password_hash" : {"type" : "null"}
+          },
+          "required": ["id","email","firstname","lastname","phonenumber","address","api_token","code_role","password_hash"]
+      }]
+  })
+});
+```
+
 **[USE-GO1] Get one user with a user api token**
 
 ```javascript
@@ -1514,9 +1539,22 @@ pm.test("The data structure of the response is correct", () => {
               "id" : {"type" : "integer"},
               "date_valid_from" : {"type" : "string"},
               "date_valid_to" : {"type" : ["string","null"]},
-              "id_educator" : {"type" : "integer"}
+              "id_educator" : {"type" : "integer"},
+              "timeSlots": {
+                  "type": "array",
+                  "properties": {
+                  "id" : {"type" : "integer"},
+                  "code_day" : {"type" : "integer"},
+                  "time_start" : {"type" : "string"},
+                  "time_end" : {"type" : "string"},
+                  "id_weekly_schedule" : {"type" : ["integer","null"]},
+                  "id_schedule_override" : {"type" : ["integer","null"]},
+                  "id_educator" : {"type" : "integer"},
+                },
+                "required": ["id","code_day","time_start","time_end","id_weekly_schedule","id_schedule_override","id_educator"]
+              }
           },
-          "required": ["id","date_valid_from","date_valid_to","id_educator"]
+          "required": ["id","date_valid_from","date_valid_to","id_educator","timeSlots"]
       }]
   })
 });
@@ -1569,107 +1607,6 @@ pm.test("The data structure of the response is correct", () => {
           },
           "required": ["id","date_valid_from","date_valid_to","id_educator"]
   })
-});
-```
-
-
-
-
-
-
-
-**[WEE-UO1] Update one weekly schedule with a user api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
-
-**[WEE-UO2] Update one non-existent weekly schedule**
-
-```javascript
-pm.test("Weekly schedule not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[WEE-UO3] Update one weekly schedule with invalid date_from format (dateAndTimeTestData.csv)**
-
-```javascript
-pm.test("Right code for invalid date_from format", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for invalid date_from format", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
-});
-```
-
-**[WEE-UO4] Update one weekly schedule with invalid date_to format (dateAndTimeTestData.csv)**
-
-```javascript
-pm.test("Right code for invalid date_to format", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for invalid date_to format", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
-});
-```
-
-**[WEE-UO5] Update one weekly schedule with chronological date problem**
-
-```javascript
-pm.test("Right code for chronological problem", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for chronological problem", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("La date ou l'heure de début est plus récente que la date ou l'heure de fin.");
-});
-```
-
-**[WEE-UO6] Update one weekly schedule permanant when one already exists**
-
-```javascript
-pm.test("Right code for weekly schedule already exists problem", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for weekly schedule already exists problem", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Un calendrier permanent a déjà été créé.");
-});
-```
-
-**[WEE-UO7] Update one weekly schedule with overlap problem**
-
-```javascript
-pm.test("Right code for overlap problem", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for overlap problem", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Les dates chevauchent d'autres dates déjà existantes.");
-});
-```
-
-**[WEE-UO8] Update one weekly schedule without problems**
-
-```javascript
-pm.test("Right code for successful updated ressource", function () {
-    pm.response.to.have.status(200);
 });
 ```
 
@@ -1800,9 +1737,22 @@ pm.test("The data structure of the response is correct", () => {
           "properties": {
               "id" : {"type" : "integer"},
               "date_schedule_override" : {"type" : "string"},
-              "id_educator" : {"type" : "integer"}
+              "id_educator" : {"type" : "integer"},
+              "timeSlots": {
+                  "type": "array",
+                  "properties": {
+                  "id" : {"type" : "integer"},
+                  "code_day" : {"type" : "integer"},
+                  "time_start" : {"type" : "string"},
+                  "time_end" : {"type" : "string"},
+                  "id_weekly_schedule" : {"type" : ["integer","null"]},
+                  "id_schedule_override" : {"type" : ["integer","null"]},
+                  "id_educator" : {"type" : "integer"},
+                },
+                "required": ["id","code_day","time_start","time_end","id_weekly_schedule","id_schedule_override","id_educator"]
+              }
           },
-          "required": ["id","date_schedule_override","id_educator"]
+          "required": ["id","date_schedule_override","id_educator","timeSlots"]
       }]
   })
 });
@@ -1854,65 +1804,6 @@ pm.test("The data structure of the response is correct", () => {
           },
           "required": ["id","date_schedule_override","id_educator"]
   })
-});
-```
-
-**[SCH-UO1] Update one schedule override with a user api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
-
-**[SCH-UO2] Update one non-existent schedule override**
-
-```javascript
-pm.test("Weekly schedule not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[SCH-UO3] Update one schedule override with invalid date format (dateAndTimeTestData.csv)**
-
-```javascript
-pm.test("Right code for invalid date format", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for invalid date format", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Format de date invalide => (YYYY-MM-DD).");
-});
-```
-
-**[SCH-UO4] Update one schedule override with overlap problem**
-
-```javascript
-pm.test("Right code for overlap problem", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for overlap problem", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Les dates chevauchent d'autres dates déjà existantes.");
-});
-```
-
-**[SCH-UO5] Update one schedule override without problems**
-
-```javascript
-pm.test("Right code for successful modified ressource", function () {
-    pm.response.to.have.status(200);
 });
 ```
 
@@ -2032,7 +1923,7 @@ pm.test("Right message for request with the id weekly schedule and the id schedu
 pm.test("Right code for invalid attributes", function () {
     pm.response.to.have.status(400);
 });
-pm.test("Right message for request with the id weekly schedule and the id schedule override", function () {
+pm.test("Right message for non-existent weekly schedule", function () {
     const responseJson = pm.response.json();
     pm.expect(responseJson.error).to.eql("Attributs invalides.");
 });
@@ -2044,7 +1935,7 @@ pm.test("Right message for request with the id weekly schedule and the id schedu
 pm.test("Right code for invalid attributes", function () {
     pm.response.to.have.status(400);
 });
-pm.test("Right message for request with the id weekly schedule and the id schedule override", function () {
+pm.test("Right message for non-existent schedule override", function () {
     const responseJson = pm.response.json();
     pm.expect(responseJson.error).to.eql("Attributs invalides.");
 });
@@ -2065,10 +1956,10 @@ pm.test("Right message for invalid code day format", function () {
 **[TIM-CO10] Create one time slot with invalid time_start format (dateAndTimeTestData.csv)**
 
 ```javascript
-pm.test("Right code for invalid time format", function () {
+pm.test("Right code for invalid time_start format", function () {
     pm.response.to.have.status(400);
 });
-pm.test("Right message for invalid time format", function () {
+pm.test("Right message for invalid time_start format", function () {
     const responseJson = pm.response.json();
     pm.expect(responseJson.error).to.eql("Format de temps invalide => (HH:MM:SS).");
 });
@@ -2077,10 +1968,10 @@ pm.test("Right message for invalid time format", function () {
 **[TIM-CO11] Create one time slot with invalid time_end format (dateAndTimeTestData.csv)**
 
 ```javascript
-pm.test("Right code for invalid time format", function () {
+pm.test("Right code for invalid time_end format", function () {
     pm.response.to.have.status(400);
 });
-pm.test("Right message for invalid time format", function () {
+pm.test("Right message for invalid time_end format", function () {
     const responseJson = pm.response.json();
     pm.expect(responseJson.error).to.eql("Format de temps invalide => (HH:MM:SS).");
 });
@@ -2101,10 +1992,10 @@ pm.test("Right message for chronological problem", function () {
 **[TIM-CO13] Create one time slot with time slot overlap in the same weekly schedule problem**
 
 ```javascript
-pm.test("Right code for invalid time format", function () {
+pm.test("Right code for overlap in the same weekly schedule problem", function () {
     pm.response.to.have.status(400);
 });
-pm.test("Right message for invalid time format", function () {
+pm.test("Right message for overlap in the same weekly schedule problem", function () {
     const responseJson = pm.response.json();
     pm.expect(responseJson.error).to.eql("Les horaires chevauchent d'autres horaires déjà existants.");
 });
@@ -2113,10 +2004,10 @@ pm.test("Right message for invalid time format", function () {
 **[TIM-CO14] Create one time slot with time slot overlap in the same schedule override problem**
 
 ```javascript
-pm.test("Right code for overlap problem", function () {
+pm.test("Right code for overlap in the same schedule override problem", function () {
     pm.response.to.have.status(400);
 });
-pm.test("Right message for overlap problem", function () {
+pm.test("Right message for overlap in the same schedule override problem", function () {
     const responseJson = pm.response.json();
     pm.expect(responseJson.error).to.eql("Les horaires chevauchent d'autres horaires déjà existants.");
 });
@@ -2227,119 +2118,6 @@ pm.test("The data structure of the response is correct", () => {
 });
 ```
 
-
-
-
-
-
-
-**[TIM-UO1] Update one time slot with a user api token**
-
-```javascript
-pm.test("Authorization header is present", () => {
-  pm.request.to.have.header("Authorization");
-});
-pm.test("Authorization header is false", function () {
-    pm.response.to.have.status(403);
-});
-pm.test("Right message for access without permission", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Vous n'avez pas les permissions.");
-});
-```
-
-**[TIM-UO2] Update one non-existent time slot**
-
-```javascript
-pm.test("Time slot not found", function () {
-    pm.response.to.have.status(404);
-});
-pm.test("Right message for not found response", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");
-});
-```
-
-**[TIM-UO3] Update one time slot with invalid code_day format**
-
-```javascript
-pm.test("Right code for invalid time format", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for invalid time format", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Format de jour invalide => (1 jusqu'à 7, dimanche = 1).");
-});
-```
-
-**[TIM-UO4] Update one time slot with invalid time_start format (dateAndTimeTestData.csv)**
-
-```javascript
-pm.test("Right code for invalid time format", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for invalid time format", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Format de temps invalide => (HH:MM:SS).");
-});
-```
-
-**[TIM-UO5] Update one time slot with invalid time_end format (dateAndTimeTestData.csv)**
-
-```javascript
-pm.test("Right code for invalid time format", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for invalid time format", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Format de temps invalide => (HH:MM:SS).");
-});
-```
-
-**[TIM-UO6] Update one time slot with chronological time problem**
-
-```javascript
-pm.test("Right code for chronological problem", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for chronological problem", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("La date ou l'heure de début est plus récente que la date ou l'heure de fin.");
-});
-```
-
-**[TIM-UO7] Update one time slot with time slot overlap in the same weekly schedule problem**
-
-```javascript
-pm.test("Right code for invalid time format", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for invalid time format", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Les horaires chevauchent d'autres horaires déjà existants.");
-});
-```
-
-**[TIM-UO8] Update one time slot with time slot overlap in the same schedule override problem**
-
-```javascript
-pm.test("Right code for overlap problem", function () {
-    pm.response.to.have.status(400);
-});
-pm.test("Right message for overlap problem", function () {
-    const responseJson = pm.response.json();
-    pm.expect(responseJson.error).to.eql("Les horaires chevauchent d'autres horaires déjà existants.");
-});
-```
-
-**[TIM-UO9] Update one time slot without problems**
-
-```javascript
-pm.test("Right code for successful updated ressource", function () {
-    pm.response.to.have.status(200);
-});
-```
-
 **[TIM-DO1] Delete one time slot with a user api token**
 
 ```javascript
@@ -2433,7 +2211,6 @@ pm.test("Right message for request without user_id_educator", function () {
 pm.test("User not found", function () {
     pm.response.to.have.status(404);
 });
-
 pm.test("Right message for not found response", function () {
     const responseJson = pm.response.json();
     pm.expect(responseJson.error).to.eql("Le serveur n'a pas trouvé la ressource demandée.");

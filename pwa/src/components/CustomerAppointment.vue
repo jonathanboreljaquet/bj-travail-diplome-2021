@@ -42,7 +42,7 @@
                             )
                           "
                         >
-                          <b-icon-trash></b-icon-trash>
+                          <b-icon-trash id="lol"></b-icon-trash>
                         </b-button>
                       </div>
                       <h3>Notes textuelles personnelles du rendez-vous</h3>
@@ -264,6 +264,13 @@ export default {
     loadEducators() {
       this.$http.get(this.$API_URL + "users/educators/").then((response) => {
         this.educators = response.data;
+        if (this.authAdministrator && this.$route.params.userId) {
+          this.title = "Rendez-vous du client";
+          this.loadCustomerAppointmentsByUserId(this.$route.params.userId);
+        } else {
+          this.title = "Mes rendez-vous";
+          this.loadAuthCustomerAppointment();
+        }
       });
     },
     loadAuthCustomerAppointment() {
@@ -304,7 +311,7 @@ export default {
     loadAppointmentsData(appointments) {
       this.appointments = [];
       appointments.forEach((appointment) => {
-        var date = new Date(appointment.datetime_appointment);
+        var date = new Date(appointment.datetime_appointment.replace(" ", "T"));
         var options = {
           weekday: "long",
           year: "numeric",
@@ -451,13 +458,6 @@ export default {
   },
   mounted() {
     this.loadEducators();
-    if (this.authAdministrator && this.$route.params.userId) {
-      this.title = "Rendez-vous du client";
-      this.loadCustomerAppointmentsByUserId(this.$route.params.userId);
-    } else {
-      this.title = "Mes rendez-vous";
-      this.loadAuthCustomerAppointment();
-    }
   },
 };
 </script>

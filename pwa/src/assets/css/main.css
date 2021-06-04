@@ -28,3 +28,8 @@
 .fc-event-main-frame {
     visibility: hidden;
 }
+
+.title {
+    margin-top: 20px;
+    color: #3ea3d8;
+  }

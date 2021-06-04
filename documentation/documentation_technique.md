@@ -597,7 +597,6 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
   	<figcaption>Fig.9 - Format de code des tests unitaires </figcaption>
   </center>
 </figure>
-
 **Définition**
 
 <table>
@@ -611,6 +610,10 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
     <tr>
         <td>User</td>
         <td>USE</td>
+    </tr>
+    <tr>
+        <td>User educator</td>
+        <td>USEE</td>
     </tr>
     <tr>
         <td>Dog</td>
@@ -641,7 +644,6 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
         <td>APP</td>
     </tr>
 </table>
-
 
 ---
 

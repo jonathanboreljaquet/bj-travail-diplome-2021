@@ -1,5 +1,6 @@
 api_rest/.env
 api_rest/vendor/*
+api_rest/.phpdoc
 pwa2/*
 pwa/node_modules/*
 

@@ -62,6 +62,39 @@ class DAOUser {
         }
     }
 
+    /**
+     * 
+     * Method to return all users with the administrator role from the database in an array of user objects.
+     * 
+     * @return User[] A User object array
+     */
+    public function findAllEducators()
+    {
+        $statement = "
+        SELECT id, firstname, lastname
+        FROM user
+        WHERE code_role = 2";
+
+        try {
+            $statement = $this->db->prepare($statement);
+            $statement->bindParam(':CODE_ROLE', $code_role, \PDO::PARAM_INT);
+            $statement->execute();
+            $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            $userArray = array();
+            
+            foreach ($results as $result) {
+                $user = new User();
+                $user->id = $result["id"];
+                $user->firstname = $result["firstname"];
+                $user->lastname = $result["lastname"];
+                array_push($userArray,$user);
+            }
+            return $userArray;
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
+    }
 
     /**
      * 

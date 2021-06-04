@@ -1937,3 +1937,37 @@ Réalisation des test unitaires réalisable avec Katalon Recorder. Katalon Recor
 | waitForText | //div[@id='content']/div[2]/div/div[2]/div[2]/div/div/div[2]/div[2] | jonathan.borel-jaquet@hotmail.com   |
 | waitForText | link=Mes informations                                        | Mes informations                    |
 | waitForText | link=Mes rendez-vous                                         | Mes rendez-vous                     |
+
+### Vendredi 4 juin 2021
+
+Les tests unitaires avec Katalon qui ont été réalisés sont :
+
+* Éducateur canin
+  * Connexion
+  * Modification of password
+  * Add a client
+  * Modification of user informations
+  * Add dog for a client
+  * Add picture for a dog
+  * Delete dog for a client
+  * Add document PDF for a client
+  * Delete document PDF for a client
+  * Add conditions of registration for a client
+  * Delete conditions of registration for a client
+  * Schedule an appointment
+  * Add textual notes and summary for client's appointment
+  * Delete an appointment
+  * Deconnexion
+* Client
+  * Connexion
+  * Modification of password
+  * Schedule an appointment
+
+Je n'ai pas réalisé la totalité des des actions possible de mon application car Katalon Recorder ne le permet pas. Comme le téléchargement de document par exemple.
+
+Modification de l'endpoint `GET api/v1/users/educators` afin que celui-ci retourne pas les données "sensibles" comme l'adresse e-mail, le numéro de téléphone et l'adresse du domicile.
+
+Génération de la documentation de l'API REST avec [phpDocumentor](https://www.phpdoc.org/)
+
+
+

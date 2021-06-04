@@ -201,7 +201,10 @@
                   <b-col sm="4">
                     <h6 class="mb-0">Numéro de puce</h6>
                   </b-col>
-                  <b-col sm="8" class="text-secondary">{{ dog.chip_id }}</b-col>
+                  <b-col sm="8" class="text-secondary">
+                    <span v-if="dog.chip_id != ''">{{ dog.chip_id }}</span>
+                    <span v-else>-</span>
+                  </b-col>
                 </b-row>
                 <div v-if="authAdministrator">
                   <hr />
@@ -317,7 +320,6 @@
               v-model="addDogForm.chip_id"
               type="text"
               placeholder="Entrez le numéro de puce du chien"
-              required
             ></b-form-input>
           </b-form-group>
 

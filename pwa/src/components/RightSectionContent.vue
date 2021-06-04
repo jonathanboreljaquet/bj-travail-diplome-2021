@@ -34,16 +34,40 @@
 
 <script>
 export default {
-  props: [
-    "textParagraph",
-    "textH1",
-    "textH3",
-    "textH5",
-    "textH6",
-    "routeBouton",
-    "textButton",
-    "imageSource",
-  ],
+  props: {
+    textParagraph: {
+      type: String,
+      default: "",
+    },
+    textH1: {
+      type: String,
+      default: "",
+    },
+    textH3: {
+      type: String,
+      default: "",
+    },
+    textH5: {
+      type: String,
+      default: "",
+    },
+    textH6: {
+      type: String,
+      default: "",
+    },
+    routeBouton: {
+      type: String,
+      default: "",
+    },
+    textButton: {
+      type: String,
+      default: "",
+    },
+    imageSource: {
+      type: String,
+      default: "",
+    },
+  },
   name: "RightSectionContent",
 };
 </script>

@@ -2,7 +2,7 @@
 
 ##### Objectif
 
-Créer un utilisateur dans la base de données et retourner son code de rôle ainsi que son api token.
+Créer un utilisateur dans la base de données et retourner son api token, son identifiant et son code de rôle.
 
 ##### Utilisation concrète
 
@@ -65,6 +65,27 @@ Cet endpoint permet de récupérer tous les clients ainsi que leurs chiens de l'
 * **[USE-GA1] Get all users with a user api token**
 
 * **[USE-GA2] Get right users with admin api token**
+
+<div style="page-break-after: always;"></div>
+
+####  GET api/v1/users/educators
+
+##### Objectif
+
+Récupérer les informations non sensibles des utilisateurs avec le `code_role` 2 (Éducateur canin) de la base de données.
+
+##### Utilisation concrète
+
+Cet endpoint permet de récupérer toutes les informations non sensibles des éducateurs canins de l'application. 
+
+##### Flow chart
+
+<img src="./diagram/drawio/flowchartGetAllUserEducator.svg" width="350px"/>
+
+##### Tests unitaires
+
+* **[USEE-GA1] Get right educator users**
+
 
 <div style="page-break-after: always;"></div>
 
@@ -178,8 +199,6 @@ Body de la requête :
 | -------- | ----------------------- | :---------: | ------ |
 | password | Le nouveau mot de passe |             |        |
 
-##### 
-
 ##### Flow chart
 
 <img src="./diagram/drawio/flowchartUpdatePasswordUserAuth.svg" width="350px"/>
@@ -199,7 +218,7 @@ Récupérer l'api token, l'identifiant et le code du rôle d'un utilisateur dans
 
 ##### Utilisation concrète
 
-Cet endpoint permet la récupération de l'api token, l'identifiant et le code du rôle afin de permettre à l'utilisateur d'accéder aux différentes fonctionnalités de l'application. 
+Cet endpoint permet la récupération de l'api token, l'identifiant et le code du rôle afin de permettre à l'utilisateur d'accéder aux différentes fonctionnalités de l'application en fournissant son adresse e-mail et son mot de passe. 
 Body de la requête :
 
 | Clef     | Définition                        | Obligatoire | Format |
@@ -406,7 +425,7 @@ Créer un document pour un utilisateur dans la base de données ainsi que de le 
 
 ##### Utilisation concrète
 
-Cet endpoint permet d'ajouter un document à un utilisateur. Si le document est de type `conditions_inscription` le système génère les conditions d'inscription avec la signature et le numéro de forfait passé en body de la requête. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet d'ajouter un document à un utilisateur. Si le document est de type `conditions_inscription`, le système génère les conditions d'inscription avec la signature et le numéro de forfait passé en body de la requête. L'endpoint est accessible uniquement par les administrateurs.
 Body de la requête :
 
 | Clef             | Définition                                              |                Obligatoire                | Format                                                 |
@@ -479,33 +498,6 @@ Cet endpoint permet de récupérer un document spécifique de l'application. L'e
 
 <div style="page-break-after: always;"></div>
 
-####  PATCH api/v1/documents/{idDocument}
-
-##### Objectif
-
-Modifier un document dans la base de données.
-
-##### Utilisation concrète
-
-Cet endpoint permet la modification des informations d'un document. Néanmoins, cet endpoint n'a pas vraiment de but concret car modifier un document existant ne devrait pas être possible. L'endpoint est accessible uniquement par les administrateurs.
-Body de la requête :
-
-| Clef               | Définition                         | Obligatoire | Format                                                 |
-| ------------------ | ---------------------------------- | :---------: | ------------------------------------------------------ |
-| type               | Le type de document à créer        |             | Le type doit être "conditions_inscription" ou "poster" |
-| document_serial_id | L'identifiant de série du document |             |                                                        |
-
-##### Flow chart
-
-<img src="./diagram/drawio/flowchartUpdateOneDocument.svg" width="200px"/>
-
-##### Tests unitaires
-
-* **[DOC-UO1] Update one document with a user api token**
-* **[DOC-UO2] Update one non-existent document**
-* **[DOC-CO3] Update one document with invalid document type format**
-* **[DOC-UO4] Update one document without problems**
-
 ####  DELETE api/v1/documents/{idDocument}
 
 ##### Objectif
@@ -530,7 +522,7 @@ Cet endpoint permet la suppression définitive d'un document avec son document s
 
 ##### Objectif
 
-Récupérer un document stocké dans le serveur.
+Télécharger un document stocké dans le serveur.
 
 ##### Utilisation concrète
 
@@ -1134,7 +1126,7 @@ Body de la requête :
 
 ##### Objectif
 
-Récupérer une note graphique stockée dans le serveur.
+Télécharger une note graphique stockée dans le serveur.
 
 ##### Utilisation concrète
 
