@@ -1,4 +1,4 @@
-**[USE_CO1] Create one user without email**
+**[USE-CO1] Create one user without email**
 
 ```javascript
 pm.test("Right code for invalid attributes", function () {
@@ -10,7 +10,7 @@ pm.test("Right message for request without email", function () {
 });
 ```
 
-**[USE_CO2] Create one user without firstname**
+**[USE-CO2] Create one user without firstname**
 
 ```javascript
 pm.test("Right code for invalid attributes", function () {
@@ -22,7 +22,7 @@ pm.test("Right message for request without firstname", function () {
 });
 ```
 
-**[USE_CO3] Create one user without lastname**
+**[USE-CO3] Create one user without lastname**
 
 ```javascript
 pm.test("Right code for invalid attributes", function () {

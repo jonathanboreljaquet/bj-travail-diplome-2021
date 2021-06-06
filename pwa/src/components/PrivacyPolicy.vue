@@ -73,11 +73,11 @@
                 peuvent, moyennant un effort raisonnable, vous identifier (les «
                 Informations personnelles »). Les Informations personnelles que
                 nous recueillons par le biais de nos Services sont notamment le
-                nom, l'adresse e-mail, l'adresse, le numéro de téléphone,
-                l'adresse IP ou d'autres informations demandées à chaque fois
-                que nécessaire. Si nous combinons des Informations personnelles
-                avec des Informations non personnelles, nous traiterons les
-                informations combinées comme des Informations personnelles aussi
+                nom, l'adresse e-mail, l'adresse, le numéro de téléphone, ou
+                d'autres informations demandées à chaque fois que nécessaire. Si
+                nous combinons des Informations personnelles avec des
+                Informations non personnelles, nous traiterons les informations
+                combinées comme des Informations personnelles aussi longtemps
                 longtemps qu'elles resteront combinées.
               </li>
             </ul>

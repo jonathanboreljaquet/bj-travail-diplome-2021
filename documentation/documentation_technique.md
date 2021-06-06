@@ -585,6 +585,10 @@ La table `absence` contient les informations des vacances des éducateurs canins
 
 La valeur du champ `date_absence_to` peut être `null` si le service est suspendu pour un moment.
 
+#### Requête de génération de planning
+
+[COMPLETER]
+
 ### Tests unitaires
 
 Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécuter des scripts de test pour chaque endpoint de mon API REST. Ces tests sont réalisables en JavaScript en utilisant la bibliothèque proposé par Postman `pm`. Tous les tests unitaires de mon API REST sont identifiables grâce à un code qui leur est propre dans l'annexe [`unit_tests.md`](./unit_tests.md).
@@ -612,16 +616,12 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
         <td>USE</td>
     </tr>
     <tr>
-        <td>User educator</td>
-        <td>USEE</td>
-    </tr>
-    <tr>
         <td>Dog</td>
         <td>DOG</td>
     </tr>
     <tr>
         <td>Document</td>
-        <td>Doc</td>
+        <td>DOC</td>
     </tr>
     <tr>
         <td>Absence</td>
@@ -644,6 +644,7 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
         <td>APP</td>
     </tr>
 </table>
+
 
 ---
 
@@ -797,7 +798,7 @@ pm.test("The data structure of the response is correct", () => {
 Composer permet de gérer les dépendances PHP de mon API REST. En premier lieu, Composer permet de générer un fichier nommé `composer.json`. Ce fichier est un moyen pour Composer de rechercher les différentes dépendances que mon projet PHP doit télécharger. Le fichier `composer.json` vérifie également la compatibilité des versions des dépendances de mon projet. C'est-à-dire que si j'utilise un paquet obsolète, Composer me le fera savoir afin d'éviter tout problème. Afin d'installer un paquet comme Dompdf, j'ai dû exécuter la commande suivante dans mon invite de commandes : 
 
 ```bash
-composer require dompdf/dompdf
+$ composer require dompdf/dompdf
 ```
 
 Après avoir exécuté ce type de commande, mon projet contient maintenant les fichiers `composer.json` et `composer.lock` ainsi que le dossier `vendor`. Comme expliqué auparavant, `composer.json` est comme un guide correspondant aux versions de dépendance que Composer **doit** installer tandis que `composer.lock` est une représentation exact des versions de dépendance qui **ont** été installées. Le dossier `vendor` quant à lui, contient tous les paquets et dépendances installés du projet.
@@ -806,15 +807,59 @@ Une fois nos paquets et dépendances installés, il faut maintenant pouvoir les 
 
 ### Librairies
 
+### PHP dotenv
+
+Installé avec la commande : 
+
+```bash
+$ composer require vlucas/phpdotenv
+```
+
+J'ai utilisé Dotenv afin de créer et charger des variables d'environnement accessible par l'intégralité de mon API REST. Son fonctionnement se déroule de la manière suivante :
+
+Création d'un fichier `.env` à la racine du projet contenant les variables d'environnement de l'application.
+
+```php
+DB_HOST= "dbhost"
+DB_PORT= "3306"
+DB_DATABASE= "database"
+DB_USERNAME= "username"
+DB_PASSWORD= "password"
+
+SMTP_HOST= "smtphost"
+SMTP_USERNAME= "smtpusername"
+SMTP_PASSWORD= "smtppassword"
+
+GOOGLE_RECAPTCHA_SECRET_KEY = "secretKey"
+```
+
+Chargement de ces variables d'environnement dans le fichier `bootstrap.php`.
+
+```php
+...
+use Dotenv\Dotenv;
+$dotenv = new DotEnv(__DIR__);
+$dotenv->load();
+...
+```
+
+Utilisation de ces variables d'environnement de la manière suivante :
+
+```php
+$host = getenv('DB_HOST');
+```
+
+[*Documentation de Php dotenv*](https://github.com/vlucas/phpdotenv)
+
 #### PHPMailer
 
 Installé avec la commande : 
 
 ```bash
-composer require phpmailer/phpmailer
+$ composer require phpmailer/phpmailer
 ```
 
-J'ai utilisé PHPMailer dans le contrôleur `HelperController` de la manière suivante :
+J'ai utilisé PHPMailer afin d'envoyer des mails depuis le contrôleur `HelperController` de la manière suivante :
 
 ```php
 public static function sendMail(string $message, string $subject,string $emailRecipient, string $attachmentFilePath = null)
@@ -865,10 +910,10 @@ public static function sendMail(string $message, string $subject,string $emailRe
 Installé avec la commande : 
 
 ```bash
-composer require dompdf/dompdf
+$ composer require dompdf/dompdf
 ```
 
-J'ai utilisé Dompdf afin de créer les conditions d'inscription dans le contrôleur `HelperController` de la manière suivante :
+J'ai utilisé Dompdf afin de créer les conditions d'inscription depuis le contrôleur `HelperController` de la manière suivante :
 
 ```php
 public static function storeConditionsRegistration(string $filename,int $package_number,string $date, string $signature_base64,string $userfirstname, string $userlastname)
@@ -984,7 +1029,7 @@ Pour plus d'informations, rendez-vous dans l'annexe [`endpoints.md`](./endpoints
 
 ## PWA
 
-### Vuejs
+### Vue
 
 #### Arborescence
 
@@ -994,59 +1039,538 @@ pwa
 └── node_modules
 └── public
 └── src
-│   └── assets
-│   └── components
-│   └── plugins
-│   └── router
-│   └── App.vue
-│   └── main.js
-│   └── store.js
-│   └── constants.js
+   	└── assets
+ 	│	└── css
+ 	│	└── img
+   	└── components
+ 	│	└── About.vue
+ 	│	└── Administration.vue
+ 	│	└── ...
+   	└── plugins
+ 	│	└── bootstrap-vue.js			
+   	└── Router
+ 	│	└── index.js	
+   	└── App.vue
+  	└── main.js
+  	└── store.js
+    └── constants.js
 ```
-
-#### Structure
-
-[à compléter]
 
 #### Composants
 
-[à compléter]
+Pour réaliser ma la SPA (Single page application) Vue de mon travail de diplôme, j'ai réalisé différents composants. La majorité des composants que j'ai développés représentent chacun une des pages de mon application. Par exemple, la page d'accueil de mon application est le composant `home.vue`, la page de connexion de l'application est le composant `connection.vue`, etc...
 
-### NPM
+En plus des composants représentant chacun une des pages de mon application, j'ai essayer de réaliser quelques composants permettant l'intégration d'une fonctionnalité ou d'un affichage redondant. 
+
+Un composant Vue est organisé de la manière suivante :
+
+* Une partie HTML entre les balises `<template> </template>`
+* Une partie JavaScript entre les balises `<script> </script>`
+* Une partie CSS entre les balises `<style> </style`
+
+Pour la partie HTML, Vue permet l'utilisation de différents outils très pratique permettant de faciliter l'élaboration de code HTML avec du JavaScript. Le premier outil est la syntaxe dites "Mustache" (les doubles accolades). 
+Exemple : 
+
+```html
+<h1>Rendez-vous du client {{ lastname }}</h1>
+```
+
+Cette syntaxe permet une liaison de données entre le JavaScript et le HTML. Par rapport à cet exemple, la balise "Mustache" sera remplacé par la valeur de la propriété Vue `lastname` et elle sera également mis à jour à chaque fois que la propriété `lastname` subira une modification.
+
+Le deuxième outil que j'ai utilisé sont les directives proposées par Vue : `v-if`, `v-for`,`v-bind`,`v-model` et `v-on`.
+
+`v-if` et `v-for` permettent de réaliser des tests et des boucles dans le code HTML avec des propriété Vue.
+Exemple :
+
+```HTML
+<button v-if="auth">Déconnexion</button>
+<ul>
+    <li v-for="element in elements">
+    	{{ element.text }}
+    </li>
+</ul>
+```
+
+`v-bind` pouvant être abrégé en `:` permet d'effectuer une liaison unidirectionnelle d'une propriété Vue avec un attributs HTML. Contrairement à la directive `v-model` qui elle permet un liaison bidirectionnelle. En effet, `v-model` permet de modifier la valeur d'entrée en modifiant les données liées et inversement, tandis que `v-bind` lui permet uniquement de modifier la valeur d'entrée en modifiant les données liées.
+Exemple :
+
+```html
+<input v-model="inputModel"></input>
+<input v-bind:value="inputBind"></input> ou <input :value="inputBind"></input> 
+```
+
+`v-on` pouvant être abrégé en `@` permet d'exécuter une fonction JavaScript lors du déclenchement [d'événements DOM](https://developer.mozilla.org/fr/docs/Web/Events).
+Exemple :
+
+```html
+<button v-on:click="function"></button> ou <button @click="function"></button>
+```
+
+Pour ce qui est de la syntaxe JavaScript proposé par Vue, je l'ai utilisé de la manière suivante :
+
+```javascript
+import { otherComponent } from "component"; //Importation de composant si nécessaire
+export default { 
+  components: {
+    otherComponent,
+  },
+  name: "MyComponent", //Le nom du composant actuel
+  data() { //Fonction contenant les variables du composant actuel
+    return {
+        message : "Lorem Ipsum",
+        ...
+    };
+  },
+  methods: {}, //Méthodes du composant actuel
+  computed: {}, //Propriétés calculées du composant actuel
+  created() {}, //Code JavaScript exécuté après que l’instance ait été créée
+  mounted() {}, //Code JavaScript exécuté juste après que l’instance ait été montée
+  destroyed() {}, //Code JavaScript exécuté après qu’une instance de Vue ait été détruite
+};
+```
+
+Quant à la balise `<style></style>` je l'ai utilisé de manière très classique, à noté que celle-ci contient l'attribut `scoped` afin que le contenu CSS de celle-ci soit appliqué uniquement aux éléments du composant actuel.
+
+Pour plus d'informations sur Vue, vous pouvez vous référer à sa très bonne documentation.
+
+[*Documentation de Vue.js*](https://fr.vuejs.org/v2/guide/)
+
+### npm
+
+npm de son nom *Node Package Manager* est le gestionnaire de paquets officiel de Node.js. npm permet de gérer les dépendances JavaScript de ma PWA. Similaire à composer qui lui génère le fichier `composer.json`, npm lui, permet de générer un fichier nommé `package.json`. Son fonctionnement en est également similaire. En effet, il permet à npm de rechercher les différentes dépendances JavaScript que ma PWA doit télécharger. Afin d'installer un paquet comme axios, j'ai dû exécuter la commande suivante dans mon invite de commandes :
+
+```bash
+$ npm install axios
+```
+
+Après avoir exécuté ce type de commande, mon projet contient maintenant les fichiers `package.json` et `package-lock.json` ainsi que le dossier `node_modules`. Les fichiers `package.json` et `package-lock.json` ont le même fonctionnement que les fichiers `composer.json` et `composer.lock`. Le dossier `node_modules` quant à lui, contient tous les paquets et dépendances installés du projet.
 
 #### Librairies
 
-##### Vue Router
+##### AlertifyJS
 
-[à compléter]
+Plugin vue-alertify installé avec la commande :
 
-##### Vuex
+```bash
+$ npm install vue-alertify
+```
 
-[à compléter]
+Et Importé dans le fichier `vue-alertify.js` de la manière suivante :
+
+```javascript
+import Vue from "vue";
+
+import VueAlertify from "vue-alertify";
+Vue.use(VueAlertify);
+```
+
+Lui-même importé dans le fichier `main.js` de la manière suivante :
+
+```javascript
+import "./plugins/vue-alertify";
+```
+
+J'ai utilisé les notifications d'[AlertifyJS](https://alertifyjs.com/) afin d'avertir l'utilisateur lors des différentes actions de celui-ci comme l'ajout d'un chien pour un utilisateur par exemple :
+
+```javascript
+this.$alertify.success("Chien ajouté avec succès");
+```
+
+[*Documentation de vue-alertify*](https://github.com/sj82516/vue-alertify)
 
 ##### Axios
 
-[à compléter]
+Installé avec la commande : 
 
-##### Jquery
+```bash
+$ npm install axios
+```
 
-[à compléter]
+Et Importé de manière globale dans le fichier `main.js` de la manière suivante :
+
+```javascript
+import Axios from "axios";
+Vue.prototype.$http = Axios;
+```
+
+J'ai utilisé le client HTTP basé sur les promesses Axios afin de réaliser des requêtes HTTP asynchrone à mon API REST depuis ma PWA. Par exemple, j'ai utilisé Axios afin de d'ajouter un chien à un utilisateur avec l'endpoint `POST api/v1/dogs` dans le composant `CustomerInformation.vue` de la manière suivante :
+
+```javascript
+createDogForCustomerByUserId(dogName, dogBreed, dogSex, dogChipId, userId) {
+    const params = new URLSearchParams();
+    params.append("name", dogName);
+    params.append("breed", dogBreed);
+    params.append("sex", dogSex);
+    params.append("chip_id", dogChipId);
+    params.append("user_id", userId);
+    const config = {
+        headers: {
+            "Authorization" : this.$store.state.api_token,
+        },
+      };
+    this.$http
+        .post(this.$API_URL + "dogs/", params, config)
+        .then((response) => {
+        	//Traitement de la réponse
+    	})
+        .catch((error) => {
+        	//Traitement de l'erreur
+        });
+}
+```
+
+[*Documentation d'Axios*](https://github.com/axios/axios)
+
+##### Vuex
+
+Installé avec la commande : 
+
+```bash
+$ npm install vuex
+```
+
+J'ai utilisé Vuex afin de créer le gestionnaire d'état de mon application. Ce gestionnaire d'état nommé`store` par Vuex me permet de stocker de manière centralisé l'api token, le rôle et l'identifiant de l'utilisateur authentifié afin que ces données soient accessible par l'intégralité de mes composant dans le but de permettre à l'utilisateur authentifié d'accéder à ses fonctionnalités. Dans son principe, Vuex fonctionne de la même manière que Vue Router. En effet, j'ai créé un fichier `store.js` contenant l'instance de mon `store`. Cette instance permet de gérer l'état de mon application en y plaçant les différentes actions et mutations qui devront être faite sur celui-ci. L'instance `store` de mon application est divisé en différentes parties :
+
+* `state` contenant l'état de l'application.
+* `mutations` permettant de modifier l'état de l'application.
+* `actions` permettant un fonctionnement similaire aux mutations à la différence qu'au lieu de modifier l'état elles appellent les mutations et peuvent contenir des opérations asynchrones.
+* `getters` permettant de réaliser des propriétés calculées.
+
+Par exemple, afin authentifié l'utilisateur et de ce fait modifier l'état de mon application, j'ai utilisé Vuex dans le fichier `store.js` de la manière suivante :
+
+```javascript
+import Vuex from "vuex";
+import router from "./router";
+import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./constants.js";
+
+Vue.use(Vuex);
+
+export default new Vuex.Store({
+    state: {
+        api_token: null,
+        code_role: null,
+        user_id: null
+    },
+    mutations: {
+        authUser(state, userData) {
+            state.api_token = userData.api_token;
+            state.code_role = userData.code_role;
+            state.user_id = userData.user_id;
+        },
+        ...
+    },
+    actions: {
+        login({ commit }, authData) {
+            const params = new URLSearchParams();
+            params.append("email", authData.email);
+            params.append("password", authData.password);
+            Vue.prototype.$http
+                .post(Vue.prototype.$API_URL + "connection/", params)
+                .then((res) => {
+                localStorage.setItem("api_token", res.data.api_token);
+                localStorage.setItem("code_role", res.data.code_role);
+                localStorage.setItem("user_id", res.data.user_id);
+                commit("authUser", {
+                    api_token: res.data.api_token,
+                    code_role: res.data.code_role,
+                    user_id: res.data.user_id,
+                });
+                Vue.prototype.$alertify.success("Vous êtes connecté");
+                if (this.state.code_role == ADMIN_CODE_ROLE) {
+                    router.push("/administration");
+                }
+                if (this.state.code_role == CUSTOMER_CODE_ROLE) {
+                    router.push("/customer_information");
+                }
+            })
+            .catch((error) => {
+                Vue.prototype.$alertify.error(error.response.data.error);
+            });
+        },
+        ...
+    },
+        getters: {
+            ifAuthenticated(state) {
+                return state.api_token !== null;
+            },
+            ...
+        }
+});
+```
+
+L'action `login `va permettre de faire un appel à l'endpoint de connexion de l'API REST `api/v1/connection` avec Axios. Si l'endpoint c'est bien déroulé, l'état de l'application se verra subir une mutation et le local storage se verra être chargé. Une fois mon `store` paramétré dans l'instance Vuex.Store, il est nécessaire de l'inclure en tant qu'option dans l'initialisation de l'instance principal de Vue disponible dans le fichier `main.js` :
+
+```javascript
+import store from "./store";
+
+new Vue({
+    store,
+    render: (h) => h(App)
+}).$mount("#app");
+```
+
+[*Documentation de Vuex*](https://vuex.vuejs.org/guide/#the-simplest-store)
+
+##### Vue Router
+
+Installé avec la commande : 
+
+```bash
+$ npm install vue-router
+```
+
+J'ai utilisé Vue router afin de créer mon application monopage. Pour intégrer Vue router à Vue, j'ai créer le fichier `index.js` dans le dossier router. Ce fichier contient mon instance Router contenant toutes les routes de ma SPA. Chacune de mes route est configuré de sorte à avoir : un chemin d'accès, un nom, un composant de référence et une méthode de vérification afin d'accéder à celle-ci si cela est nécessaire. Par exemple, la route permettant d'afficher la page d'administration des éducateurs canins est configuré dans le fichier `router.js` de la manière suivante : 
+
+```javascript
+import Router from "vue-router";
+import store from "./store";
+import Administration from "./../components/Administration.vue";
+import { ADMIN_CODE_ROLE } from "./constants.js";
+
+Vue.use(Router);
+
+export default new Router({
+  routes: [
+      {
+          path: "/administration",
+          name: "administration",
+          component: Administration,
+          beforeEnter(to, from, next) {
+              if (store.state.api_token && store.state.code_role == ADMIN_CODE_ROLE) {
+                  next();
+              } else {
+                  next("/");
+              }
+          }
+      },
+      ...
+  ]
+});
+```
+
+Dans cet route ainsi que dans toutes les routes pour accéder aux pages des éducateurs canin, je test à l'aide de la fonction `beforeEnter` de Vue router si l'utilisateur est un administrateur (éducateur canin) ou un client. Si celui-ci est une administrateur, alors je le laisse accéder au composant. Si ce n'est pas le cas, je le redirige vers la page d'accueil de application. Une fois les différentes routes paramétrés dans l'instance Router, il est nécessaire de l'inclure en tant qu'option dans l'initialisation de l'instance principal de Vue disponible dans le fichier `main.js` :
+
+```javascript
+import router from "./router";
+
+new Vue({
+    router,
+    render: (h) => h(App)
+}).$mount("#app");
+```
+
+[*Documentation de Vue Router*](https://router.vuejs.org/guide/#javascript)
 
 ##### BootstrapVue
 
-[à compléter]
+Plugin bootstrap-vue Installé avec la commande :
 
-##### Responsive-Sketchpad
+```bash
+$ npm install vue bootstrap bootstrap-vue
+```
 
-[à compléter]
+Et Importé dans le fichier `bootstrap-vue.js` de la manière suivante :
+
+```javascript
+import Vue from "vue";
+
+import BootstrapVue from "bootstrap-vue";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-vue/dist/bootstrap-vue.css";
+Vue.use(BootstrapVue);
+```
+
+Lui-même importé dans le fichier `main.js` de la manière suivante :
+
+```javascript
+import "./plugins/bootstrap-vue";
+```
+
+J'ai utilisé le plugin BootstrapVue afin de faciliter l'intégration et la compatibilité de Bootstrap avec Vue. En effet, certaines fonctions de Bootstrap nécessitant JQuery et Poppers.js, peuvent entrer en conflit avec Vue. Bootstrap-vue va justement permettre de convertir la plupart de ces fonctions dans le but de les rendre compatible avec Vue afin qu'elles fonctionnent comme prévu. Pour ce qui est de la syntaxe de BootstrapVue, elle est très similaire voir plus lisible que Bootstrap.
+
+[*Documentation de BootstrapVue*](https://bootstrap-vue.org/docs)
+
+##### Signature Pad
+
+Plugin vue-signature-pad installé avec la commande :
+
+```bash
+$ npm install vue-signature-pad
+```
+
+Et Importé dans le fichier `bootstrap-vue.js` de la manière suivante :
+
+```javascript
+import Vue from "vue";
+
+import VueSignaturePad from "vue-signature-pad";
+Vue.use(VueSignaturePad);
+```
+
+Lui-même importé dans le fichier `main.js` de la manière suivante :
+
+```javascript
+import "./plugins/vue-signature-pad";
+```
+
+J'ai utilisé le plugin vue-signature-pad afin de faciliter l'intégration et l'utilisation de la librairie JavaScript [Signature Pad](https://github.com/szimek/signature_pad) avec Vue. Le plugin permet d'utiliser le composant `<VueSignaturePad />`  en lui fournissant si on le souhaite, différents paramètres et d'utiliser différentes fonctions décrites dans la documentation du plugin. 
+
+[*Documentation de vue-signature-pad*](https://github.com/neighborhood999/vue-signature-pad#readme)
 
 ##### FullCalendar
 
-[à compléter]
+Composant FullCalendar installé avec la commande :
 
-##### Webpack
+```bash
+$ npm install @fullcalendar/vue
+```
 
-[à compléter]
+Et Importé dans les composants souhaitant l'utilisé de la manière suivante :
+
+```javascript
+import FullCalendar from "@fullcalendar/vue";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import frLocale from "@fullcalendar/core/locales/fr";
+```
+
+J'ai utilisé FullCalendar afin d'afficher les différents calendriers de mon application nécessitant d'être charger avec des événements comme les rendez-vous de l'éducateur canin par exemple. FullCalendar permet une intégration et une utilisation optimal avec Vue en fournissant un composant qui correspond exactement aux fonctionnalité de l'API standard de FullCalendar. FullCalendar permet de personnaliser l'affichage de son calendrier ainsi que de ses fonctionnalité de manière très complète. Voici un exemple de la configuration effectué pour l'affichage des créneaux horaires disponibles d'un éducateur canin :
+
+```html
+<FullCalendar ref="fullCalendar" :options="calendarOptions" />
+```
+
+```javascript
+export default {
+  components: {
+    FullCalendar,
+  },
+  name: "Calendar",
+  data() {
+    return {
+      calendarOptions: {
+        plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+        initialView: "dayGridMonth",
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,timeGridWeek,timeGridDay",
+        },
+        height: "auto",
+        locale: frLocale,
+        eventDisplay: "block",
+        allDaySlot: false,
+        slotMinTime: "06:00:00",
+        slotMaxTime: "20:00:00",
+        events: [],
+        eventBackgroundColor: "green",
+        eventClick: this.handleDateClick,
+      },
+    };
+  },
+}
+```
+
+Toutes ces options ainsi que bien d'autres sont disponibles dans la documentation de FullCalendar
+
+[*Documentation de FullCalendar pour Vue*](https://fullcalendar.io/docs/vue)
+
+##### Moment.js
+
+Installé avec la commande :
+
+```bash
+$ npm install moment
+```
+
+Et Importé dans les composants souhaitant l'utilisé de la manière suivante :
+
+```javascript
+import moment from "moment";
+moment.locale("fr-ch");
+```
+
+J'ai utilisé la librairie moment.js afin de formater et manipuler les différentes dates de mon application. Voici un exemple de traitement que j'ai réalisé avec moment.js afin de formater une date :
+
+```javascript
+formatDate(value) {
+    if (value) {
+        return moment(value).format("dddd DD MMMM YYYY"); //Exemple de résultat : lundi 21 juin 2021
+    }
+}
+```
+
+[*Documentation de Moment.js*](https://momentjs.com/docs/#/use-it/)
+
+##### reCAPTCHA
+
+Composant Google reCAPTCHA installé avec la commande :
+
+```bash
+$ npm install vue-recaptcha
+```
+
+Et Importé dans le composant `inscription.vue` de la manière suivante :
+
+```javascript
+import VueRecaptcha from "vue-recaptcha";
+```
+
+J'ai utilisé le composant vue-recaptcha afin d'implémenter une vérification lors de l'inscription à l'aide du système de détection automatisée d'utilisateur reCAPTCHA de Google. Pour intégrer reCAPTCHA à mon application, je me suis rendu sur la documentation officielle de Google afin de récupérer la clef d'intégration côté client. Une fois ma clef récupérée j'ai configuré le composant vue-recaptcha de la manière suivante : 
+
+```html
+<vue-recaptcha
+	ref="recaptcha"
+	@verify="onVerify"
+	sitekey="clientKey"
+    :loadRecaptchaScript="true"
+>
+</vue-recaptcha>
+```
+
+```javascript
+export default {
+  name: "Inscription",
+  components: {
+    VueRecaptcha
+  },
+  methods: {
+      onVerify(response) {
+          
+      },
+  }
+}
+```
+
+Ici, la méthode `verify` émet la réponse qui représente le token à envoyer à l'API REST via l'endpoint `POST api/v1/users` afin de procéder à la vérification côté serveur.
+
+[*Documentation de vue-recaptcha*](https://github.com/DanSnow/vue-recaptcha#readme)
+[*Documentation reCAPTCHA pour l'intégration côté client*](https://developers.google.com/recaptcha/docs/display)
+
+Afin de valider la vérification d'utilisateur avec reCAPTCHA côté client, il est nécessaire d'envoyer une requête HTTP au service reCAPTCHA. Pour ce faire, j'appel la méthode suivante dans mon UserController lors de l'inscription :
+
+```php
+public static function reCAPTCHAvalidate(string $userResponseToken)
+{
+    $curl = curl_init();
+    curl_setopt($curl,CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+    curl_setopt($curl, CURLOPT_POST,1);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query(
+        array(
+            'secret' => getenv('GOOGLE_RECAPTCHA_SECRET_KEY'),
+            'response' => $userResponseToken
+        )
+    ));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      
+    $response = json_decode(curl_exec($curl));
+
+    return $response->success;
+    }
+```
+
+[*Documentation reCAPTCHA pour l'intégration côté serveur*](https://developers.google.com/recaptcha/docs/verify)
 
 ## Table des figures
 

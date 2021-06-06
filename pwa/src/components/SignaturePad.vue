@@ -71,13 +71,11 @@ export default {
       this.$jquery("#pad").css({ height: padWidth + "px" });
     },
   },
-  created() {
-    window.addEventListener("resize", this.resizeSignaturePadToSquare);
-  },
   destroyed() {
     window.removeEventListener("resize", this.resizeSignaturePadToSquare);
   },
   mounted() {
+    window.addEventListener("resize", this.resizeSignaturePadToSquare);
     this.resizeSignaturePadToSquare();
   },
 };

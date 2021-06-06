@@ -373,7 +373,7 @@ export default {
       this.isBusy = false;
     },
   },
-  created() {
+  mounted() {
     this.loadCustomersWithDogs();
   },
 };

@@ -261,11 +261,11 @@
         <b-form
           @submit.prevent="
             createDogForCustomerByUserId(
-              $route.params.userId,
               addDogForm.name,
               addDogForm.breed,
               addDogForm.sex,
-              addDogForm.chip_id
+              addDogForm.chip_id,
+              $route.params.userId
             )
           "
         >
@@ -872,7 +872,7 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    createDogForCustomerByUserId(userId, dogName, dogBreed, dogSex, dogChipId) {
+    createDogForCustomerByUserId(dogName, dogBreed, dogSex, dogChipId, userId) {
       const params = new URLSearchParams();
       params.append("name", dogName);
       params.append("breed", dogBreed);

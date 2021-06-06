@@ -1,29 +1,34 @@
 import Vue from "vue";
 import Router from "vue-router";
-import store from "../store";
-import Home from "./../components/Home.vue";
-import About from "./../components/About.vue";
-import Calendar from "./../components/Calendar.vue";
-import PrivacyPolicy from "./../components/PrivacyPolicy.vue";
-import Connection from "./../components/Connection.vue";
-import Inscription from "./../components/Inscription.vue";
-import CustomerInformation from "./../components/CustomerInformation.vue";
-import CustomerAppointment from "./../components/CustomerAppointment.vue";
-import Administration from "./../components/Administration.vue";
-import Planning from "./../components/Planning.vue";
-import EducatorCalendar from "./../components/EducatorCalendar.vue";
-import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "../constants.js";
+import store from "./store";
+import Home from "./components/Home.vue";
+import About from "./components/About.vue";
+import Calendar from "./components/Calendar.vue";
+import PrivacyPolicy from "./components/PrivacyPolicy.vue";
+import Connection from "./components/Connection.vue";
+import Inscription from "./components/Inscription.vue";
+import CustomerInformation from "./components/CustomerInformation.vue";
+import CustomerAppointment from "./components/CustomerAppointment.vue";
+import Administration from "./components/Administration.vue";
+import Planning from "./components/Planning.vue";
+import EducatorCalendar from "./components/EducatorCalendar.vue";
+import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./constants.js";
 
 Vue.use(Router);
 
 export default new Router({
   routes: [
-    { path: "/", component: Home },
-    { path: "/about", component: About },
-    { path: "/calendar", component: Calendar },
-    { path: "/privacy_policy", component: PrivacyPolicy },
+    { path: "/", name: "home", component: Home },
+    { path: "/about", name: "about", component: About },
+    { path: "/calendar", name: "calendar", component: Calendar },
+    {
+      path: "/privacy_policy",
+      name: "privacyPolicy",
+      component: PrivacyPolicy,
+    },
     {
       path: "/connection",
+      name: "connection",
       component: Connection,
       beforeEnter(to, from, next) {
         if (
@@ -43,6 +48,7 @@ export default new Router({
     },
     {
       path: "/inscription",
+      name: "inscription",
       component: Inscription,
       beforeEnter(to, from, next) {
         if (

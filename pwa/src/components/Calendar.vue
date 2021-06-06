@@ -217,11 +217,6 @@ export default {
             info.event.extendedProps.idEducator
           );
           this.$bvModal.show("modal-create-appointment");
-          //else {
-          //   this.$alertify.error(
-          //     "Connectez-vous afin de planifier votre rendez-vous"
-          //   );
-          // }
         }
       }
     },

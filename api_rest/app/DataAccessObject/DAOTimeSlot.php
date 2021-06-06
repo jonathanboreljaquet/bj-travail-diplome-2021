@@ -440,7 +440,14 @@ class DAOTimeSlot {
         AND DATE(ap.datetime_appointment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
         AND TIME(ap.datetime_appointment) = ts.time_start
         AND TIME(ADDTIME(ap.datetime_appointment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
+        
         AND IF(so.date_schedule_override IS NULL,dates.date > NOW() ,so.date_schedule_override >NOW())
+
+        AND (SELECT COUNT(*)
+		FROM schedule_override
+		WHERE schedule_override.date_schedule_override = dates.date 
+		AND schedule_override.is_deleted = 0
+		AND schedule_override.id_educator = :ID_EDUCATOR ) = 0
         
         ORDER BY date,time_start";
 
@@ -501,7 +508,14 @@ class DAOTimeSlot {
         AND DATE(ap.datetime_appointment) = IF(so.date_schedule_override IS NULL,dates.date,so.date_schedule_override)
         AND TIME(ap.datetime_appointment) = ts.time_start
         AND TIME(ADDTIME(ap.datetime_appointment,SEC_TO_TIME(3600* ap.duration_in_hour))) = ts.time_end LIMIT 1) = 0
+
         AND IF(so.date_schedule_override IS NULL,dates.date > NOW() ,so.date_schedule_override >NOW())
+
+        AND (SELECT COUNT(*)
+		FROM schedule_override
+		WHERE schedule_override.date_schedule_override = dates.date 
+		AND schedule_override.is_deleted = 0
+		AND schedule_override.id_educator = :ID_EDUCATOR ) = 0
         
         HAVING DATE = :DATE
         AND time_start = :TIME_START

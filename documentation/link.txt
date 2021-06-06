@@ -1,4 +1,0 @@
-FullCalendar
-https://stackoverflow.com/questions/18195906/how-can-i-get-adam-shaws-fullcalendar-to-display-responsive-in-a-rails-4-app?rq=1
-https://stackoverflow.com/questions/41908295/fullcalendar-change-view-for-mobile-devices
-https://stackoverflow.com/questions/58758782/fullcalendar-dynamically-change-default-view-based-on-screen-width

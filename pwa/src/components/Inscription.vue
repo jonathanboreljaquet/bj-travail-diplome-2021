@@ -117,7 +117,7 @@
               <vue-recaptcha
                 ref="recaptcha"
                 @verify="onVerify"
-                sitekey="6LdDq9saAAAAAG7jxON5LMecQiHSpHXddkE6-Jek"
+                sitekey="6LfeMhEbAAAAAHuNfrr-lGCFGw8yYjkYAEb47yOw"
                 :loadRecaptchaScript="true"
               >
               </vue-recaptcha>

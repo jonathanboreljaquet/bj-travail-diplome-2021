@@ -37,14 +37,14 @@ Body de la requête :
 
 ##### Tests unitaires
 
-* **[USE_CO1] Create one user without email**
-* **[USE_CO2] Create one user without firstname**
-* **[USE_CO3] Create one user without lastname**
-* **[USE_CO4] Create one user without phonenumber**
-* **[USE_CO5] Create one user without address**
-* **[USE_CO6] Create one user with invalid email format**
+* **[USE-CO1] Create one user without email**
+* **[USE-CO2] Create one user without firstname**
+* **[USE-CO3] Create one user without lastname**
+* **[USE-CO4] Create one user without phonenumber**
+* **[USE-CO5] Create one user without address**
+* **[USE-CO6] Create one user with invalid email format**
 * **[USE-CO7] Create one user with email address already exists**
-* **[USE_CO8] Create one user without problems**
+* **[USE-CO8] Create one user without problems**
 
 ####  GET api/v1/users
 
@@ -107,7 +107,7 @@ Cet endpoint permet de récupérer un client spécifique de l'application avec s
 
 * **[USE-GO1] Get one user with a user api token**
 
-* **[USE_GO2] Get one non-existent user**
+* **[USE-GO2] Get one non-existent user**
 
 * **[USE-GO3] Get right user wtih admin api token**
 
@@ -138,10 +138,10 @@ Body de la requête :
 
 ##### Tests unitaires
 
-* **[USE_UO1] Update one user with a user api token**
-* **[USE_UO2] Update one non-existent user**
-* **[USE_UO3] Update one user with invalid email format**
-* **[USE_UO4] Update one user without problems**
+* **[USE-UO1] Update one user with a user api token**
+* **[USE-UO2] Update one non-existent user**
+* **[USE-UO3] Update one user with invalid email format**
+* **[USE-UO4] Update one user without problems**
 
 ####  DELETE api/v1/users/{idUser}
 
@@ -160,7 +160,7 @@ Cet endpoint permet la suppression définitive d'un utilisateur. L'endpoint est 
 ##### Tests unitaires
 
 * **[USE-DO1] Delete one user with a user api token**
-* **[USE_DO2] Delete one non-existent user**
+* **[USE-DO2] Delete one non-existent user**
 * **[USE-DO3] Delete one user without problems**
 
 ####  GET api/v1/users/me
@@ -265,13 +265,13 @@ Body de la requête :
 
 ##### Tests unitaires
 
-* **[DOG_CO1] Create one dog with a user api token**
-* **[DOG_CO2] Create one dog without name**
-* **[DOG_CO3] Create one dog without breed**
-* **[DOG_CO4] Create one dog without sex**
-* **[DOG_CO5] Create one dog without user_id**
-* **[DOG_CO6] Create one dog for non-existent user**
-* **[DOG_CO7] Create one dog without problems**
+* **[DOG-CO1] Create one dog with a user api token**
+* **[DOG-CO2] Create one dog without name**
+* **[DOG-CO3] Create one dog without breed**
+* **[DOG-CO4] Create one dog without sex**
+* **[DOG-CO5] Create one dog without user_id**
+* **[DOG-CO6] Create one dog for non-existent user**
+* **[DOG-CO7] Create one dog without problems**
 
 ####  GET api/v1/dogs
 
@@ -311,7 +311,7 @@ Cet endpoint permet de récupérer un chien spécifique de l'application. L'endp
 ##### Tests unitaires
 
 * **[DOG-GO1] Get one dog with a user api token**
-* **[DOG_GO2] Get one non-existent dog**
+* **[DOG-GO2] Get one non-existent dog**
 * **[DOG-GO3] Get right dog with admin api token**
 
 <div style="page-break-after: always;"></div>
@@ -341,9 +341,9 @@ Body de la requête :
 
 ##### Tests unitaires
 
-* **[DOG_UO1] Update one dog with a user api token**
-* **[DOG_UO2] Update one non-existent dog**
-* **[DOG_UO3] Update one dog without problems**
+* **[DOG-UO1] Update one dog with a user api token**
+* **[DOG-UO2] Update one non-existent dog**
+* **[DOG-UO3] Update one dog without problems**
 
 ####  DELETE api/v1/dogs/{idDog}
 
@@ -390,10 +390,10 @@ Body de la requête :
 ##### Tests unitaires
 
 * **[DOG-UDP1] Upload dog picture with a user api token**
-* **[DOG_UDP2] Upload dog picture without dog_picture**
-* **[DOG_UDP3] Upload dog picture without dog_id**
-* **[DOG_UDP4] Upload dog picture for non-existant dog**
-* **[DOG_UDP5] Upload dog picture with invalid image type format**
+* **[DOG-UDP2] Upload dog picture without dog_picture**
+* **[DOG-UDP3] Upload dog picture without dog_id**
+* **[DOG-UDP4] Upload dog picture for non-existant dog**
+* **[DOG-UDP5] Upload dog picture with invalid image type format**
 * **[DOG-UDP6] Upload dog picture without problems**
 
 ####  GET api/v1/dogs/downloadPicture/{serial_id}
