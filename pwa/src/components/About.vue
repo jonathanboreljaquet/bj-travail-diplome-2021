@@ -34,7 +34,7 @@ export default {
 
       texth5RightSectionContent: "Une méthode moderne",
       textParagraphRightSectionContent:
-        "Je base ma méthode en respectant les besoins et l'émotionnel du chien, c'est pourquoi je met l'accent sur une coopération totale de ce dernier en lui permettant de faire ces propres choix et ainsi VOUS permettre d'obtenir de votre chien, écoute et attention en toutes circonstances",
+        "Je base ma méthode en respectant les besoins et l'émotionnel du chien, c'est pourquoi je met l'accent sur une coopération totale de ce dernier en lui permettant de faire ces propres choix et ainsi VOUS permettre d'obtenir de votre chien, écoute et attention en toutes circonstances.",
       imageSourceRightSectionContent: BorisWithHyron,
       routeBoutonRightSectionContent: "about",
     };

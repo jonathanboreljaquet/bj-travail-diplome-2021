@@ -3,7 +3,7 @@
     <b-container>
       <b-row id="title" class="text-center">
         <b-col>
-          <h1>S'incrire</h1>
+          <h1>S'inscrire</h1>
         </b-col>
       </b-row>
       <b-row class="text-center text-secondary">

@@ -33,8 +33,8 @@ export default {
       texth1LeftSectionContent: "Douceur de chien",
       texth3LeftSectionContent: "Educateur & comportementaliste canin",
       texth5LeftSectionContent: "Vous voulez prendre rendez-vous ?",
-      texth6LeftSectionContent: "Accéder aux calendriers des éducateurs canins",
-      textButtonLeftSectionContent: "Calendriers",
+      texth6LeftSectionContent: "Accéder aux agendas des éducateurs canins",
+      textButtonLeftSectionContent: "Agendas",
       imageSourceLeftSectionContent: Hyron,
       routeBoutonLeftSectionContent: "calendar",
 

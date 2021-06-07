@@ -2001,3 +2001,16 @@ Pour résumer les points qu'il me reste à documenter sont :
 * La requête de génération de planning dans la documentation technique
 * La conclusion du rapport
 * La réalisation du manuel utilisateur
+
+### Lundi 07 juin 2021
+
+Début de réalisation du manuel utilisateur.
+
+Discussion avec David Paulino. Celui-ci m'a fait remarquer qu'il manquait la fonctionnalité de vérification d'adresse e-mail lors de la création de compte par un client. Il m'a expliqué comment réaliser cette fonctionnalité :
+
+Création de deux champs dans la table user de la base de données
+
+1. isValidated : Boolean
+2. challenge : Une chaine de charactère généré aléatoirement de type string
+
+Lors de la création de compte par un utilisateur, l'utilisateur recevra un e-mail avec un lien contenant son identifiant ainsi ainsi que son "challenge". Lors du click sur ce lien comme par exemple `https://douceurdechien.ch/validate?userId=12&challenge=AKu689M2`, une requête HTTP sera envoyé au serveur permettant à l'utilisateur d'accéder à son compte. Cette fonctionnalité permet de m'assurer que le client n'a pas spécifié une adresse e-mail invalide et également démotivé les personnes malveillantes voulant surcharger ma base de données. Je compte ajouter cette fonctionnalité si j'ai le temps, sinon j'en parlerais dans les améliorations possibles de mon rapport.

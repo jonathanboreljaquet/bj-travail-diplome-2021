@@ -27,7 +27,7 @@
                     <p v-if="appointment.summary != null">
                       {{ appointment.summary }}
                     </p>
-                    <p v-else>Aucune résumé</p>
+                    <p v-else>Aucun résumé</p>
                     <div v-if="authAdministrator">
                       <div style="position: absolute; top: 5px; right: 5px">
                         <b-button
