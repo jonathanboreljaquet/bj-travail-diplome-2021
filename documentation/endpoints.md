@@ -1,10 +1,81 @@
+# Documentation technique des endpoints de l'API REST
+## Description
+Ce document permet de comprendre le procédé de chaque endpoint de l'API REST Douceur de Chien.
+Chaque endpoint respècte la structure suivante :
+
+* Objectif de l'endpoint
+* Utilisation concrète de l'endpoint
+* Diagramme de type flowchart décrivant les étapes de fonctionnement de l'endpoint   
+
+## Tables des matières
+- [Documentation technique des endpoints de l'API REST](#documentation-technique-des-endpoints-de-lapi-rest)
+  - [Description](#description)
+  - [Tables des matières](#tables-des-matières)
+    - [User endpoints](#user-endpoints)
+      - [POST api/v1/users](#post-apiv1users)
+      - [GET api/v1/users](#get-apiv1users)
+      - [GET api/v1/users/educators](#get-apiv1userseducators)
+      - [GET api/v1/users/{idUser}](#get-apiv1usersiduser)
+      - [PATCH api/v1/users/{idUser}](#patch-apiv1usersiduser)
+      - [DELETE api/v1/users/{idUser}](#delete-apiv1usersiduser)
+      - [GET api/v1/users/me](#get-apiv1usersme)
+      - [PATCH api/v1/users/me/changePassword](#patch-apiv1usersmechangepassword)
+      - [POST api/v1/connection](#post-apiv1connection)
+    - [Dog endpoints](#dog-endpoints)
+      - [POST api/v1/dogs](#post-apiv1dogs)
+      - [GET api/v1/dogs](#get-apiv1dogs)
+      - [GET api/v1/dogs/{idDog}](#get-apiv1dogsiddog)
+      - [PATCH api/v1/dogs/{idDog}](#patch-apiv1dogsiddog)
+      - [DELETE api/v1/dogs/{idDog}](#delete-apiv1dogsiddog)
+      - [POST api/v1/dogs/uploadPicture](#post-apiv1dogsuploadpicture)
+      - [GET api/v1/dogs/downloadPicture/{serial_id}](#get-apiv1dogsdownloadpictureserial_id)
+    - [Document endpoints](#document-endpoints)
+      - [POST api/v1/documents](#post-apiv1documents)
+      - [GET api/v1/documents](#get-apiv1documents)
+      - [GET api/v1/documents/{idDocument}](#get-apiv1documentsiddocument)
+      - [DELETE api/v1/documents/{idDocument}](#delete-apiv1documentsiddocument)
+      - [GET api/v1/dogs/documents/downloadDocument/{serial_id}](#get-apiv1dogsdocumentsdownloaddocumentserial_id)
+    - [Absence endpoints](#absence-endpoints)
+      - [POST api/v1/absences](#post-apiv1absences)
+      - [GET api/v1/absences](#get-apiv1absences)
+      - [GET api/v1/absences/{idAbsence}](#get-apiv1absencesidabsence)
+      - [PATCH api/v1/absences/{idAbsence}](#patch-apiv1absencesidabsence)
+      - [DELETE api/v1/absences/{idAbsence}](#delete-apiv1absencesidabsence)
+    - [WeeklySchedule endpoints](#weeklyschedule-endpoints)
+      - [POST api/v1/weeklySchedules](#post-apiv1weeklyschedules)
+      - [GET api/v1/weeklySchedules](#get-apiv1weeklyschedules)
+      - [GET api/v1/weeklySchedules/{idWeeklySchedule}](#get-apiv1weeklyschedulesidweeklyschedule)
+      - [DELETE api/v1/weeklySchedules/{idWeeklySchedule}](#delete-apiv1weeklyschedulesidweeklyschedule)
+    - [ScheduleOverride endpoints](#scheduleoverride-endpoints)
+      - [POST api/v1/scheduleOverrides](#post-apiv1scheduleoverrides)
+      - [GET api/v1/scheduleOverrides](#get-apiv1scheduleoverrides)
+      - [GET api/v1/scheduleOverrides/{idScheduleOverride}](#get-apiv1scheduleoverridesidscheduleoverride)
+      - [DELETE api/v1/scheduleOverrides/{idScheduleOverride}](#delete-apiv1scheduleoverridesidscheduleoverride)
+    - [TimeSlot endpoints](#timeslot-endpoints)
+      - [POST api/v1/timeSlots](#post-apiv1timeslots)
+      - [GET api/v1/timeSlots](#get-apiv1timeslots)
+      - [GET api/v1/timeSlots/{idTimeSlot}](#get-apiv1timeslotsidtimeslot)
+      - [DELETE api/v1/timeSlots/{idTimeSlot}](#delete-apiv1timeslotsidtimeslot)
+    - [Appointment endpoints](#appointment-endpoints)
+      - [POST api/v1/appointments](#post-apiv1appointments)
+      - [GET api/v1/appointments](#get-apiv1appointments)
+      - [GET api/v1/appointments/{idAppointment}](#get-apiv1appointmentsidappointment)
+      - [PATCH api/v1/appointments/{idAppointment}](#patch-apiv1appointmentsidappointment)
+      - [DELETE api/v1/appointments/{idAppointment}](#delete-apiv1appointmentsidappointment)
+      - [POST api/v1/appointments/uploadNoteGraphical](#post-apiv1appointmentsuploadnotegraphical)
+      - [GET api/v1/appointments/downloadNoteGraphical/{serial_id}](#get-apiv1appointmentsdownloadnotegraphicalserial_id)
+      - [GET api/v1/plannings/{idEducator}](#get-apiv1planningsideducator)
+
+<div style="page-break-after: always;"></div>
+
+### User endpoints
 ####  POST api/v1/users
 
-##### Objectif
+**Objectif**
 
 Créer un utilisateur dans la base de données et retourner son api token, son identifiant et son code de rôle.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet l'inscription d'un client de deux manières différentes afin que celui-ci puisse accéder aux fonctionnalités de l'application :
 
@@ -25,17 +96,17 @@ Body de la requête :
 
 <div style="page-break-after: always;"></div>
 
-##### Use case
+**Use case**
 
-<img src="./diagram/useCaseInscription.svg" width="500px" />
+<center><img src="./diagram/useCaseInscription.svg" width="500px" /></center>
 
 <div style="page-break-after: always;"></div>
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartPostUser.svg" width="470px"/>
+<center><img src="./diagram/drawio/flowchartPostUser.svg" width="470px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[USE-CO1] Create one user without email**
 * **[USE-CO2] Create one user without firstname**
@@ -46,82 +117,80 @@ Body de la requête :
 * **[USE-CO7] Create one user with email address already exists**
 * **[USE-CO8] Create one user without problems**
 
+<div style="page-break-after: always;"></div>
+
 ####  GET api/v1/users
 
-##### Objectif
+**Objectif**
 
 Récupérer tous les utilisateurs avec le `code_role` 1 (client) avec leurs chiens de la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer tous les clients ainsi que leurs chiens de l'application. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetAllUser.svg" width="350px"/>
+<center><img src="./diagram/drawio/flowchartGetAllUser.svg" width="350px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[USE-GA1] Get all users with a user api token**
-
 * **[USE-GA2] Get right users with admin api token**
 
 <div style="page-break-after: always;"></div>
 
 ####  GET api/v1/users/educators
 
-##### Objectif
+**Objectif**
 
 Récupérer les informations non sensibles des utilisateurs avec le `code_role` 2 (Éducateur canin) de la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer toutes les informations non sensibles des éducateurs canins de l'application. 
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetAllUserEducator.svg" width="350px"/>
+<center><img src="./diagram/drawio/flowchartGetAllUserEducator.svg" width="350px"/></center></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[USEE-GA1] Get right educator users**
-
 
 <div style="page-break-after: always;"></div>
 
 #### GET api/v1/users/{idUser}
 
-##### Objectif
+**Objectif**
 
 Récupérer un utilisateur avec ses chiens et ses documents de la base de données grâce à son identifiant.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer un client spécifique de l'application avec ses chiens et ses documents. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetOneUser.svg" width="350px"/>
+<center><img src="./diagram/drawio/flowchartGetOneUser.svg" width="350px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[USE-GO1] Get one user with a user api token**
-
 * **[USE-GO2] Get one non-existent user**
-
 * **[USE-GO3] Get right user wtih admin api token**
-
 <div style="page-break-after: always;"></div>
 
 ####  PATCH api/v1/users/{idUser}
 
-##### Objectif
+**Objectif**
 
 Modifier un utilisateur dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la modification des informations d'un utilisateur. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef        | Définition                              | Obligatoire | Format                            |
@@ -132,32 +201,36 @@ Body de la requête :
 | phonenumber | Le numéro de téléphone de l'utilisateur |             |                                   |
 | address     | L'adresse de l'utilisateur              |             |                                   |
 
-##### Flow chart
+<div style="page-break-after: always;"></div>
 
-<img src="./diagram/drawio/flowchartUpdateOneUser.svg" width="200px"/>
+**Flow chart**
 
-##### Tests unitaires
+<center><img src="./diagram/drawio/flowchartUpdateOneUser.svg" width="400px"/></center>
+
+**Tests unitaires**
 
 * **[USE-UO1] Update one user with a user api token**
 * **[USE-UO2] Update one non-existent user**
 * **[USE-UO3] Update one user with invalid email format**
 * **[USE-UO4] Update one user without problems**
 
+<div style="page-break-after: always;"></div>
+
 ####  DELETE api/v1/users/{idUser}
 
-##### Objectif
+**Objectif**
 
 Supprimer un utilisateur dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la suppression définitive d'un utilisateur. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartDeleteOneUser.svg" width="350px"/>
+<center><img src="./diagram/drawio/flowchartDeleteOneUser.svg" width="330px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[USE-DO1] Delete one user with a user api token**
 * **[USE-DO2] Delete one non-existent user**
@@ -165,19 +238,19 @@ Cet endpoint permet la suppression définitive d'un utilisateur. L'endpoint est 
 
 ####  GET api/v1/users/me
 
-##### Objectif
+**Objectif**
 
 Récupérer toutes les informations de l'utilisateur authentifié grâce à son api token dans le header `Authorization`.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer toutes les données de l'utilisateur authentifié (chiens, documents, rendez-vous).
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetUserAuth.svg" width="350px"/>
+<center><img src="./diagram/drawio/flowchartGetUserAuth.svg" width="350px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[USE-GUA1] Get all user information of the current logged in non-existent user**
 * **[USE-GUA2] Get all user information of the current logged in user**
@@ -186,24 +259,25 @@ Cet endpoint permet de récupérer toutes les données de l'utilisateur authenti
 
 ####  PATCH api/v1/users/me/changePassword
 
-##### Objectif
+**Objectif**
 
 Modifier le mot de passe de l'utilisateur authentifié grâce à son api token dans le header `Authorization`.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de modifier le mot de passe de l'utilisateur authentifié.
+
 Body de la requête :
 
 | Clef     | Définition              | Obligatoire | Format |
 | -------- | ----------------------- | :---------: | ------ |
 | password | Le nouveau mot de passe |             |        |
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartUpdatePasswordUserAuth.svg" width="350px"/>
+<center><img src="./diagram/drawio/flowchartUpdatePasswordUserAuth.svg" width="400px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[USE-UPAU1] Update password of the current logged in non-existent user**
 * **[USE-UPAU2] Update password of the current logged in user without problems**
@@ -212,13 +286,14 @@ Body de la requête :
 
 ####  POST api/v1/connection
 
-##### Objectif
+**Objectif**
 
 Récupérer l'api token, l'identifiant et le code du rôle d'un utilisateur dans la base de données grâce à son adresse e-mail ainsi que son mot de passe.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la récupération de l'api token, l'identifiant et le code du rôle afin de permettre à l'utilisateur d'accéder aux différentes fonctionnalités de l'application en fournissant son adresse e-mail et son mot de passe. 
+
 Body de la requête :
 
 | Clef     | Définition                        | Obligatoire | Format |
@@ -226,26 +301,30 @@ Body de la requête :
 | email    | L'adresse e-mail de l'utilisateur |      X      |        |
 | password | Le prénom de l'utilisateur        |      X      |        |
 
-##### Flow chart
+<div style="page-break-after: always;"></div>
 
-<img src="./diagram/drawio/flowchartConnection.svg" width="250px"/>
+**Flow chart**
 
-##### Tests unitaires
+<center><img src="./diagram/drawio/flowchartConnection.svg" width="390px"/></center>
+
+**Tests unitaires**
 
 * **[USE-C1] Connect user without email**
 * **[USE-C2] Connect user with an unrecognized email**
 * **[USE-C3] Connect user with wrong password**
 * **[USE-C4] Successful connection**
 
+### Dog endpoints
 ####  POST api/v1/dogs
 
-##### Objectif
+**Objectif**
 
 Créer un chien pour un utilisateur dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet d'ajouter un chien à un utilisateur. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef              | Définition                                           | Obligatoire | Format |
@@ -259,11 +338,11 @@ Body de la requête :
 
 <div style="page-break-after: always;"></div>
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartPostDog.svg" width="280px"/>
+<center><img src="./diagram/drawio/flowchartPostDog.svg" width="280px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[DOG-CO1] Create one dog with a user api token**
 * **[DOG-CO2] Create one dog without name**
@@ -275,19 +354,19 @@ Body de la requête :
 
 ####  GET api/v1/dogs
 
-##### Objectif
+**Objectif**
 
 Récupérer tous les chiens de la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer tous les chiens existants de l'application. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetAllDog.svg" width="350px"/>
+<center><img src="./diagram/drawio/flowchartGetAllDog.svg" width="350px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[DOG-GA1] Get all dogs with a user api token**
 * **[DOG-GA2] Get right dogs with admin api token**
@@ -296,19 +375,19 @@ Cet endpoint permet de récupérer tous les chiens existants de l'application. L
 
 #### GET api/v1/dogs/{idDog}
 
-##### Objectif
+**Objectif**
 
 Récupérer un chien de la base de données grâce à son identifiant.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer un chien spécifique de l'application. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetOneDog.svg" width="350px"/>
+<center><img src="./diagram/drawio/flowchartGetOneDog.svg" width="350px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[DOG-GO1] Get one dog with a user api token**
 * **[DOG-GO2] Get one non-existent dog**
@@ -318,13 +397,14 @@ Cet endpoint permet de récupérer un chien spécifique de l'application. L'endp
 
 ####  PATCH api/v1/dogs/{idDog}
 
-##### Objectif
+**Objectif**
 
 Modifier un chien dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la modification des informations d'un chien. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef              | Définition                              | Obligatoire | Format |
@@ -335,31 +415,35 @@ Body de la requête :
 | picture_serial_id | Le numéro de série de la photo du chien |             |        |
 | chip_id           | Le numéro de puce sous-cutanée du chien |             |        |
 
-##### Flow chart
+<div style="page-break-after: always;"></div>
 
-<img src="./diagram/drawio/flowchartUpdateOneDog.svg" width="220px"/>
+**Flow chart**
 
-##### Tests unitaires
+<center><img src="./diagram/drawio/flowchartUpdateOneDog.svg" width="350px"/></center>
+
+**Tests unitaires**
 
 * **[DOG-UO1] Update one dog with a user api token**
 * **[DOG-UO2] Update one non-existent dog**
 * **[DOG-UO3] Update one dog without problems**
 
+<div style="page-break-after: always;"></div>
+
 ####  DELETE api/v1/dogs/{idDog}
 
-##### Objectif
+**Objectif**
 
 Supprimer un chien dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la suppression définitive d'un chien. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartDeleteOneDog.svg" width="270px"/>
+<center><img src="./diagram/drawio/flowchartDeleteOneDog.svg" width="250px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[DOG-DO1] Delete one dog with a user api token**
 * **[DOG-DO2] Delete one non-existent dog**
@@ -367,13 +451,14 @@ Cet endpoint permet la suppression définitive d'un chien. L'endpoint est access
 
 ####  POST api/v1/dogs/uploadPicture
 
-##### Objectif
+**Objectif**
 
 Upload une image sur le serveur et l'attribue à un chien de la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet d'ajouter une photo à un chien. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef        | Définition             | Obligatoire | Format      |
@@ -383,11 +468,11 @@ Body de la requête :
 
 <div style="page-break-after: always;"></div>
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartUploadDogPicture.svg" width="500px"/>
+<center><img src="./diagram/drawio/flowchartUploadDogPicture.svg" width="490px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[DOG-UDP1] Upload dog picture with a user api token**
 * **[DOG-UDP2] Upload dog picture without dog_picture**
@@ -398,34 +483,36 @@ Body de la requête :
 
 ####  GET api/v1/dogs/downloadPicture/{serial_id}
 
-##### Objectif
+**Objectif**
 
 Récupérer l'image d'un chien stockée dans le serveur.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer la photo d'un chien grâce à son identifiant de série. L'endpoint est accessible par n'importe quel type d'utilisateur.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartDownloadDogPicture.svg" width="500px"/>
+<center><img src="./diagram/drawio/flowchartDownloadDogPicture.svg" width="500px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[DOG-DDP1] Download non-existant dog picture**
 * **[DOG-DDP2] Download dog picture without problems**
 
 <div style="page-break-after: always;"></div>
 
+### Document endpoints
 ####  POST api/v1/documents
 
-##### Objectif
+**Objectif**
 
 Créer un document pour un utilisateur dans la base de données ainsi que de le stocker sur le serveur.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet d'ajouter un document à un utilisateur. Si le document est de type `conditions_inscription`, le système génère les conditions d'inscription avec la signature et le numéro de forfait passé en body de la requête. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef             | Définition                                              |                Obligatoire                | Format                                                 |
@@ -438,11 +525,13 @@ Body de la requête :
 
 <div style="page-break-after: always;"></div>
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartCreateDocument.svg" width="460px"/>
+<center><img src="./diagram/drawio/flowchartCreateDocument.svg" width="550px"/></center>
 
-##### Tests unitaires
+<div style="page-break-after: always;"></div>
+
+**Tests unitaires**
 
 * **[DOC-CO1] Create one document with a user api token**
 * **[DOC-CO2] Create one document without type**
@@ -457,19 +546,19 @@ Body de la requête :
 
 ####  GET api/v1/documents
 
-##### Objectif
+**Objectif**
 
 Récupérer tous les documents de la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer tous les documents existants de tous les clients. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetAllDocument.svg"/>
+<center><img src="./diagram/drawio/flowchartGetAllDocument.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[DOC-GA1] Get all documents with a user api token**
 * **[DOC-GA2] Get right documents with admin api token**
@@ -478,19 +567,19 @@ Cet endpoint permet de récupérer tous les documents existants de tous les clie
 
 ####  GET api/v1/documents/{idDocument}
 
-##### Objectif
+**Objectif**
 
 Récupérer un document de la base de données grâce à son identifiant.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer un document spécifique de l'application. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetOneDocument.svg"/>
+<center><img src="./diagram/drawio/flowchartGetOneDocument.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[DOC-GO1] Get one document with a user api token**
 * **[DOC-GO2] Get one non-existent document**
@@ -500,19 +589,19 @@ Cet endpoint permet de récupérer un document spécifique de l'application. L'e
 
 ####  DELETE api/v1/documents/{idDocument}
 
-##### Objectif
+**Objectif**
 
 Supprimer un document dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la suppression définitive d'un document avec son document sur le serveur s'il existe. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartDeleteOneDocument.svg" width="280px"/>
+<center><img src="./diagram/drawio/flowchartDeleteOneDocument.svg" width="280px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[DOC-DO1] Delete one document with a user api token**
 * **[DOC-DO2] Delete one non-existent document**
@@ -520,32 +609,34 @@ Cet endpoint permet la suppression définitive d'un document avec son document s
 
 ####  GET api/v1/dogs/documents/downloadDocument/{serial_id}
 
-##### Objectif
+**Objectif**
 
 Télécharger un document stocké dans le serveur.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer le document d'un client. L'endpoint est accessible par l'utilisateur propriétaire authentifié.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartDownloadDocument.svg"/>
+<center><img src="./diagram/drawio/flowchartDownloadDocument.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[DOC-DD2] Download document without problems**
 * **[DOC-DD1] Download non-existent or non-owner document**
 
+### Absence endpoints
 ####  POST api/v1/absences
 
-##### Objectif
+**Objectif**
 
 Créer une donnée de vacance pour l'éducateur canin authentifié dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet d'ajouter une donnée de vacance. Cette donnée aura une date de début, une date de fin ainsi qu'une description. Les vacances permettront de spécifier une distance temporelle où l'éducateur canin l'ayant créé ne travaillera pas. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef              | Définition                      | Obligatoire | Format                                                       |
@@ -556,11 +647,11 @@ Body de la requête :
 
 <div style="page-break-after: always;"></div>
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartPostAbsence.svg" width="250px"/>
+<center><img src="./diagram/drawio/flowchartPostAbsence.svg" width="250px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[ABS-CO1] Create one absence with a user api token**
 * **[ABS-CO2] Create one absence without date_from**
@@ -572,19 +663,19 @@ Body de la requête :
 
 ####  GET api/v1/absences
 
-##### Objectif
+**Objectif**
 
 Récupérer toutes les données de vacances de l'utilisateur authentifié de la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer toutes les vacances existantes de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetAllAbsence.svg"/>
+<center><img src="./diagram/drawio/flowchartGetAllAbsence.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[ABS-GA1] Get all absences with a user api token**
 * **[ABS-GA2] Get right absences with admin api token**
@@ -593,19 +684,19 @@ Cet endpoint permet de récupérer toutes les vacances existantes de l'éducateu
 
 ####  GET api/v1/absences/{idAbsence}
 
-##### Objectif
+**Objectif**
 
 Récupérer une donnée d'absence de l'utilisateur authentifié de la base de données grâce à son identifiant.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer une vacance spécifique de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetOneAbsence.svg"/>
+<center><img src="./diagram/drawio/flowchartGetOneAbsence.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[ABS-GO1] Get one absence with a user api token**
 * **[ABS-GO2] Get one non-existent absence**
@@ -615,13 +706,14 @@ Cet endpoint permet de récupérer une vacance spécifique de l'éducateur canin
 
 ####  PATCH api/v1/absences/{idAbsence}
 
-##### Objectif
+**Objectif**
 
 Modifier une donnée de vacance de l'utilisateur authentifié dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la modification des informations d'une vacance de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef              | Définition                      | Obligatoire | Format                                                       |
@@ -632,11 +724,11 @@ Body de la requête :
 
 <div style="page-break-after: always;"></div>
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartUpdateOneAbsence.svg" width="290px"/>
+<center><img src="./diagram/drawio/flowchartUpdateOneAbsence.svg" width="310px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[ABS-UO1] Update one absence with a user api token**
 * **[ABS-UO2] Update one non-existent absence**
@@ -647,33 +739,35 @@ Body de la requête :
 
 ####  DELETE api/v1/absences/{idAbsence}
 
-##### Objectif
+**Objectif**
 
 Supprimer une donnée de vacance de manière non définitive de l'utilisateur authentifié dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la suppression non définitive d'une vacance de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartDeleteOneAbsence.svg"/>
+<center><img src="./diagram/drawio/flowchartDeleteOneAbsence.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[ABS-DO1] Delete one absence with a user api token**
 * **[ABS-DO2] Delete one non-existent absence**
 * **[ABS-DO3] Delete one absence without problems**
 
+### WeeklySchedule endpoints
 ####  POST api/v1/weeklySchedules
 
-##### Objectif
+**Objectif**
 
 Créer un calendrier hebdomadaire pour l'utilisateur authentifié dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet d'ajouter un calendrier hebdomadaire pour l'éducateur canin authentifié. Ce calendrier hebdomadaire doit avoir une date de début mais peut avoir une date de fin. C'est-à-dire qu'un calendrier hebdomadaire sans date de fin est un calendrier hebdomadaire permanent. De ce fait, il peut y avoir qu'un seul calendrier permanent existant pour un éducateur canin. Les calendriers hebdomadaires permettront de créer des créneaux horaires hebdomadaires sur une certaine durée. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef            | Définition                                  | Obligatoire | Format                                                       |
@@ -683,11 +777,11 @@ Body de la requête :
 
 <div style="page-break-after: always;"></div>
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartPostWeeklySchedule.svg" width="400px"/>
+<center><img src="./diagram/drawio/flowchartPostWeeklySchedule.svg" width="400px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[WEE-CO1] Create one weekly schedule with a user api token**
 * **[WEE-CO2] Create one weekly schedule without date_from**
@@ -700,19 +794,19 @@ Body de la requête :
 
 ####  GET api/v1/weeklySchedules
 
-##### Objectif
+**Objectif**
 
 Récupérer tous les calendriers hebdomadaires ainsi que leurs créneaux horaires de l'utilisateur authentifié de la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer tous les calendriers hebdomadaires existants ainsi que leurs créneaux horaires de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetAllWeeklySchedule.svg"/>
+<center><img src="./diagram/drawio/flowchartGetAllWeeklySchedule.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[WEE-GA1] Get all weekly schedules with a user api token**
 * **[WEE-GA2] Get right weekly schedules with admin api token**
@@ -721,19 +815,19 @@ Cet endpoint permet de récupérer tous les calendriers hebdomadaires existants 
 
 ####  GET api/v1/weeklySchedules/{idWeeklySchedule}
 
-##### Objectif
+**Objectif**
 
 Récupérer un calendrier hebdomadaire de l'utilisateur authentifié de la base de données grâce à son identifiant.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer un calendrier hebdomadaire spécifique de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetOneWeeklySchedule.svg"/>
+<center><img src="./diagram/drawio/flowchartGetOneWeeklySchedule.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[WEE-GO1] Get one weekly schedule with a user api token**
 * **[WEE-GO2] Get one non-existent weekly schedule**
@@ -743,33 +837,35 @@ Cet endpoint permet de récupérer un calendrier hebdomadaire spécifique de l'�
 
 ####  DELETE api/v1/weeklySchedules/{idWeeklySchedule}
 
-##### Objectif
+**Objectif**
 
 Supprimer un calendrier hebdomadaire de manière non définitive de l'utilisateur authentifié dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la suppression non définitive d'un calendrier hebdomadaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartDeleteOneWeeklySchedule.svg"/>
+<center><img src="./diagram/drawio/flowchartDeleteOneWeeklySchedule.svg" width="360px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[WEE-DO1] Delete one weekly schedule with a user api token**
 * **[WEE-DO2] Delete one non-existent weekly schedule**
 * **[WEE-DO3] Delete one weekly schedule without problems**
 
+### ScheduleOverride endpoints
 ####  POST api/v1/scheduleOverrides
 
-##### Objectif
+**Objectif**
 
 Créer une exception d'horaire de l'utilisateur authentifié dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet d'ajouter une exception d'horaire de l'éducateur canin authentifié. Cette exception d'horaire est une date unique. Les exceptions d'horaires permettront de créer des créneaux horaires hebdomadaires sur un jour unique particulier. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef                   | Définition                       | Obligatoire | Format                                                |
@@ -778,11 +874,11 @@ Body de la requête :
 
 <div style="page-break-after: always;"></div>
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartPostScheduleOverride.svg" width="290px"/>
+<center><img src="./diagram/drawio/flowchartPostScheduleOverride.svg" width="280px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[SCH-CO1] Create one schedule override with a user api token**
 * **[SCH-CO2] Create one schedule override without date**
@@ -792,19 +888,19 @@ Body de la requête :
 
 ####  GET api/v1/scheduleOverrides
 
-##### Objectif
+**Objectif**
 
 Récupérer toutes les exceptions d'horaires ainsi que leurs créneaux horaires de l'utilisateur authentifié de la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer toutes les exceptions d'horaires existantes ainsi que leurs créneaux horaires de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetAllScheduleOverride.svg"/>
+<center><img src="./diagram/drawio/flowchartGetAllScheduleOverride.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[SCH-GA1] Get all schedule overrides with a user api token**
 * **[SCH-GA2] Get right schedule overrides with admin api token**
@@ -813,19 +909,19 @@ Cet endpoint permet de récupérer toutes les exceptions d'horaires existantes a
 
 ####  GET api/v1/scheduleOverrides/{idScheduleOverride}
 
-##### Objectif
+**Objectif**
 
 Récupérer une exception d'horaire de l'utilisateur authentifié de la base de données grâce à son identifiant.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer une exception d'horaire spécifique de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetOneScheduleOverride.svg"/>
+<center><img src="./diagram/drawio/flowchartGetOneScheduleOverride.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[SCH-GO1] Get one schedule override with a user api token**
 * **[SCH-GO2] Get one non-existent schedule override**
@@ -835,33 +931,35 @@ Cet endpoint permet de récupérer une exception d'horaire spécifique de l'édu
 
 ####  DELETE api/v1/scheduleOverrides/{idScheduleOverride}
 
-##### Objectif
+**Objectif**
 
 Supprimer une exception d'horaire de manière non définitive de l'utilisateur authentifié dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la suppression non définitive d'une exception d'horaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartDeleteOneScheduleOverride.svg"/>
+<center><img src="./diagram/drawio/flowchartDeleteOneScheduleOverride.svg" width="370px" /></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[SCH-DO1] Delete one schedule override with a user api token**
 * **[SCH-DO2] Delete one non-existent schedule override**
 * **[SCH-DO3] Delete one schedule override without problems**
 
+### TimeSlot endpoints
 ####  POST api/v1/timeSlots
 
-##### Objectif
+**Objectif**
 
 Créer un créneau horaire pour l'utilisateur authentifié dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet d'ajouter un créneau horaire pour un calendrier hebdomadaire ou pour une exception d'horaire de l'éducateur canin authentifié. Ce créneau horaire doit avoir une heure de début, une heure de fin et un code correspondant à la journée de la semaine désirée. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef                 | Définition                                    |            Obligatoire             | Format                                                       |
@@ -874,11 +972,11 @@ Body de la requête :
 
 <div style="page-break-after: always;"></div>
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartPostTimeSlot.svg"/>
+<center><img src="./diagram/drawio/flowchartPostTimeSlot.svg" width="300px" /></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[TIM-CO1] Create one time slot with a user api token**
 * **[TIM-CO2] Create one time slot without code day**
@@ -900,19 +998,19 @@ Body de la requête :
 
 ####  GET api/v1/timeSlots
 
-##### Objectif
+**Objectif**
 
 Récupérer tous les créneaux horaires de l'utilisateur authentifié de la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer tous les créneaux horaires existants de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetAllTimeSlot.svg"/>
+<center><img src="./diagram/drawio/flowchartGetAllTimeSlot.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[TIM-GA1] Get all time slots with a user api token**
 * **[TIM-GA2] Get right time slots with admin api token**
@@ -921,19 +1019,19 @@ Cet endpoint permet de récupérer tous les créneaux horaires existants de l'é
 
 ####  GET api/v1/timeSlots/{idTimeSlot}
 
-##### Objectif
+**Objectif**
 
 Récupérer un créneau horaire de l'utilisateur authentifié de la base de données grâce à son identifiant.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer un créneau horaire spécifique de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetOneTimeSlot.svg"/>
+<center><img src="./diagram/drawio/flowchartGetOneTimeSlot.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[TIM-GO1] Get one time slot with a user api token**
 * **[TIM-GO2] Get one non-existent time slot**
@@ -943,49 +1041,53 @@ Cet endpoint permet de récupérer un créneau horaire spécifique de l'éducate
 
 ####  DELETE api/v1/timeSlots/{idTimeSlot}
 
-##### Objectif
+**Objectif**
 
 Supprimer un créneau horaire de manière non définitive de l'utilisateur authentifié dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la suppression non définitive d'un créneau horaire de l'éducateur canin authentifié. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartDeleteOneTimeSlot.svg"/>
+<center><img src="./diagram/drawio/flowchartDeleteOneTimeSlot.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[TIM-DO1] Delete one time slot with a user api token**
 * **[TIM-DO2] Delete one non-existent time slot**
 * **[TIM-DO3] Delete one time slot without problems**
 
+### Appointment endpoints
 ####  POST api/v1/appointments
 
-##### Objectif
+**Objectif**
 
 Créer un rendez-vous entre deux utilisateurs dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet d'ajouter un rendez-vous entre un client et un éducateur canin. La création de rendez-vous insère uniquement les données temporelles du rendez-vous. L'endpoint est accessible par les utilisateurs authentifiés.
+
 Body de la requête :
 
 | Clef                | Définition                         | Obligatoire | Format                                                       |
 | ------------------- | ---------------------------------- | :---------: | ------------------------------------------------------------ |
-| datetime_appointment | La date et l'heure du rendez-vous  |      X      | La date et l'heure doivent respecter le format  <br />(YYYY-MM-DD HH:MM:SS) |
+| datetime_appointment | La date et l'heure du rendez-vous  |      X      | La date et l'heure doivent respecter le format  <br /></center>(YYYY-MM-DD HH:MM:SS) |
 | duration_in_hour    | La durée en heure du rendez-vous   |      X      |                                                              |
 | user_id_customer    | L'identifiant du client            |      X      |                                                              |
 | user_id_educator    | L'identifiant de l'éducateur canin |      X      |                                                              |
 
 <div style="page-break-after: always;"></div>
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartPostAppointment.svg" width="260px"/>
+<center><img src="./diagram/drawio/flowchartPostAppointment.svg" width="580px"/></center>
 
-##### Tests unitaires
+<div style="page-break-after: always;"></div>
+
+**Tests unitaires**
 
 * **[APP-CO1] Create one appointment with unauthorized user**
 * **[APP-CO2] Create one appointment without datetime_appointment**
@@ -1002,19 +1104,19 @@ Body de la requête :
 
 ####  GET api/v1/appointments
 
-##### Objectif
+**Objectif**
 
 Récupérer tous les rendez-vous de l'utilisateur authentifié de la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer toutes les informations des rendez-vous de l'utilisateur authentifié. Si l'utilisateur est un client, l'endpoint ne retourne pas les notes de l'éducateur canin. L'endpoint est accessible par les utilisateurs authentifiés.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetAllAppointment.svg"/>
+<center><img src="./diagram/drawio/flowchartGetAllAppointment.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[APP-GA1] Get all appointments with unauthorized user**
 * **[APP-GA2] Get right appointments for customer**
@@ -1024,19 +1126,19 @@ Cet endpoint permet de récupérer toutes les informations des rendez-vous de l'
 
 ####  GET api/v1/appointments/{idAppointment}
 
-##### Objectif
+**Objectif**
 
 Récupérer un rendez-vous de la base de données grâce à son identifiant.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer un rendez-vous spécifique. L'endpoint est accessible uniquement par les administrateurs.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetOneAppointment.svg"/>
+<center><img src="./diagram/drawio/flowchartGetOneAppointment.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[APP-GO1] Get one appointment with a user api token**
 * **[APP-GO2] Get one non-existent appointment**
@@ -1046,13 +1148,14 @@ Cet endpoint permet de récupérer un rendez-vous spécifique. L'endpoint est ac
 
 ####  PATCH api/v1/appointments/{idAppointment}
 
-##### Objectif
+**Objectif**
 
 Modifier un rendez-vous de la base de données grâce à son identifiant.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la modification des informations d'un rendez-vous. Il est impossible de modifier les informations temporelles d'un rendez-vous, uniquement les notes textuelles et le résumé peuvent l'être. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef      | Définition                          | Obligatoire | Format |
@@ -1060,11 +1163,11 @@ Body de la requête :
 | note_text | Les notes textuelles du rendez-vous |             |        |
 | summary   | Le résumé du rendez-vous            |             |        |
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartUpdateOneAppointment.svg" width="280px"/>
+<center><img src="./diagram/drawio/flowchartUpdateOneAppointment.svg" width="280px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[APP-UO1] Update one appointment with a user api token**
 * **[APP-UO2] Update one non-existent appointment**
@@ -1072,19 +1175,19 @@ Body de la requête :
 
 ####  DELETE api/v1/appointments/{idAppointment}
 
-##### Objectif
+**Objectif**
 
 Supprimer un rendez-vous de manière non définitive dans la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet la suppression non définitive d'un rendez-vous. Cette suppression non définitive permet d'identifier quand le rendez-vous a été supprimé et par quel utilisateur. L'endpoint est accessible uniquement par les utilisateurs authentifiés.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartDeleteOneAppointment.svg"/>
+<center><img src="./diagram/drawio/flowchartDeleteOneAppointment.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[APP-DO1] Delete one appointment with unauthorized user**
 * **[APP-DO2] Delete one non-existent appointment**
@@ -1093,13 +1196,14 @@ Cet endpoint permet la suppression non définitive d'un rendez-vous. Cette suppr
 
 ####  POST api/v1/appointments/uploadNoteGraphical
 
-##### Objectif
+**Objectif**
 
 Upload une note graphique sur le serveur et l'attribue à un rendez-vous de la base de données.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet d'ajouter une note graphique à un rendez-vous. L'endpoint est accessible uniquement par les administrateurs.
+
 Body de la requête :
 
 | Clef           | Définition                   | Obligatoire | Format |
@@ -1109,11 +1213,11 @@ Body de la requête :
 
 <div style="page-break-after: always;"></div>
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartUploadNoteGraphical.svg" width="420px"/>
+<center><img src="./diagram/drawio/flowchartUploadNoteGraphical.svg" width="410px"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[APP-UNG1] Upload note graphical with a user api token**
 * **[APP-UNG2] Upload note graphical without note_graphical**
@@ -1124,19 +1228,19 @@ Body de la requête :
 
 ####  GET api/v1/appointments/downloadNoteGraphical/{serial_id}
 
-##### Objectif
+**Objectif**
 
 Télécharger une note graphique stockée dans le serveur.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer une note graphique en base64 grâce à son identifiant de série.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartDownloadNoteGraphical.svg"/>
+<center><img src="./diagram/drawio/flowchartDownloadNoteGraphical.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[APP-DNG1] Download note graphical with a user api token**
 * **[APP-DNG2] Download non-existant note graphical**
@@ -1146,19 +1250,19 @@ Cet endpoint permet de récupérer une note graphique en base64 grâce à son id
 
 ####  GET api/v1/plannings/{idEducator}
 
-##### Objectif
+**Objectif**
 
 Récupérer le planning d'un éducateur canin grâce à son identifiant.
 
-##### Utilisation concrète
+**Utilisation concrète**
 
 Cet endpoint permet de récupérer le planning d'un éducateur canin. Le planning d'un éducateur canin contient toutes les dates et heures qui permettent un rendez-vous avec celui-ci. L'endpoint est accessible par n'importe quel type d'utilisateur.
 
-##### Flow chart
+**Flow chart**
 
-<img src="./diagram/drawio/flowchartGetOnePlanning.svg"/>
+<center><img src="./diagram/drawio/flowchartGetOnePlanning.svg"/></center>
 
-##### Tests unitaires
+**Tests unitaires**
 
 * **[PLA-GO1] Get one planning for non-existent educator**
 * **[PLA-GO2] Get right planning**
