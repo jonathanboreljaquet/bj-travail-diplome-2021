@@ -1,3 +1,11 @@
+<!--
+  ButtonReturn.vue
+
+  Reusable component representing a static button on a page allowing to redirect the user to another component.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div>
     <b-button class="btnReturn" :to="to">

@@ -3,82 +3,13 @@ Travail de diplôme Douceur de Chien
 
 ## Description
 
-Travail de diplôme ayant comme objectif la réalisation d'une application WEB pour la société Douceur de Chien. Le but du projet est de faciliter les interactions entre des éducateurs canins et leurs clients. L'application permettra à un client de prendre un rendez-vous autonome respectant le planning d'un éducateur canin et à un éducateur canin de faire signer numériquement les conditions d'utilisation  par exemple.
+Travail de diplôme ayant comme objectif la réalisation d'une application WEB pour la société Douceur de Chien. Le but du projet est de faciliter les interactions entre des éducateurs canins et leurs clients. L'application permettra à un client de prendre un rendez-vous autonome respectant le planning d'un éducateur canin et à un éducateur canin de faire signer numériquement les conditions d'utilisation par exemple.
 
 ## Fonctionnalités
 
 ### Endpoints de l'API REST
 
-* `POST api/v1/users`
-* `POST api/v1/connection`
-* `GET api/v1/users`
-* `GET api/v1/users/educators`
-* `GET api/v1/users/{idUser}`
-* `GET api/v1/users/me`
-* `PATCH api/v1/users/{idUser}`
-* `PATCH api/v1/users/me/changePassword`
-* `DELETE api/v1/users/{idUser}`
-
-------
-
-* `POST api/v1/dogs`
-* `GET api/v1/dogs`
-* `GET api/v1/dogs/{idDog}`
-* `PATCH api/v1/dogs/{idDog}`
-* `DELETE api/v1/dogs/{idDog}`
-* `POST api/v1/dogs/uploadPicture`
-* `GET api/v1/dogs/downloadPicture/{serial_number}`
-
-------
-
-* `POST api/v1/documents`
-* `GET api/v1/documents`
-* `GET api/v1/documents/{idDocument}`
-* `PATCH api/v1/documents/{idDocument}`
-* `DELETE api/v1/documents/{idDocument}`
-* `GET api/v1/documents/downloadDocument/{serial_number}`
-
-------
-
-* `POST api/v1/absences`
-* `GET api/v1/absences`
-* `GET api/v1/absences/{idAbsence}`
-* `PATCH api/v1/absences/{idAbsence}`
-* `DELETE api/v1/absences/{idAbsence}`
-
-------
-
-* `POST api/v1/weeklySchedules`
-* `GET api/v1/weeklySchedules`
-* `GET api/v1/weeklySchedules/{idWeeklySchedule}`
-* `DELETE api/v1/weeklySchedules/{idWeeklySchedule}`
-
-------
-
-* `POST api/v1/scheduleOverrides`
-* `GET api/v1/scheduleOverrides`
-* `GET api/v1/scheduleOverrides/{idScheduleOverride}`
-* `DELETE api/v1/scheduleOverrides/{idScheduleOverride}`
-
-------
-
-* `POST api/v1/timeSlots`
-* `GET api/v1/timeSlots`
-* `GET api/v1/timeSlots/{idTimeSlot}`
-* `DELETE api/v1/timeSlots/{idTimeSlot}`
-
-------
-
-* `POST api/v1/appointments`
-* `GET api/v1/appointments`
-* `GET api/v1/appointments/{idTimeSlot}`
-* `PATCH api/v1/appointments/{idTimeSlot}`
-* `DELETE api/v1/appointments/{idTimeSlot}`
-* `POST api/v1/appointments/uploadNoteGraphical`
-* `POST api/v1/appointments/downloadNoteGraphical/{serial_number}`
-* `GET api/v1/plannings/{idEducator}`
-
-Pour plus d'informations, dirigez-vous sur la [documentation technique](./documentation/documentation_technique.md).
+La documentation des endpoints est disponible dans un [annexe](./documentation/endpoints.md).
 
 ### Fonctionnalités de l'application WEB
 
@@ -145,15 +76,16 @@ Pour plus d'informations, dirigez-vous sur la [documentation technique](./docume
 
 1. Télécharger le projet
 2. Déplacer le dossier `api_rest` à la racine de votre serveur HTTP
-3. Exécuter la commande ``composer install`` dans ce dossier
-4. Copiez le contenu du fichier **.env.example** dans un nouveau fichier nommé **.env**
-5. Renseignez les valeurs des variables d'environnement dans le fichier **.env**
-6. Exécuter la commande `php dbseed.php` pour générer les données de test
+3. Accéder au répertoire `api_rest` en ligne de commande
+4. Exécuter la commande `composer install`
+5. Copiez le contenu du fichier **.env.example** dans un nouveau fichier nommé **.env**
+6. Renseignez les valeurs des variables d'environnement dans le fichier **.env**
+7. Exécuter la commande `php dbseed.php` pour générer les données de test
 
 ### JAVASCRIPT - APPLICATION
 
 1. Télécharger le projet
-2. Accéder au répertoire pwa en ligne de commande
+2. Accéder au répertoire `pwa` en ligne de commande
 3. Exécuter la commande `npm install`
 4. Exécuter la commande `npm run serve`
 5. Ouvrir l'url `http://localhost:8080/`

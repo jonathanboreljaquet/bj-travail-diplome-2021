@@ -1,3 +1,11 @@
+<!--
+  RightSectionContent.vue
+
+  Reusable component representing an aesthetic content displayed with textual content on the right and an image on the left.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div class="content">
     <b-container>

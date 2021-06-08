@@ -1,3 +1,11 @@
+<!--
+  PrivacyPolicy.vue
+
+  Reusable component representing the signature functionality.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div class="content">
     <b-container id="container">

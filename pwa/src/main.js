@@ -1,3 +1,11 @@
+/*
+  main.js
+  
+  File allowing to initialize the main root component with all the configuration and the plugins necessary for the good functioning of the application.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+*/
+
 import "@babel/polyfill";
 import "mutationobserver-shim";
 

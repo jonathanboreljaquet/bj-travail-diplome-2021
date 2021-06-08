@@ -1,3 +1,11 @@
+/*
+  router.js
+  
+  File to configure the application router with Vue Router.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+*/
+
 import Vue from "vue";
 import Router from "vue-router";
 import store from "./store";

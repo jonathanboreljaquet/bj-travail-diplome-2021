@@ -1,3 +1,11 @@
+<!--
+  Connection.vue
+
+  Component representing the application connection page.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div class="content">
     <b-container>

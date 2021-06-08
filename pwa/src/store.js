@@ -1,3 +1,11 @@
+/*
+  store.js
+  
+  File to configure the application store with Vuex.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+*/
+
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";

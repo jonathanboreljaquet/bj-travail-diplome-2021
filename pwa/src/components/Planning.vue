@@ -1,3 +1,11 @@
+<!--
+  Planning.vue
+
+  Component representing the planning page of a dog trainer.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div>
     <b-container>
@@ -246,7 +254,7 @@
           </b-form-group>
 
           <b-button block type="submit" variant="outline-primary">
-            Créer le calendrier hebdomadaire
+            Ajouter le calendrier hebdomadaire
           </b-button>
         </b-form>
       </b-modal>
@@ -280,7 +288,7 @@
           </b-form-group>
 
           <b-button block type="submit" variant="outline-primary">
-            Créer l'exception d'horaire
+            Ajouter l'exception d'horaire
           </b-button>
         </b-form>
       </b-modal>
@@ -333,7 +341,7 @@
           </b-form-group>
 
           <b-button block type="submit" variant="outline-primary">
-            Créer les vacances
+            Ajouter les vacances
           </b-button>
         </b-form>
       </b-modal>
@@ -392,7 +400,7 @@
           </b-form-group>
 
           <b-button block type="submit" variant="outline-primary">
-            Créer le créneau horaire
+            Ajouter le créneau horaire
           </b-button>
         </b-form>
       </b-modal>
@@ -438,7 +446,7 @@
           </b-form-group>
 
           <b-button block type="submit" variant="outline-primary">
-            Créer le créneau horaire
+            Ajouter le créneau horaire
           </b-button>
         </b-form>
       </b-modal>

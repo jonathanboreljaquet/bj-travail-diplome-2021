@@ -1,3 +1,11 @@
+<!--
+  Footer.vue
+
+  Footer component included in all application previews.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div id="footer">
     <b-container>

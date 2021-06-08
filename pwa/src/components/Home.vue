@@ -1,3 +1,11 @@
+<!--
+  Home.vue
+
+  Component representing the home page of the application.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div>
     <left-section-content

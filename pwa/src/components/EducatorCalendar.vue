@@ -1,3 +1,11 @@
+<!--
+  EducatorCalendar.vue
+
+  Component representing the page of the personal calendar of a dog trainer.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div>
     <b-container>

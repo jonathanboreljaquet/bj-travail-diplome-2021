@@ -1,3 +1,11 @@
+<!--
+  CustomerAppointment.vue
+
+  Component representing the appointment information of a client.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div class="ComponnentContent">
     <b-container>

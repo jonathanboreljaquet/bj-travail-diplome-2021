@@ -1,3 +1,11 @@
+<!--
+  Calendar.vue
+
+  Component representing the page of the calendars of the dog educators of the society.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div>
     <b-container>

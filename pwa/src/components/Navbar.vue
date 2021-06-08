@@ -1,3 +1,11 @@
+<!--
+  Navbar.vue
+
+  Navbar component included in all application previews.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div>
     <b-navbar fixed="top" toggleable="lg" type="dark" variant="dark">

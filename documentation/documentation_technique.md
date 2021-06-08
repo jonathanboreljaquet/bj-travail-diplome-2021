@@ -99,7 +99,6 @@ Exemple de la classe `DogController` :
   	<figcaption>Fig.4 - Dog Controller </figcaption>
   </center>
 </figure>
-
 Dans ce dossier résident également les contrôleurs `ResponseController` et `HelperController`. Le `ResponseController` permet de retourner toutes les différentes réponses HTTP. Le `HelperController` permet l'utilisation de méthode dite d'aide et qui n'aurait pas leur place dans un contrôleur basique.
 Classes `ResponseController` et `HelperController` :
 
@@ -296,7 +295,6 @@ La table `user` contient les informations des différents utilisateurs :
         <td>Le hash du mot de passe de l'utilisateur.</td>
     </tr>
 </table>
-
 *Remarques*
 
 La table ne contient pas de sel pour le mot de passe car depuis PHP 7.0.0, il est conseillé d'utiliser le sel généré par défaut.

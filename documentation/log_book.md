@@ -669,7 +669,7 @@ Ajout d'une vérification du format du code day lors de la création ou la modif
 * Création de la méthode de réponse `invalidCodeDayFormat() `dans le ResponseController 
   * La méthode renvoie le code erreur 400 Bad Request avec le message :  Format de jour invalide => (1 jusqu/'à 7, dimanche = 1).
 
-Modification de la base de données afin de permettre la création, l'utilisation et la gestion de planning pour plusieurs éducateurs canins. Les 4 tables permettant ces fonctionnalités détiennent dorénavant un champs `id_educator` :
+Modification de la base de données afin de permettre la création, l'utilisation et la gestion de planning pour plusieurs éducateurs canins. Les 4 tables permettant ces fonctionnalités détiennent dorénavant un champ `id_educator` :
 
 ![mcd_planning_modified](./logbook/mcd_planning_modified.PNG)
 
@@ -757,11 +757,11 @@ WHERE is_deleted= :DELETED
 AND id_educator = :ID_EDUCATOR;
 ```
 
-Suppression du champs `password_salt` dans la table `user` de la base de données afin de suivre l'avertissement de PHP 7.
+Suppression du champ `password_salt` dans la table `user` de la base de données afin de suivre l'avertissement de PHP 7.
 *Avertissement : L'option Salt a été désapprouvée à partir de PHP 7.0.0. Il est maintenant préférable d'utiliser simplement le sel qui est généré par défaut.* [source](https://www.php.net/manual/fr/function.password-hash.php)
-En effet, PHP recommande de ne plus utiliser de salt personnel mais d'utiliser la méthode PHP `password_hash`. La méthode prend en paramètres différents algorithmes de hachage, je compte utiliser la constante PHP `PASSWORD_DEFAULT` qui utilise l'algorithme bcrypt. Constante évoluant avec son temps afin de trouver des algorithmes de plus en plus robustes, PHP nous conseille également de stocker le résultat dans une colonne de la base de données qui peut contenir au moins 60 caractères. J'ai donc modifié la taille de type VARCHAR du champs `password_hash` initialement 45 en 60.
+En effet, PHP recommande de ne plus utiliser de salt personnel mais d'utiliser la méthode PHP `password_hash`. La méthode prend en paramètres différents algorithmes de hachage, je compte utiliser la constante PHP `PASSWORD_DEFAULT` qui utilise l'algorithme bcrypt. Constante évoluant avec son temps afin de trouver des algorithmes de plus en plus robustes, PHP nous conseille également de stocker le résultat dans une colonne de la base de données qui peut contenir au moins 60 caractères. J'ai donc modifié la taille de type VARCHAR du champ `password_hash` initialement 45 en 60.
 
-Création d'un champs `user_id_educator` dans la table `appoitment` lié à l'id de la table `user` de la base de données afin de permettre aux clients de l'application de prendre rendez-vous avec l'éducateur canin de leurs choix car l'application doit maintenant le permettre.
+Création d'un champ `user_id_educator` dans la table `appoitment` lié à l'id de la table `user` de la base de données afin de permettre aux clients de l'application de prendre rendez-vous avec l'éducateur canin de leurs choix car l'application doit maintenant le permettre.
 
 Ajout d'un code à chaque test unitaire de l'API REST. Exemple de code :
 
@@ -1825,26 +1825,26 @@ Documentation des points suivants dans le rapport :
     * AlertifyJS
     * reCAPTCHA
 
-Implémentation de la vérification d'inscription avec le système de détection automatisée d'utilisateurs reCAPTCHA de Google du côté serveur. En effet, c'est en réalisant la documentation technique de mon projet que je me suis rendu compte que je vérifier le captcha uniquement du côté client. De ce fait, la protection fournit pas reCAPTCHA n'était pas optimale. Pour ce faire, j'ai ajouté dans mon l'endpoint `POST api/v1/users` la possibilité de rajouter dans le body `reCAPTCHAuserResponseToken`. Celui-ci est maintenant obligatoire si un mot de passe est spécifié dans le body de la requête. Fonctionnement de reCAPTCHA :
+Implémentation de la vérification d'inscription avec le système de détection automatisée d'utilisateurs reCAPTCHA de Google du côté serveur. En effet, c'est en réalisant la documentation technique de mon projet que je me suis rendu compte que je vérifiais le captcha uniquement du côté client. De ce fait, la protection fournie par reCAPTCHA n'était pas optimale. Pour ce faire, j'ai ajouté dans mon endpoint `POST api/v1/users` la possibilité de rajouter dans le body `reCAPTCHAuserResponseToken`. Celui-ci est maintenant obligatoire si un mot de passe est spécifié dans le body de la requête. Fonctionnement de reCAPTCHA :
 
 * Cocher le captcha du composant vue reCAPTCHA au niveau du frontend
-* Réaliser s'il le faut, le test de validation 
+* Réaliser s'il le faut le test de validation 
 * Une fois réalisé, le reCAPTCHA retourne un token de réponse
-* Envoie de ce token avec les autres informations d'inscription
-* Validation du token en appelant l'api `https://www.google.com/recaptcha/api/siteverify` avec comme champs de body :
-  * La clé secrète fournit par Google
+* Envoi de ce token avec les autres informations d'inscription
+* Validation du token en appelant l'api `https://www.google.com/recaptcha/api/siteverify` avec comme champ de body :
+  * La clé secrète fournie par Google
   * Le token de réponse utilisateur 
-* Retourne true si c'est bon et false si il y a un problème
+* Retourne true si c'est bon et false s'il y a un problème
 
 [Source](https://developers.google.com/recaptcha/docs/verify)
 
 ### Mardi 01 juin 2021
 
-Modification des points d'entrées de l'API REST qui nécessitait un contrôle en amont afin de vérifier si les champs de type integer l'était bien. En effet, auparavant, ces endpoints retournait une erreur PHP car la variable d'instance du modèle était de type integer tandis que le champ du body lui, pouvait être de type string et de ce fait, lors de l'Initialisation de la variable d'instance du modèle avec cette valeur, retournait une erreur. J'ai donc vérifier dans chaque points d'entrées de mon API REST nécessitant des données numériques, que si elles existent et qu'elles sont numérique, alors je peux les insérer dans le modèle, sinon j'insère null.
+Modification des points d'entrées de l'API REST qui nécessitait un contrôle en amont afin de vérifier si les champs de type integer l'était bien. En effet, auparavant, ces endpoints retournaient une erreur PHP car la variable d'instance du modèle était de type integer tandis que le champ du body lui, pouvait être de type string et de ce fait, lors de l'Initialisation de la variable d'instance du modèle avec cette valeur, retournait une erreur. J'ai donc vérifié dans chaque points d'entrées de mon API REST nécessitant des données numériques, que si elles existent et qu'elles sont numériques, alors je peux les insérer dans le modèle, sinon j'insère null.
 
 Modification de l'endpoint `POST api/v1/connection` afin que celui-ci retourne également l'identifiant de l'utilisateur authentifié.
 
-Modification du gestionnaire d'état Vue afin pouvoir désormais manipuler l'identifiant de l'utilisateur authentifié de manière globale.
+Modification du gestionnaire d'état Vue afin de pouvoir désormais manipuler l'identifiant de l'utilisateur authentifié de manière globale.
 
 Création de la fonctionnalité permettant la prise de rendez-vous autonome pour les clients. En effet, une fois sur la page "Agenda", le client authentifié peut sélectionner un créneau horaire afin de réserver un rendez-vous.
 
@@ -1852,24 +1852,24 @@ Création de la fonctionnalité permettant la prise de rendez-vous autonome pour
 
 La fonctionnalité fonctionne de la manière suivante :
 
-1. Click sur le créneau horaire depuis l'affichage mensuelle
+1. Click sur le créneau horaire depuis l'affichage mensuel
 2. Click sur le créneau horaire depuis l'affichage journalier ou hebdomadaire
-3. Si le client est authentifié, affichage de la fenêtre modale si-dessus, si se n'est pas le cas, une erreur est affiché afin de signaler à l'utilisateur qu'il doit se connecter
+3. Si le client est authentifié, affichage de la fenêtre modale ci-dessus, si ce n'est pas le cas, une erreur est affichée afin de signaler à l'utilisateur qu'il doit se connecter
 4. Affichage des informations du rendez-vous dans la fenêtre modale
 5. Click sur le bouton "Réserver le rendez-vous" afin de valider la création et appeler l'endpoint `POST api/v1/appointments`
 
-Ajout de la fonctionnalité permettant aux éducateurs canins de supprimer des rendez-vous depuis la page affichant les rendez-vous d'un client en utilisant l'endpoint `DELETE api/v1/appointments/{idAppointment}.
+Ajout de la fonctionnalité permettant aux éducateurs canins de supprimer des rendez-vous depuis la page affichant les rendez-vous d'un client en utilisant l'endpoint `DELETE api/v1/appointments/{idAppointment}`.
 
-Ajout d'une fonctionnalité permettant de supprimer la date de fin d'un calendrier hebdomadaire lors de sa création afin de permettre la création d'un calendrier hebdomadaire permanant.
+Ajout d'une fonctionnalité permettant de supprimer la date de fin d'un calendrier hebdomadaire lors de sa création afin de permettre la création d'un calendrier hebdomadaire permanent.
 
 ### Mercredi 02 juin 2021
 
-Création de la fonctionnalité permettant de générer un fichier ICS afin de l'envoyer dans l'e-mail d'avertissement de création de rendez-vous. Un fichier ICS est une format de fichier pour iCalendar. Ces fichiers ayant comme extension `.ics` permettent d'importer dans un calendrier des données de calendrier. Ce format étant une norme internationale, de nombreux calendrier numériques telle que les calendriers de Microsoft, Google et Apple sont capable de supporter ce format de fichier.
+Création de la fonctionnalité permettant de générer un fichier ICS afin de l'envoyer dans l'e-mail d'avertissement de création de rendez-vous. Un fichier ICS est un format de fichier pour iCalendar. Ces fichiers ayant comme extension `.ics` permettent d'importer dans un calendrier des données de calendrier. Ce format étant une norme internationale, de nombreux calendriers numériques tels que les calendriers de Microsoft, Google et Apple sont capables de supporter ce format de fichier.
 
-Pour générer ce fichier, je procède de la même manière que la création de conditions d'inscription avec Dompdf. C'est à dire qu'une fois la création du rendez-vous effectué, je vais effectuer les étapes suivantes : 
+Pour générer ce fichier, je procède de la même manière que la création des conditions d'inscription avec Dompdf. C'est-à-dire qu'une fois la création du rendez-vous effectué, je vais effectuer les étapes suivantes : 
 
 1. Générer le template PHP `ICS_appointment.php` ci-dessous grâce à une temporisation de sortie afin d'y rentrer les différentes variables du rendez-vous.
-   Les explications de de chaque propriétés sont disponible dans le [RFC2445](https://www.ietf.org/rfc/rfc2445.txt)
+   Les explications de chaque propriétés sont disponibles dans le [RFC2445](https://www.ietf.org/rfc/rfc2445.txt)
 ```php
 header('Content-type: text/calendar; charset=utf-8');
 header('Content-Disposition: attachment; filename=' . $filename);
@@ -1894,32 +1894,32 @@ END:VCALENDAR";
 ```
 2. Récupération du contenu de la temporisation
 3. Création d'un fichier temporaire `.ics` avec le contenu du tampon
-4. Envoie de ce fichier par e-mail au client avec PHPMailer
+4. Envoi de ce fichier par e-mail au client avec PHPMailer
 5. Suppression du fichier temporaire
 
 Rendez-vous GMeet avec le client du projet, soit M. Gourdoux, afin de réaliser une démonstration et récolter ses remarques ou commentaires.
-Dans l'ensemble, M. Gourdoux est satisfait du projet, il est très content que celui-ci représente bien les éléments présent dans le cahier des charges. Il trouve également que l'application WEB est très épurée et que celle-ci va droit au but. En effet, d'après lui, l'application n'affiche pas plein d'éléments superflus mais affiche uniquement les éléments essentiels rendant celle-ci sobre et efficace. Ces commentaires m'ont fait énormément plaisir !
+Dans l'ensemble, M. Gourdoux est satisfait du projet, il est très content que celui-ci représente bien les éléments présents dans le cahier des charges. Il trouve également que l'application WEB est très épurée et que celle-ci va droit au but. En effet, d'après lui, l'application n'affiche pas plein d'éléments superflus mais affiche uniquement les éléments essentiels rendant celle-ci sobre et efficace. Ces commentaires m'ont fait énormément plaisir !
 
-Il en tout de même profité pour me faire deux commentaires. Le premier est par rapport à l'interface utilisateur. En effet. M. Gourdoux ma demander si il était possible de mieux guider l'utilisateur non authentifié lors de la prise de rendez-vous autonome. En effet, jusqu'à là, l'application affiche uniquement une notification afin de prévenir l'utilisateur qu'il doit se connecter. M. Gourdoux souhaiterez qu'un message et une redirection soit disponible afin de permettre à l'utilisateur non authentifié de se connecter ou s'inscrire.
+Il en tout de même profité pour me faire deux commentaires. Le premier est par rapport à l'interface utilisateur. En effet, M. Gourdoux m'a demandé s'il était possible de mieux guider l'utilisateur non authentifié lors de la prise de rendez-vous autonome. En effet, jusque là, l'application affiche uniquement une notification afin de prévenir l'utilisateur qu'il doit se connecter. M. Gourdoux souhaiterait qu'un message et une redirection soient disponibles afin de permettre à l'utilisateur non authentifié de se connecter ou s'inscrire.
 
-Le deuxième est par rapport à la fonctionnalité de prise de rendez-vous pour l'éducateur canin en cours de développement. En effet, lors de la démonstration, M. Gourdoux m'a posé une question très pertinente : Est-il possible que l'éducateur canin puisse planifier un rendez-vous avec un client quant-il le souhaite sans passer par la vérification du planning ? En effet, la question est intéressante car la vérification de planning sert principalement pour la prise de rendez-vous autonome et non pour l'éducateur canin. Car comme expliqué par M.Gourdoux, il est très fréquent que lors des rendez-vous entre le client et l'éducateur canin, ceux-ci planifie le ou les futurs rendez-vous ensemble. N'ayant pas penser à cette possibilité lors du développement de mon backend, je compte me pencher sur la problématique dans le but de réaliser ou modifier un endpoint afin de permettre aux éducateurs canins de planifier leurs rendez-vous quant-ils le désire.
+Le deuxième est par rapport à la fonctionnalité de prise de rendez-vous pour l'éducateur canin en cours de développement. En effet, lors de la démonstration, M. Gourdoux m'a posé une question très pertinente : est-il possible que l'éducateur canin puisse planifier un rendez-vous avec un client quand il le souhaite sans passer par la vérification du planning ? En effet, la question est intéressante car la vérification de planning sert principalement pour la prise de rendez-vous autonome et non pour l'éducateur canin. Car comme expliqué par M. Gourdoux, il est très fréquent que lors des rendez-vous entre le client et l'éducateur canin, ceux-ci planifient le ou les futurs rendez-vous ensemble. N'ayant pas pensé à cette possibilité lors du développement de mon backend, je compte me pencher sur la problématique dans le but de réaliser ou modifier un endpoint afin de permettre aux éducateurs canins de planifier leurs rendez-vous quand ils le désirent.
 
 ### Jeudi 03 juin 2021
 
 Modification de l'interface utilisateur de la prise de rendez-vous autonome afin de répondre à la demande du client.
 
-Modification de l'endpoint `POST api/v1/appointments` afin que son contrôleur effectue la vérification de planning uniquement quand l'utilisateur utilisant l'endpoint est un client et non un éducateur canin. Cette modification permet maintenant aux éducateurs canins de planifier des rendez-vous quant il le désire.
+Modification de l'endpoint `POST api/v1/appointments` afin que son contrôleur effectue la vérification de planning uniquement quand l'utilisateur utilisant l'endpoint est un client et non un éducateur canin. Cette modification permet maintenant aux éducateurs canins de planifier des rendez-vous quand ils le désirent.
 
 Création de la fonctionnalité de planification de rendez-vous pour l'éducateur canin authentifié. Dorénavant, celui-ci peut planifier un rendez-vous avec un client de la société depuis la page "Mes rendez-vous". Pour ce faire, appel de l'endpoint `POST api/v1/appointments` précédemment modifié afin de ne pas passer par la vérification de planning lorsque c'est un éducateur canin qui planifie le rendez-vous.
 
 ![dateTestPlanningSecondUser](./img/vue_addappointmentforeducator.PNG)
 
-Exécution de tous les tests unitaires de l'API REST et réglage d'un petit problème lors de l'endpoint `POST api/v1/weeklySchedules` qui vérifiait le chevauchement  de tous les calendriers hebdomadaire de tous les éducateurs canins et non seulement ceux de l'éducateur canin authentifié. Il y avait en effet un problème dans la requête SQL de vérification de chevauchement.
+Exécution de tous les tests unitaires de l'API REST et réglage d'un petit problème lors de l'endpoint `POST api/v1/weeklySchedules` qui vérifiait le chevauchement  de tous les calendriers hebdomadaires de tous les éducateurs canins et non seulement ceux de l'éducateur canin authentifié. Il y avait en effet un problème dans la requête SQL de vérification de chevauchement.
 
-Ajout d'un plugin pour le gestionnaire d'état de vue `Vuex` permettant de faire persister l'état de l'application lors de rafraichissement de page.
+Ajout d'un plugin pour le gestionnaire d'état de vue `Vuex` permettant de faire persister l'état de l'application lors du rafraichissement de la page.
 Plugin : [vuex-persistedstate](https://github.com/robinvdvleuten/vuex-persistedstate)
 
-Réalisation des test unitaires réalisable avec Katalon Recorder. Katalon Recorder est une extension chrome permettant d'enregistrer des actions utilisateurs dans des applications WEB afin de générer des scripts de test. Katalon Recorder permet de lancer séquentiellement une suite d'action, comme des click, des saisies de données, etc... Par exemple, pour tester que la fonctionnalité de connexion d'un client fonctionne bien, j'ai réalisé les étapes suivante dans mon script de test : 
+Réalisation des tests unitaires réalisables avec Katalon Recorder. Katalon Recorder est une extension chrome permettant d'enregistrer des actions utilisateurs dans des applications WEB afin de générer des scripts de test. Katalon Recorder permet de lancer séquentiellement une suite d'action, comme des click, des saisies de données, etc... Par exemple, pour tester que la fonctionnalité de connexion d'un client fonctionne bien, j'ai réalisé les étapes suivantes dans mon script de test : 
 
 | Connexion   |                                                              |                                     |
 | ----------- | ------------------------------------------------------------ | ----------------------------------- |
@@ -1943,7 +1943,7 @@ Réalisation des test unitaires réalisable avec Katalon Recorder. Katalon Recor
 Les tests unitaires avec Katalon qui ont été réalisés sont :
 
 * Éducateur canin
-  * Connexion
+  * Connection
   * Modification of password
   * Add a client
   * Modification of user informations
@@ -1957,19 +1957,19 @@ Les tests unitaires avec Katalon qui ont été réalisés sont :
   * Schedule an appointment
   * Add textual notes and summary for client's appointment
   * Delete an appointment
-  * Deconnexion
+  * Disconnection
 * Client
-  * Connexion
+  * Connection
   * Modification of password
   * Schedule an appointment
 
-Je n'ai pas réalisé la totalité des des actions possible de mon application car Katalon Recorder ne le permet pas. Comme le téléchargement de document par exemple.
+Je n'ai pas réalisé la totalité des actions possibles de mon application car Katalon Recorder ne le permet pas. Comme le téléchargement de document par exemple.
 
-Modification de l'endpoint `GET api/v1/users/educators` afin que celui-ci retourne pas les données "sensibles" comme l'adresse e-mail, le numéro de téléphone et l'adresse du domicile.
+Modification de l'endpoint `GET api/v1/users/educators` afin que celui-ci ne retourne pas les données "sensibles" comme l'adresse e-mail, le numéro de téléphone et l'adresse du domicile.
 
 Génération de la documentation de l'API REST avec [phpDocumentor](https://www.phpdoc.org/).
 
-Modification de la requête de génération de planning ainsi que de la vérification de planning afin que celles-ci récupèrent uniquement l'exception d'horaire lorsque celle-ci à la même date qu'une date généré par un calendrier hebdomadaire. En effet, avant cette modification, l'ajout d'une exception d'horaire permettait uniquement d'ajouter un créneau horaire pour un jour spécifique en prenant tout de même en compte les créneaux horaires d'un calendrier hebdomadaire. Dorénavant, l'ajout d'une exception d'horaire permet de ne pas prendre en compte les créneaux horaires du calendrier hebdomadaire propriétaire.
+Modification de la requête de génération de planning ainsi que de la vérification de planning afin que celles-ci récupèrent uniquement l'exception d'horaire lorsque cette dernière à la même date qu'une date générée par un calendrier hebdomadaire. En effet, avant cette modification, l'ajout d'une exception d'horaire permettait uniquement d'ajouter un créneau horaire pour un jour spécifique en prenant tout de même en compte les créneaux horaires d'un calendrier hebdomadaire. Dorénavant, l'ajout d'une exception d'horaire permet de ne pas prendre en compte les créneaux horaires du calendrier hebdomadaire propriétaire.
 
 Ancien fonctionnement : 
 
@@ -1981,20 +1981,20 @@ Nouveau fonctionnement :
 
 Réalisation d'un script permettant de générer beaucoup de données de planning pour des éducateurs canins. L'objectif de cette génération est de tester ma requête de récupération de planning. Les données que j'insère sont les suivantes :
 
-* 100 000 utilisateur
+* 100 000 utilisateurs
 * Pour chacun de ces utilisateurs, création d'un calendrier hebdomadaire avec 10 créneaux horaires par jour pour le mois de juillet (2021-07-01 au 2021-07-31)
 * Pour chacun de ces utilisateurs, création d'une exception d'horaire avec 5 créneaux horaires le 15 juillet (2021-07-15)
 * Pour chacun de ces utilisateurs, création de vacances pour la dernière semaine de juillet (2021-07-26 au 2021-07-31)
 * Pour chacun de ces utilisateurs, création d'un rendez-vous (2021-07-15 08:00:00)  
 
-Exécution de la requête de génération de planning de l'endpoint `GET api/v1/plannings/{idEducator}`sur Workbench. Celle-ci à duré 1115 secondes et a généré un cout de requête  de 1833113. 
+Exécution de la requête de génération de planning de l'endpoint `GET api/v1/plannings/{idEducator}`sur Workbench. Celle-ci à duré 1115 secondes et a généré un coût de requête  de 1833113. 
 
 ![dateTestPlanningSecondUser](./explain/explain05_06_21.png)
 
 ### Dimanche 06 juin 2021
 
 Réalisation de la documentation technique de l'application WEB. Pour ce qui est de la documentation technique, il reste encore à parler de la requête de génération de planning.
-Réalisation des maquettes effectifs dans le rapport. Pour ce qui est du rapport, il reste encore la conclusion à développer.
+Réalisation des maquettes effectives dans le rapport. Pour ce qui est du rapport, il reste encore la conclusion à développer.
 
 Pour résumer les points qu'il me reste à documenter sont :
 
@@ -2006,11 +2006,11 @@ Pour résumer les points qu'il me reste à documenter sont :
 
 Début de réalisation du manuel utilisateur.
 
-Discussion avec David Paulino. Celui-ci m'a fait remarquer qu'il manquait la fonctionnalité de vérification d'adresse e-mail lors de la création de compte par un client. Il m'a expliqué comment réaliser cette fonctionnalité :
+Discussion avec David Paulino. Celui-ci m'a fait remarqué qu'il manquait la fonctionnalité de vérification d'adresse e-mail lors de la création de compte par un client. Il m'a expliqué comment réaliser cette fonctionnalité :
 
-Création de deux champs dans la table user de la base de données
+Création de deux champs dans la table user de la base de données :
 
 1. isValidated : Boolean
 2. challenge : Une chaine de charactère généré aléatoirement de type string
 
-Lors de la création de compte par un utilisateur, l'utilisateur recevra un e-mail avec un lien contenant son identifiant ainsi ainsi que son "challenge". Lors du click sur ce lien comme par exemple `https://douceurdechien.ch/validate?userId=12&challenge=AKu689M2`, une requête HTTP sera envoyé au serveur permettant à l'utilisateur d'accéder à son compte. Cette fonctionnalité permet de m'assurer que le client n'a pas spécifié une adresse e-mail invalide et également démotivé les personnes malveillantes voulant surcharger ma base de données. Je compte ajouter cette fonctionnalité si j'ai le temps, sinon j'en parlerais dans les améliorations possibles de mon rapport.
+Lors de la création de compte par un utilisateur, l'utilisateur recevra un e-mail avec un lien contenant son identifiant ainsi que son "challenge". Lors du click sur ce lien, comme par exemple `https://douceurdechien.ch/validate?userId=12&challenge=AKu689M2`, une requête HTTP sera envoyée au serveur permettant à l'utilisateur d'accéder à son compte. Cette fonctionnalité permettra de m'assurer que le client n'a pas spécifié une adresse e-mail invalide et également de démotiver les personnes malveillantes voulant surcharger ma base de données. Je compte ajouter cette fonctionnalité si j'ai le temps, sinon j'en parlerai dans les améliorations possibles de mon rapport.

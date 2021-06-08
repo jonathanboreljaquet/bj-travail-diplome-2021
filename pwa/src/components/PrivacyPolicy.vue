@@ -1,3 +1,11 @@
+<!--
+  PrivacyPolicy.vue
+
+  Component representing the privacy policies of the application.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div class="content">
     <b-container>

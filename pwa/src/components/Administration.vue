@@ -1,3 +1,11 @@
+<!--
+  Administration.vue
+
+  Component representing the administration page of the canine educator of the application.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div>
     <b-container>
@@ -46,23 +54,23 @@
         </b-col>
       </b-row>
       <b-pagination
-        v-model="currentPage"
+        v-model="btableOptions.currentPage"
         align="fill"
         size="sm"
         class="my-0"
-        :total-rows="totalRows"
+        :total-rows="totalRowsPagination"
       ></b-pagination>
       <b-table
         ref="tableuser"
-        :items="items"
+        :items="btableOptions.items"
         :busy="isBusy"
-        :fields="fields"
-        :sort-by.sync="sortBy"
-        :sort-desc.sync="sortDesc"
+        :fields="btableOptions.fields"
+        :sort-by.sync="btableOptions.sortBy"
+        :sort-desc.sync="btableOptions.sortDesc"
         :filter="filter"
         :filter-included-fields="filterOn"
         :perPage="10"
-        :current-page="currentPage"
+        :current-page="btableOptions.currentPage"
         sort-icon-left
         striped
         responsive="sm"
@@ -260,6 +268,8 @@
 
 <script>
 import { BIconPencilSquare } from "bootstrap-vue";
+// @vuese
+// Component representing the administration page of the canine educator of the application.
 export default {
   components: {
     BIconPencilSquare,
@@ -267,20 +277,18 @@ export default {
   name: "Administration",
   data() {
     return {
-      sortBy: "nom",
-      sortDesc: false,
-      fields: [
-        { key: "nom", sortable: true },
-        { key: "prenom", sortable: true },
-        { key: "chiens", sortable: false },
-        { key: "edition", sortable: false },
-      ],
-      items: [],
-      filter: null,
-      filterOn: ["nom", "prenom"],
-      isBusy: true,
-      currentPage: 1,
-      totalRows: 1,
+      btableOptions: {
+        sortBy: "nom",
+        sortDesc: false,
+        fields: [
+          { key: "nom", sortable: true },
+          { key: "prenom", sortable: true },
+          { key: "chiens", sortable: false },
+          { key: "edition", sortable: false },
+        ],
+        items: [],
+        currentPage: 1,
+      },
       formAddClient: {
         email: "",
         firstname: "",
@@ -292,9 +300,17 @@ export default {
         password: "",
         repeatPassword: "",
       },
+      filter: null,
+      filterOn: ["nom", "prenom"],
+      isBusy: true,
+      totalRowsPagination: 1,
     };
   },
   methods: {
+    /**
+     * Method to load all customers with their dogs from the api rest endpoint "GET api/v1/users".
+     *
+     */
     loadCustomersWithDogs() {
       const config = {
         headers: {
@@ -305,21 +321,30 @@ export default {
       this.$http
         .get(this.$API_URL + "users/", config)
         .then((response) => {
-          this.items = [];
+          this.btableOptions.items = [];
           response.data.forEach((user) => {
             user["prenom"] = user["firstname"];
             delete user["firstname"];
             user["nom"] = user["lastname"];
             delete user["lastname"];
           });
-          this.items = response.data;
+          this.btableOptions.items = response.data;
           this.toggleBusy();
-          this.totalRows = this.items.length + 10;
+          this.totalRowsPagination = this.btableOptions.items.length + 10;
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to create a user with the api rest endpoint "POST api/v1/users".
+     *
+     * @param {string} email The user's email address
+     * @param {string} firstname The user's first name
+     * @param {string} lastname The user's last name
+     * @param {string} phonenumber The user's phonenumber
+     * @param {string} address The user's address
+     */
     createUser(email, firstname, lastname, phonenumber, address) {
       const params = new URLSearchParams();
       params.append("email", email);
@@ -345,6 +370,12 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to change the password of the authenticated user with the api rest endpoint "POST api/v1/users/me/changePassword".
+     *
+     * @param {string} password The new password
+     * @param {string} repeatPassword Repetition of the new password
+     */
     updateAuthCustomerPassword(password, repeatPassword) {
       if (password != repeatPassword) {
         this.$alertify.error("les mots de passes ne corréspondent pas");

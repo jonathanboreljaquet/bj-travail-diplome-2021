@@ -1,3 +1,11 @@
+<!--
+  CustomerInformation.vue
+
+  Component representing the personal information page of a client.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div>
     <b-container>

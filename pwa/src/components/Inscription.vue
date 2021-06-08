@@ -1,3 +1,11 @@
+<!--
+  Inscription.vue
+
+  Component representing the inscription page of the application.
+
+  Jonathan Borel-Jaquet - CFPT / T.IS-ES2 <jonathan.brljq@eduge.ch>
+-->
+
 <template>
   <div class="content">
     <b-container>
