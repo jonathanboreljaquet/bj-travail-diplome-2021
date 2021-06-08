@@ -195,10 +195,14 @@ export default {
     };
   },
   methods: {
+    /**
+     * Method to load all the appointments of the authenticated dog educator
+     * from the api rest endpoint "GET api/v1/appointments".
+     *
+     */
     loadEducatorAppointments() {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
       };
@@ -225,10 +229,13 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to load all customers from the api rest endpoint "GET api/v1/users".
+     *
+     */
     loadCustomers() {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
       };
@@ -242,6 +249,15 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to create an appointment with the api rest endpoint "POST api/v1/appointments".
+     *
+     * @param {string} date The date of the appointment
+     * @param {string} timestart The time start of the appointment
+     * @param {number} durationInHour The duration in hour of the appointment
+     * @param {number} user_id_customer The customer's identifier
+     * @param {number} user_id_educator The dog educator's identifier
+     */
     createAppointment(
       date,
       timestart,
@@ -256,7 +272,6 @@ export default {
       params.append("user_id_educator", user_id_educator);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };

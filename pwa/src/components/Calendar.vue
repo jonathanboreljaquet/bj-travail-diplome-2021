@@ -19,7 +19,7 @@
           <b-form-group label="Éducateur canin :">
             <b-form-select
               id="educatorSelect"
-              v-model="selected"
+              v-model="idEducatorSelected"
               @change="onChange()"
             >
               <b-form-select-option
@@ -159,24 +159,33 @@ export default {
         eventClick: this.handleDateClick,
       },
       selectedAppointment: {
-        datetime: null,
-        startHour: null,
-        endHour: null,
+        datetime: "",
+        startHour: "",
+        endHour: "",
         durationInHour: null,
         idEducator: null,
       },
-      selected: null,
+      idEducatorSelected: null,
       educators: [],
     };
   },
   methods: {
+    /**
+     * Method to load all educators from the api rest endpoint "GET api/v1/users/educators".
+     *
+     */
     loadEducators() {
       this.$http.get(this.$API_URL + "users/educators/").then((response) => {
         this.educators = response.data;
-        this.selected = this.educators[0].id;
-        this.loadEducatorPlanning(this.selected);
+        this.idEducatorSelected = this.educators[0].id;
+        this.loadEducatorPlanning(this.idEducatorSelected);
       });
     },
+    /**
+     * Method to load all the time slots of an educator from his id from the api rest endpoint "GET api/v1/plannings/{idEducator}".
+     *
+     * @param {number} idEducator The dog educator's id
+     */
     loadEducatorPlanning(idEducator) {
       this.$http
         .get(this.$API_URL + "plannings/" + idEducator)
@@ -197,6 +206,11 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method called when clicking on a time slot in the calendar to redirect the user to the daily overview and open the modal for creating appointments.
+     *
+     * @param {number} info The object of FullCalendar
+     */
     handleDateClick: function (info) {
       {
         let calendarApi = this.$refs.fullCalendar.getApi();
@@ -228,6 +242,14 @@ export default {
         }
       }
     },
+    /**
+     * Method to create an appointment with the api rest endpoint "POST api/v1/appointments".
+     *
+     * @param {string} datetime The datetime of the appointment
+     * @param {number} durationInHour The duration in hours of the appointment
+     * @param {number} user_id_customer The customer's identifier
+     * @param {number} user_id_educator The dog educator's identifier
+     */
     createAppointment(
       datetime,
       durationInHour,
@@ -241,7 +263,6 @@ export default {
       params.append("user_id_educator", user_id_educator);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
@@ -251,27 +272,31 @@ export default {
           console.log(response);
           this.$alertify.success("Rendez-vous reservé avec succès");
           this.$bvModal.hide("modal-create-appointment");
-          this.loadEducatorPlanning(this.selected);
+          this.loadEducatorPlanning(this.idEducatorSelected);
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to load another calendar when changing the selection of a dog educator
+     *
+     */
     onChange() {
-      this.loadEducatorPlanning(this.selected);
+      this.loadEducatorPlanning(this.idEducatorSelected);
     },
     sendAppointmentInformations(
-      appointmentdatetime,
-      appointmentStartHour,
-      appointmentEndHour,
-      appointmentDurationInHour,
-      appointmentIdEducator
+      datetime,
+      startHour,
+      endHour,
+      durationInHour,
+      idEducator
     ) {
-      this.selectedAppointment.datetime = appointmentdatetime;
-      this.selectedAppointment.startHour = appointmentStartHour;
-      this.selectedAppointment.endHour = appointmentEndHour;
-      this.selectedAppointment.durationInHour = appointmentDurationInHour;
-      this.selectedAppointment.idEducator = appointmentIdEducator;
+      this.selectedAppointment.datetime = datetime;
+      this.selectedAppointment.startHour = startHour;
+      this.selectedAppointment.endHour = endHour;
+      this.selectedAppointment.durationInHour = durationInHour;
+      this.selectedAppointment.idEducator = idEducator;
     },
   },
   mounted() {

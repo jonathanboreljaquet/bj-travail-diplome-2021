@@ -24,10 +24,12 @@
             style="padding: 10px; width: 100%; margin-bottom: 10px"
             img-src="./../assets/img/user-profile.png"
             img-top
-            :title="firstname"
+            :title="customer.firstname"
           >
-            <p class="text-secondary mb-1" v-if="code_role == '1'">Client</p>
-            <p class="text-secondary mb-1">{{ address }}</p>
+            <p class="text-secondary mb-1" v-if="customer.code_role == '1'">
+              Client
+            </p>
+            <p class="text-secondary mb-1">{{ customer.address }}</p>
             <div v-if="authCustomer">
               <b-button
                 id="btnUpdatePassword"
@@ -81,10 +83,10 @@
           </b-card>
 
           <b-card
-            v-if="documents.length > 0"
+            v-if="customer.documents.length > 0"
             style="padding: 10px; width: 100%"
           >
-            <div v-for="document in documents" :key="document.id">
+            <div v-for="document in customer.documents" :key="document.id">
               <b-row style="text-align: center; margin-top: 10px">
                 <b-col>
                   <b-button
@@ -124,7 +126,7 @@
                 <h6 class="mb-0">Nom complet</h6>
               </b-col>
               <b-col sm="9" class="text-secondary">
-                {{ firstname }} {{ lastname }}
+                {{ customer.firstname }} {{ customer.lastname }}
               </b-col>
             </b-row>
             <hr />
@@ -132,21 +134,25 @@
               <b-col sm="3">
                 <h6 class="mb-0">Adresse e-mail</h6>
               </b-col>
-              <b-col sm="9" class="text-secondary">{{ email }}</b-col>
+              <b-col sm="9" class="text-secondary">{{ customer.email }}</b-col>
             </b-row>
             <hr />
             <b-row>
               <b-col sm="3">
                 <h6 class="mb-0">Numéro de téléphone</h6>
               </b-col>
-              <b-col sm="9" class="text-secondary">{{ phonenumber }}</b-col>
+              <b-col sm="9" class="text-secondary">{{
+                customer.phonenumber
+              }}</b-col>
             </b-row>
             <hr />
             <b-row>
               <b-col sm="3">
                 <h6 class="mb-0">Adresse de domicile</h6>
               </b-col>
-              <b-col sm="9" class="text-secondary">{{ address }}</b-col>
+              <b-col sm="9" class="text-secondary">{{
+                customer.address
+              }}</b-col>
             </b-row>
             <div v-if="authAdministrator">
               <hr />
@@ -161,7 +167,7 @@
             </div>
           </b-card>
           <b-row>
-            <b-col md="6" v-for="dog in dogs" :key="dog.id">
+            <b-col md="6" v-for="dog in customer.dogs" :key="dog.id">
               <b-card style="margin-bottom: 10px">
                 <b-row no-gutters>
                   <b-col md="12">
@@ -313,7 +319,7 @@
             <b-form-select
               id="input-dog-sex"
               v-model="addDogForm.sex"
-              :options="sex"
+              :options="sexDogOptions"
               required
             ></b-form-select>
           </b-form-group>
@@ -345,7 +351,7 @@
       >
         <b-form
           @submit.prevent="
-            uploadDogPictureByDogId(selectedDogId, dogPictureFile)
+            uploadDogPictureByDogId(selectedDog.id, selectedDog.pictureFile)
           "
         >
           <b-form-group
@@ -355,7 +361,7 @@
           >
             <b-form-file
               required
-              v-model="dogPictureFile"
+              v-model="selectedDog.pictureFile"
               accept="image/jpeg, image/png"
               placeholder="Aucun fichier choisi"
               browse-text="Ajouter"
@@ -384,7 +390,7 @@
               addDocumentForm.type,
               signatureBase64,
               addDocumentForm.packageNumber,
-              documentFile
+              addDocumentForm.file
             )
           "
         >
@@ -396,7 +402,7 @@
             <b-form-select
               id="input-document-type"
               v-model="addDocumentForm.type"
-              :options="documentTypes"
+              :options="documentOptions"
               required
             ></b-form-select>
           </b-form-group>
@@ -444,7 +450,7 @@
             >
               <b-form-file
                 required
-                v-model="documentFile"
+                v-model="addDocumentForm.file"
                 placeholder="Aucun fichier choisi"
                 browse-text="Ajouter"
                 id="input-document-file"
@@ -492,7 +498,7 @@
         :hide-header="true"
       >
         <h5 style="text-align: center">Supprimer le document ?</h5>
-        <b-form @submit.prevent="deleteDocumentById(selectedDocumentId)">
+        <b-form @submit.prevent="deleteDocumentById(selectedDocument.id)">
           <b-row>
             <b-col>
               <b-button
@@ -525,7 +531,7 @@
         :hide-header="true"
       >
         <h5 style="text-align: center">Supprimer le chien ?</h5>
-        <b-form @submit.prevent="deleteDogById(selectedDogId)">
+        <b-form @submit.prevent="deleteDogById(selectedDog.id)">
           <b-row>
             <b-col>
               <b-button
@@ -560,11 +566,11 @@
           @submit.prevent="
             updateUserById(
               $route.params.userId,
-              firstname,
-              lastname,
-              email,
-              phonenumber,
-              address
+              customer.firstname,
+              customer.lastname,
+              customer.email,
+              customer.phonenumber,
+              customer.address
             )
           "
         >
@@ -575,7 +581,7 @@
           >
             <b-form-input
               id="input-user-firstname"
-              v-model="firstname"
+              v-model="customer.firstname"
               type="text"
               placeholder="Entrez le prénom de l'utilisateur"
               required
@@ -589,7 +595,7 @@
           >
             <b-form-input
               id="input-user-lastname"
-              v-model="lastname"
+              v-model="customer.lastname"
               type="text"
               placeholder="Entrez la nom de l'utilisateur"
               required
@@ -603,7 +609,7 @@
           >
             <b-form-input
               id="input-user-email"
-              v-model="email"
+              v-model="customer.email"
               type="email"
               placeholder="Entrez l'adresse e-mail de l'utilisateur"
               required
@@ -617,7 +623,7 @@
           >
             <b-form-input
               id="input-user-phonenumber"
-              v-model="phonenumber"
+              v-model="customer.phonenumber"
               type="text"
               placeholder="Entrez le numéro de téléphone de l'utilisateur"
               required
@@ -631,7 +637,7 @@
           >
             <b-form-input
               id="input-user-address"
-              v-model="address"
+              v-model="customer.address"
               type="text"
               placeholder="Entrez l'adresse de domicile de l'utilisateur"
               required
@@ -653,11 +659,11 @@
         <b-form
           @submit.prevent="
             updateDogById(
-              selectedDogId,
-              selectedDogName,
-              selectedDogBreed,
-              selectedDogSex,
-              selectedDogChipId
+              selectedDog.id,
+              selectedDog.name,
+              selectedDog.breed,
+              selectedDog.sex,
+              selectedDog.chipId
             )
           "
         >
@@ -668,7 +674,7 @@
           >
             <b-form-input
               id="input-dog-name"
-              v-model="selectedDogName"
+              v-model="selectedDog.name"
               type="text"
               placeholder="Entrez le nom du chien"
               required
@@ -682,7 +688,7 @@
           >
             <b-form-input
               id="input-dog-breed"
-              v-model="selectedDogBreed"
+              v-model="selectedDog.breed"
               type="text"
               placeholder="Entrez la race du chien"
               required
@@ -696,8 +702,8 @@
           >
             <b-form-select
               id="input-dog-sex"
-              v-model="selectedDogSex"
-              :options="sex"
+              v-model="selectedDog.sex"
+              :options="sexDogOptions"
               required
             ></b-form-select>
           </b-form-group>
@@ -709,7 +715,7 @@
           >
             <b-form-input
               id="input-dog-chip-id"
-              v-model="selectedDogChipId"
+              v-model="selectedDog.chipId"
               type="text"
               placeholder="Entrez le numéro de puce du chien"
               required
@@ -782,38 +788,41 @@ export default {
   data() {
     return {
       title: null,
-      id: null,
-      email: null,
-      firstname: null,
-      lastname: null,
-      phonenumber: null,
-      api_token: null,
-      address: null,
-      code_role: null,
-      password: null,
-      repeatPassword: null,
-      dogs: [],
-      documents: [],
+      customer: {
+        id: "",
+        email: "",
+        firstname: "",
+        lastname: "",
+        phonenumber: "",
+        address: "",
+        code_role: null,
+        dogs: [],
+        documents: [],
+      },
       addDogForm: {
         name: "",
         breed: "",
         sex: "Mâle",
         chip_id: "",
+        pictureFile: null,
       },
-      selectedDogId: null,
-      selectedDogName: null,
-      selectedDogBreed: null,
-      selectedDogSex: null,
-      selectedDogChipId: null,
-      selectedDocumentId: null,
-      dogPictureFile: null,
-      sex: ["Mâle", "Femelle"],
-      documentFile: null,
+      selectedDog: {
+        id: null,
+        name: "",
+        breed: "",
+        sex: "",
+        chipId: "",
+      },
+      sexDogOptions: ["Mâle", "Femelle"],
+      selectedDocument: {
+        id: null,
+      },
       addDocumentForm: {
         type: "poster",
         packageNumber: 1,
+        file: null,
       },
-      documentTypes: [
+      documentOptions: [
         { value: "poster", text: "Document pdf" },
         { value: "conditions_inscription", text: "Conditions d'inscription" },
       ],
@@ -828,37 +837,46 @@ export default {
       signatureIsBlocked: false,
       checkboxValidationStatus: false,
       createConditionsButtonisDisabled: true,
+      password: null,
+      repeatPassword: null,
     };
   },
   methods: {
+    /**
+     * Method to load all informations of the authenticated client from the api rest endpoint "GET api/v1/users/me".
+     *
+     */
     loadAuthCustomerInformations() {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
       };
       this.$http
         .get(this.$API_URL + "users/me/", config)
         .then((response) => {
-          this.id = response.data.id;
-          this.email = response.data.email;
-          this.firstname = response.data.firstname;
-          this.lastname = response.data.lastname;
-          this.phonenumber = response.data.phonenumber;
-          this.address = response.data.address;
-          this.code_role = response.data.code_role;
-          this.dogs = response.data.dogs;
-          this.documents = response.data.documents;
+          this.customer.id = response.data.id;
+          this.customer.email = response.data.email;
+          this.customer.firstname = response.data.firstname;
+          this.customer.lastname = response.data.lastname;
+          this.customer.phonenumber = response.data.phonenumber;
+          this.customer.address = response.data.address;
+          this.customer.code_role = response.data.code_role;
+          this.customer.dogs = response.data.dogs;
+          this.customer.documents = response.data.documents;
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to load all informations of a client from his id from the api rest endpoint "GET api/v1/users/{userId}"
+     *
+     * @param {number} userId The client's id
+     */
     loadCustomerInformationsByUserId(userId) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
       };
@@ -866,30 +884,38 @@ export default {
         .get(this.$API_URL + "users/" + userId, config)
         .then((response) => {
           console.log(response);
-          this.id = response.data.id;
-          this.email = response.data.email;
-          this.firstname = response.data.firstname;
-          this.lastname = response.data.lastname;
-          this.phonenumber = response.data.phonenumber;
-          this.address = response.data.address;
-          this.code_role = response.data.code_role;
-          this.dogs = response.data.dogs;
-          this.documents = response.data.documents;
+          this.customer.id = response.data.id;
+          this.customer.email = response.data.email;
+          this.customer.firstname = response.data.firstname;
+          this.customer.lastname = response.data.lastname;
+          this.customer.phonenumber = response.data.phonenumber;
+          this.customer.address = response.data.address;
+          this.customer.code_role = response.data.code_role;
+          this.customer.dogs = response.data.dogs;
+          this.customer.documents = response.data.documents;
         })
         .catch((error) => {
           this.$alertify.error(error.response.data.error);
         });
     },
-    createDogForCustomerByUserId(dogName, dogBreed, dogSex, dogChipId, userId) {
+    /**
+     * Method to create a dog for a user with the api rest endpoint "POST api/v1/dogs".
+     *
+     * @param {string} name The dog's name
+     * @param {string} breed The dog's breed
+     * @param {string} sex The dog's sex
+     * @param {string} chipId The dog's chip id
+     * @param {number} userId The identifier of the user owner
+     */
+    createDogForCustomerByUserId(name, breed, sex, chipId, userId) {
       const params = new URLSearchParams();
-      params.append("name", dogName);
-      params.append("breed", dogBreed);
-      params.append("sex", dogSex);
-      params.append("chip_id", dogChipId);
+      params.append("name", name);
+      params.append("breed", breed);
+      params.append("sex", sex);
+      params.append("chip_id", chipId);
       params.append("user_id", userId);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
@@ -905,13 +931,18 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    uploadDogPictureByDogId(dogId, dogPictureFile) {
+    /**
+     * Method to upload a picture dog for a dog from the api rest endpoint "POST api/v1/dogs/uploadPicture".
+     *
+     * @param {number} id The dog id
+     * @param {File} pictureFile The dog picture file
+     */
+    uploadDogPictureByDogId(id, pictureFile) {
       let formData = new FormData();
-      formData.append("dog_picture", dogPictureFile);
-      formData.append("dog_id", dogId);
+      formData.append("dog_picture", pictureFile);
+      formData.append("dog_id", id);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
       };
@@ -927,28 +958,36 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to create a document for a user from the api rest endpoint "POST api/v1/documents".
+     *
+     * @param {string} userId The user id
+     * @param {string} type The document type
+     * @param {?string} signatureBase64 The signature in base64 format for the conditions of registration
+     * @param {?number} packageNumber The package number for the conditions of registration
+     * @param {?File} file The PDF document file
+     */
     createDocumentForCustomerByUserId(
       userId,
-      documentType,
+      type,
       signatureBase64,
-      documentPackageNumber,
-      documentFile
+      packageNumber,
+      file
     ) {
       var params;
-      if (this.addDocumentForm.type == "conditions_inscription") {
+      if (type == "conditions_inscription") {
         params = new URLSearchParams();
         params.append("signature_base64", signatureBase64);
-        params.append("package_number", documentPackageNumber);
+        params.append("package_number", packageNumber);
       } else {
         params = new FormData();
-        params.append("document", documentFile);
+        params.append("document", file);
       }
-      params.append("type", documentType);
+      params.append("type", type);
       params.append("user_id", userId);
 
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
       };
@@ -964,25 +1003,27 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    downloadDocument(type, document_serial_id) {
+    /**
+     * Method to downlaod a document with the api rest endpoint "GET api/v1/documents/downloadDocument/{documentSerialId}".
+     *
+     * @param {string} type The document type
+     * @param {string} serial_id The document serial id
+     */
+    downloadDocument(type, serial_id) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
         responseType: "blob",
       };
       this.$http
-        .get(
-          this.$API_URL + "documents/downloadDocument/" + document_serial_id,
-          config
-        )
+        .get(this.$API_URL + "documents/downloadDocument/" + serial_id, config)
         .then((response) => {
           var blob = new Blob([response.data]);
           var file = window.URL.createObjectURL(blob);
           var a = document.createElement("a");
           a.href = file;
-          a.download = type + "_" + document_serial_id + ".pdf";
+          a.download = type + "_" + serial_id + ".pdf";
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
@@ -991,15 +1032,19 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteUserById(userId) {
+    /**
+     * Method to delete a user from his id from the api rest endpoint "DELETE api/v1/users/{userId}"
+     *
+     * @param {string} id The user id
+     */
+    deleteUserById(id) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
       this.$http
-        .delete(this.$API_URL + "users/" + userId, config)
+        .delete(this.$API_URL + "users/" + id, config)
         .then((response) => {
           this.$alertify.success("Utilisateur supprimé");
           this.$router.push("/administration");
@@ -1009,15 +1054,19 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteDogById(dogId) {
+    /**
+     * Method to delete a dog from his id from the api rest endpoint "DELETE api/v1/dogs/{dogId}"
+     *
+     * @param {string} id The dog id
+     */
+    deleteDogById(id) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
       this.$http
-        .delete(this.$API_URL + "dogs/" + dogId, config)
+        .delete(this.$API_URL + "dogs/" + id, config)
         .then((response) => {
           this.loadCustomerInformationsByUserId(this.$route.params.userId);
           this.$alertify.success("Chien supprimé");
@@ -1027,15 +1076,19 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteDocumentById(documentId) {
+    /**
+     * Method to delete a document from his id from the api rest endpoint "DELETE api/v1/documents/{documentId}"
+     *
+     * @param {string} id The document id
+     */
+    deleteDocumentById(id) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
       this.$http
-        .delete(this.$API_URL + "documents/" + documentId, config)
+        .delete(this.$API_URL + "documents/" + id, config)
         .then((response) => {
           this.loadCustomerInformationsByUserId(this.$route.params.userId);
           this.$alertify.success("Document supprimé");
@@ -1045,28 +1098,30 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    updateUserById(
-      userId,
-      userFirstname,
-      userLastname,
-      userEmail,
-      userPhonenumber,
-      userAddress
-    ) {
+    /**
+     * Method to update a user from his id from the api rest endpoint "PATCH api/v1/users/{userId}"
+     *
+     * @param {string} id The user id
+     * @param {string} firstname The user's first name
+     * @param {string} lastname The user's last name
+     * @param {string} email The user's email address
+     * @param {string} phonenumber The user's phonenumber
+     * @param {string} address The user's address
+     */
+    updateUserById(id, firstname, lastname, email, phonenumber, address) {
       const params = new URLSearchParams();
-      params.append("firstname", userFirstname);
-      params.append("lastname", userLastname);
-      params.append("email", userEmail);
-      params.append("phonenumber", userPhonenumber);
-      params.append("address", userAddress);
+      params.append("firstname", firstname);
+      params.append("lastname", lastname);
+      params.append("email", email);
+      params.append("phonenumber", phonenumber);
+      params.append("address", address);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
       this.$http
-        .patch(this.$API_URL + "users/" + userId, params, config)
+        .patch(this.$API_URL + "users/" + id, params, config)
         .then((response) => {
           console.log(response);
           this.loadCustomerInformationsByUserId(this.$route.params.userId);
@@ -1077,20 +1132,28 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    updateDogById(dogId, dogName, dogBreed, dogSex, dogChipId) {
+    /**
+     * Method to update a dog from his id from the api rest endpoint "PATCH api/v1/dogs/{dogId}"
+     *
+     * @param {string} id The dog id
+     * @param {string} name The dog's name
+     * @param {string} breed The dog's breed
+     * @param {string} sex The dog's sex
+     * @param {string} chipId The dog's chip id
+     */
+    updateDogById(id, name, breed, sex, chipId) {
       const params = new URLSearchParams();
-      params.append("name", dogName);
-      params.append("breed", dogBreed);
-      params.append("sex", dogSex);
-      params.append("chip_id", dogChipId);
+      params.append("name", name);
+      params.append("breed", breed);
+      params.append("sex", sex);
+      params.append("chip_id", chipId);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
       this.$http
-        .patch(this.$API_URL + "dogs/" + dogId, params, config)
+        .patch(this.$API_URL + "dogs/" + id, params, config)
         .then((response) => {
           console.log(response);
           this.loadCustomerInformationsByUserId(this.$route.params.userId);
@@ -1101,6 +1164,12 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to update the password of the authenticated user with the api rest endpoint "PATCH api/v1/users/me/changePassword".
+     *
+     * @param {string} password The new password
+     * @param {string} repeatPassword Repetition of the new password
+     */
     updateAuthCustomerPassword(password, repeatPassword) {
       if (password != repeatPassword) {
         this.$alertify.error("les mots de passes ne corréspondent pas");
@@ -1110,7 +1179,6 @@ export default {
       params.append("password", password);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
@@ -1137,17 +1205,35 @@ export default {
         this.createConditionsButtonisDisabled = true;
       }
     },
-    sendDogId(dogId) {
-      this.selectedDogId = dogId;
+    /**
+     * Method to allow the component to read the id of a dog in order to proceed to a modification or a deletion from a modal.
+     *
+     * @param {number} id The dog id
+     */
+    sendDogId(id) {
+      this.selectedDog.id = id;
     },
-    sendDogInformations(dogName, dogBreed, dogSex, dogChipId) {
-      this.selectedDogName = dogName;
-      this.selectedDogBreed = dogBreed;
-      this.selectedDogSex = dogSex;
-      this.selectedDogChipId = dogChipId;
+    /**
+     * Method to allow the component to read the data of a dog in order to proceed to a modification or a deletion from a modal.
+     *
+     * @param {string} name The dog's name
+     * @param {string} breed The dog's breed
+     * @param {string} sex The dog's sex
+     * @param {string} chipId The dog's chip id
+     */
+    sendDogInformations(name, breed, sex, chipId) {
+      this.selectedDog.name = name;
+      this.selectedDog.breed = breed;
+      this.selectedDog.sex = sex;
+      this.selectedDog.chipId = chipId;
     },
-    sendDocumentId(documentId) {
-      this.selectedDocumentId = documentId;
+    /**
+     * Method to allow the component to read the id of a document in order to proceed to a modification or a deletion from a modal.
+     *
+     * @param {number} id The document id
+     */
+    sendDocumentId(id) {
+      this.selectedDocument.id = id;
     },
     saveSignature(...args) {
       const [base64, isBlocked] = args;

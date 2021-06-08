@@ -686,10 +686,14 @@ export default {
     };
   },
   methods: {
+    /**
+     * Method to load and format all the weekly schedules with their time
+     * slots of the authenticated dog educator from the api rest endpoint "GET api/v1/weeklySchedules".
+     *
+     */
     loadEducatorWeeklySchedulesWithTimeSlots() {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
@@ -725,6 +729,11 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to load and format all the schedule overrides with their time slots
+     * of the authenticated dog educator from the api rest endpoint "GET api/v1/scheduleOverrides".
+     *
+     */
     loadEducatorScheduleOverridesWithTimeSlots() {
       const config = {
         headers: {
@@ -757,6 +766,10 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to load and format all absences of the authenticated dog educator from the api rest endpoint "GET api/v1/scheduleOverrides".
+     *
+     */
     loadEducatorAbsences() {
       const config = {
         headers: {
@@ -784,6 +797,14 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to create a time slot for a weekly schedule from the api rest endpoint "POST api/v1/timeSlots".
+     *
+     * @param {string} weeklyScheduleId The weekly schedule id
+     * @param {string} codeDay The code day of time slot
+     * @param {string} timeStart The time start of time slot
+     * @param {?number} timeEnd The time end of time slot
+     */
     createTimeSlotForWeeklySchedule(
       weeklyScheduleId,
       codeDay,
@@ -797,7 +818,6 @@ export default {
       params.append("time_end", timeEnd + ":00:00");
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
@@ -812,6 +832,14 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to create a time slot for a schedule override from the api rest endpoint "POST api/v1/timeSlots".
+     *
+     * @param {string} weeklyScheduleId The weekly schedule id
+     * @param {string} codeDay The code day of time slot
+     * @param {string} timeStart The time start of time slot
+     * @param {?number} timeEnd The time end of time slot
+     */
     createTimeSlotForScheduleOverride(scheduleOverrideId, timeStart, timeEnd) {
       const params = new URLSearchParams();
       params.append("id_schedule_override", scheduleOverrideId);
@@ -820,7 +848,6 @@ export default {
       params.append("time_end", timeEnd + ":00:00");
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
@@ -835,6 +862,12 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to create a weekly schedule from the api rest endpoint "POST api/v1/weeklySchedules".
+     *
+     * @param {string} dateValidFrom The date valid from of the weekly schedule
+     * @param {?string} dateValidTo The date valid to of the weekly schedule
+     */
     createWeeklySchedule(dateValidFrom, dateValidTo) {
       const params = new URLSearchParams();
       params.append("date_valid_from", dateValidFrom);
@@ -843,7 +876,6 @@ export default {
       }
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
@@ -859,12 +891,16 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to create a schedule override from the api rest endpoint "POST api/v1/scheduleOverrides".
+     *
+     * @param {string} dateScheduleOverride The date of schedule override
+     */
     createScheduleOverride(dateScheduleOverride) {
       const params = new URLSearchParams();
       params.append("date_schedule_override", dateScheduleOverride);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
@@ -880,13 +916,18 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to create a absence from the api rest endpoint "POST api/v1/absences".
+     *
+     * @param {string} dateAbsenceFrom The date absence from of absence
+     * @param {string} dateAbsenceTo The date absence to of absence
+     */
     createAbsence(dateAbsenceFrom, dateAbsenceTo) {
       const params = new URLSearchParams();
       params.append("date_absence_from", dateAbsenceFrom);
       params.append("date_absence_to", dateAbsenceTo);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
@@ -902,15 +943,19 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteWeeklyScheduleById(weeklyScheduleId) {
+    /**
+     * Method to delete a weekly schedule from his id from the api rest endpoint "DELETE api/v1/weeklySchedules/{weeklyScheduleId}"
+     *
+     * @param {string} id The weekly schedule id
+     */
+    deleteWeeklyScheduleById(id) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
       this.$http
-        .delete(this.$API_URL + "weeklySchedules/" + weeklyScheduleId, config)
+        .delete(this.$API_URL + "weeklySchedules/" + id, config)
         .then((response) => {
           this.loadEducatorWeeklySchedulesWithTimeSlots();
           this.$alertify.success("Calendrier hebdomadaire supprimé");
@@ -920,18 +965,19 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteScheduleOverrideById(scheduleOverrideId) {
+    /**
+     * Method to delete a schedule override from his id from the api rest endpoint "DELETE api/v1/scheduleOverrides/{scheduleOverrideId}"
+     *
+     * @param {string} id The schedule override id
+     */
+    deleteScheduleOverrideById(id) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
       this.$http
-        .delete(
-          this.$API_URL + "scheduleOverrides/" + scheduleOverrideId,
-          config
-        )
+        .delete(this.$API_URL + "scheduleOverrides/" + id, config)
         .then((response) => {
           this.loadEducatorScheduleOverridesWithTimeSlots();
           this.$alertify.success("Exception d'horaire supprimé");
@@ -941,15 +987,19 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    deleteAbsenceById(absenceId) {
+    /**
+     * Method to delete a absence from his id from the api rest endpoint "DELETE api/v1/absences/{absenceId}"
+     *
+     * @param {string} id The absence id
+     */
+    deleteAbsenceById(id) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
       this.$http
-        .delete(this.$API_URL + "absences/" + absenceId, config)
+        .delete(this.$API_URL + "absences/" + id, config)
         .then((response) => {
           this.loadEducatorAbsences();
           this.$alertify.success("Vacances supprimées");
@@ -959,10 +1009,14 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to delete a time slot from his id from the api rest endpoint "DELETE api/v1/timeSlots/{timeSlotId}"
+     *
+     * @param {string} id The time slot id
+     */
     deleteTimeSlotById(timeSlotId) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };

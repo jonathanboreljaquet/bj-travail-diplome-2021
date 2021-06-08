@@ -24,7 +24,7 @@
       </b-row>
       <b-row id="title" class="justify-content-center">
         <b-col lg="6">
-          <b-form @submit.prevent="onSubmit">
+          <b-form @submit.prevent="inscription">
             <b-form-group
               id="input-group-inscription-email"
               label="Adresse e-mail :"
@@ -170,7 +170,11 @@ export default {
         this.form.reCAPTCHAresponse = response;
       }
     },
-    onSubmit() {
+    /**
+     * Method to register a user with the store.
+     *
+     */
+    inscription() {
       if (this.form.password != this.form.repeatPassword) {
         this.$alertify.error("les mots de passes ne corréspondent pas");
         return;

@@ -268,8 +268,7 @@
 
 <script>
 import { BIconPencilSquare } from "bootstrap-vue";
-// @vuese
-// Component representing the administration page of the canine educator of the application.
+
 export default {
   components: {
     BIconPencilSquare,
@@ -314,7 +313,6 @@ export default {
     loadCustomersWithDogs() {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
       };
@@ -354,7 +352,6 @@ export default {
       params.append("address", address);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
@@ -371,7 +368,7 @@ export default {
         });
     },
     /**
-     * Method to change the password of the authenticated user with the api rest endpoint "POST api/v1/users/me/changePassword".
+     * Method to update the password of the authenticated user with the api rest endpoint "PATCH api/v1/users/me/changePassword".
      *
      * @param {string} password The new password
      * @param {string} repeatPassword Repetition of the new password
@@ -385,7 +382,6 @@ export default {
       params.append("password", password);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };

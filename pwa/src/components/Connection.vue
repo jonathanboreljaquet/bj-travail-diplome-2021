@@ -24,7 +24,7 @@
       </b-row>
       <b-row id="title" class="justify-content-center">
         <b-col lg="6">
-          <b-form @submit.prevent="onSubmit" autocomplete="on">
+          <b-form @submit.prevent="connection" autocomplete="on">
             <b-form-group
               id="input-group-connection-email"
               label="Adresse email:"
@@ -75,7 +75,11 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
+    /**
+     * Method to connect the user with the store.
+     *
+     */
+    connection() {
       this.$store.dispatch("login", {
         email: this.form.email,
         password: this.form.password,

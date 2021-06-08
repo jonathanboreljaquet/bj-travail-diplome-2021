@@ -11,7 +11,7 @@
     <b-container>
       <b-row class="text-center">
         <b-col>
-          <h1>{{ title }} {{ customerFirstname }} {{ customerLastname }}</h1>
+          <h1>{{ title }} {{ customer.firstname }} {{ customer.lastname }}</h1>
         </b-col>
       </b-row>
       <b-row v-if="appointments.length > 0" class="content">
@@ -120,9 +120,9 @@
         <b-form
           @submit.prevent="
             updateAppointmentByAppointmentId(
-              selectedAppointmentId,
-              selectedAppointmentSummary,
-              selectedAppointmentNoteText
+              selectedAppointment.id,
+              selectedAppointment.summary,
+              selectedAppointment.noteText
             )
           "
         >
@@ -133,7 +133,7 @@
           >
             <b-form-textarea
               id="input-appointment-summary"
-              v-model="selectedAppointmentSummary"
+              v-model="selectedAppointment.summary"
               placeholder="Entrer le résumé du cours"
               rows="8"
               max-rows="8"
@@ -147,7 +147,7 @@
           >
             <b-form-textarea
               id="input-appointment-note-text"
-              v-model="selectedAppointmentNoteText"
+              v-model="selectedAppointment.noteText"
               placeholder="Entrer les notes textuelles du cours"
               rows="8"
               max-rows="8"
@@ -168,14 +168,14 @@
         :hide-footer="true"
         @shown="
           $refs.signaturePad.resizeCanvas();
-          loadNoteGraphicalPicture(selectedAppointmentNoteGraphicalSerialId);
+          loadNoteGraphicalPicture(selectedAppointment.noteGraphicalSerialId);
         "
       >
         <b-form
           style="width: 100%"
           @submit.prevent="
             uploadNoteGraphicalByAppointmentId(
-              selectedAppointmentId,
+              selectedAppointment.id,
               $refs.signaturePad.saveSignature('image/jpeg').data
             )
           "
@@ -184,7 +184,7 @@
             id="signature"
             width="100%"
             height="80%"
-            :customStyle="customStyle"
+            :customStyle="customStyleSignaturePad"
             ref="signaturePad"
             :options="{ backgroundColor: 'rgb(255, 255, 255)' }"
           />
@@ -215,7 +215,7 @@
         :hide-header="true"
       >
         <h5 style="text-align: center">Supprimer le rendez-vous ?</h5>
-        <b-form @submit.prevent="deleteAppointment(selectedAppointmentId)">
+        <b-form @submit.prevent="deleteAppointmentById(selectedAppointment.id)">
           <b-row>
             <b-col>
               <b-button
@@ -256,19 +256,27 @@ export default {
   data() {
     return {
       title: "",
-      appointments: [],
+      customer: {
+        firstname: "",
+        lastname: "",
+      },
+      selectedAppointment: {
+        id: null,
+        summary: "",
+        noteText: "",
+        noteGraphicalSerialId: "",
+      },
       messageNoAppointments: "Aucun rendez-vous",
-      customerFirstname: "",
-      customerLastname: "",
-      selectedAppointmentId: "",
-      selectedAppointmentSummary: "",
-      selectedAppointmentNoteText: "",
-      selectedAppointmentNoteGraphicalSerialId: "",
-      customStyle: { border: "#c2c2c2 3px solid" },
-      educators: null,
+      customStyleSignaturePad: { border: "#c2c2c2 3px solid" },
+      appointments: [],
+      educators: [],
     };
   },
   methods: {
+    /**
+     * Method to load all educators from the api rest endpoint "GET api/v1/users/educators".
+     *
+     */
     loadEducators() {
       this.$http.get(this.$API_URL + "users/educators/").then((response) => {
         this.educators = response.data;
@@ -281,10 +289,13 @@ export default {
         }
       });
     },
+    /**
+     * Method to load all appointments of the authenticated client from the api rest endpoint "GET api/v1/appointments".
+     *
+     */
     loadAuthCustomerAppointment() {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
       };
@@ -297,18 +308,22 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method to load all the appointments of a client from his id from the api rest endpoint "GET api/v1/users/{userId}"
+     *
+     * @param {number} userId The client's id
+     */
     loadCustomerAppointmentsByUserId(userId) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
       };
       this.$http
         .get(this.$API_URL + "users/" + userId, config)
         .then((response) => {
-          this.customerFirstname = response.data.firstname;
-          this.customerLastname = response.data.lastname;
+          this.customer.firstname = response.data.firstname;
+          this.customer.lastname = response.data.lastname;
 
           this.loadAppointmentsData(response.data.appointments);
         })
@@ -316,6 +331,11 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method for formatting the time data of an appointment object table.
+     *
+     * @param {Object[]} appointments The appointment object table
+     */
     loadAppointmentsData(appointments) {
       this.appointments = [];
       appointments.forEach((appointment) => {
@@ -342,10 +362,14 @@ export default {
         });
       });
     },
+    /**
+     * Method to load a graphical note from its serial id from the api rest endpoint "GET api/v1/appointments/downloadNoteGraphical/{noteGraphicalSerialId}".
+     *
+     * @param {string} noteGraphicalSerialId The serial id of the graphical  note
+     */
     loadNoteGraphicalPicture(noteGraphicalSerialId) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token
         },
         responseType: "arraybuffer",
@@ -367,22 +391,24 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-    updateAppointmentByAppointmentId(
-      appointmentId,
-      appointmentSummary,
-      appointmentNoteText
-    ) {
+    /**
+     * Method to update an appointment from his id from the api rest endpoint "PATCH api/v1/appointments/{appointmentId}"
+     *
+     * @param {number} id The appointment id
+     * @param {string} summary The summary of the appointment
+     * @param {string} noteText The note text of the appointment
+     */
+    updateAppointmentByAppointmentId(id, summary, noteText) {
       const params = new URLSearchParams();
-      params.append("summary", appointmentSummary);
-      params.append("note_text", appointmentNoteText);
+      params.append("summary", summary);
+      params.append("note_text", noteText);
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
       this.$http
-        .patch(this.$API_URL + "appointments/" + appointmentId, params, config)
+        .patch(this.$API_URL + "appointments/" + id, params, config)
         .then((response) => {
           console.log(response);
           this.loadCustomerAppointmentsByUserId(this.$route.params.userId);
@@ -393,30 +419,37 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
-
-    sendAppointmentInformations(
-      appointmentId,
-      appointmentSummary,
-      appointmentNoteText,
-      appotimentNoteGraphicalSerialId
-    ) {
-      this.selectedAppointmentId = appointmentId;
-      this.selectedAppointmentSummary = appointmentSummary;
-      this.selectedAppointmentNoteText = appointmentNoteText;
-      this.selectedAppointmentNoteGraphicalSerialId =
-        appotimentNoteGraphicalSerialId;
+    /**
+     * Method to allow the component to read the data of an appointment in order to proceed to a modification or a deletion from a modal.
+     *
+     * @param {number} id The appointment id
+     * @param {string} summary The summary of the appointment
+     * @param {string} noteText The note text of the appointment
+     * @param {string} noteGraphicalSerialId The serial id of the graphical note of the appointment
+     */
+    sendAppointmentInformations(id, summary, noteText, noteGraphicalSerialId) {
+      this.selectedAppointment.id = id;
+      this.selectedAppointment.summary = summary;
+      this.selectedAppointment.noteText = noteText;
+      this.selectedAppointment.noteGraphicalSerialId = noteGraphicalSerialId;
     },
-    uploadNoteGraphicalByAppointmentId(appointmentId, noteGraphicalBase64) {
+    /**
+     * Method to upload a graphical note from the api rest endpoint "POST api/v1/appointments/uploadNoteGraphical".
+     *
+     * @param {number} id The appointment id
+     * @param {string} noteGraphicalBase64 The graphical note in base64 format
+     */
+    uploadNoteGraphicalByAppointmentId(id, noteGraphicalBase64) {
+      //Workaround with the fetch api to convert a base64 to a Binary Large object
       fetch(noteGraphicalBase64)
         .then((res) => res.blob())
         .then((blob) => {
           var file = new File([blob], "note", { type: "image/jpeg" });
           let formData = new FormData();
           formData.append("note_graphical", file);
-          formData.append("appointment_id", appointmentId);
+          formData.append("appointment_id", id);
           const config = {
             headers: {
-              // eslint-disable-next-line prettier/prettier
               "Authorization" : this.$store.state.api_token
             },
           };
@@ -437,15 +470,19 @@ export default {
             });
         });
     },
-    deleteAppointment(appointmentId) {
+    /**
+     * Method to delete an appointment from his id from the api rest endpoint "DELETE api/v1/appointments/{appointmentId}"
+     *
+     * @param {number} id The appointment id
+     */
+    deleteAppointmentById(id) {
       const config = {
         headers: {
-          // eslint-disable-next-line prettier/prettier
           "Authorization" : this.$store.state.api_token,
         },
       };
       this.$http
-        .delete(this.$API_URL + "appointments/" + appointmentId, config)
+        .delete(this.$API_URL + "appointments/" + id, config)
         .then((response) => {
           this.loadCustomerAppointmentsByUserId(this.$route.params.userId);
           this.$alertify.success("Rendez-vous supprimé");
@@ -455,6 +492,10 @@ export default {
           this.$alertify.error(error.response.data.error);
         });
     },
+    /**
+     * Method for clearing the signature of the signaturePad component
+     *
+     */
     clearNoteGraphical() {
       this.$refs.signaturePad.clearSignature();
     },
