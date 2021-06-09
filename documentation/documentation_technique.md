@@ -43,7 +43,6 @@
       - [Moment.js](#momentjs)
       - [reCAPTCHA](#recaptcha)
     - [Tests Katalon Recorder](#tests-katalon-recorder)
-  - [Table des figures](#table-des-figures)
 
 ## API REST
 
@@ -96,6 +95,8 @@ Exemple de la classe `DAODog` :
   </center>
 </figure>
 
+<div style="page-break-after: always;"></div>
+
 #### app/Controllers
 
 Le dossier Controllers contient les contrôleurs de l'API REST. Comme leurs noms l'indiquent, le but des contrôleurs est de contrôler les différents cas d'utilisation et d'autorisation d'accès en utilisant, s'il le faut, les DAO afin de communiquer avec la base de données et en retournant les différents codes HTTP et messages en format JSON. 
@@ -103,7 +104,7 @@ Exemple de la classe `DogController` :
 
 <figure>
    <center>
-  	<img src="./diagram/umletino/dogController.png" alt="dogController">      
+  	<img src="./diagram/umletino/dogController.png" width="400" alt="dogController">      
   	<figcaption>Fig.4 - Dog Controller </figcaption>
   </center>
 </figure>
@@ -116,6 +117,8 @@ Classes `ResponseController` et `HelperController` :
   	<figcaption>Fig.5 - ResponseController et HelperController </figcaption>
   </center>
 </figure>
+
+<div style="page-break-after: always;"></div>
 
 #### app/System
 
@@ -135,7 +138,7 @@ Le dossier public contient les différents fichiers d'entrée de l'API REST. Les
 
 #### storage
 
-Dossier contenant les différents fichiers uploadés de l'API REST, comme les documents PDF ou les photos de chiens par exemple. 
+Dossier contenant les différents fichiers uploadés de l'API REST comme les documents PDF ou les photos de chiens par exemple. 
 
 #### bootstrap.php
 
@@ -144,6 +147,8 @@ Fichier de bootage de l'API REST inclus dans tous les fichiers d'entrée, celui-
 * Charger les dépendances PHP du dossier vendor
 * Charger les variables d'environnements
 * Créer la connexion à la base de données
+
+<div style="page-break-after: always;"></div>
 
 ### Structure
 
@@ -182,7 +187,7 @@ La table `appointment` contient les informations des rendez-vous entre un éduca
         <td>datetime_appointment</td>
         <td>DATETIME</td>
         <td style="text-align:center;">X</td>
-        <td>la date ainsi que l'heure du rendez-vous entre un client et un éducateur canin.</td>
+        <td>La date ainsi que l'heure du rendez-vous entre un client et un éducateur canin.</td>
     </tr>
     <tr>
         <td>duration_in_hour</td>
@@ -235,11 +240,14 @@ La table `appointment` contient les informations des rendez-vous entre un éduca
 </table>
 
 
+
 *Remarques*
 
 Les données des champs `datetime_deletion` et `user_id_deletion` sont uniquement ajoutées lors de la suppression non définitive du rendez-vous par un éducateur canin ou un client.
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 La table `user` contient les informations des différents utilisateurs :
 
@@ -342,6 +350,7 @@ La table `document` contient les informations des documents des utilisateurs :
 
 
 ---
+<div style="page-break-after: always;"></div>
 
 La table `dog` contient les informations des chiens des utilisateurs :
 
@@ -424,7 +433,7 @@ La table `weekly_schedule` contient les informations des calendriers hebdomadair
         <td>is_deleted</td>
         <td>TINYINT</td>
         <td style="text-align:center;">X</td>
-        <td>Le statut du calendrier hébdomadaire.</td>
+        <td>Le statut du calendrier hebdomadaire.</td>
     </tr>
     <tr>
         <td>id_educator</td>
@@ -434,12 +443,14 @@ La table `weekly_schedule` contient les informations des calendriers hebdomadair
     </tr>
 </table>
 
+
 *Remarques*
 
 Le système s'assure qu'il n'y ait pas de chevauchement entre les différentes lignes non supprimées de cette table (`date_valid_from` et `date_valid_to`) appartenant au même éducateur canin.
 Une seule ligne non supprimée d'un éducateur canin peut avoir comme valeur `null` le champ `date_valid_to`. Cette ligne correspondra donc à l'unique calendrier permanent d'un éducateur canin.
 
 ---
+<div style="page-break-after: always;"></div>
 
 La table `schedule_override` contient les informations des exceptions d'horaires des éducateurs canins :
 
@@ -541,6 +552,7 @@ Le système s'assure qu'il n'y ait pas de chevauchement entre les différentes l
 Le système s'assure qu'un créneau horaire appartienne à un calendrier hebdomadaire OU à une exception d'horaire, il ne doit pas appartenir aux deux ni à aucun.
 
 ---
+<div style="page-break-after: always;"></div>
 
 La table `absence` contient les informations des vacances des éducateurs canins :
 
@@ -590,23 +602,27 @@ La table `absence` contient les informations des vacances des éducateurs canins
 
 La valeur du champ `date_absence_to` peut être `null` si le service est suspendu pour un moment.
 
+---
+
+<div style="page-break-after: always;"></div>
+
 #### Requête de génération de planning
 
 ##### Explication
 
-Une des fonctionnalités les plus importantes de mon travail de diplôme est la génération de planning pour un éducateur canin. En effet, j'ai développé des tables de ma base de données en sorte de permettre aux éducateurs canins de la société d'éditer leurs propres horaires de la manière la plus flexible possible. Les éducateurs canins peuvent créer des calendriers hebdomadaires (weekly schedules) ayant une date de début et une date de fin (à noter qu'un seul et unique calendrier hebdomadaire peut ne pas avoir de date de fin afin de le rendre permanant sur une durée de une année suivant le jour actuel). Chaque calendrier hebdomadaire peut avoir des créneaux horaire (time slots) afin de spécifier les données hebdomadaires de celui-ci.
+Une des fonctionnalités les plus importantes de mon travail de diplôme est la génération de planning pour un éducateur canin. En effet, j'ai développé des tables de ma base de données en sorte de permettre aux éducateurs canins de la société d'éditer leurs propres horaires de la manière la plus flexible possible. Les éducateurs canins peuvent créer des calendriers hebdomadaires (weekly schedules) ayant une date de début et une date de fin (à noter qu'un seul et unique calendrier hebdomadaire peut ne pas avoir de date de fin afin de le rendre permanent sur une durée d'une année suivant le jour actuel). Chaque calendrier hebdomadaire peut avoir des créneaux horaire (time slots) afin de spécifier les données hebdomadaires de celui-ci.
 
-En plus de cela, les éducateurs canins peuvent créer des exceptions d'horaire (schedule override) afin d'écraser les potentiels créneaux horaires d'un calendrier hebdomadaire d'une journée par les siens. Donc, similaire aux calendriers hebdomadaires, l'exception d'horaire peut également avoir des créneaux horaires.
+En plus de cela, les éducateurs canins peuvent créer des exceptions d'horaires (schedule override) afin d'écraser les potentiels créneaux horaires d'un calendrier hebdomadaire d'une journée par les siens. Donc, similaire aux calendriers hebdomadaires, l'exception d'horaire peut également avoir des créneaux horaires.
 
-Pour finir, les éducateur canins ont la possibilité de créer des plages de vacances qui devront permettre d'ignorer tous les créneaux horaire inclus dans celles-ci.
+Pour finir, les éducateurs canins ont la possibilité de créer des plages de vacances qui devront permettre d'ignorer tous les créneaux horaires inclus dans celles-ci.
 
 Afin d'être plus clair, imaginons les données suivantes : 
 
 * Calendrier hebdomadaire du 31 mai au 04 juillet
-  * Deux créneau horaire tous les lundis
-  * Deux créneau horaire tous les mercredis
-  * Deux créneau horaire tous les jeudis
-  * Deux créneau horaire tous les vendredis
+  * Deux créneaux horaires tous les lundis
+  * Deux créneaux horaires tous les mercredis
+  * Deux créneaux horaires tous les jeudis
+  * Deux créneaux horaires tous les vendredis
 * Exception d'horaire le 03 juin
   * Un créneau horaire dans la journée
 * Exception d'horaire le 08 juin
@@ -617,7 +633,9 @@ Afin d'être plus clair, imaginons les données suivantes :
   * Un créneau horaire dans la journée
 * Vacances du 28 juin au 04 juillet
 
-Le résultat sans le traitement ressemblerais à cela :
+<div style="page-break-after: always;"></div>
+
+Le résultat sans le traitement ressemblerait à cela :
 
 <figure>
    <center>
@@ -626,7 +644,7 @@ Le résultat sans le traitement ressemblerais à cela :
   </center>
 </figure>
 
-Le résultat avec le traitement réalisé dans ma requête ressemblerais à cela :
+Le résultat avec le traitement réalisé dans ma requête ressemblerait à cela :
 
 <figure>
    <center>
@@ -637,7 +655,7 @@ Le résultat avec le traitement réalisé dans ma requête ressemblerais à cela
 
 ##### Test de performance
 
-Afin de réaliser cette fonctionnalité, j'ai développé durant mon travail de diplôme, une requête que je pourrais considérais de touffu. En effet, afin d'arriver à ses fins, ma requête contient trois sous-requêtes et interpelle un total de six tables différentes. J'ai alors voulu vérifier sa capacité à s'adapter à un nombre conséquent de données en réalisant un test de performance de celle-ci. Pour réaliser ce test de performance, j'ai ajouté les données suivantes à l'aide d'un script dans ma base de données :
+Afin de réaliser cette fonctionnalité, j'ai développé durant mon travail de diplôme, une requête que je pourrais considérer de touffu. En effet, afin d'arriver à ses fins, ma requête contient trois sous-requêtes et interpelle un total de six tables différentes. J'ai alors voulu vérifier sa capacité à s'adapter à un nombre conséquent de données en réalisant un test de performance de celle-ci. Pour réaliser ce test de performance, j'ai ajouté les données suivantes à l'aide d'un script dans ma base de données :
 
 * 100 000 utilisateurs
 * Pour chacun de ces utilisateurs, création d'un calendrier hebdomadaire avec 10 créneaux horaires par jour pour le mois de juillet (2021-07-01 au 2021-07-31)
@@ -656,9 +674,11 @@ Une fois les données insérées, j'ai alors exécuté ma requête de générati
 
 Avec ces données, ma requête à pris environ 18 minutes afin de générer le planning d'un des éducateurs canins. À l'heure actuelle cette requête n'est pas prête à traiter une grande quantité de données mais je compte, dans le futur, l'optimiser voir la modifier afin que celle-ci soit utilisable avec beaucoup de données. 
 
+<div style="page-break-after: always;"></div>
+
 ### Tests unitaires Postman
 
-Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécuter des scripts de test pour chaque endpoint de mon API REST. Ces tests sont réalisables en JavaScript en utilisant la bibliothèque proposée par Postman `pm`. Tous les tests unitaires de mon API REST sont identifiables grâce à un code qui leur est propre dans l'annexe [`postman_unit_tests.md`](./postman_unit_tests.md).
+Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécuter des scripts de test pour chaque endpoint de mon API REST. Ces tests sont réalisables en JavaScript en utilisant la bibliothèque proposée par Postman `pm`. Tous les tests unitaires de mon API REST sont identifiables grâce à un code qui leur est propre dans l'annexe `postman_unit_tests.pdf`.
 
 #### Format de code
 
@@ -715,6 +735,7 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
 
 
 ---
+<div style="page-break-after: always;"></div>
 
 <table>
     <tr>
@@ -777,6 +798,7 @@ Afin de tester l'API REST, j'ai utilisé l'outil Postman qui m'a permis d'exécu
         <td>DNG</td>
     </tr>
 </table>
+
 #### Syntaxe
 
 Postman propose à ses utilisateurs la possibilité d'écrire des scripts de test pour tester les différentes requêtes de leurs API. Afin de rédiger ces tests, j'ai dû utiliser une certaine syntaxe JavaScript proposée par Postman. Lors de la réalisation de mes tests unitaires avec Postman, j'ai utilisé la fonction `pm.test` afin de tester tous les cas d'utilisation et d'exception de mon API REST. La fonction `pm.test` prend en premier paramètre une chaîne de caractères qui apparaîtra dans la sortie des résultats du test afin d'identifier le test. Le deuxième paramètre est une fonction qui doit retourner un booléen pour indiquer si le test a réussi ou échoué. 
@@ -789,6 +811,8 @@ pm.test("Right code for successful created ressource", function () {
     pm.response.to.have.status(201);
 });
 ```
+
+<div style="page-break-after: always;"></div>
 
 Pour les endpoints nécessitant de retourner un message, j'ai également testé que celui-ci soit correct en utilisant la fonction` pm.expect(element1).to.eql(element2)` qui permet de tester que le premier élément corresponde bien au second. 
 Par exemple, afin de tester que l'endpoint de création d'utilisateur `POST api/v1/users` avec une adresse e-mail ne respectant pas le bon format retourne bien le code HTTP `400` ainsi que le message d'erreur `Format d'adresse email invalide.`, j'ai réalisé les tests :
@@ -816,7 +840,9 @@ pm.test("Right message for invalid date_to format", function () {
 });
 ```
 
-Ce test est réalisé avec les différentes données du fichier CSV disponibles à la fin de l'annexe [`unit_tests.md`](./unit_tests.md).
+Ce test est réalisé avec les différentes données du fichier CSV disponibles à la fin de l'annexe [`postman_unit_tests.pdf`](./postman_unit_tests.pdf).
+
+<div style="page-break-after: always;"></div>
 
 Pour les tests unitaires nécessitant un test sur l'en-tête d'autorisation, j'ai utilisé la fonction `pm.request.to.have.header(header)`.
 Par exemple, afin de tester que l'endpoint de suppression d'un document `DELETE api/v1/documents` avec un api token appartenant à un client retourne bien le code HTTP `403` ainsi que le message d'erreur `Vous n'avez pas les permissions.`, j'ai réalisé les tests :
@@ -860,6 +886,7 @@ pm.test("The data structure of the response is correct", () => {
   })
 });
 ```
+<div style="page-break-after: always;"></div>
 
 ### Composer
 
@@ -871,9 +898,11 @@ $ composer require dompdf/dompdf
 
 Après avoir exécuté ce type de commande, mon projet contient maintenant les fichiers `composer.json` et `composer.lock` ainsi que le dossier `vendor`. Comme expliqué auparavant, `composer.json` est comme un guide correspondant aux versions de dépendance que Composer **doit** installer tandis que `composer.lock` est une représentation exacte des versions de dépendance qui **ont** été installées. Le dossier `vendor` quant à lui, contient tous les paquets et dépendances installés du projet.
 
-Une fois nos paquets et dépendances installés, il faut maintenant pouvoir les inclure dans un de nos scripts PHP. Pour ce faire, Composer nous facilite la tâche en générant un fichier de chargement automatique nommé `autoload.php`. En incluant ce fichier dans mon fichier `bootstrap.php` qui lui-même étant inclus dans chaque points d'entrée de mon API REST, je peux accéder quand je le souhaite aux différents paquets et dépendances de mon projet. Par exemple, si je souhaite utiliser le paquet Dompdf dans un de mes scripts PHP, il me suffit d'écrire la ligne `use Dompdf\Dompdf` afin d'y accéder. 
+Une fois nos paquets et dépendances installés, il faut maintenant pouvoir les inclure dans un de nos scripts PHP. Pour ce faire, Composer nous facilite la tâche en générant un fichier de chargement automatique nommé `autoload.php`. En incluant ce fichier dans mon fichier `bootstrap.php` qui lui-même étant inclus dans chaque point d'entrée de mon API REST, je peux accéder quand je le souhaite aux différents paquets et dépendances de mon projet. Par exemple, si je souhaite utiliser le paquet Dompdf dans un de mes scripts PHP, il me suffit d'écrire la ligne `use Dompdf\Dompdf` afin d'y accéder. 
 
 ### Librairies
+
+<div style="page-break-after: always;"></div>
 
 #### PHP dotenv
 
@@ -919,6 +948,8 @@ $host = getenv('DB_HOST');
 
 [*Documentation de Php dotenv*](https://github.com/vlucas/phpdotenv)
 
+<div style="page-break-after: always;"></div>
+
 #### PHPMailer
 
 Installé avec la commande : 
@@ -933,8 +964,7 @@ J'ai utilisé PHPMailer afin d'envoyer des e-mails depuis le contrôleur `Helper
 public static function sendMail(string $message, string $subject,string $emailRecipient, string $attachmentFilePath = null)
 {
     // Création d'une instance de la classe PHPMailer en activant les exceptions
-    $mail = new PHPMailer(true);
-    
+    $mail = new PHPMailer(true);   
     // Chargement du template avec le sujet et le message de l'e-mail
     $body = HelperController::loadMailTemplate($subject,$message);
     try {
@@ -946,16 +976,13 @@ public static function sendMail(string $message, string $subject,string $emailRe
         $mail->Password   = getenv('SMTP_PASSWORD');                             
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         
         $mail->Port       = 587; 
-
         //Destinataire
         $mail->setFrom('noreply@douceurdechien.com', 'Douceur de Chien');
         $mail->addAddress($emailRecipient); 
-
         //Pièce jointe
         if (!is_null($attachmentFilePath)) {
             $mail->addAttachment($attachmentFilePath);
         }
-        
         //Contenu
         $mail->isHTML(true);     
         $mail->CharSet = 'UTF-8';      
@@ -963,12 +990,12 @@ public static function sendMail(string $message, string $subject,string $emailRe
         $mail->Subject = $subject;
         $mail->AddEmbeddedImage("./../../resources/image/logo_douceur_de_chien.png", "logo-image", "logo_douceur_de_chien.png");
         $mail->Body = $body;
-        
+    
         $mail->send();
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
-    }
+}
 ```
 
 [*Documentation de PHPMailer*](https://phpmailer.github.io/PHPMailer/namespaces/default.html)
@@ -1009,11 +1036,13 @@ public static function storeConditionsRegistration(string $filename,int $package
 
 [*Documentation de Dompdf*](https://github.com/dompdf/dompdf/wiki/Usage)
 
+<div style="page-break-after: always;"></div>
+
 ### Fichier iCalendar
 
 Lors de la création d'un rendez-vous entre un client et un éducateur canin, mon API REST envoie un e-mail au client afin de lui fournir les informations du rendez-vous. En plus des informations du rendez-vous, j'ai créé une fonctionnalité permettant de générer un fichier ICS afin de l'inclure dans l'e-mail. Un fichier ICS est un format de fichier pour iCalendar. Ces fichiers ayant comme extension `.ics` permettent d'importer dans un calendrier des données de calendrier. Ce format étant une norme internationale, de nombreux calendriers numériques tels que les calendriers de Microsoft, Google et Apple sont capables de supporter ce format de fichier.
 
-Pour générer ce fichier, je procède de la même manière que la création des conditions d'inscription avec Dompdf. C'est-à-dire qu'une fois la création du rendez-vous effectué, je vais effectuer les étapes suivantes : 
+Pour générer ce fichier, je procède de la même manière que la création des conditions d'inscription avec Dompdf, c'est-à-dire qu'une fois la création du rendez-vous effectué, je vais effectuer les étapes suivantes : 
 
 ```php
 public static function sendMailWithICSFile($start_datetime, $end_datetime, $educator_fullname, $customer_email , $filename)
@@ -1034,6 +1063,7 @@ public static function sendMailWithICSFile($start_datetime, $end_datetime, $educ
       unlink($new_tmpfile_path);
     }
 ```
+<div style="page-break-after: always;"></div>
 
 1. Début de la temporisation de sortie permettant d'inclure les différentes données dans le template PHP `iCalendar_appointment.php` :
 
@@ -1067,6 +1097,8 @@ END:VCALENDAR";
 5. Suppression du fichier temporaire
 
 [*Informations sur le format iCalendar (RFC2445)*](https://www.ietf.org/rfc/rfc2445.txt)
+
+<div style="page-break-after: always;"></div>
 
 ### Endpoints
 
@@ -1152,7 +1184,9 @@ Les en-têtes que j'ai utilisés dans les différents points d'entrée de mon AP
 * `POST api/v1/appointments/downloadNoteGraphical/{serial_number}`
 * `GET api/v1/plannings/{idEducator}`
 
-Pour plus d'informations, rendez-vous dans l'annexe [`endpoints.md`](./endpoints.md).
+Pour plus d'informations, rendez-vous dans l'annexe `endpoints.pdf`.
+
+<div style="page-break-after: always;"></div>
 
 ## PWA
 
@@ -1195,6 +1229,8 @@ Un composant Vue est organisé de la manière suivante :
 * Une partie JavaScript entre les balises `<script> </script>`
 * Une partie CSS entre les balises `<style> </style`
 
+<div style="page-break-after: always;"></div>
+
 Pour la partie HTML, Vue permet l'utilisation de différents outils très pratiques permettant de faciliter l'élaboration de code HTML avec du JavaScript. Le premier outil est la syntaxe dite "Mustache" (les doubles accolades). 
 Exemple : 
 
@@ -1232,6 +1268,8 @@ Exemple :
 ```html
 <button v-on:click="function"></button> ou <button @click="function"></button>
 ```
+
+<div style="page-break-after: always;"></div>
 
 Pour ce qui est de la syntaxe JavaScript proposée par Vue, je l'ai utilisée de la manière suivante :
 
@@ -1320,6 +1358,8 @@ import Axios from "axios";
 Vue.prototype.$http = Axios;
 ```
 
+<div style="page-break-after: always;"></div>
+
 J'ai utilisé le client HTTP basé sur les promesses Axios afin de réaliser des requêtes HTTP asynchrone à mon API REST depuis ma PWA. Par exemple, j'ai utilisé Axios afin d'ajouter un chien à un utilisateur avec l'endpoint `POST api/v1/dogs` dans le composant `CustomerInformation.vue` de la manière suivante :
 
 ```javascript
@@ -1369,9 +1409,7 @@ Par exemple, afin d'authentifier l'utilisateur et de ce fait modifier l'état de
 import Vuex from "vuex";
 import router from "./router";
 import { CUSTOMER_CODE_ROLE, ADMIN_CODE_ROLE } from "./constants.js";
-
 Vue.use(Vuex);
-
 export default new Vuex.Store({
     state: {
         api_token: null,
@@ -1402,13 +1440,7 @@ export default new Vuex.Store({
                     code_role: res.data.code_role,
                     user_id: res.data.user_id,
                 });
-                Vue.prototype.$alertify.success("Vous êtes connecté");
-                if (this.state.code_role == ADMIN_CODE_ROLE) {
-                    router.push("/administration");
-                }
-                if (this.state.code_role == CUSTOMER_CODE_ROLE) {
-                    router.push("/customer_information");
-                }
+                ...
             })
             .catch((error) => {
                 Vue.prototype.$alertify.error(error.response.data.error);
@@ -1425,7 +1457,7 @@ export default new Vuex.Store({
 });
 ```
 
-L'action `login `va permettre de faire un appel à l'endpoint de connexion de l'API REST `api/v1/connection` avec Axios. Si l'endpoint c'est bien déroulé, l'état de l'application se verra subir une mutation et le local storage se verra être chargé. Une fois mon `store` paramétré dans l'instance `Vuex.Store`, il est nécessaire de l'inclure en tant qu'option dans l'initialisation de l'instance principale de Vue disponible dans le fichier `main.js` :
+L'action `login `va permettre de faire un appel à l'endpoint de connexion de l'API REST `api/v1/connection` avec Axios. Si l'endpoint s'est bien déroulé, l'état de l'application se verra subir une mutation et le local storage se verra être chargé. Une fois mon `store` paramétré dans l'instance `Vuex.Store`, il est nécessaire de l'inclure en tant qu'option dans l'initialisation de l'instance principale de Vue disponible dans le fichier `main.js` :
 
 ```javascript
 import store from "./store";
@@ -1437,6 +1469,8 @@ new Vue({
 ```
 
 [*Documentation de Vuex*](https://vuex.vuejs.org/guide/#the-simplest-store)
+
+<div style="page-break-after: always;"></div>
 
 #### Vue Router
 
@@ -1474,8 +1508,9 @@ export default new Router({
   ]
 });
 ```
+<div style="page-break-after: always;"></div>
 
-Dans cette route ainsi que dans toutes les routes pour accéder aux pages des éducateurs canins, je teste à l'aide de la fonction `beforeEnter` de Vue router si l'utilisateur est un administrateur (éducateur canin) ou un client. Si celui-ci est un administrateur, alors je le laisse accéder au composant. Dans le cas contraire, je le redirige vers la page d'accueil de application. Une fois les différentes routes paramétrées dans l'instance `Router`, il est nécessaire de l'inclure en tant qu'option dans l'initialisation de l'instance principale de Vue disponible dans le fichier `main.js` :
+Dans cette route ainsi que dans toutes les routes pour accéder aux pages des éducateurs canins, je teste à l'aide de la fonction `beforeEnter` de Vue router si l'utilisateur est un administrateur (éducateur canin) ou un client. Si celui-ci est un administrateur, alors je le laisse accéder au composant. Dans le cas contraire, je le redirige vers la page d'accueil de l'application. Une fois les différentes routes paramétrées dans l'instance `Router`, il est nécessaire de l'inclure en tant qu'option dans l'initialisation de l'instance principale de Vue disponible dans le fichier `main.js` :
 
 ```javascript
 import router from "./router";
@@ -1513,7 +1548,7 @@ Lui-même importé dans le fichier `main.js` de la manière suivante :
 import "./plugins/bootstrap-vue";
 ```
 
-J'ai utilisé le plugin BootstrapVue afin de faciliter l'intégration et la compatibilité de Bootstrap avec Vue. En effet, certaines fonctions de Bootstrap nécessitant JQuery et Poppers.js, peuvent entrer en conflit avec Vue. BootstrapVue va justement permettre de convertir la plupart de ces fonctions dans le but de les rendre compatibles avec Vue afin qu'elles fonctionnent comme prévu. Pour ce qui est de la syntaxe de BootstrapVue, elle est très similaire voire plus lisible que Bootstrap.
+J'ai utilisé le plugin BootstrapVue afin de faciliter l'intégration et la compatibilité de Bootstrap avec Vue. En effet, certaines fonctions de Bootstrap nécessitant JQuery et Poppers.js, peuvent entrer en conflit avec Vue. BootstrapVue va justement permettre de convertir la plupart de ces fonctions dans le but de les rendre compatibles avec Vue afin qu'elles fonctionnent comme prévu. Pour ce qui est de la syntaxe de BootstrapVue, elle est très similaire, voire plus lisible que Bootstrap.
 
 [*Documentation de BootstrapVue*](https://bootstrap-vue.org/docs)
 
@@ -1562,6 +1597,8 @@ import interactionPlugin from "@fullcalendar/interaction";
 import frLocale from "@fullcalendar/core/locales/fr";
 ```
 
+<div style="page-break-after: always;"></div>
+
 J'ai utilisé FullCalendar afin d'afficher les différents calendriers de mon application nécessitant d'être chargés avec des événements comme les rendez-vous de l'éducateur canin par exemple. FullCalendar permet une intégration et une utilisation optimales avec Vue en fournissant un composant qui correspond exactement aux fonctionnalités de l'API standard de FullCalendar. FullCalendar permet de personnaliser l'affichage de son calendrier ainsi que de ses fonctionnalités de manière très complète. Voici un exemple de la configuration effectuée pour l'affichage des créneaux horaires disponibles d'un éducateur canin :
 
 ```html
@@ -1599,9 +1636,11 @@ export default {
 }
 ```
 
-Toutes ces options ainsi que bien d'autres sont disponibles dans la documentation de FullCalendar
+Toutes ces options ainsi que bien d'autres sont disponibles dans la documentation de FullCalendar.
 
 [*Documentation de FullCalendar pour Vue*](https://fullcalendar.io/docs/vue)
+
+<div style="page-break-after: always;"></div>
 
 #### Moment.js
 
@@ -1644,6 +1683,8 @@ Et importé dans le composant `inscription.vue` de la manière suivante :
 import VueRecaptcha from "vue-recaptcha";
 ```
 
+<div style="page-break-after: always;"></div>
+
 J'ai utilisé le composant vue-recaptcha afin d'implémenter une vérification lors de l'inscription à l'aide du système de détection automatisée d'utilisateur reCAPTCHA de Google. Pour intégrer reCAPTCHA à mon application, je me suis rendu sur la documentation officielle de Google afin de récupérer la clef d'intégration côté client. Une fois ma clef récupérée, j'ai configuré le composant vue-recaptcha de la manière suivante : 
 
 ```html
@@ -1673,7 +1714,10 @@ export default {
 Ici, la méthode `verify` émet la réponse qui représente le token à envoyer à l'API REST via l'endpoint `POST api/v1/users` afin de procéder à la vérification côté serveur.
 
 [*Documentation de vue-recaptcha*](https://github.com/DanSnow/vue-recaptcha#readme)
+
 [*Documentation reCAPTCHA pour l'intégration côté client*](https://developers.google.com/recaptcha/docs/display)
+
+<div style="page-break-after: always;"></div>
 
 Afin de valider la vérification d'utilisateur avec reCAPTCHA côté client, il est nécessaire d'envoyer une requête HTTP au service reCAPTCHA. Pour ce faire, j'appelle la méthode suivante dans mon UserController lors de l'inscription :
 
@@ -1699,6 +1743,8 @@ public static function reCAPTCHAvalidate(string $userResponseToken)
 
 [*Documentation reCAPTCHA pour l'intégration côté serveur*](https://developers.google.com/recaptcha/docs/verify)
 
+<div style="page-break-after: always;"></div>
+
 ### Tests Katalon Recorder
 
 Afin de tester les fonctionnalités de mon application WEB développée avec Vue, j'ai suivi les conseils de mon professeur de diplôme et j'ai réalisé des scripts de test avec Katalon Recorder. Utilisant principalement Chrome comme navigateur, je me suis rendu sur le chrome web store afin de télécharger l'extension Katalon Recorder.  L'interface graphique de l'extension ressemble à cela :
@@ -1716,6 +1762,8 @@ Afin de tester le maximum de fonctionnalités avec Katalon Recorder, j'ai dével
 * Une cible permettant au script de savoir sur quel élément il doit exécuter l'action, comme un élément avec l'identifiant HTML `btnInscription` par exemple.
 * Et une valeur si c'est nécessaire en cas de réalisation d'action d'écriture par exemple.  
 
+<div style="page-break-after: always;"></div>
+
 Grâce à cette interface, j'ai pu développer et utiliser des scripts de test. Voici un exemple du script de test de connexion de l'éducateur canin :
 
 <table>
@@ -1732,87 +1780,68 @@ Grâce à cette interface, j'ai pu développer et utiliser des scripts de test. 
     	<td>open</td>
         <td>http://localhost:8080/#/</td>
         <td></td>
-        <td>Ouverture de la page d'acceuil de l'application</td>
+        <td>Ouverture de la page d'acceuil de l'application.</td>
     </tr>
     <tr>
     	<td>click</td>
         <td>link=Connexion</td>
         <td></td>
-        <td>Click sur le bouton de connexion de la barre de navigation</td>
+        <td>Click sur le bouton de connexion de la barre de navigation.</td>
     </tr>
     <tr>
     	<td>click</td>
         <td>id=input-connection-email</td>
         <td></td>
-        <td>Click sur la zone de saisie pour l'adresse e-mail</td>
+        <td>Click sur la zone de saisie pour l'adresse e-mail.</td>
     </tr>
     <tr>
     	<td>type</td>
         <td>id=input-connection-email</td>
         <td>borel@eduge.ch</td>
-        <td>Écriture de l'adresse e-mail "borel@eduge.ch" dans la zone de saisie pour l'adresse e-mail</td>
+        <td>Écriture de l'adresse e-mail "borel@eduge.ch" dans la zone de saisie pour l'adresse e-mail.</td>
     </tr>
     <tr>
     	<td>click</td>
         <td>id=input-connection-password</td>
         <td></td>
-        <td>Click sur la zone de saisie pour le mot de passe</td>
+        <td>Click sur la zone de saisie pour le mot de passe.</td>
     </tr>
     <tr>
     	<td>type</td>
         <td>id=input-connection-password</td>
         <td>poire54321</td>
-        <td>Écriture du mot de passe "poire54321" dans la zone de saisie pour le mot de passe</td>
+        <td>Écriture du mot de passe "poire54321" dans la zone de saisie pour le mot de passe.</td>
     </tr>
     <tr>
     	<td>click</td>
         <td>//button[@type='submit']</td>
         <td></td>
-        <td>Click sur le bouton de connexion du formulaire</td>
+        <td>Click sur le bouton de connexion du formulaire.</td>
     </tr>
     <tr>
     	<td>waitForText</td>
         <td>//div[@id='title']/div/h1</td>
         <td>Administration</td>
-        <td>Vérification de la présence du titre de composant "Administration"</td>
+        <td>Vérification de la présence du titre de composant "Administration".</td>
     </tr>
     <tr>
     	<td>waitForText</td>
         <td>link=Administration</td>
         <td>Administration</td>
-        <td>Vérification de la présence du lien "Administration" dans la barre de navigation</td>
+        <td>Vérification de la présence du lien "Administration" dans la barre de navigation.</td>
     </tr>
     <tr>
     	<td>waitForText</td>
         <td>link=Mon planning</td>
         <td>Mon planning</td>
-        <td>Vérification de la présence du lien "Mon planning" dans la barre de navigation</td>
+        <td>Vérification de la présence du lien "Mon planning" dans la barre de navigation.</td>
     </tr>
     <tr>
     	<td>waitForText</td>
         <td>link=Mes rendez-vous</td>
         <td>Mes rendez-vous</td>
-        <td>Vérification de la présence du lien "Mes rendez-vous" dans la barre de navigation</td>
+        <td>Vérification de la présence du lien "Mes rendez-vous" dans la barre de navigation.</td>
     </tr>
 </table>
 
-
-
-## Table des figures
-
-| Numéro de figure | Figure                                                      |
-| ---------------- | ----------------------------------------------------------- |
-| 1                | Dog Model                                                   |
-| 2                | Table dog                                                   |
-| 3                | Data Access Object Dog                                      |
-| 4                | Dog Controller                                              |
-| 5                | ResponseController et HelperController                      |
-| 6                | Classes DatabaseConnector et Constants                      |
-| 7                | Structure de l'API REST                                     |
-| 8                | Base de de données de l'API REST                            |
-| 9                | Planning sans traitement                                    |
-| 10               | Planning avec traitement                                    |
-| 11               | Visual Explain Plan de la requête de génération de planning |
-| 12               | Format de code des tests unitaires                          |
-| 13               | Interface graphique de Katalon Recorder                     |
 

@@ -2025,4 +2025,12 @@ Relecture et correction de toutes les fautes d'orthographes du rapport.
 
 Relecture et correction de toutes les fautes d'orthographes de la documentation des endpoints et formatage afin que le document s'affiche le mieux possible au format PDF.
 
-Formatage PDF de la documentation des endpoints
+Formatage PDF de la documentation des endpoints.
+
+### Mercredi 08 juin 2021
+
+Développement de la conclusion du rapport.
+
+Relecture et correction de toutes les fautes d'orthographes de la documentation technique.
+
+Finalisation du manuel utilisateur.

@@ -391,7 +391,7 @@ class HelperController {
      * 
      * @return void
      */
-    public static function sendMailWithICSFile($start_datetime, $end_datetime, $educator_fullname, $customer_email , $filename)
+    public static function sendMailWithICSFile(\Datetime $start_datetime, \Datetime $end_datetime, string $educator_fullname, string $customer_email, string $filename)
     {
       ob_start();
       include HelperController::getDefaultDirectory()."resources/template/iCalendar_appointment.php";

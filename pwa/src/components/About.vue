@@ -37,12 +37,12 @@ export default {
       texth1LeftSectionContent: "Bonjour, je suis Boris Gourdoux",
       texth5LeftSectionContent: "+ de 300 couples Maître/chien à mon actif",
       textParagraphLeftSectionContent:
-        "Depuis ma toute petite enfance, ma relation avec le chien à été salvatrice. Elle m'a permis de dépasser bien des difficultés et de trouver une véritable complicité. Diplômé et spécialisé en rééducation et comportement, vous bénéficiez de toute mon expertise et expérience dans l'éducation canine, fruit de nombreuses formations dans ce qui se fait de mieux dans le domaine. L'objectif chez Douceur De Chien est de vous permettre de créer un lien renforcé et durable avec votre compagnon à 4 pattes et ceci en utilisant uniquement de la patience, de la cohérence et beaucoup de passion. Ainsi chez Douceur De Chien vous n'obtiendrez aucun conseil sur l'utilisation de colliers étrangleur ou même de la force pour éduquer votre chien.",
+        "Depuis ma toute petite enfance, ma relation avec le chien à été salvatrice. Elle m'a permis de dépasser bien des difficultés et de trouver une véritable complicité. Diplômé et spécialisé en rééducation et comportement, vous bénéficiez de toute mon expertise et expérience dans l'éducation canine, fruit de nombreuses formations dans ce qui se fait de mieux dans le domaine. L'objectif chez Douceur de Chien est de vous permettre de créer un lien renforcé et durable avec votre compagnon à 4 pattes et ceci en utilisant uniquement de la patience, de la cohérence et beaucoup de passion. Ainsi chez Douceur de Chien vous n'obtiendrez aucun conseil sur l'utilisation de colliers étrangleurs ou même de la force pour éduquer votre chien.",
       imageSourceLeftSectionContent: BorisEducator,
 
       texth5RightSectionContent: "Une méthode moderne",
       textParagraphRightSectionContent:
-        "Je base ma méthode en respectant les besoins et l'émotionnel du chien, c'est pourquoi je met l'accent sur une coopération totale de ce dernier en lui permettant de faire ces propres choix et ainsi VOUS permettre d'obtenir de votre chien, écoute et attention en toutes circonstances.",
+        "Je base ma méthode en respectant les besoins et l'émotionnel du chien, c'est pourquoi je met l'accent sur une coopération totale de ce dernier en lui permettant de faire ses propres choix et ainsi vous permettre d'obtenir de votre chien, écoute et attention en toutes circonstances.",
       imageSourceRightSectionContent: BorisWithHyron,
       routeBoutonRightSectionContent: "about",
     };

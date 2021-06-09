@@ -27,14 +27,14 @@
           <b-form @submit.prevent="connection" autocomplete="on">
             <b-form-group
               id="input-group-connection-email"
-              label="Adresse email:"
+              label="Adresse e-mail:"
               label-for="input-connection-email"
             >
               <b-form-input
                 id="input-connection-email"
                 v-model="form.email"
                 type="email"
-                placeholder="Entrez l'adresse email"
+                placeholder="Entrez l'adresse e-mail"
                 autocomplete="email"
                 required
               ></b-form-input>
