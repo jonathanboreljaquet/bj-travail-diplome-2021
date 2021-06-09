@@ -1,16 +1,16 @@
 # Documentation technique des endpoints de l'API REST
 ## Description
 Ce document permet de comprendre le procédé de chaque endpoint de l'API REST Douceur de Chien.
-Chaque endpoint respècte la structure suivante :
+Chaque endpoint respecte la structure suivante :
 
 * Objectif de l'endpoint
 * Utilisation concrète de l'endpoint
 * Diagramme de type flowchart décrivant les étapes de fonctionnement de l'endpoint   
 
-## Tables des matières
+## Table des matières
 - [Documentation technique des endpoints de l'API REST](#documentation-technique-des-endpoints-de-lapi-rest)
   - [Description](#description)
-  - [Tables des matières](#tables-des-matières)
+  - [Table des matières](#table-des-matières)
     - [User endpoints](#user-endpoints)
       - [POST api/v1/users](#post-apiv1users)
       - [GET api/v1/users](#get-apiv1users)
@@ -79,8 +79,8 @@ Créer un utilisateur dans la base de données et retourner son api token, son i
 
 Cet endpoint permet l'inscription d'un client de deux manières différentes afin que celui-ci puisse accéder aux fonctionnalités de l'application :
 
-* Inscription client de manière autonome
-* Inscription client par l'éducateur canin lors d'un appel téléphonique, un e-mail contenant un mot de passe généré aléatoirement est envoyé par e-mail
+* Inscription du client de manière autonome
+* Inscription du client par l'éducateur canin lors d'un appel téléphonique, un e-mail contenant un mot de passe généré aléatoirement est envoyé par e-mail
 
 Body de la requête :
 
@@ -92,7 +92,7 @@ Body de la requête :
 | phonenumber                | Le numéro de téléphone de l'utilisateur                      |               X               |                                   |
 | address                    | L'adresse de l'utilisateur                                   |               X               |                                   |
 | password                   | Le mot de passe de l'utilisateur                             |                               |                                   |
-| reCAPTCHAuserResponseToken | Le token de réponse fournit par le système de détection automatisé d'utilisateurs reCAPTCHA de Google | X si le password est spécifié |                                   |
+| reCAPTCHAuserResponseToken | Le token de réponse fournit par le système de détection automatisée d'utilisateurs reCAPTCHA de Google | X si le password est spécifié |                                   |
 
 <div style="page-break-after: always;"></div>
 
@@ -144,7 +144,7 @@ Cet endpoint permet de récupérer tous les clients ainsi que leurs chiens de l'
 
 **Objectif**
 
-Récupérer les informations non sensibles des utilisateurs avec le `code_role` 2 (Éducateur canin) de la base de données.
+Récupérer les informations non sensibles des utilisateurs avec le `code_role` 2 (éducateur canin) de la base de données.
 
 **Utilisation concrète**
 
@@ -766,7 +766,7 @@ Créer un calendrier hebdomadaire pour l'utilisateur authentifié dans la base d
 
 **Utilisation concrète**
 
-Cet endpoint permet d'ajouter un calendrier hebdomadaire pour l'éducateur canin authentifié. Ce calendrier hebdomadaire doit avoir une date de début mais peut avoir une date de fin. C'est-à-dire qu'un calendrier hebdomadaire sans date de fin est un calendrier hebdomadaire permanent. De ce fait, il peut y avoir qu'un seul calendrier permanent existant pour un éducateur canin. Les calendriers hebdomadaires permettront de créer des créneaux horaires hebdomadaires sur une certaine durée. L'endpoint est accessible uniquement par les administrateurs.
+Cet endpoint permet d'ajouter un calendrier hebdomadaire pour l'éducateur canin authentifié. Ce calendrier hebdomadaire doit avoir une date de début mais peut ne pas avoir une date de fin, c'est-à-dire qu'un calendrier hebdomadaire sans date de fin est un calendrier hebdomadaire permanent. De ce fait, il peut y avoir qu'un seul calendrier permanent existant pour un éducateur canin. Les calendriers hebdomadaires permettront de créer des créneaux horaires hebdomadaires sur une certaine durée. L'endpoint est accessible uniquement par les administrateurs.
 
 Body de la requête :
 
