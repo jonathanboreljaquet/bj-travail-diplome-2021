@@ -262,7 +262,7 @@
       <!-- MODAL ADD SCHEDULEOVERRIDE -->
       <b-modal
         id="modal-add-scheduleoverride"
-        title="Ajouter un exception d'horaire"
+        title="Ajouter une exception d'horaire"
         :hide-footer="true"
       >
         <b-form

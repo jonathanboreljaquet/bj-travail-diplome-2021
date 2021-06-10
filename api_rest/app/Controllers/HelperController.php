@@ -404,12 +404,12 @@ class HelperController {
       $new_tmpfile_path = sys_get_temp_dir(). '\\' . $filename;
       rename($tmpfile_path, $new_tmpfile_path);
 
-      $message = "Bonjour et merci de faire confiance à la société Douceur de Chien,
-      vous venez de prendre un rendez-vous le ".$start_datetime->format("d-m-Y")."
+      $message = "Bonjour et merci de faire confiance à la société Douceur de Chien.
+      Vous venez de prendre un rendez-vous le ".$start_datetime->format("d-m-Y")."
       de ".$start_datetime->format("H\h")." à ".$end_datetime->format("H\h")." avec
       l'éducateur canin ".$educator_fullname.".
-      Vous trouverez ci-joint un fichier ICS permettant de planifier le rendez-vous
-      dans votre calendrier Microsoft, Google ou Apple. Vous pouvez égalament accéder aux informations
+      Vous trouverez ci-joint, un fichier ICS permettant de planifier le rendez-vous
+      dans votre calendrier Microsoft, Google ou Apple. Vous pouvez également accéder aux informations
       de ce rendez-vous depuis votre compte.";
 
       HelperController::sendMail($message,"Un nouveau rendez-vous a été planifié",$customer_email,null,$new_tmpfile_path);

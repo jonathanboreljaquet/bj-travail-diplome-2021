@@ -1,4 +1,68 @@
-# Douceur de chien
+# Log book du travail de diplôme Douceur de Chien
+
+- [Log book du travail de diplôme Douceur de Chien](#log-book-du-travail-de-diplôme-douceur-de-chien)
+  - [Log book travail de stage](#log-book-travail-de-stage)
+    - [Mardi 30  mars 2021](#mardi-30--mars-2021)
+      - [Objectif du POC](#objectif-du-poc)
+    - [Mercredi 31  mars 2021](#mercredi-31--mars-2021)
+    - [Jeudi 01 avril 2021](#jeudi-01-avril-2021)
+    - [Mardi 06 avril 2021](#mardi-06-avril-2021)
+    - [Mercredi 07 avril 2021](#mercredi-07-avril-2021)
+    - [Jeudi 08 avril 2021](#jeudi-08-avril-2021)
+    - [Vendredi 09 avril 2021](#vendredi-09-avril-2021)
+    - [Lundi 12 avril 2021](#lundi-12-avril-2021)
+    - [Mardi 13 avril 2021](#mardi-13-avril-2021)
+    - [Mercredi 14 avril 2021](#mercredi-14-avril-2021)
+    - [Jeudi 15 avril 2021](#jeudi-15-avril-2021)
+  - [Log book travail de diplôme](#log-book-travail-de-diplôme)
+    - [Vendredi 20 novembre 2020](#vendredi-20-novembre-2020)
+    - [Lundi 23 novembre 2020](#lundi-23-novembre-2020)
+    - [Mardi 24 novembre 2020](#mardi-24-novembre-2020)
+    - [Mercredi 16 décembre 2020](#mercredi-16-décembre-2020)
+    - [Samedi 9 janvier 2021](#samedi-9-janvier-2021)
+    - [Lundi 19 avril 2021](#lundi-19-avril-2021)
+    - [Mardi 20 avril 2021](#mardi-20-avril-2021)
+    - [Mercredi 21 avril 2021](#mercredi-21-avril-2021)
+    - [Jeudi 22 avril 2021](#jeudi-22-avril-2021)
+    - [Vendredi 23 avril 2021](#vendredi-23-avril-2021)
+    - [Lundi 26 avril 2021](#lundi-26-avril-2021)
+    - [Mardi 27 avril 2021](#mardi-27-avril-2021)
+    - [Mercredi 28 avril 2021](#mercredi-28-avril-2021)
+    - [Jeudi 29 avril 2021](#jeudi-29-avril-2021)
+    - [Vendredi 30 avril 2021](#vendredi-30-avril-2021)
+    - [Lundi 03 mai 2021](#lundi-03-mai-2021)
+    - [Mardi 04 mai 2021](#mardi-04-mai-2021)
+    - [Mercredi 05 mai 2021](#mercredi-05-mai-2021)
+    - [Jeudi 06 mai 2021](#jeudi-06-mai-2021)
+    - [Vendredi 07 mai 2021](#vendredi-07-mai-2021)
+    - [Lundi 10 mai 2021](#lundi-10-mai-2021)
+    - [Mardi 11 mai 2021](#mardi-11-mai-2021)
+    - [Mercredi 12 mai 2021](#mercredi-12-mai-2021)
+    - [Jeudi 13 mai 2021](#jeudi-13-mai-2021)
+    - [Vendredi 14 mai 2021](#vendredi-14-mai-2021)
+    - [Samedi 15 mai 2021](#samedi-15-mai-2021)
+    - [Lundi 17 mai 2021](#lundi-17-mai-2021)
+    - [Mardi 18 mai 2021](#mardi-18-mai-2021)
+    - [Mercredi 19 mai 2021](#mercredi-19-mai-2021)
+    - [Jeudi 20 mai 2021](#jeudi-20-mai-2021)
+    - [Vendredi 21 mai 2021](#vendredi-21-mai-2021)
+    - [Mardi 25 mai 2021](#mardi-25-mai-2021)
+    - [Mercredi 26 mai 2021](#mercredi-26-mai-2021)
+    - [Jeudi 27 mai 2021](#jeudi-27-mai-2021)
+    - [Vendredi 28 mai 2021](#vendredi-28-mai-2021)
+    - [Samedi 29 mai 2021](#samedi-29-mai-2021)
+    - [Lundi 31 mai 2021](#lundi-31-mai-2021)
+    - [Mardi 01 juin 2021](#mardi-01-juin-2021)
+    - [Mercredi 02 juin 2021](#mercredi-02-juin-2021)
+    - [Jeudi 03 juin 2021](#jeudi-03-juin-2021)
+    - [Vendredi 04 juin 2021](#vendredi-04-juin-2021)
+    - [Dimanche 06 juin 2021](#dimanche-06-juin-2021)
+    - [Lundi 07 juin 2021](#lundi-07-juin-2021)
+    - [Mardi 08 juin 2021](#mardi-08-juin-2021)
+    - [Mercredi 09 juin 2021](#mercredi-09-juin-2021)
+    - [Jeudi 10 juin 2021](#jeudi-10-juin-2021)
+    - [Vendredi 11 juin 2021](#vendredi-11-juin-2021)
+
 
 ## Log book travail de stage
 
@@ -509,7 +573,7 @@ Finalisation de la documentation technique.
 
 Rencontre physique avec le client du travail de diplôme afin de répondre à différentes questions pour la réalisation de la version 1 du cahier des charges.
 
-**Question posée :**
+**Questions posées :**
 
 Comment procéder de la meilleure des façons pour la création et la prise en charge d'un nouveau client ?
 
@@ -554,15 +618,15 @@ Quelles sont les informations que le client doit avoir la possibilité de consul
 1. L'éducateur canin se rend au domicile du client à la date spécifiée lors de l'appel téléphonique. 
 2. Il va se rendre sur l'application mobile et se connecter avec ses identifiants.
 3. Il va rechercher le client grâce à son nom et accéder à sa fiche client précédemment créée lors de l'appel téléphonique.
-4. Il va montrer les données personnelles du client et lui demander une vérification de celle-ci.
-5. Si elles sont fausses, modification de celle-ci.
+4. Il va montrer les données personnelles du client et lui demander une vérification de celles-ci.
+5. Si elles sont fausses, modification de celles-ci.
 6. Si elles sont correctes, l'éducateur canin devra prendre une photo du chien ainsi que de rentrer manuellement ou avec un lecteur RFID communiquant en Bluetooth avec l'application, les 15 chiffres du code de la puce sous-cutanée du chien.
 7. Il pourra ensuite sauvegarder cette version finale de la fiche client.
 
 **Scénario de rendez-vous avec le client**
 
 1. L'éducateur canin peut à tout moment lors d'un rendez-vous, accéder à la fiche du client afin de pouvoir y rentrer différentes données :
-   1. Note du cour sous format texte (accessible uniquement par l'éducateur).
+   1. Note du cours sous format texte (accessible uniquement par l'éducateur).
    2. Note du cours sous format graphique (accessible uniquement par l'éducateur).
    3. Note récapitulative du cours (accessible par l'éducateur ainsi que le client).
    4. Si le rendez-vous est le premier, alors le client doit depuis l'application de l'éducateur :
@@ -578,30 +642,30 @@ Quelles sont les informations que le client doit avoir la possibilité de consul
 
 - Connexion à l'application.
 - Accès au calendrier de ses rendez-vous.
-- Affichage de tous les clients avec photo du chien/nom et prénom du client.
+- Affichage de tous les clients avec photo du chien et nom et prénom du client.
 - Recherche spécifique d'un client par nom ou depuis un scan de puce sous-cutanée canine.
 - Accès aux informations personnelles d'une fiche client depuis la recherche spécifique ou le calendrier de rendez-vous.
   - Nom du client
   - Prénom du client
-  - Etc...
-  - Document PDF du client (conditions d'inscriptions, fiche de cours, etc...)
-- Création préliminaire d'une fiche client (*Étape 1 : Procédure d'ajout d'un nouveau client par téléphone*)
-- Accès ou création de contenue séance d'une fiche client depuis la recherche spécifique ou le calendrier de rendez-vous.
+  - Etc.
+  - Document PDF du client (conditions d'inscription, fiche de cours, etc.)
+- Création préliminaire d'une fiche client (*Étape 1 : Procédure d'ajout d'un nouveau client par téléphone*).
+- Accès ou création de contenu séance d'une fiche client depuis la recherche spécifique ou le calendrier de rendez-vous.
   - Rendez-vous 1
     - Note du cours sous format texte
     - Note du cours sous format graphique
     - Note récapitulative du cours
-    - (si premier cours, alors ajout conditions d'inscription, facture, etc...)
+    - (si premier cours, alors ajout conditions d'inscription, facture, etc.)
   - Rendez-vous 2
     - ...
 
 **Fonctionnalité disponible pour le client**
 
-- Inscription à l'application depuis le mail envoyé lors de la fin de *procédure d'ajout d'un nouveau client par téléphone*
+- Inscription à l'application depuis le e-mail envoyé lors de la fin de *procédure d'ajout d'un nouveau client par téléphone*
 - Connexion à l'application
 - Accès au calendrier de ses rendez-vous
 - Accès à ses informations personnelles (avec contrat signé)
-- Accès à ses différents contenues séances (note récapitulative du cours ainsi que affiche PDF du cours)
+- Accès à ses différents contenus séances (note récapitulative du cours ainsi qu'une affiche PDF du cours)
 
 ### Lundi 23 novembre 2020
 
@@ -624,13 +688,13 @@ Ajout du planning prévisionnel au cahier des charges.
 Modification du cahier des charges suite à des discussions avec les professeurs MM Bonvin et Garchery. Les différents points traités sont les suivants :
 
 - L'application mobile devient une PWA (Progressive web app)
-- Suppression de la fonctionnalité de lecture de données RFID par Bluetooth
+- Suppression de la fonctionnalité de lecture des données RFID par Bluetooth
 
 ### Samedi 9 janvier 2021
 
 Rencontre physique avec le client afin de répondre au maximum aux exigences de celui-ci.
 
-**Question posée :**
+**Questions posées :**
 
 Calendrier natif ou intégrer à l'application ?
 
@@ -640,7 +704,7 @@ Quand faut-il envoyer le e-mail lors de l'ajout de document ?
 
 **Résumé de la discussion**
 
-Le client désire centraliser tous ses rendez-vous professionnels avec un calendrier intégré à l'application afin de ne pas mélanger les rendez-vous pro et les rendez-vous privés.
+Le client désire centraliser tous ses rendez-vous professionnels avec un calendrier intégré à l'application afin de ne pas mélanger les rendez-vous professionnels et les rendez-vous privés.
 
 Les informations personnelles des clients pourront être modifiées uniquement par l'administrateur (éducateur canin).
 
@@ -648,7 +712,7 @@ Un e-mail devra être envoyé lors de la création/ajout de document. Celui-ci c
 
 ### Lundi 19 avril 2021
 
-Commencement officiel du travail de diplôme. Conférence avec M. Garcia afin de discuter du déroulement et du règlement du travail de diplôme.
+Début officiel du travail de diplôme. Conférence avec M. Garcia afin de discuter du déroulement et du règlement du travail de diplôme.
 
 Importation du travail effectué dans le POC simulant le travail de stage de l'année 2020 (Gestion de planning de l'unique éducateur canin de l'application).
 
@@ -656,7 +720,7 @@ Rendez-vous physique en C109 avec M. Mathieu afin de poser différentes question
 
 * Sous quel format devons-nous rédiger la documentation technique du travail de diplôme ?
   * Réponse : Nous sommes plutôt libres du format (MarkDown, Word, Latex, autres). Nous avons discuté de la documentation technique et avons convenu de la réaliser en MarkDown la documentation réellement technique dans le dépôt distant GIT et, dans un second document LaTeX ou Word, la documentation théorique.
-* Est-il possible d'organiser des rendez-vous réguliers entre nous et M. Mathieu ?
+* Est-il possible d'organiser des rendez-vous réguliers avec M. Mathieu ?
   * Réponse : Cela n'a pas encore été validé, mais les jours de rencontres se dérouleront soit les mardis matins, soit les vendredis.
 * Faut-il que je réalise des tests unitaires pour mon API REST ?
   * Réponse : Oui, réaliser des tests pour mon API REST est une bonne idée. Nous avons appris l'existence de la solution de test d'automatisation [Katalon](https://www.katalon.com/) permettant l'exécution de test automatique sur les futures vues de nos applications. M. Mathieu m'a également conseillé de tester mon API REST avec l'outil [Postman](https://www.postman.com/).
@@ -667,7 +731,7 @@ Ajout d'une vérification du format du code day lors de la création ou la modif
 
 * Création de la méthode `validateCodeDayFormat(string $code_day)`dans le HelperController permettant de vérifier si le code day est entre 1 inclus et 7 inclus.
 * Création de la méthode de réponse `invalidCodeDayFormat() `dans le ResponseController 
-  * La méthode renvoie le code erreur 400 Bad Request avec le message :  Format de jour invalide => (1 jusqu/'à 7, dimanche = 1).
+  * La méthode renvoie le code erreur 400 Bad Request avec le message :  Format de jour invalide => (1 jusqu'à 7, dimanche = 1).
 
 Modification de la base de données afin de permettre la création, l'utilisation et la gestion de planning pour plusieurs éducateurs canins. Les 4 tables permettant ces fonctionnalités détiennent dorénavant un champ `id_educator` :
 
@@ -677,7 +741,7 @@ Modification de tous les modèles et contrôleurs concernés.
 
 * Les méthodes concernées des modèles contiennent maintenant en paramètre => `int $idEducator` afin de permettre aux différentes requêtes SQL de traiter uniquement les données pour un éducateur canin.
 
-Envoie de e-mail à M. Mathieu afin de poser la question suivante: faut-il réaliser un Trello pour notre travail de diplôme malgré le fait qu'on soit seul à le réaliser ? 
+Envoie de e-mail à M. Mathieu afin de poser la question suivante: faut-il réaliser un Trello pour notre travail de diplôme malgré le fait que l'on soit seul à le réaliser ? 
 
 Modification du script dbseed.php. Dorénavant, en plus de la création des 10 utilisateurs de test, le script permet d'insérer dans la base de données des données de test pour 3 éducateurs canins détenant 3 exemples de plannings différents.
 
@@ -841,7 +905,7 @@ public static function generateRandomPassword() {
 
 ### Vendredi 23 avril 2021
 
-Importation de la librairie PHPMailer avec la commande `composer require phpmailer/phpmailer` et création de la méthode permettant l'envoie de e-mail de la manière la plus épurée avec le protocole SMTP.
+Importation de la librairie PHPMailer avec la commande `composer require phpmailer/phpmailer` et création de la méthode permettant l'envoi de l'e-mail de la manière la plus épurée avec le protocole SMTP.
 
 ```PHP
 public static function sendMail(string $message,string $emailRecipient)
@@ -928,7 +992,7 @@ Modification de l'ancien contrôleur afin qu'il réponde aux nouvelles demandes 
 Création du Data Access Object DAOUser qui était anciennement mon modèle.
 Création du nouveau modèle permettant de représenter les données de ma table user de manière objet.
 
-Envoie d'un e-mail à M. Mathieu afin de lui montrer les modifications structurelles de mon API REST afin d'être sûr d'être sur la bonne voie. Une question à propos de l'emplacement des futurs endpoints spéciaux comme celui permettant la connexion a également été posée. 
+Envoi d'un e-mail à M. Mathieu afin de lui montrer les modifications structurelles de mon API REST afin d'être sûr d'être sur la bonne voie. Une question à propos de l'emplacement des futurs endpoints spéciaux comme celui permettant la connexion a également été posée. 
 
 ### Lundi 26 avril 2021
 
@@ -1774,7 +1838,7 @@ Réalisation de la page "Mes rendez-vous" pour les éducateurs canins afin que c
 
 La page charge tous les rendez-vous de l'éducateur canin authentifié avec l'endpoint `GET api/v1/appoitments` et les affiches dans un calendrier. Lors du click sur l'un des rendez-vous du calendrier, l'éducateur canin sera redirigé vers la page du rendez-vous en question correspondant à la page "Mes rendez-vous" du client.
 
-### Vendredi 27 mai 2021
+### Vendredi 28 mai 2021
 
 Rendez-vous hebdomadaire physique avec M. Mathieu. Lors de cette discussion, j'ai posé les questions suivantes :
 
@@ -1803,7 +1867,7 @@ J'ai utilisé cette librairie afin de permettre à l'éducateur canin de dessine
 * Édition ou suppression des notes graphiques
 * Appel de l'endpoint `POST api/v1/appointments/uploadNoteGraphical` afin d'uploader cette nouvelle version des notes graphiques
 
-### Samedi 28 mai 2021
+### Samedi 29 mai 2021
 
 Modification du composant  `Sketchpad.vue` en `SignaturePad.vue` afin de pouvoir intégrer la nouvelle librairie de signature à la fonctionnalité permettant de créer les conditions d'inscription signées.
 
@@ -1996,7 +2060,7 @@ Exécution de la requête de génération de planning de l'endpoint `GET api/v1/
 Réalisation de la documentation technique de l'application WEB. Pour ce qui est de la documentation technique, il reste encore à parler de la requête de génération de planning.
 Réalisation des maquettes effectives dans le rapport. Pour ce qui est du rapport, il reste encore la conclusion à développer.
 
-Pour résumer les points qu'il me reste à documenter sont :
+Pour résumer, les points qui me restent à documenter sont :
 
 * La requête de génération de planning dans la documentation technique
 * La conclusion du rapport
@@ -2006,18 +2070,18 @@ Pour résumer les points qu'il me reste à documenter sont :
 
 Début de réalisation du manuel utilisateur.
 
-Discussion avec David Paulino. Celui-ci m'a fait remarqué qu'il manquait la fonctionnalité de vérification d'adresse e-mail lors de la création de compte par un client. Il m'a expliqué comment réaliser cette fonctionnalité :
+Discussion avec David Paulino. Celui-ci m'a fait remarquer qu'il manquait la fonctionnalité de vérification d'adresse e-mail lors de la création de compte par un client. Il m'a expliqué comment réaliser cette fonctionnalité.
 
-Création de deux champs dans la table user de la base de données :
+Création de deux champs dans la table `user` de la base de données :
 
 1. isValidated : Boolean
-2. challenge : Une chaine de charactère généré aléatoirement de type string
+2. challenge : Une chaîne de caractère généré aléatoirement de type string
 
-Lors de la création de compte par un utilisateur, l'utilisateur recevra un e-mail avec un lien contenant son identifiant ainsi que son "challenge". Lors du click sur ce lien, comme par exemple `https://douceurdechien.ch/validate?userId=12&challenge=AKu689M2`, une requête HTTP sera envoyée au serveur permettant à l'utilisateur d'accéder à son compte. Cette fonctionnalité permettra de m'assurer que le client n'a pas spécifié une adresse e-mail invalide et également de démotiver les personnes malveillantes voulant surcharger ma base de données. Je compte ajouter cette fonctionnalité si j'ai le temps, sinon j'en parlerai dans les améliorations possibles de mon rapport.
+Lors de la création de compte par un utilisateur, l'utilisateur recevra un e-mail avec un lien contenant son identifiant ainsi que son "challenge". Lors du click sur ce lien, comme par exemple `https://douceurdechien.ch/validate?userId=12&challenge=AKu689M2`, une requête HTTP sera envoyée au serveur permettant à l'utilisateur d'accéder à son compte. Cette fonctionnalité permettra de m'assurer que le client n'a pas spécifié une adresse e-mail invalide et également de démotiver les personnes malveillantes voulant surcharger ma base de données. Je compte ajouter cette fonctionnalité si j'ai le temps, auquel cas j'en parlerai dans les améliorations possibles de mon rapport.
 
 ### Mardi 08 juin 2021
 
-Ajout de commentaires dans tous les fichiers de la PWA en nécessitant. 
+Ajout de commentaires dans tous les fichiers de la PWA. 
 
 Vérification et correction de l'annexe `endpoints.md`.
 
@@ -2027,10 +2091,33 @@ Relecture et correction de toutes les fautes d'orthographes de la documentation 
 
 Formatage PDF de la documentation des endpoints.
 
-### Mercredi 08 juin 2021
+### Mercredi 09 juin 2021
 
 Développement de la conclusion du rapport.
 
 Relecture et correction de toutes les fautes d'orthographes de la documentation technique.
 
 Finalisation du manuel utilisateur.
+
+### Jeudi 10 juin 2021
+
+Relecture et correction de toutes les fautes d'orthographes du manuel utilisateur.
+
+Relecture et correction de toutes les fautes d'orthographes de la conclusion du rapport.
+
+### Vendredi 11 juin 2021
+
+Impression du code source de l'API REST et de la PWA en PDF. 
+
+Conversion des différents fichiers du rendu en PDF  :
+
+1. Rapport (`rapport.pdf`)
+2. Documentation technique (`documentation_technique.pdf`)
+   1. Documentation technique des endpoints de l'API REST (`endpoints.pdf`)
+   2. Tests unitaires réalisés avec Postman des endpoints de l'API REST  (`postman_unit_test.pdf`)
+3. Journal de bord (`logbook.pdf`)
+4. Manuel utilisateur (`manuel_utilisateur.pdf`)
+5. Code source de l'API REST (`code_source_api_rest.pdf`)
+6. Code source de la PWA (`code_source_pwa.pdf`)
+
+Rendu définitif, on va aller fêter ca !!!!!!

@@ -49,7 +49,7 @@ export default {
       texth3RightSectionContent: "À propos de nous",
       textButtonRightSectionContent: "Lire plus",
       textParagraphRightSectionContent:
-        "Je m'appelle Boris Gourdoux, je suis le fondateur de Douceur de Chien. Accompagné de Hyron, Staffie mâle et Jaya, Rodhesian Ridgeback femelle. J'ai fais de l'éducation bienveillante et moderne mon leitmotiv afin d'aider tous les maîtres de chiens qui feront appel à mes services. Formé et diplômé en rééducation comportementale, je me ferais un plaisir de vous accompagner dans l'éducation de votre chien.",
+        "Je m'appelle Boris Gourdoux, je suis le fondateur de Douceur de Chien. Accompagné de Hyron, Staffie mâle et Jaya, Rodhesian Ridgeback femelle, je fais de l'éducation bienveillante et moderne mon leitmotiv afin d'aider tous les maîtres de chiens qui feront appel à mes services. Formé et diplômé en rééducation comportementale, je me ferais un plaisir de vous accompagner dans l'éducation de votre chien.",
       imageSourceRightSectionContent: BorisWithDogs,
       routeBoutonRightSectionContent: "about",
     };

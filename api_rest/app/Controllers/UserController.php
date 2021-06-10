@@ -161,7 +161,7 @@ class UserController {
         $this->DAOUser->insert($user);
 
         if (isset($random_password)) {
-            HelperController::sendMail("Bonjour et merci de faire confiance à la société Douceur de Chien, vous trouverez plus bas votre mot de passe généré aléatoirement afin d'accéder à votre compte. Toutefois, il est fortement conseillé de modifier votre mot de passe une fois connecté.","Création de votre compte Douceur de Chien",$user->email,$random_password);
+            HelperController::sendMail("Bonjour et merci de faire confiance à la société Douceur de Chien. Vous trouverez ci-dessous votre mot de passe généré aléatoirement afin d'accéder à votre compte. Toutefois, il est fortement conseillé de modifier votre mot de passe une fois connecté.","Création de votre compte Douceur de Chien",$user->email,$random_password);
         }
 
         $newUser = $this->DAOUser->findUserByEmail($user->email);

@@ -176,7 +176,7 @@ class DocumentController {
 
         $this->DAODocument->insert($document);
 
-        HelperController::sendMail("Bonjour et merci de faire confiance à la société Douceur de Chien, vous trouverez ci-joint le document qui a été ajouté à votre compte, vous pouvez égalament accéder à ce document depuis votre compte.","Un nouveau document a été ajouté à votre compte",$user->email,null,$upload_file);
+        HelperController::sendMail("Bonjour et merci de faire confiance à la société Douceur de Chien. Vous trouverez ci-joint le document qui a été ajouté à votre compte. Vous pouvez également accéder à ce document depuis votre compte.","Un nouveau document a été ajouté à votre compte",$user->email,null,$upload_file);
 
         return ResponseController::successfulCreatedRessource();
     }
