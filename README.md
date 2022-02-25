@@ -5,6 +5,11 @@ Travail de diplôme Douceur de Chien
 
 Travail de diplôme ayant comme objectif la réalisation d'une application WEB pour la société Douceur de Chien. Le but du projet est de faciliter les interactions entre des éducateurs canins et leurs clients. L'application permettra à un client de prendre un rendez-vous autonome respectant le planning d'un éducateur canin et à un éducateur canin de faire signer numériquement les conditions d'utilisation par exemple.
 
+## Documentation 
+
+[Documentation technique du projet](./rendu/documentation_technique.pdf)
+
+
 ## Fonctionnalités
 
 ### Endpoints de l'API REST
@@ -92,7 +97,7 @@ La documentation des endpoints est disponible dans un [annexe](./documentation/e
 
 ## Commandes
 
-* `composer install`` : Installe toutes les dépendances PHP du projet
+* `composer install` : Installe toutes les dépendances PHP du projet
 * `php dbseed.php` : Exécute le script PHP `dbseed.php` afin d'insérer dans la base de données des données de test.
 * `npm install` : Installe toutes les dépendances Javascript
 * `npm run serve` : Démarre un serveur de développement basé sur [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
