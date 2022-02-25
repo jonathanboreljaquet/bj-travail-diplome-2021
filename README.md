@@ -92,8 +92,8 @@ La documentation des endpoints est disponible dans un [annexe](./documentation/e
 
 ## Commandes
 
-``composer install`` : Installe toutes les dépendances PHP du projet
-`php dbseed.php` : Exécute le script PHP `dbseed.php` afin d'insérer dans la base de données des données de test.
-`npm install` : Installe toutes les dépendances Javascript
-`npm run serve` : Démarre un serveur de développement basé sur [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+* `composer install`` : Installe toutes les dépendances PHP du projet
+* `php dbseed.php` : Exécute le script PHP `dbseed.php` afin d'insérer dans la base de données des données de test.
+* `npm install` : Installe toutes les dépendances Javascript
+* `npm run serve` : Démarre un serveur de développement basé sur [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
 
