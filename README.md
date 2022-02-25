@@ -7,11 +7,11 @@ Travail de diplôme ayant comme objectif la réalisation d'une application WEB p
 
 ## Documentation 
 
-[Documentation technique](./rendu/documentation_technique.pdf)
-[Rapport](./rendu/rapport.pdf)
-[Manuel utilisateur](./rendu/manuel_utilisateur.pdf)
-[Journal de bord](./rendu/logbook.pdf)
-[Tests unitaires de l'API](./rendu/annexe_postman_unit_tests.pdf)
+* [Documentation technique](./rendu/documentation_technique.pdf)
+* [Rapport](./rendu/rapport.pdf)
+* [Manuel utilisateur](./rendu/manuel_utilisateur.pdf)
+* [Journal de bord](./rendu/logbook.pdf)
+* [Tests unitaires de l'API](./rendu/annexe_postman_unit_tests.pdf)
 
 ## Fonctionnalités
 
